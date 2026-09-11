@@ -35,7 +35,19 @@ def test_60_degrees_geometry_and_moment_range():
     assert lo["snow_mu1"] == 0.0
 
 
-def test_compare_covers_both_layouts_and_tilts():
+def test_4x3L_landscape_at_45():
+    """The adopted stand (11.09.2026): 4 stands of 3 modules in landscape."""
+    r = stands.stand("4x3L", 45, 1.20, MODULE, bottom_edge=0.5, strip_spacing=1.6)
+    assert (r["stands"], r["modules_per_stand"], r["strips"]) == (4, 3, 8)
+    assert r["field_w_m"] == pytest.approx(2.278, abs=0.001)
+    assert r["field_slope_m"] == pytest.approx(3.442, abs=0.001)
+    assert r["depth_m"] == pytest.approx(2.434, abs=0.002)      # fits the 3,30 m band
+    assert r["top_edge_m"] == pytest.approx(2.934, abs=0.002)
+    assert r["M_kNm"] == pytest.approx(25.7, abs=0.1)
+    assert r["strip_m3_required"] < r["strip_m3_adopted"] == stands.STRIP_4X3L_M3
+
+
+def test_compare_covers_all_layouts_and_tilts():
     rows = stands.compare(config.load("sjednica"))
     combos = {(r["layout"], r["tilt"]) for r in rows}
-    assert combos == {("3x4", 45), ("3x4", 60), ("2x6", 45), ("2x6", 60)}
+    assert combos == {(lay, t) for lay in ("3x4", "2x6", "4x3L") for t in (45, 60)}
