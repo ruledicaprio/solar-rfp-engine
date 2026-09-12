@@ -239,17 +239,57 @@ def plot_a3(dxf_path, out_pdf, crop=False):
 
 
 # --------------------------------------------------------------------------
+MEMO = ("Dioničko društvo BH Telecom Sarajevo",
+        "Franca Lehara 7, 71000 Sarajevo, BiH",
+        "Izvršna direkcija za tehnologiju i razvoj servisa",
+        "tel: +387 33 256 500; fax: +387 33 256 505")
+MEMO_WEB = "www.bhtelecom.ba"
+
+
+def arial(page):
+    """Embed the system Arial on a page: the base-14 PDF fonts have no
+    š/ć/č/ž/đ. Returns (regular, bold) font names."""
+    have = set()
+    for tag, fname in (("bht", "arial.ttf"), ("bhtb", "arialbd.ttf")):
+        p = os.path.join(os.environ.get("WINDIR", r"C:\Windows"), "Fonts", fname)
+        if os.path.exists(p):
+            page.insert_font(fontname=tag, fontfile=p)
+            have.add(tag)
+    return ("bht" if "bht" in have else "helv"), ("bhtb" if "bhtb" in have else "hebo")
+
+
+def memo_header(page, x0=50, x1=None, top=30):
+    """The BH Telecom memorandum as the page header (Investor, 11.09.2026): the
+    bh mark on the left with the web address under it, the company block on the
+    right, a grey rule below. A4 and INFO pages only - the A3 drawings keep
+    their own title block. Returns the y below it, where the content starts."""
+    x1 = x1 or page.rect.width - 50
+    reg, bold = arial(page)
+    logo = fitz.open("pdf", fitz.open(LOGO_SVG).convert_to_pdf())
+    h = 34
+    w = h * logo[0].rect.width / logo[0].rect.height
+    page.show_pdf_page(fitz.Rect(x0, top, x0 + w, top + h), logo, 0)
+    page.insert_text(fitz.Point(x0, top + h + 11), MEMO_WEB, fontname=reg, fontsize=7,
+                     color=(0.35, 0.35, 0.35))
+    y = top + 4
+    for i, txt in enumerate(MEMO):
+        if page.insert_textbox(fitz.Rect(x1 - 320, y, x1, y + 13), txt,
+                               fontname=bold if i == 0 else reg, fontsize=8 if i == 0 else 7,
+                               color=(0.04, 0.04, 0.04) if i == 0 else (0.35, 0.35, 0.35),
+                               align=2) < 0:
+            raise SystemExit(f"memorandum: {txt!r} nije stalo")
+        y += 10.5
+    bar = top + h + 18
+    page.draw_line(fitz.Point(x0, bar), fitz.Point(x1, bar), color=(0.6, 0.6, 0.6), width=0.6)
+    return bar + 8
+
+
 def cover_page(doc):
     """Cover in the style of the TD title page, adapted for Prilog III."""
     page = doc.new_page(width=595, height=842)  # A4 portrait
-    # The mark comes from cad/bht-logo.svg, the file the drawing title blocks
-    # trace, and is placed as vector. It used to be lifted out of the TD .docx by
-    # make_prilog1, which Rev 8 deleted: the import failed inside a bare except
-    # and the Rev 8 cover shipped without a logo.
-    svg = fitz.open(LOGO_SVG)
-    logo = fitz.open("pdf", svg.convert_to_pdf())
-    w = 52 * logo[0].rect.width / logo[0].rect.height
-    page.show_pdf_page(fitz.Rect(60, 50, 60 + w, 50 + 52), logo, 0)
+    # The memorandum carries the mark (cad/bht-logo.svg, the file the drawing
+    # title blocks trace, placed as vector) and the company lines.
+    memo_header(page)
 
     # The base-14 PDF fonts have no š/ć/č/ž/đ, so Bosnian text comes out with
     # question marks. Embed the system Arial instead.
@@ -274,13 +314,6 @@ def cover_page(doc):
             align=align,
         )
 
-    line("BH TELECOM d.d. SARAJEVO", 120, 13, bold=True)
-    line(
-        "Izvršna direkcija za tehnologiju i razvoj servisa",
-        140,
-        10,
-        colour=(0.35, 0.35, 0.35),
-    )
     page.draw_line(
         fitz.Point(50, 168), fitz.Point(545, 168), color=(0.96, 0.51, 0.12), width=1.6
     )
@@ -378,25 +411,19 @@ def site_data_page(doc):
     import json
 
     d = json.load(open(os.path.join(BASE, "cad", "design.json"), encoding="utf-8"))
-    g, a, m, tk, c = d["genset"], d["array"], d["module"], d["tank"], d["container"]
+    g, a, m, tk, sup = d["genset"], d["array"], d["module"], d["tank"], d["support"]
     if "energy" not in d:
         raise SystemExit("design.json has no energy block - run tools/sync_energy.py")
     e = d["energy"]
     fence = 2.10                       # certified 04 Ograda.dwg (Rev 6)
 
     page = doc.new_page(width=595, height=842)
-    fonts = {}
-    for tag, fname in (("bht", "arial.ttf"), ("bhtb", "arialbd.ttf")):
-        p = os.path.join(os.environ.get("WINDIR", r"C:\Windows"), "Fonts", fname)
-        if os.path.exists(p):
-            page.insert_font(fontname=tag, fontfile=p)
-            fonts[tag] = True
-    reg = "bht" if "bht" in fonts else "helv"
-    bold = "bhtb" if "bhtb" in fonts else "hebo"
+    y0 = memo_header(page)
+    reg, bold = arial(page)
 
-    page.insert_textbox(fitz.Rect(50, 60, 545, 90), "1.  OPŠTI PODACI O LOKACIJI",
+    page.insert_textbox(fitz.Rect(50, y0 + 12, 545, y0 + 42), "1.  OPŠTI PODACI O LOKACIJI",
                         fontname=bold, fontsize=14)
-    page.draw_line(fitz.Point(50, 92), fitz.Point(545, 92),
+    page.draw_line(fitz.Point(50, y0 + 44), fitz.Point(545, y0 + 44),
                    color=(0.96, 0.51, 0.12), width=1.6)
 
     rows = [
@@ -410,10 +437,6 @@ def site_data_page(doc):
                             f"{fence:.2f} m".replace(".", ",")),
         ("Antenski stub", "Rešetkasta izvedba, visina 38 m; baza 4,20 m (dno) / "
                           "1,20 m (vrh)"),
-        ("Kontejner", f"Vanjske dimenzije {c['ext'][0] / 1000:.3f} × "
-                      f"{c['ext'][1] / 1000:.2f} m, zidni paneli {c['wall']} mm; "
-                      f"IP55, prema ovjerenom projektu lokacije; PRAZAN"
-                      .replace(".", ",")),
         ("Priključak na EES", "NE — lokacija nije priključena na "
                               "elektroenergetsku mrežu"),
         ("TK oprema", "Huawei RRU (3 kom) + BBU/MPLS, −48 VDC"),
@@ -422,19 +445,18 @@ def site_data_page(doc):
                              "DEA (rezervni)"),
         ("FN konfiguracija", f"{a['modules_total']} × "
                              f"{m['model'].split('/')[0].replace('Huawei', '').strip()} "
-                             f"({a['kWp']:.2f} kWp), fiksni nagib {a['tilt_deg']}°, "
-                             f"azimut 180° (jug); monofacijalni iPV moduli sa "
-                             f"optimizatorima".replace(".", ",")),
-        ("DEA", f"{g['kVA']:g} kVA / {g['kW']} kW stand-by (ISO 8528-3), rad u prime "
-                f"režimu, ulaz ispravljača ograničen na "
-                f"{d['control']['rect_cap_ac_kw']} kW; skid izvedba u kontejneru"
-                .replace(".", ",")),
+                             f"({a['kWp']:.2f} kWp) na {a['count']} nosača po "
+                             f"{sup['modules_each']} modula (položeno), nagib "
+                             f"{a['tilt_deg']}°, azimut {a['azimuth_deg']}° (JZ)"
+                             .replace(".", ",")),
+        ("DEA", f"{g['kVA']:g} kVA / {g['kW']} kW, skid u kontejneru; ulaz ispravljača "
+                f"≤{d['control']['rect_cap_ac_kw']} kW".replace(".", ",")),
         ("Spremnik goriva", f"Dvoplašni, {tk['litres']} l, sa nivo sondom i "
                             f"detekcijom curenja"),
-        ("Očekivani rad DEA", f"≈{r10(e['genset_h_mean'])} h/god (9 od 10 godina "
-                              f"≤{r10(e['genset_h_p90'])} h), gorivo "
-                              f"≈{r10(e['fuel_l_mean'])} l/god — simulacija pvsim, uz "
-                              f"parametriranje SMU iz Priloga I, Tačka 4.6"),
+        ("Orijentacija", "vrata JI, hladnjak DEA SZ, FN polje JZ; ormari ICC i MTS SI "
+                         "(Google Maps, Naručilac 11.09.2026)"),
+        ("Očekivani rad agregata", f"{r10(e['genset_h_mean'])}~{r10(e['genset_h_p90'])} "
+                                   f"h/god"),
     ]
 
     x0, x1, x2 = 50, 195, 545
@@ -447,11 +469,11 @@ def site_data_page(doc):
     # still will not fit stops the build instead of shipping empty.
     scratch = fitz.open()
     probe = scratch.new_page(width=595, height=842)
-    arial = os.path.join(os.environ.get("WINDIR", r"C:\Windows"), "Fonts",
-                         "arial.ttf")
-    pfont = "p" if os.path.exists(arial) else "helv"
+    arial_ttf = os.path.join(os.environ.get("WINDIR", r"C:\Windows"), "Fonts",
+                             "arial.ttf")
+    pfont = "p" if os.path.exists(arial_ttf) else "helv"
     if pfont == "p":
-        probe.insert_font(fontname="p", fontfile=arial)
+        probe.insert_font(fontname="p", fontfile=arial_ttf)
 
     def height_for(txt):
         for h in range(24, 108, 11):
@@ -460,7 +482,7 @@ def site_data_page(doc):
                 return h
         raise SystemExit(f"stranica opštih podataka: red ne stane — {txt[:60]!r}")
 
-    y = 115
+    y = y0 + 65
     for label, value in rows:
         h = height_for(value)
         page.draw_rect(fitz.Rect(x0, y, x2, y + h), color=(0.75, 0.75, 0.75),
@@ -476,17 +498,6 @@ def site_data_page(doc):
                     f"stranica opštih podataka: {txt[:50]!r} nije stalo")
         y += h
     scratch.close()
-
-    page.insert_textbox(
-        fitz.Rect(x0, y + 14, x2, y + 90),
-        "Napomena: podaci preuzeti iz RFI dokumenta „Autonomno napajanje za BS\" "
-        "od 27.04.2026. godine i Projektnog zadatka za hibridno napajanje BS "
-        "Sjednica. Konstruktivni podaci kontejnera preuzeti iz Projektnog zadatka "
-        "za tipsku prenosivu kućicu — kontejner (opterećenje poda 10,00 kN/m², "
-        f"snijeg 3,00 kN/m², vjetar 1,10 kN/m²). DEA kao "
-        f"{g['model'].split(' ili ')[0]} (motor "
-        f"{g['engine'].split(',')[0]}) ili ekvivalent.",
-        fontname=reg, fontsize=7.6, color=(0.25, 0.25, 0.25))
     return page
 
 
@@ -521,29 +532,25 @@ def info_pv_page(doc):
     fig = os.path.join(BASE, "review", "pvsim", "fig")
 
     page = doc.new_page(width=1190.55, height=841.89)          # A3 landscape
-    fonts = {}
-    for tag, fname in (("bht", "arial.ttf"), ("bhtb", "arialbd.ttf")):
-        p = os.path.join(os.environ.get("WINDIR", r"C:\Windows"), "Fonts", fname)
-        if os.path.exists(p):
-            page.insert_font(fontname=tag, fontfile=p)
-            fonts[tag] = True
-    reg = "bht" if "bht" in fonts else "helv"
-    bold = "bhtb" if "bhtb" in fonts else "hebo"
+    # the memorandum takes the top; everything below moves down by dy
+    dy = memo_header(page, 40, 1150) - 40
+    reg, bold = arial(page)
     orange, grey, ink = (0.96, 0.51, 0.12), (0.35, 0.35, 0.35), (0.04, 0.04, 0.04)
 
-    page.insert_text(fitz.Point(40, 40), "BH TELECOM d.d. SARAJEVO   |   BS SJEDNICA "
-                     "(BILEĆA)   |   PRILOG III", fontname=reg, fontsize=9, color=grey)
-    page.insert_text(fitz.Point(40, 68), "FN simulacija — proizvodnja i energetski "
+    page.insert_text(fitz.Point(40, dy + 68), "FN simulacija — proizvodnja i energetski "
                      "bilans (informativno)", fontname=bold, fontsize=17, color=ink)
-    page.draw_line(fitz.Point(40, 78), fitz.Point(1150, 78), color=orange, width=1.6)
+    page.draw_line(fitz.Point(40, dy + 78), fitz.Point(1150, dy + 78), color=orange,
+                   width=1.6)
 
-    page.insert_image(fitz.Rect(40, 92, 585, 392),
+    page.insert_image(fitz.Rect(40, dy + 92, 585, dy + 392),
                       filename=os.path.join(fig, f"f1_bilans_t{t}.png"))
-    page.insert_image(fitz.Rect(605, 92, 1150, 432),
+    page.insert_image(fitz.Rect(605, dy + 92, 1150, dy + 432),
                       filename=os.path.join(fig, f"f4_dea_godine_t{t}.png"))
 
+    da = design["array"]
     rows = [
-        ("Polje", f"12 × iPV585-M2A = 7,02 kWp, nagib {t}°, azimut 180° (jug)"),
+        ("Polje", f"12 × iPV585-M2A = 7,02 kWp na {da['count']} nosača, nagib {t}°, "
+                  f"azimut {da['azimuth_deg']}° (jugozapad)"),
         ("FN na DC sabirnici (−48 V)", f"{num(k['pv_bus_kwh'])} kWh/god · "
                                        f"{num(k['specific_yield_bus'])} kWh/kWp"),
         ("Potrošnja", f"{num(k['load_kwh'])} kWh/god (1180 W + hlađenje ormara i "
@@ -562,7 +569,7 @@ def info_pv_page(doc):
                                    f"najveće mjesečno odstupanje "
                                    f"{num(100 * v['worst_month_dev'], 1)} %"),
     ]
-    x0, x1, x2, y = 40, 250, 800, 452
+    x0, x1, x2, y = 40, 250, 800, dy + 452
     for label, value in rows:
         page.draw_rect(fitz.Rect(x0, y, x2, y + 24), color=(0.75, 0.75, 0.75), width=0.6)
         page.draw_line(fitz.Point(x1, y), fitz.Point(x1, y + 24),
@@ -582,7 +589,7 @@ def info_pv_page(doc):
             f"Vrijednosti su informativne i ne mijenjaju zahtjeve Priloga I. "
             f"Izvor: review/pvsim/kpis.json (sha256 "
             f"{hashlib.sha256(raw).hexdigest()[:12]}, pvsim commit {d['git_commit']}).")
-    page.insert_textbox(fitz.Rect(820, 452, 1150, 690), note, fontname=reg,
+    page.insert_textbox(fitz.Rect(820, dy + 452, 1150, dy + 690), note, fontname=reg,
                         fontsize=8.5, color=grey)
     page.draw_rect(fitz.Rect(1030, 760, 1150, 800), color=ink, width=0.8)
     page.insert_textbox(fitz.Rect(1030, 770, 1150, 800), "INFO-02", fontname=bold,
