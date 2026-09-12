@@ -52,12 +52,14 @@ ODLUKA_LIMITS_REV9 = (
     "parametriranje upravljačke jedinice za minimalan rad agregata, propisano "
     "Prilogom I TD. Agregat radi u režimu trajne (prime) snage prema ISO 8528-1, sa "
     "ulaznom snagom ispravljača ograničenom na 9,5 kW.")
+# SW-facing fields at both sites (Investor 11.09.2026): the pvsim run at azimuth 225°
 ODLUKA_LIMITS_JOINT = (
     "Satna simulacija energetskog bilansa za 19 godina (pvlib, PVGIS-SARAH3, "
-    "2005–2023) daje očekivani rad agregata od ≈250 h godišnje na lokaciji Sjednica "
-    "i ≈230 h na lokaciji Hamzići (u najlošijim godinama do ≈330 h), uz potrošnju "
-    "goriva od ≈820 l, odnosno ≈750 l godišnje; spremnik od 500 l dopunjava se u "
-    "prosjeku dva puta godišnje. Vrijednosti važe uz parametriranje "
+    "2005–2023) daje očekivani rad agregata od ≈300 h godišnje na lokaciji Sjednica "
+    "i ≈270 h na lokaciji Hamzići (u najlošijim godinama do ≈380 h, odnosno ≈350 h), "
+    "uz potrošnju goriva od ≈990 l, odnosno ≈900 l godišnje; spremnik od 500 l "
+    "dopunjava se u prosjeku dva do tri puta godišnje. Vrijednosti važe za FN polja "
+    "okrenuta prema jugozapadu (azimut 225°, nagib 45°) i uz parametriranje "
     "upravljačke jedinice za minimalan rad agregata, propisano Prilogom I TD. "
     "Agregati rade u režimu trajne (prime) snage prema ISO 8528-1, sa ulaznom "
     "snagom ispravljača ograničenom na 9,5 kW.")
@@ -67,11 +69,13 @@ HAMZICI_OBJECT = [
     "temelj: AB temeljna ploča dim. 5,40 x 5,40 m, na kojoj stoje antenski stub i kontejner",
     "antenski sistem: rešetkasti stub visine h = 32 m, sa platformom na +3,0 m iznad krova kontejnera",
     "objekat: kontejner K2 vanjskih dimenzija 3,00 x 2,30 m, prazan (bez GRO i instalacija), sa "
-    "kompaktnim zidnim klima-uređajem Stulz WDE80 na istočnom zidu, koji se demontira i odvozi u "
+    "kompaktnim zidnim klima-uređajem Stulz WDE80 na jugoistočnom zidu, koji se demontira i "
+    "odvozi u "
     "skladište BH Telecom-a (Alipašino Polje, Sarajevo)",
     "vanjski ormari za TK opremu: Huawei ICC360-HA1-C1 (PowerCube 1000) sa ispravljačima, LFP "
     "baterijama i kontrolerom (zasebna nabavka Naručioca)",
-    "okolina: metalna ograda visine 1,80 m oko temelja 5,40 x 5,40 m, sa kapijom na sjevernoj strani;",
+    "okolina: metalna ograda visine 1,80 m oko temelja 5,40 x 5,40 m, sa kapijom na "
+    "sjeverozapadnoj strani;",
     "zakupljena površina 150 m² (12,00 x 12,50 m), k.č. 109/1 K.O. Hamzići",
     "Lokacija nije priključena na EES (priključak projektovan 2017. godine nije izveden) i DEA "
     "predstavlja rezervni izvor napajanja u okviru hibridnog sistema.",
@@ -157,7 +161,7 @@ def nz(path):
     replace(p, "Predmet nabavke je podijeljen na 2 LOT-a:",
             "Predmet nabavke za obje lokacije je podijeljen na 2 LOT-a:", 1)
     replace(p, "montaža nosača za fotonaponske panele 3 kpl,",
-            "montaža nosača za fotonaponske panele 6 kpl (3 kpl po lokaciji),", 1)
+            "montaža nosača za fotonaponske panele 8 kpl (4 kpl po lokaciji),", 1)
     replace(p, LOT2_OLD + " hibridnog sistema.",
             LOT2_NEW + " hibridnih sistema, te demontaža postojećeg klima-uređaja na "
             "lokaciji Hamzići.", 1)
@@ -260,7 +264,7 @@ def odluka(path):
             "na baznim stanicama Sjednica (Bileća) i Hamzići (Čitluk)", 4)
     replace(p, "NA BAZNOJ STANICI SJEDNICA (BILEĆA)",
             "NA BAZNIM STANICAMA SJEDNICA (BILEĆA) I HAMZIĆI (ČITLUK)", 2)
-    replace(p, "(ground mount support) - 3 kpl,", "(ground mount support) - 6 kpl (3 kpl po "
+    replace(p, "(ground mount support) - 3 kpl,", "(ground mount support) - 8 kpl (4 kpl po "
             "lokaciji),", 2)
     replace(p, LOT2_OLD + " hibridnog sistema.",
             LOT2_NEW + " hibridnih sistema, te demontaža postojećeg klima-uređaja na "
@@ -278,9 +282,11 @@ def odluka(path):
     replace(p, ODLUKA_LIMITS_REV9, ODLUKA_LIMITS_JOINT, 1)
     replace(p, "smješten u postojeći kontejner. DEA napaja ispravljače.",
             "smješten u postojeći kontejner na svakoj lokaciji. DEA napaja ispravljače.", 1)
+    # 4x3L and SW at both sites (Investor 11.09.2026)
     replace(p, "LOT 1 : metalna konstrukcija sa 3 (tri) nosača za fotonaponske panele",
-            "LOT 1 : metalne konstrukcije sa po 3 (tri) nosača za fotonaponske panele na "
-            "svakoj lokaciji", 1)
+            "LOT 1 : metalne konstrukcije sa po 4 (četiri) odvojena nosača za fotonaponske "
+            "panele na svakoj lokaciji", 1)
+    replace(p, "orijentacije jug (azimut 180°)", "orijentacije jugozapad (azimut 225°)", 1)
     replace(p, "LOT 2: agregatsko postrojenje sa automatskim",
             "LOT 2: dva agregatska postrojenja (po jedno na svakoj lokaciji) sa automatskim", 1)
     replace(p, "postojeći kontejner na lokaciji, dvoplašnim spremnikom",

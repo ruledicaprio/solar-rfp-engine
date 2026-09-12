@@ -84,22 +84,23 @@ LBL_GRAND = "SVE UKUPNO sa popustom i PDV-om [KM]:"
 # old fragment must occur exactly once, so everything else in the item is kept.
 HAMZICI_EDITS = {
     "4.5": [
-        ("Kanal je PRELAZNI KOMAD od prirubnice hladnjaka do žaluzine 600 × 600 mm kroz ZAPADNI zid; "
-         "hladnjak je 60 mm od zida, pa je razvijena površina ≈1,0 m².",
+        # Sjednica wording since fix_boq_sw_4x3l.py (walls by true direction, 11.09.2026)
+        ("Kanal je PRELAZNI KOMAD od prirubnice hladnjaka do žaluzine 600 × 600 mm kroz "
+         "SJEVEROZAPADNI (SZ) zid; hladnjak je 60 mm od zida, pa je razvijena površina ≈1,0 m².",
          "Kanal je PLENUM od prirubnice hladnjaka do POSTOJEĆIH OTVORA demontiranog klima-uređaja "
-         "Stulz (Tačka 5.15) u sredini JUŽNOG zida kontejnera, sa prirubnicama, fleksibilnim spojem "
-         "prema hladnjaku (Tačka 4.4) i brtvljenjem; razvijena površina ≈1,5 m²."),
+         "Stulz (Tačka 5.15) u sredini JUGOISTOČNOG (JI) zida kontejnera, sa prirubnicama, "
+         "fleksibilnim spojem prema hladnjaku (Tačka 4.4) i brtvljenjem; razvijena površina ≈1,5 m²."),
         ("RASPORED (OBAVEZNO, prema crtežu M-01): kanal se vodi najkraćim putem od radijatora kroz "
-         "ZAPADNI zid kontejnera do izlazne žaluzine iz Tačke 4.6.",   # after BOTH_SITES_EDITS
+         "SJEVEROZAPADNI (SZ) zid kontejnera do izlazne žaluzine iz Tačke 4.6.",   # after T1
          "RASPORED (OBAVEZNO, prema crtežu H-04): kanal se vodi najkraćim putem od radijatora do "
-         "postojećih otvora klima-uređaja Stulz u sredini JUŽNOG zida kontejnera, u kojima se "
-         "ugrađuje izlazna žaluzina iz Tačke 4.6."),
+         "postojećih otvora klima-uređaja Stulz u sredini JUGOISTOČNOG (JI) zida kontejnera, u "
+         "kojima se ugrađuje izlazna žaluzina iz Tačke 4.6."),
     ],
     "4.6": [
         ("Isporuka i montaža fiksne žaluzine na kraju kanala za odvod toplog zraka, dimenzija "
          "600 × 600 mm, sa zaštitnom mrežicom, komplet sa montažnim materijalom.",
          "Prilagođenje postojećih otvora demontiranog klima-uređaja Stulz (Tačka 5.15) u sredini "
-         "JUŽNOG zida kontejnera za izlaz toplog zraka sa hladnjaka agregata: spajanje i/ili "
+         "JUGOISTOČNOG (JI) zida kontejnera za izlaz toplog zraka sa hladnjaka agregata: spajanje i/ili "
          "proširenje otvora na žaluzinu bruto površine ≥0,36 m² (npr. 600 × 600 mm), sa ojačanim "
          "okvirom u zidnom panelu; isporuka i montaža fiksne žaluzine na kraju kanala za odvod "
          "toplog zraka, sa zaštitnom mrežicom protiv insekata i ptica, komplet sa montažnim "
@@ -107,42 +108,46 @@ HAMZICI_EDITS = {
          "sa rešetkom na vrhu (≈+1,30 m) — topli zrak se usmjerava NAVIŠE, ne prema FN polju; hauba "
          "najmanje 1,0 m od nogu stuba; neiskorišteni dio postojećih otvora zatvoriti sendvič "
          "panelom d=60 mm istovjetnim zidu kontejnera, sa brtvljenjem."),
-        ("RASPORED (OBAVEZNO, prema crtežu M-01): žaluzina se ugrađuje u ZAPADNI zid kontejnera, na "
-         "osi radijatora agregata. Topli zrak i izduv se NE smiju izbacivati prema SJEVERNOJ strani, "
-         "gdje se nalaze postojeći vanjski ormari ICC360-HA1-C1 i MTS9302A i gdje se nalazi usis "
-         "svježeg zraka.",
-         "RASPORED (OBAVEZNO, prema crtežu H-04): žaluzina se ugrađuje u JUŽNI zid kontejnera, na "
-         "mjestu postojećih otvora klima-uređaja Stulz u sredini zida, sa haubom koja topli zrak "
-         "usmjerava naviše. Topli zrak i izduv se NE smiju izbacivati "
-         "prema SJEVERNOJ strani, gdje se nalaze ulazna vrata kontejnera, niti prema usisu svježeg "
-         "zraka na ZAPADNOM zidu (Tačka 4.7)."),
+        ("RASPORED (OBAVEZNO, prema crtežu M-01): žaluzina se ugrađuje u SJEVEROZAPADNI (SZ) zid "
+         "kontejnera, na osi radijatora agregata. Topli zrak i izduv se NE smiju izbacivati prema "
+         "SJEVEROISTOČNOJ (SI) strani, gdje se nalaze postojeći vanjski ormari ICC360-HA1-C1 i "
+         "MTS9302A i gdje se nalazi usis svježeg zraka.",
+         "RASPORED (OBAVEZNO, prema crtežu H-04): žaluzina se ugrađuje u JUGOISTOČNI (JI) zid "
+         "kontejnera, na mjestu postojećih otvora klima-uređaja Stulz u sredini zida, sa haubom "
+         "koja topli zrak usmjerava naviše. Topli zrak i izduv se NE smiju izbacivati prema "
+         "SJEVEROZAPADNOJ (SZ) strani, gdje su ulazna vrata kontejnera, prema JUGOZAPADNOJ (JZ) "
+         "strani, gdje su vanjski ormari ICC360-HA1-C1 i MTS i FN polje, niti prema usisu svježeg "
+         "zraka na SJEVEROISTOČNOM (SI) zidu (Tačka 4.7)."),
     ],
     "4.7": [
-        ("RASPORED (OBAVEZNO, prema crtežu M-01): žaluzina se ugrađuje u SJEVERNI zid kontejnera, na "
-         "istočnom kraju, sa donjom ivicom na cca 0,30 m od poda. Sjeverna strana je zasjenjena i daje "
-         "najhladniji usisni zrak, čime se poboljšava hlađenje agregata. Žaluzina se postavlja istočno "
-         "od vanjskih ormara ICC360-HA1-C1/MTS9302A kako se ne bi usisavao topli zrak sa njih.",
-         "RASPORED (OBAVEZNO, prema crtežu H-04): žaluzina se ugrađuje u ZAPADNI zid kontejnera, uz "
-         "alternator (sjeverni kraj agregata), sjeverno od spremnika, sa donjom ivicom na cca 0,30 m "
-         "od poda."),
-        ("spremnika ≥3 m.", "spremnika ≥3 m (H-04: 3,2 m uz završetak izduva 0,40 m od zida)."),
+        ("RASPORED (OBAVEZNO, prema crtežu M-01): žaluzina se ugrađuje u SJEVEROISTOČNI (SI) zid "
+         "kontejnera, na jugoistočnom kraju, sa donjom ivicom na cca 0,30 m od poda. Sjeveroistočna "
+         "strana je zasjenjena veći dio dana i daje najhladniji usisni zrak, čime se poboljšava "
+         "hlađenje agregata. Žaluzina se postavlja jugoistočno od vanjskih ormara "
+         "ICC360-HA1-C1/MTS9302A kako se ne bi usisavao topli zrak sa njih.",
+         "RASPORED (OBAVEZNO, prema crtežu H-04): žaluzina se ugrađuje u SJEVEROISTOČNI (SI) zid "
+         "kontejnera, uz alternator (sjeverozapadni kraj agregata), jugoistočno od korita "
+         "spremnika, sa donjom ivicom na cca 0,30 m od poda; sjeveroistočna strana je zasjenjena "
+         "veći dio dana."),
+        ("spremnika ≥3 m.", "spremnika ≥3 m (H-04: ≥3,2 m do završetka izduva i do oduška "
+         "spremnika)."),
     ],
     "4.10": [
         ("izvedena izvan kontejnera i završena IZNAD KROVA, usmjereno naviše, sa kapom protiv upada "
          "padavina.",
-         "izvedena izvan kontejnera HORIZONTALNO kroz ISTOČNI zid kontejnera na visini ≈+2,30 m, "
-         "usmjereno prema istoku, sa kapom protiv upada padavina. Prodor kroz zid izvesti sa termički "
+         "izvedena izvan kontejnera HORIZONTALNO kroz JUGOISTOČNI (JI) zid kontejnera, iz "
+         "jugozapadnog (JZ) prolaza, zapadno od haube, na visini ≈+2,30 m, usmjereno prema "
+         "jugoistoku, sa kapom protiv upada padavina. Prodor kroz zid izvesti sa termički "
          "izolovanom zaštitnom čahurom."),
         ("od prigušivača do izlaza iznad krova, do 4 m.",
-         "od prigušivača do izlaza kroz istočni zid, do 4 m."),
-        ("TRASA: fleksibilni spoj i prigušivač neposredno iza motora, uspon uz ZAPADNI zid kontejnera, "
-         "završetak IZNAD KROVA usmjeren naviše, sa hvatačem iskri.",
-         "TRASA: fleksibilni spoj neposredno iza motora, prigušivač u istočnom prolazu, horizontalni "
-         "izlaz kroz ISTOČNI "
-         "zid kontejnera na ≈+2,30 m, usmjeren prema istoku, sa završetkom ≥0,40 m od zida — dalje od "
-         "FN polja i od ulaznih vrata, "
-         "sa hvatačem iskri. Završetak iznad krova NIJE moguć: "
-         "platforma antenskog stuba na +3,0 m nalazi se iznad krova kontejnera."),
+         "od prigušivača do izlaza kroz JI zid, do 4 m."),
+        ("TRASA: fleksibilni spoj i prigušivač neposredno iza motora, uspon uz SJEVEROZAPADNI (SZ) "
+         "zid kontejnera, završetak IZNAD KROVA usmjeren naviše, sa hvatačem iskri.",
+         "TRASA: fleksibilni spoj neposredno iza motora, prigušivač u jugozapadnom (JZ) prolazu, "
+         "horizontalni izlaz kroz JUGOISTOČNI (JI) zid kontejnera na ≈+2,30 m, zapadno od haube, "
+         "sa završetkom ≥0,40 m od zida — dalje od FN polja, ormara i ulaznih vrata, sa hvatačem "
+         "iskri. Završetak iznad krova NIJE moguć: platforma antenskog stuba na +3,0 m nalazi se "
+         "iznad krova kontejnera."),
         ("protutlak ≈1,9 kPa", "protutlak ≈1,6 kPa"),          # hamzici review/07 C.4
     ],
     # Site facts (hamzici-hybrid-solar/cad/*.json, review/07-proracuni.md, joint Prilog I).
@@ -154,21 +159,22 @@ HAMZICI_EDITS = {
          "(≈77 % derativane prime snage na 493 m n.v. i +40 °C, koja iznosi 12,3 kW)"),
     ],
     "4.1": [
-        ("unos kroz kapiju na sredini istočne strane ograde (svijetla širina cca 1,00 m) i ulazna "
-         "vrata kontejnera 900 × 2000 mm;",
-         "unos kroz kapiju na SJEVERNOJ strani ograde (svijetla širina 1,30 m) i ulazna vrata "
-         "kontejnera na SJEVERNOM zidu, 1,00 × 2,15 m — skid 620 mm kroz vrata svijetle širine "
-         "990 mm, pravo po osi; najprije spremnik, zatim agregat;"),
+        ("unos kroz kapiju na sredini jugoistočne strane ograde (svijetla širina cca 1,00 m) i "
+         "ulazna vrata kontejnera 900 × 2000 mm;",
+         "unos kroz kapiju na SJEVEROZAPADNOJ (SZ) strani ograde (svijetla širina 1,30 m) i ulazna "
+         "vrata kontejnera na SZ zidu, 1,00 × 2,15 m — skid 620 mm kroz vrata svijetle širine "
+         "990 mm, pravo po osi; najprije agregat, zatim spremnik;"),
         ("SERVISNI PROSTOR ( prema crtežu M-01): agregat se postavlja CENTRIRANO u slobodnom prostoru "
-         "kontejnera, sa najmanje 720 mm sa JUŽNE i 720 mm sa SJEVERNE strane (520 mm na dijelu gdje je "
-         "GRO) te 1155 mm sa ISTOČNE strane. Sa ZAPADNE strane je hladnjak, koji izduvava u kanal kroz "
-         "zid i ne servisira se s te strane",
-         "SERVISNI PROSTOR (prema crtežu H-04): os agregata SJEVER–JUG u sredini kontejnera; slobodan "
-         "prostor: ISTOČNA strana 0,78 m (servisna strana), sjeverni kraj 0,97 m do čela GRO, ZAPADNA "
-         "strana 0,78 m, uz korito spremnika 0,14 m. Sa JUŽNE strane je hladnjak, koji preko plenuma "
-         "od 0,12 m izduvava kroz postojeće otvore klima-uređaja Stulz u sredini JUŽNOG zida, u haubu "
-         "koja topli zrak usmjerava naviše (Tačke 4.5 i 4.6) i ne servisira se s te strane. Ponuđač "
-         "potvrđuje da su servisna mjesta agregata dostupna sa istočne strane i sa sjevernog kraja"),
+         "kontejnera, sa najmanje 720 mm sa JUGOZAPADNE i 720 mm sa SJEVEROISTOČNE strane (520 mm na "
+         "dijelu gdje je GRO) te 1155 mm sa JUGOISTOČNE strane. Sa SJEVEROZAPADNE strane je hladnjak, "
+         "koji izduvava u kanal kroz zid i ne servisira se s te strane",
+         "SERVISNI PROSTOR (prema crtežu H-04): os agregata SZ–JI u sredini kontejnera; slobodan "
+         "prostor: jugozapadna (JZ) strana 0,78 m, sjeveroistočna (SI) strana 0,78 m, kraj prema SZ "
+         "0,97 m do čela GRO; od vrata do korita spremnika 0,95 m slobodno. Sa JUGOISTOČNE (JI) "
+         "strane je hladnjak, koji preko plenuma od 0,12 m izduvava kroz postojeće otvore "
+         "klima-uređaja Stulz u sredini JI zida, u haubu koja topli zrak usmjerava naviše (Tačke 4.5 "
+         "i 4.6) i ne servisira se s te strane. Ponuđač potvrđuje da su servisna mjesta agregata "
+         "dostupna sa JZ i SI strane i sa SZ kraja"),
     ],
     "4.8": [
         # the source (fix_boq_dc_aux.py D2) makes it a 48 V DC EC fan off the DC razvod that
@@ -177,26 +183,25 @@ HAMZICI_EDITS = {
          "aksijalnog EC ventilatora 48 V DC, izvlačnog — izbacuje zrak iz prostora, za prinudnu "
          "ventilaciju prostora agregata"),
         ("RASPORED (prema crtežu M-01)", "RASPORED (prema crtežu H-04)"),
-        ("ventilator se ugrađuje u ISTOČNI zid kontejnera, u gornjoj zoni (donja ivica cca 1,75 m), "
-         "sjeverno od ulaznih vrata.",
-         "ventilator se ugrađuje u ZAPADNI zid kontejnera, u gornjoj zoni, sjeverno od usisne "
-         "žaluzine iz Tačke 4.7."),
+        ("ventilator se ugrađuje u JUGOISTOČNI (JI) zid kontejnera, u gornjoj zoni (donja ivica "
+         "cca 1,75 m), sjeveroistočno od ulaznih vrata.",
+         "ventilator se ugrađuje u JUGOISTOČNI (JI) zid kontejnera, u gornjoj zoni, sjeveroistočno "
+         "od haube (Tačka 4.6)."),
     ],
     "4.2": [
-        ("smještaj u JUGOISTOČNI ugao kontejnera, prema crtežu M-01",
-         "smještaj u JUGOZAPADNOM uglu kontejnera, prema crtežu H-04 — prihvatno korito "
-         "1150 × 640 mm uz južni i zapadni zid, 0,14 m od agregata; izduvni cjevovod je na istočnoj "
-         "strani agregata"),
+        ("smještaj u JUŽNI ugao kontejnera (uz JZ i JI zid), prema crtežu M-01",
+         "smještaj u SJEVERNI ugao kontejnera (uz SZ i SI zid), prema crtežu H-04 — prihvatno "
+         "korito 1150 × 640 mm uz SZ i SI zid; izduvni cjevovod je na jugozapadnoj strani agregata"),
         ("odušna cijev izvedena IZVAN kontejnera, otvor zaštićen metalnom mrežicom;",
-         "odušna cijev izvedena IZVAN kontejnera kroz JUŽNI zid, uz zapadni kraj, do stojeće cijevi "
-         "između kontejnera i južne ograde (završetak +2,80 m) — principijelno prema H-04, konačno "
-         "prema elaboratu zaštite od požara; najmanje 3 m od završetka izduva i od usisa zraka; "
-         "otvor zaštićen metalnom mrežicom;"),
+         "odušna cijev izvedena IZVAN kontejnera kroz SZ zid, sjeveroistočno od vrata, do stojeće "
+         "cijevi između kontejnera i SZ ograde (završetak +2,80 m) — principijelno prema H-04, "
+         "konačno prema elaboratu zaštite od požara; najmanje 3 m od završetka izduva i od usisa "
+         "zraka; otvor zaštićen metalnom mrežicom;"),
     ],
     "4.12": [
         ("Za trasu do 5 m iz Tačke 4.10 i vanjski prečnik izolacije ≈165 mm razvijena površina je "
          "≈3,0 m².",
-         "Za trasu iz Tačke 4.10 (≈1 m do prigušivača, zatim ≈3 m horizontalno kroz ISTOČNI zid) i "
+         "Za trasu iz Tačke 4.10 (≈1 m do prigušivača u JZ prolazu, zatim ≈2 m do JI zida) i "
          "vanjski prečnik izolacije ≈165 mm razvijena površina je ≈2,5 m²."),
     ],
     "5.3": [
@@ -209,19 +214,20 @@ HAMZICI_EDITS = {
              "vanjski sistem zaštite od munje (rešetkasti antenski stub h=32 m, platforme na "
              "+3,0 / +12,0 / +30,0 m)"),
             ("Ormar zidni sa nosačima, orijentacionih dimenzija 0,60 × 0,25 × 0,80 m (Š×D×V)",
-             "Ormar zidni sa nosačima, za SJEVERNI zid zapadno od ulaznih vrata (širina zida 0,595 m), "
-             "širine ≤0,50 m — orijentacionih dimenzija npr. 0,50 × 0,25 × 0,80 m (Š×D×V)")],
+             "Ormar zidni sa nosačima, za SZ zid jugozapadno od ulaznih vrata (širina zida "
+             "0,595 m), širine ≤0,50 m — orijentacionih dimenzija npr. 0,50 × 0,25 × 0,80 m "
+             "(Š×D×V)")],
     "5.11": [("vanjski sistem zaštite od munje i antenski stub h=38 m",
               "vanjski sistem zaštite od munje i rešetkasti antenski stub h=32 m (platforme na "
               "+3,0 / +12,0 / +30,0 m)")],
     "5.13": [("zbog dužine DC trase od 25 m.", "zbog dužine DC trase od ≈20 m u jednom smjeru."),
              ("i crtež E-01)", "i crtež H-05)")],
-    # Huawei ICC360-HA1-C1 stands outdoors on the slab, north strip west of the door.
+    # Huawei ICC360-HA1-C1 and the MTS stand outdoors on the slab, JZ side, behind the PV row.
     "5.5": [
         ("Isporuka i polaganje veza na dionici hibridni sistem — DEA:",
-         "Isporuka i polaganje veza na dionici hibridni sistem — DEA; ormar Huawei ICC360-HA1-C1 "
-         "stoji na ploči, u sjevernom pojasu zapadno od ulaznih vrata (principijelno), a veza sa GRO "
-         "vodi ≈3–5 m kroz SJEVERNI zid kontejnera:"),
+         "Isporuka i polaganje veza na dionici hibridni sistem — DEA; ormari Huawei ICC360-HA1-C1 "
+         "i MTS stoje na ploči na JZ strani, iza FN polja (principijelno), a veza sa GRO vodi "
+         "≈3–5 m kroz JZ zid kontejnera:"),
         ("energetski kabl dužine do 15 m", "energetski kabl dužine ≈3–5 m"),
         ("signalni kabl dužine do 15 m", "signalni kabl dužine ≈3–5 m"),
         ("komunikacioni Ethernet kabl dužine do 15 m", "komunikacioni Ethernet kabl dužine ≈3–5 m"),
@@ -242,20 +248,21 @@ HAMZICI_LOT1_EDITS = {
         ("Nagib je zadržan zbog decembarskog prinosa — pri podnevnoj visini Sunca 23,6° na 42,94° N "
          "nagib 45° ostvaruje 93 % direktnog zračenja u odnosu na 85 % pri 35°, a decembar je "
          "mjerodavni mjesec za dimenzionisanje autonomnog sistema",
-         "Listopadno stablo JJI–JI od stuba (≈7–9 m, 15–20 m, izvan zakupa) zasjenjuje polje u "
-         "zimskim jutrima; stablo se ne uklanja — Ponuđač postavlja polje tako da se zasjenjenje "
-         "umanji (Prilog I, Tačka 3.7)"),
-        ("smještaj: nosači se temelje IZVAN ograđenog platoa, južno od ograde, u pojasu širine cca "
-         "1950 mm;",
+         "Listopadno stablo JJI–JI od stuba (≈7–9 m, 15–20 m, izvan zakupa) ostaje; pri polju "
+         "okrenutom prema jugozapadu njegov uticaj je mali (Prilog I, Tačka 3.7)"),
+        # Sjednica wording since fix_boq_sw_4x3l.py (4x3L, SW, 11.09.2026)
+        ("smještaj: nosači se temelje IZVAN ograđenog platoa, jugozapadno od ograde (JZ strana), "
+         "cca 0,40 m od ograde;",
          "smještaj (43,288012° N, 17,624794° E, 493 m n.v.): nosači se temelje IZVAN ograđenog "
-         "platoa, južno od ploče i ograde, u pojasu južno od ploče dubine 3575 mm i širine 12,00 m, "
-         "unutar zakupa k.č. 109/1 K.O. Hamzići (12,00 × 12,50 m);"),
-        ("gornja (sjeverna) ivica panela je 1,64 m iznad kote ograde h=2,10 m. Ponuđač provjerava da "
-         "konstrukcija u cijelosti ostaje unutar zakupljene parcele 16,00 × 9,40 m",
-         "gornja (sjeverna) ivica panela je 1,74 m iznad vrha ograde — ograda je h=1,80 m iznad ploče, "
-         "odnosno 2,00 m iznad vanjskog terena, koji je uz ploču na −0,20 m (ovjereni 04_Ograda). "
-         "Ponuđač provjerava da "
-         "konstrukcija u cijelosti ostaje unutar zakupa 12,00 × 12,50 m"),
+         "platoa, jugozapadno od ploče i ograde, u pojasu dubine 3300 mm i dužine 12,50 m (JZ "
+         "strana), unutar zakupa k.č. 109/1 K.O. Hamzići (12,00 × 12,50 m); trake 350 mm od granice "
+         "zakupa i od ploče;"),
+        ("gornja (sjeveroistočna) ivica panela je 0,83 m iznad kote ograde h=2,10 m. Ponuđač "
+         "provjerava da konstrukcija u cijelosti ostaje unutar zakupljene parcele 16,00 × 9,40 m",
+         "gornja (sjeveroistočna) ivica panela je 0,93 m iznad vrha ograde — ograda je h=1,80 m "
+         "iznad ploče, odnosno 2,00 m iznad vanjskog terena, koji je uz ploču na −0,20 m (ovjereni "
+         "04_Ograda). Ponuđač provjerava da konstrukcija u cijelosti ostaje unutar zakupa "
+         "12,00 × 12,50 m"),
         ("prema ovjerenoj projektnoj dokumentaciji lokacije i BAS EN 1991-1-4 sa BiH nacionalnim "
          "aneksom, uz primjenu faktora orografije za izloženi planinski vrh na 1076 m n.v.",
          "prema BAS EN 1991-1-4 sa BiH nacionalnim aneksom — ista vrijednost kao na lokaciji "
@@ -334,7 +341,8 @@ NEW_ITEMS = {
     "LOT 2": [
         ("5.15", "5.14", "kpl", 1,
          "Odspajanje (230 V AC, 48 V DC, signalizacija) i demontaža postojećeg kompaktnog zidnog "
-         "klima-uređaja Stulz WDE80 (8 kW) na JUŽNOM zidu kontejnera, u sredini, BEZ otvaranja "
+         "klima-uređaja Stulz WDE80 (8 kW) na JUGOISTOČNOM (JI) zidu kontejnera, u sredini, BEZ "
+         "otvaranja "
          "rashladnog "
          "kruga; pakovanje, utovar i transport u skladište BH Telecom d.d. na Alipašinom Polju, "
          "Sarajevo, istovar i zapisnik o primopredaji (tip, serijski broj, stanje). Otvori u zidu "

@@ -294,14 +294,19 @@ def coverage(wb):
 # Sjednica-only facts (and superseded Hamzići values) that must not survive in a Hamzići
 # sheet - including the Sjednica drawing numbers, now that the H-01..H-05 map is in.
 SJEDNICA_FACTS = re.compile(r"1076|42,94|16,00 × 9,40|h=2,10|h=38|planinsk|11,6 kW|≈82 %|93 %|"
-                            r"trase od 25 m|dužini 25 m|900 × 2000|istočne strane ograde|"
-                            r"1,94 m|4\.4\.2\.3|720 mm|1155 mm|CENTRIRANO|JUGOISTOČNI ugao|"
+                            r"trase od 25 m|dužini 25 m|900 × 2000|jugoistočne strane ograde|"
+                            r"1,94 m|4\.4\.2\.3|720 mm|1155 mm|CENTRIRANO|"
+                            r"JUŽNI ugao kontejnera \(uz JZ|cca 0,40 m od ograde|0,83 m|"
                             r"0,60 × 0,25|≈1,9 kPa|dužine do 15 m|\b[MSE]-0\d\b|"
                             # superseded Hamzići layout: Stulz and discharge on the east wall
                             r"ISTOČNE strane je hladnjak|južnom kraju istočnog zida|"
                             r"uz ISTOČNI zid kontejnera, sjeverno od agregata|"
                             r"sa istočnog zida kontejnera|Stulz \(Tačka 5\.15\) na ISTOČNOM|"
-                            r"ugrađuje u ISTOČNI zid kontejnera, na mjestu")
+                            r"ugrađuje u ISTOČNI zid kontejnera, na mjestu|"
+                            # superseded Hamzići layout of the plan-frame round (before the
+                            # 45° orientation, 11.09.2026): walls named as if door = north
+                            r"sredini JUŽNOG zida|u ZAPADNI zid|JUGOZAPADNOM uglu|kroz ISTOČNI "
+                            r"zid|sjevernom pojasu|na JUŽNOM zidu|pojasu južno od ploče|1,74 m")
 
 
 def check_sjednica(wb):

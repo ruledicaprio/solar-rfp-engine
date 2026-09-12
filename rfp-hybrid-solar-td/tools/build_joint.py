@@ -37,7 +37,8 @@ FIGURES = {
     "agregat-celni.png": os.path.join(SJ, "TD-OUTPUT", "grafika", "prilog1", "agregat-celni.png"),
     "spremnik-bocni.png": os.path.join(SJ, "TD-OUTPUT", "grafika", "prilog1", "spremnik-bocni.png"),
     "spremnik-odozgo.png": os.path.join(SJ, "TD-OUTPUT", "grafika", "prilog1", "spremnik-odozgo.png"),
-    "m01-raspored.png": os.path.join(SJ, "TD-OUTPUT", "grafika", "prilog1", "m01-raspored.png"),
+    # rendered from the current sheet, like H-04 (the stored PNG predates the true orientation)
+    "m01-raspored.png": os.path.join(SJ, "TD-OUTPUT", "grafika", "M-01.pdf"),
     "h04-raspored.png": os.path.join(HZ, "TD-OUTPUT", "grafika", "H-04.pdf"),
     "energetski-bilans-sjednica.png": os.path.join(SJ, "review", "pvsim", "fig", "f1_bilans_t45.png"),
     "energetski-bilans-hamzici.png": os.path.join(HZ, "review", "pvsim", "fig", "f1_bilans_t45.png"),
@@ -50,14 +51,28 @@ FORBIDDEN = bp1.FORBIDDEN + [
     ("Čapljin", "Hamzići su u općini Čitluk"),
     ("AS 36 m", "stub na Hamzićima je 32 m"),
     ("Hamzići?", "zaostali upitnik iz nacrta"),
-    ("1,94 m", "nadvišenje ograde na Hamzićima je 1,74 m: teren je 0,20 m ispod ploče"),
-    ("ISTOČNI zid, južni kraj", "Stulz je u sredini JUŽNOG zida (Naručilac 11.09.2026)"),
-    ("duža osa istok–zapad", "agregat na Hamzićima stoji po osi SJEVER–JUG"),
+    ("1,94 m", "nadvišenje ograde na Hamzićima je 0,93 m: teren je 0,20 m ispod ploče"),
+    ("ISTOČNI zid, južni kraj", "Stulz je u sredini JI zida (Naručilac 11.09.2026)"),
+    ("duža osa istok–zapad", "agregat na Hamzićima stoji po osi SZ–JI"),
+    # 11.09.2026: true orientation, SW fields, 4x3L stand at both sites
+    ("azimut 180°", "polja su okrenuta prema jugozapadu, azimut 225°"),
+    ("2 reda × 2", "nosač je 1 × 3 modula, položeno (4x3L)"),
+    ("≈230 h/god", "Hamzići: ≈270 h/god sa poljem prema JZ"),
+    ("≈750 l/god", "Hamzići: ≈900 l/god sa poljem prema JZ"),
+    ("1,74 m", "nadvišenje ograde na Hamzićima je 0,93 m (4x3L)"),
 ]
-REQUIRED = bp1.REQUIRED + [
-    "493 m", "1,74 m", "h = 1,80 m", "3575 mm", "k.č. 109/1", "Stulz WDE80",
-    "Alipašino Polje", "0,36 m²", "≈230 h/god", "≈750 l/god", "H-04", "12,3 kW",
-    "izvlačni", "≤0,50 m", "3.6.9 Plan uzemljivača",
+# the Sjednica Rev 9 values this round supersedes, and what replaces them
+SUPERSEDED_REQUIRED = {
+    "42,6 kNm": "25,7 kNm", "26,6 kN": "16,1 kN", "1,485 m³": None, "8,91 m³": None,
+    "+0,50 m / +3,74 m": None, "1,64 m": "0,83 m", "18,1 kN": None, "13,4 kN": None,
+    "≈250 h/god": "≈300 h/god", "≈820 l/god": "≈990 l/god",
+    "SJEVERNI zid, istočni kraj": None, "JUŽNI zid": None,
+}
+REQUIRED = [r for r in bp1.REQUIRED if r not in SUPERSEDED_REQUIRED] \
+    + [v for v in SUPERSEDED_REQUIRED.values() if v] + [
+    "493 m", "0,93 m", "h = 1,80 m", "3300 mm", "k.č. 109/1", "Stulz WDE80",
+    "Alipašino Polje", "0,36 m²", "≈270 h/god", "≈900 l/god", "H-04", "12,3 kW",
+    "izvlačni", "≤0,50 m", "3.6.9 Plan uzemljivača", "225°",
 ]
 N_MEDIA = len(FIGURES)
 
@@ -156,11 +171,11 @@ def calc_pdf(md, outs, required):
 def calculations():
     calc_pdf(os.path.join(SJ, "review", "07-proracuni.md"),
              [os.path.join(paths.TD, "proracuni_BS_Sjednica_Bileca.pdf")],
-             ["A.6 Energetski bilans", "≈250 h/god", "42,6 kNm", "D.8 Trajni potrošači"])
+             ["A.6 Energetski bilans", "≈300 h/god", "25,7 kNm", "D.8 Trajni potrošači"])
     calc_pdf(os.path.join(HZ, "review", "07-proracuni.md"),
              [os.path.join(paths.TD, "proracuni_BS_Hamzici_Citluk.pdf"),
               os.path.join(HZ, "review", "07-proracuni_hamzici.pdf")],
-             ["A.6 Energetski bilans", "≈230 h/god", "42,6 kNm", "Stulz WDE80", "D.9 Trajni potrošači"])
+             ["A.6 Energetski bilans", "≈270 h/god", "25,7 kNm", "Stulz WDE80", "D.9 Trajni potrošači"])
 
 
 def drawings():
