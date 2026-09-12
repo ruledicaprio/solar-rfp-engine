@@ -12,12 +12,14 @@ only the changes below are made.
                                     adds 1.6, the existing earth rings under the strips
     LOT 2 Sjednica, LOT 2 Hamzići   genset in the existing container - Hamzići differs
                                     only where the site differs (HAMZICI_*, NEW_ITEMS)
-    REKAPITULACIJA                  totals of the four sheets, discount, 17 % VAT,
-                                    notes, date and signature
+    REKAPITULACIJA LOT n            the LOT's two site totals, its own discount and
+                                    17 % VAT, notes, date and signature
 
-The source REKAPITULACIJA / NAPOMENA / Datum blocks below each LOT subtotal are
-dropped - the totals live on the REKAPITULACIJA sheet, which finds every subtotal
-cell by its label, never by a hard-coded row.
+One workbook per LOT (Investor, 12.09.2026): the award is per LOT and a bidder may
+offer only one, so each LOT is a complete price form of its own - its two site
+sheets and its REKAPITULACIJA. The source REKAPITULACIJA / NAPOMENA / Datum blocks
+below each LOT subtotal are dropped; the recap finds every subtotal cell by its
+label, never by a hard-coded row.
 
 Source defects fixed on the way (listed again in the run summary):
   * fit-to-width printing is switched on - the source carries fitToWidth=1 but
@@ -31,7 +33,7 @@ Source defects fixed on the way (listed again in the run summary):
   * LOT 2 item 4.5 pointed to the outlet louvre as "Tačka 4.7" (the intake) - it is
     4.6, fixed on both site sheets (BOTH_SITES_EDITS).
 
-    python joint_boq.py          writes paths.PRILOG2 (TD_OUT redirects it)
+    python joint_boq.py          writes paths.PRILOG2_LOT, one file per LOT (TD_OUT redirects)
 """
 import os
 import re
@@ -47,7 +49,7 @@ import paths  # noqa: E402
 
 SRC = os.path.join(paths.SITES["sjednica"]["folder"], "TD-OUTPUT",
                    "3.1 PRILOG II TD - predmjer Sjednica Bileca.xlsx")
-OUT = paths.PRILOG2
+OUT = paths.PRILOG2_LOT                  # {lot: path} - one workbook per LOT
 
 SITE = {
     "sjednica": {"up": "BS SJEDNICA", "title": "BS SJEDNICA (BILEĆA)", "label": "BS Sjednica (Bileća)"},
@@ -55,9 +57,10 @@ SITE = {
 }
 LOTS = ("LOT 1", "LOT 2")
 SHEET = {(lot, s): f"{lot} {paths.SITES[s]['name']}" for lot in LOTS for s in SITE}
-LOT_SHEETS = [SHEET[lot, s] for lot in LOTS for s in SITE]
-REKAP = "REKAPITULACIJA"
-SHEET_ORDER = LOT_SHEETS + [REKAP]
+SITE_SHEETS = {lot: [SHEET[lot, s] for s in SITE] for lot in LOTS}
+LOT_SHEETS = [n for lot in LOTS for n in SITE_SHEETS[lot]]
+REKAP = {lot: f"REKAPITULACIJA {lot}" for lot in LOTS}
+SHEET_ORDER = {lot: SITE_SHEETS[lot] + [REKAP[lot]] for lot in LOTS}
 
 SRC_SITE = " SJEDNICA, BILEĆA"           # how the source title rows name the site
 JOINT = "\nBS SJEDNICA I BS HAMZIĆI"     # ... and the joint tender (own line: fits any sheet)
@@ -70,14 +73,13 @@ LOT_RE = re.compile(r"^UKUPNO LOT (\d) —")   # LOT subtotal "UKUPNO LOT 2 — 
 #                                              source recap's "UKUPNO LOT 1 (bez PDV-a)")
 LINE = '=IF(AND(D{r}<>"",E{r}<>""),D{r}*E{r},"")'   # source line-total pattern
 
-# ---- REKAPITULACIJA labels (the check script imports these) -----------------
+# ---- REKAPITULACIJA labels, one recap per LOT (the check script imports these) --
 LBL_SITE = {(lot, s): f"{SITE[s]['label']} — {lot} bez PDV-a [KM]:" for lot in LOTS for s in SITE}
 LBL_LOT_TOTAL = {lot: f"UKUPNO {lot} (BS Sjednica + BS Hamzići) bez PDV-a [KM]:" for lot in LOTS}
-LBL_TOTAL = "SVE UKUPNO (LOT 1 + LOT 2) bez PDV-a [KM]:"
 LBL_POPUST = "Popust [%]:"
-LBL_DISC = "SVE UKUPNO sa popustom bez PDV-a [KM]:"
+LBL_DISC = {lot: f"UKUPNO {lot} sa popustom bez PDV-a [KM]:" for lot in LOTS}
 LBL_VAT = "Iznos PDV-a (17 %) [KM]:"
-LBL_GRAND = "SVE UKUPNO sa popustom i PDV-om [KM]:"
+LBL_GRAND = {lot: f"UKUPNO {lot} sa popustom i PDV-om [KM]:" for lot in LOTS}
 
 # ---- BS Hamzići, LOT 2: what differs from Sjednica -------------------------
 # Text edits are exact (old, new) replacements inside the Sjednica item text; each
@@ -365,9 +367,13 @@ NOTES = [
        "Nabavka je podijeljena na dva LOT-a prema vrsti radova: LOT 1 — konstrukcija nosača za "
        "fotonaponske panele, LOT 2 — agregatsko postrojenje (DEA) u postojećem kontejneru. Svaki LOT "
        "obuhvata OBJE lokacije: BS Sjednica (Bileća) i BS Hamzići (Čitluk).")]),
+    # new notes: {lot} and {sheets} are filled in per LOT workbook (build_rekap)
     (None,
-     "- Cijene se upisuju posebno za svaku lokaciju, na listovima „" + "“, „".join(LOT_SHEETS[:-1])
-     + "“ i „" + LOT_SHEETS[-1] + "“; iznosi se automatski prenose u ovu rekapitulaciju."),
+     "- Ovaj obrazac se odnosi na {lot}. Za drugi LOT popunjava se, potpisuje i ovjerava zaseban "
+     "obrazac; ponuđač koji ne pristupa drugom LOT-u ne dostavlja njegov obrazac."),
+    (None,
+     "- Cijene se upisuju posebno za svaku lokaciju, na listovima {sheets}; iznosi se "
+     "automatski prenose u ovu rekapitulaciju."),
     ("- Ugovorne obaveze nastaju po upućivanju pismenog zahtjeva/narudžbe od strane BH Telecom-a.", []),
     ("- Količine u Tačkama 2. i 5. su orijentacione i utvrđene na osnovu podataka iz RFI dokumente. "
      "Konačne količine utvrđuju se elaboratom montaže i geodetskim snimkom, a obračunavaju se po "
@@ -718,8 +724,12 @@ def style_row(ws, r, src, sr, cols="ABCDEF"):
         ws[f"{col}{r}"]._style = copy(src[f"{col}{sr}"]._style)
 
 
-def build_rekap(wb, src1, src2, log):
-    ws = wb.create_sheet(REKAP)
+def build_rekap(wb, lot, src1, src2, log):
+    """REKAPITULACIJA of one LOT: its two site totals, discount, 17 % VAT, notes, date and
+    signature. Styles and page setup come from the source LOT 2 sheet, as before: portrait
+    A4, so the totals, the notes and the signature print on one page for either LOT."""
+    src_lot = src1 if lot == "LOT 1" else src2
+    ws = wb.create_sheet(REKAP[lot])
     for col in "ABCD":
         ws.column_dimensions[col].width = src2.column_dimensions[col].width
     for col in "EF":
@@ -730,8 +740,8 @@ def build_rekap(wb, src1, src2, log):
 
     ws["A1"] = src2["A1"].value
     style_row(ws, 1, src2, 1, "A")
-    ws["A2"] = "OBRAZAC ZA CIJENU PONUDE - REKAPITULACIJA (LOT 1 + LOT 2)"
-    ws["A3"] = replace_once(src1["A3"].value, SRC_SITE, JOINT, "REKAPITULACIJA A3")
+    ws["A2"] = f"OBRAZAC ZA CIJENU PONUDE - {lot} - REKAPITULACIJA"
+    ws["A3"] = replace_once(src1["A3"].value, SRC_SITE, JOINT, f"{REKAP[lot]} A3")
     for r in (2, 3):
         style_row(ws, r, src2, r, "A")
         ws.merge_cells(f"A{r}:F{r}")
@@ -745,51 +755,42 @@ def build_rekap(wb, src1, src2, log):
         ws.row_dimensions[r].height = src2.row_dimensions[r].height
 
     # source styles: 65 = REKAPITULACIJA head, 14 = section head, 66 = value row,
-    # 68 = total row, 63 = LOT total (the grand total), 74/75 = NAPOMENA
-    head, sect, val, tot, grand = 65, 14, 66, 68, 63
+    # 68 = total row (also the grand total: row 63 printed it unstyled), 74/75 = NAPOMENA
+    head, sect, val, tot = 65, 14, 66, 68
     r = 8
     style_row(ws, r, src2, head)
     ws[f"B{r}"] = "REKAPITULACIJA"
-    lot_title = {"LOT 1": src1["B10"].value, "LOT 2": src2["B10"].value}
-    total_row = {}
-    for lot in LOTS:
+    r += 1
+    style_row(ws, r, src2, sect)
+    ws[f"B{r}"] = src_lot["B10"].value
+    first = r + 1
+    for site in SITE:
         r += 1
-        style_row(ws, r, src2, sect)
-        ws[f"B{r}"] = lot_title[lot]
-        first = r + 1
-        for site in SITE:
-            r += 1
-            style_row(ws, r, src2, val)
-            style_row(ws, r, src2, 16, "B")           # Arial 9 like the item texts
-            name = SHEET[lot, site]
-            lot_row = structure(wb[name])["lot_row"]
-            ws[f"B{r}"] = LBL_SITE[lot, site]
-            ws[f"F{r}"] = f"='{name}'!F{lot_row}"
-        r += 1
-        style_row(ws, r, src2, tot)
-        ws[f"B{r}"] = LBL_LOT_TOTAL[lot]
-        ws[f"F{r}"] = f"=SUM(F{first}:F{r - 1})"
-        total_row[lot] = r
-    r_tot, r_pop, r_disc, r_vat, r_grand = r + 1, r + 2, r + 3, r + 4, r + 5
-    style_row(ws, r_tot, src2, tot)
-    ws[f"B{r_tot}"] = LBL_TOTAL
-    ws[f"F{r_tot}"] = "=" + "+".join(f"F{total_row[lot]}" for lot in LOTS)
+        style_row(ws, r, src2, val)
+        style_row(ws, r, src2, 16, "B")               # Arial 9 like the item texts
+        name = SHEET[lot, site]
+        ws[f"B{r}"] = LBL_SITE[lot, site]
+        ws[f"F{r}"] = f"='{name}'!F{structure(wb[name])['lot_row']}"
+    r_lot, r_pop, r_disc, r_vat, r_grand = r + 1, r + 2, r + 3, r + 4, r + 5
+    style_row(ws, r_lot, src2, tot)
+    ws[f"B{r_lot}"] = LBL_LOT_TOTAL[lot]
+    ws[f"F{r_lot}"] = f"=SUM(F{first}:F{r})"
     style_row(ws, r_pop, src2, tot, "AB")
     style_row(ws, r_pop, src2, val, "CDEF")          # bordered input cell for the discount
     ws[f"B{r_pop}"] = LBL_POPUST
     style_row(ws, r_disc, src2, tot)
-    ws[f"B{r_disc}"] = LBL_DISC
-    ws[f"F{r_disc}"] = f'=F{r_tot}*(1-IF(F{r_pop}="",0,F{r_pop}/100))'
+    ws[f"B{r_disc}"] = LBL_DISC[lot]
+    ws[f"F{r_disc}"] = f'=F{r_lot}*(1-IF(F{r_pop}="",0,F{r_pop}/100))'
     style_row(ws, r_vat, src2, tot)
     ws[f"B{r_vat}"] = LBL_VAT
     ws[f"F{r_vat}"] = f"=F{r_disc}*0.17"
-    style_row(ws, r_grand, src2, grand)
-    ws[f"B{r_grand}"] = LBL_GRAND
+    style_row(ws, r_grand, src2, tot)
+    ws[f"B{r_grand}"] = LBL_GRAND[lot]
     ws[f"F{r_grand}"] = f"=F{r_disc}+F{r_vat}"
     for rr in range(8, r_grand + 1):
         ws.row_dimensions[rr].height = 15
 
-    # NAPOMENA - the source notes, checked verbatim, then adapted to two sites
+    # NAPOMENA - the source notes, checked verbatim, then adapted to two sites and one LOT
     r_note = find_row(src2, "NAPOMENA:")
     src_notes = []
     rr = r_note + 1
@@ -799,6 +800,7 @@ def build_rekap(wb, src1, src2, log):
     expected = [s for s, _ in NOTES if s is not None]
     if src_notes != expected:
         raise ValueError(f"source NAPOMENA changed:\n{src_notes}")
+    sheets = " i ".join(f"„{n}“" for n in SITE_SHEETS[lot])
     r = r_grand + 2
     style_row(ws, r, src2, r_note, "AB")
     ws[f"B{r}"] = "NAPOMENA:"
@@ -807,7 +809,7 @@ def build_rekap(wb, src1, src2, log):
         r += 1
         style_row(ws, r, src2, r_note + 1, "AB")
         if source is None:
-            text = edits
+            text = edits.format(lot=lot, sheets=sheets)
         else:
             text = source
             for old, new in edits:
@@ -833,13 +835,13 @@ def build_rekap(wb, src1, src2, log):
     ws.print_options = copy(src2.print_options)
     ws.HeaderFooter = copy(src2.HeaderFooter)
     print_setup(ws, r)
-    log.append(f"{REKAP}: totals rows 10-{r_grand}, {len(NOTES)} notes, signature row {r}")
+    log.append(f"{REKAP[lot]}: totals rows 10-{r_grand}, {len(NOTES)} notes, signature row {r}")
     return ws
 
 
-def validate(wb, src_formulas):
+def validate(wb, lot, src_formulas):
     """Structural self-check before saving."""
-    for name in LOT_SHEETS:
+    for name in SITE_SHEETS[lot]:
         ws = wb[name]
         s = structure(ws)
         bad = []
@@ -871,54 +873,52 @@ def validate(wb, src_formulas):
             raise AssertionError(f"{name}: {bad}")
 
 
-def main():
+def build(lot):
+    """One LOT's price form: its two site sheets and its REKAPITULACIJA."""
     wb = openpyxl.load_workbook(SRC)
     src1, src2 = wb["LOT 1"], wb["LOT 2"]
-    inspect_source(wb)
-    snap = {}
-    for src in (src1, src2):
-        last = structure(src)["lot_row"]
-        snap[src.title] = {c.coordinate: c.value for row in src.iter_rows(max_row=last) for c in row
-                           if isinstance(c.value, str) and c.value.startswith("=")}
+    src = src1 if lot == "LOT 1" else src2
+    last = structure(src)["lot_row"]
+    snap = {c.coordinate: c.value for row in src.iter_rows(max_row=last) for c in row
+            if isinstance(c.value, str) and c.value.startswith("=")}
 
     fixes, changes = [], []
-    for lot, src in (("LOT 1", src1), ("LOT 2", src2)):
-        for site in SITE:
-            site_sheet(wb, src, lot, site, src1, fixes)
-    apply_hamzici_lot1(wb[SHEET["LOT 1", "hamzici"]], changes)
-    apply_hamzici_lot2(wb[SHEET["LOT 2", "hamzici"]], changes)
-    build_rekap(wb, src1, src2, fixes)
+    for site in SITE:
+        site_sheet(wb, src, lot, site, src1, fixes)
+    apply = apply_hamzici_lot1 if lot == "LOT 1" else apply_hamzici_lot2
+    apply(wb[SHEET[lot, "hamzici"]], changes)
+    build_rekap(wb, lot, src1, src2, fixes)
 
     heights = {}
-    for name in LOT_SHEETS:
+    for name in SITE_SHEETS[lot]:
         ws = wb[name]
         heights[name] = autofit_rows(ws)
         print_setup(ws, ws.max_row)
-    heights[REKAP] = autofit_rows(wb[REKAP])
+    heights[REKAP[lot]] = autofit_rows(wb[REKAP[lot]])
 
     wb.remove(src1)
     wb.remove(src2)
-    wb._sheets = [wb[n] for n in SHEET_ORDER]
+    wb._sheets = [wb[n] for n in SHEET_ORDER[lot]]
     for i, ws in enumerate(wb.worksheets):
         ws.sheet_view.tabSelected = i == 0
     wb.active = 0
     wb.calculation.fullCalcOnLoad = True
 
-    unchanged = {SHEET["LOT 1", "sjednica"]: snap["LOT 1"], SHEET["LOT 2", "sjednica"]: snap["LOT 2"]}
-    validate(wb, unchanged)
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    wb.save(OUT)
+    validate(wb, lot, {SHEET[lot, "sjednica"]: snap})
+    out = OUT[lot]
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    wb.save(out)
 
-    print(f"\nwritten {OUT}")
+    print(f"\nwritten {out}")
     for ws in wb.worksheets:
         extra = ""
-        if ws.title in LOT_SHEETS:
+        if ws.title in SITE_SHEETS[lot]:
             s = structure(ws)
             extra = (f", {len(s['items'])} items, LOT subtotal F{s['lot_row']} = "
                      f"{ws.cell(s['lot_row'], 6).value}")
         print(f"  {ws.title}: {ws.max_row} rows, print area {ws.print_area}, "
               f"{heights[ws.title]} rows set to auto-fit{extra}")
-    print("Hamzići changes:")
+    print(f"{lot} Hamzići changes:")
     for c in changes:
         print("  " + c)
     print("fixes / notes:")
@@ -927,6 +927,12 @@ def main():
     props = getattr(wb, "custom_doc_props", None)
     if props is not None:
         print(f"custom document properties kept: {[p.name for p in props.props]}")
+
+
+def main():
+    inspect_source(openpyxl.load_workbook(SRC))
+    for lot in LOTS:
+        build(lot)
 
 
 if __name__ == "__main__":

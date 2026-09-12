@@ -9,13 +9,13 @@ across the joint package. Site-specific values that differ (fence 2,10 / 1,80 m,
 overhang 1,64 / 1,74 m, altitude 1076 / 493 m) are not variants of those rules,
 so they do not collide; they are added below as values that must be present.
 
-Three additions for the joint package:
+Two additions for the joint package:
   COVERAGE   every deliverable names both sites
-  BANNED+    single-site leftovers and wrong facts about Hamzići
-  PENDING    estimate placeholders - reported, and counted, until the Investor
-             supplies the estimates
+  BANNED+    single-site leftovers, wrong facts about Hamzići, and the estimate
+             placeholders / 50 000 KM figures that the Investor's estimate of
+             12.09.2026 (100 000 KM bez PDV-a: LOT 1 30 000, LOT 2 70 000) replaced
 
-Exit code = failures + pending, so the package cannot be released by accident.
+Exit code = number of failures, so the package cannot be released by accident.
 """
 import glob
 import os
@@ -48,6 +48,12 @@ SINGLE_VALUE.update({
     "Hamzići expected fuel ≈900 l/god": r"≈\s*900\s*l",
     "PV azimuth 225° (true SW)": r"225\s*°",
     "walls named by true direction (SI/SZ/JI/JZ)": r"\b(SI|SZ|JI|JZ)\s+zid",
+    # estimate, Investor 12.09.2026 (replaces the Sjednica 15 000 / 34 000 / 49 000 rules)
+    "total estimate 100.000,00 KM": r"100\.000,00\s*KM",
+    "LOT 1 estimate 30.000,00 KM": r"30\.000,00\s*KM",
+    "LOT 2 estimate 70.000,00 KM": r"70\.000,00\s*KM",
+    "estimate in words (sto hiljada)": r"sto\s+hiljada\s+konvertibilnih\s+maraka",
+    "one price form per LOT": r"zaseban\s+za\s+(svaki\s+LOT|LOT\s*1\s+i\s+za\s+LOT\s*2)",
 })
 
 CONFLICTS = dict(cc.CONFLICTS)
@@ -109,10 +115,12 @@ BANNED.update({
     "2x2 portrait stand (superseded by 4x3L)": r"2\s*reda\s*×\s*2\s*(kolone|modula)",
     "south-facing field (superseded by SW)": r"orijentacij\w*\s+JUG\s*\(azimut",
     "Hamzići PV in the south strip (it is the JZ band)": r"pojasu\s+južno\s+od\s+ploče",
+    "estimate placeholder left": r"___\.___",
+    "estimate in words 'pedeset hiljada' (it is 100 000)": r"pedeset\s*hiljada",
+    "superseded 50 000 KM estimate (15 000 / 35 000)": r"\b(50|15|35)\.000,00\s*KM",
+    "typo 'LOT 1a iznos'": r"LOT\s*1a\s+iznos",
+    "combined price form (one form per LOT)": r"Obrazac\s+za\s+cijenu\s+ponude\s+\(LOT\s*1\s+i\s+LOT\s*2\)",
 })
-
-PENDING = {"estimate placeholder": r"___\.___"}
-
 
 def load():
     cc.TD = paths.TD
@@ -178,18 +186,8 @@ def main():
         else:
             print(f"  OK    {topic}: gone")
 
-    print("\n=== PENDING (Naručilac) ===")
-    pending = 0
-    for topic, pat in PENDING.items():
-        hits = cc.scan(docs, pat)
-        if hits:
-            pending += 1
-            print(f"  PENDING  {topic}: " + ", ".join(f"{k} x{v}" for k, v in hits.items()))
-        else:
-            print(f"  OK       {topic}: none left")
-
-    print(f"\nRESULT: {fails} failure(s), {pending} pending")
-    return fails + pending
+    print(f"\nRESULT: {fails} failure(s)")
+    return fails
 
 
 if __name__ == "__main__":

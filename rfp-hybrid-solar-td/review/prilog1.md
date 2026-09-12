@@ -14,8 +14,8 @@ agregat sa spremnikom goriva u postojećem kontejneru i isto upravljanje. Zahtje
 se razlikuju po lokaciji dati su u zasebnim tačkama ili kolonama, sa oznakom lokacije.
 
 U slučaju neslaganja između dokumenata TD mjerodavni su redom: (1) Tenderska
-dokumentacija (TD), (2) Prilog I, (3) Prilog II (Predmjer), (4) Prilog III (grafički
-prilozi).
+dokumentacija (TD), (2) Prilog I, (3) Prilog II (Obrazac za cijenu ponude, zaseban za
+svaki LOT), (4) Prilog III (grafički prilozi).
 
 Prilog III sadrži i preuzete stranice ovjerenih projekata lokacija, koje služe samo kao
 podloga; **mjerodavan raspored opreme i otvora u kontejneru je onaj sa crteža M-01

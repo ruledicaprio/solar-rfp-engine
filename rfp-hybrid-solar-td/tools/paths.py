@@ -27,6 +27,8 @@ NZ = os.path.join(TD, "1. NZ hibridni sistem napajanja BS Sjednica i BS Hamzići
 TDJN = os.path.join(TD, "2. TD JN Hibridni sistem napajanja BS Sjednica i BS Hamzići.docx")
 ODLUKA = os.path.join(TD, "2.1 Prijedlog Odluke Hibridni sistem napajanja BS Sjednica i BS Hamzići.docx")
 PRILOG1 = os.path.join(TD, "3. Prilog I TD - Specifikacija zahtjeva.docx")
-PRILOG2 = os.path.join(TD, "3.1 PRILOG II TD - predmjer Sjednica i Hamzici.xlsx")
+# one price form per LOT: a bidder fills in and signs only the LOT it bids for
+PRILOG2_LOT = {lot: os.path.join(TD, f"3.1 PRILOG II TD - Obrazac za cijenu ponude {lot} - "
+                                     f"Sjednica i Hamzici.xlsx") for lot in ("LOT 1", "LOT 2")}
 PRILOG3 = os.path.join(TD, "3.2 Prilog III TD - Situacije.pdf")
 IZJAVA = os.path.join(TD, "4. Izjava o stanju zaliha BS Sjednica i BS Hamzići.docx")

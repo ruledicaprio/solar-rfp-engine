@@ -14,10 +14,11 @@ carry the same styles.
 Every replacement states how many times it must match; a template that has
 drifted fails instead of half-editing.
 
-Estimates: the Investor supplies them later, so every amount in the estimate
-paragraphs becomes a placeholder ("___.___,__ KM"). The Sjednica documents
-carried three different totals (50 000, 100 000 and "pedesethiljada" in words
-next to 100 000), so there is nothing to carry over.
+Estimate (Investor, 12.09.2026): 100 000,00 KM bez PDV-a for both sites, LOT 1
+30 000,00 KM and LOT 2 70 000,00 KM. The Sjednica documents carried three
+different totals - 100 000 in the NZ and the Odluka point II, 50 000 (15 000 +
+35 000) in the Odluka's plan paragraphs and one table total, and "pedesethiljada"
+in words next to 100 000 - so every one is set to the Investor's figures here.
 """
 import os
 import re
@@ -33,8 +34,7 @@ sys.path.insert(0, os.path.join(paths.SITES["sjednica"]["folder"], "tools"))
 from ooxml_edit import Part                                         # noqa: E402
 
 SRC = os.path.join(paths.SITES["sjednica"]["folder"], "TD-OUTPUT")
-PH = "___.___,__"                                    # estimate placeholder
-PH_WORDS = "(slovima: ______________ konvertibilnih maraka)"
+WORDS_100K = "(sto hiljada konvertibilnih maraka)"
 
 TITLE_OLD = "SISTEM NAPAJANJA SJEDNICA, BILEĆA (LOT 1 i 2)"
 TITLE_NEW = "SISTEM NAPAJANJA SJEDNICA, BILEĆA I HAMZIĆI, ČITLUK (LOT 1 i 2)"
@@ -167,9 +167,13 @@ def nz(path):
             "lokaciji Hamzići.", 1)
     replace(p, "Prilog III TD: Situacija Sjednica, Bileća.",
             "Prilog III TD: Situacije Sjednica, Bileća i Hamzići, Čitluk.", 1)
-    replace(p, "100.000,00 KM (pedesethiljada konvertibilnih maraka)", f"{PH} KM {PH_WORDS}", 1)
-    replace(p, "LOT 1 — 30.000,00 KM", f"LOT 1 — {PH} KM", 1)
-    replace(p, "LOT 2 — 70.000,00 KM", f"LOT 2 — {PH} KM", 1)
+    replace(p, "Prilog II TD: Obrazac za cijenu ponude i",
+            "Prilog II TD: Obrazac za cijenu ponude (zaseban za svaki LOT) i", 1)
+    # estimate (Investor, 12.09.2026): 100 000 KM bez PDV-a, LOT 1 30 000 / LOT 2 70 000 -
+    # the amounts of the Sjednica NZ; only the amount in words was wrong
+    replace(p, "100.000,00 KM (pedesethiljada konvertibilnih maraka)", f"100.000,00 KM {WORDS_100K}", 1)
+    replace(p, "LOT 1 — 30.000,00 KM", "LOT 1 — 30.000,00 KM", 1)
+    replace(p, "LOT 2 — 70.000,00 KM", "LOT 2 — 70.000,00 KM", 1)
     replace(p, "Mjesto realizacije je objekat BH Telecoma Sjednica, Bileća (42.9448° N, "
                "18.3236° E, nadmorska visina 1076 m).",
             "Mjesta realizacije su objekti BH Telecoma Sjednica, Bileća (42.9448° N, 18.3236° E, "
@@ -241,6 +245,12 @@ def tdjn(path):
                "opremu (za LOT 2)",
             "nosače PV panela i prateću opremu (za LOT 1), isporučeni agregat i prateću opremu "
             "(za LOT 2)", 2)
+    # Prilog II: one price form per LOT (Investor, 12.09.2026) - the award is per LOT
+    replace(p, "PRILOG II: Obrazac za cijenu ponude (LOT 1 i LOT 2)",
+            "PRILOG II: Obrazac za cijenu ponude, zaseban za LOT 1 i za LOT 2", 1)
+    replace(p, "izražena u KM bez PDV-a. (za jedan ili oba LOT-a)",
+            "izražena u KM bez PDV-a. (za jedan ili oba LOT-a; za svaki LOT kojem ponuda "
+            "pristupa popunjava se, potpisuje i ovjerava zaseban obrazac)", 1)
     items["word/document.xml"] = p.xml.encode("utf-8")
     save(path, items)
 
@@ -252,11 +262,11 @@ def odluka(path):
                   if para_text(m.group(0)).startswith("Objekat Sjednica (Bileća) je 2014."))
     xml = insert_after_paragraph(xml, anchor,
                                  [clone_paragraph(paragraph_by_text(xml, anchor), ODLUKA_HAMZICI)])
-    # amounts standing alone in the financial-plan table cells ("100.000"): done per
-    # <w:t>, because the flat text glues neighbouring cells into "100.000100.000"
-    xml, n_cells = re.subn(r"(<w:t(?:\s[^>]*)?>)\d{2,3}\.000(</w:t>)", r"\g<1>___.___\g<2>", xml)
-    if not n_cells:
-        raise SystemExit("Odluka: no amount cells found in the financial-plan tables")
+    # financial-plan tables: the first table's total reads 50.000 under its 100.000 row.
+    # Done per <w:t>, because the flat text glues neighbouring cells into "100.000100.000"
+    xml, n_cells = re.subn(r"(<w:t(?:\s[^>]*)?>)50\.000(</w:t>)", r"\g<1>100.000\g<2>", xml)
+    if n_cells != 2:
+        raise SystemExit(f"Odluka: expected the two 50.000 table-total cells, found {n_cells}")
     p = Part(xml)
     replace(p, "napajanja Sjednica, Bileća (LOT 1 i 2)",
             "napajanja Sjednica, Bileća i Hamzići, Čitluk (LOT 1 i 2)", 3)
@@ -272,12 +282,14 @@ def odluka(path):
     replace(p, LOT2_OLD + " čitavog hibridnog sistema.",
             LOT2_NEW + " čitavih hibridnih sistema, te demontaža postojećeg klima-uređaja na "
             "lokaciji Hamzići.", 1)
-    # estimates -> placeholders (the Investor supplies them)
-    replace(p, "(pedesethiljada konvertibilnih maraka)", PH_WORDS, None)
+    # estimate (Investor, 12.09.2026): 100 000 KM bez PDV-a, LOT 1 30 000 / LOT 2 70 000
+    replace(p, "(pedesethiljada konvertibilnih maraka)", WORDS_100K, 3)
+    replace(p, "ukupno 50.000,00 KM", "ukupno 100.000,00 KM", 2)
+    replace(p, "LOT 1 — 15.000,00 KM i LOT 2 — 35.000,00 KM",
+            "LOT 1 — 30.000,00 KM i LOT 2 — 70.000,00 KM", 2)
     replace(p, "od čega se iznos od 30.000,00 KM odnosi na LOT 1a iznos od 70.000,00 KM na "
-               "LOT 2 —", f"od čega se iznos od {PH} KM odnosi na LOT 1, a iznos od {PH} KM "
-               "na LOT 2. ", 1)
-    replace(p, r"\b\d{1,3}\.000,00 KM", f"{PH} KM", None, regex=True)
+               "LOT 2 —", "od čega se iznos od 30.000,00 KM odnosi na LOT 1, a iznos od "
+               "70.000,00 KM na LOT 2. ", 1)
     # Aneks 2: the approved two-site wording
     replace(p, ODLUKA_LIMITS_REV9, ODLUKA_LIMITS_JOINT, 1)
     replace(p, "smješten u postojeći kontejner. DEA napaja ispravljače.",
