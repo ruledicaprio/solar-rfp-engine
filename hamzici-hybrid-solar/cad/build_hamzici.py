@@ -119,7 +119,8 @@ def build(names, strict=False):
     print(f"  site checks OK: vent→exhaust {r['vent_exhaust'] / 1000:.2f} m, "
           f"vent→intake {r['vent_intake'] / 1000:.2f} m, vent→ICC360 {r['vent_icc360'] / 1000:.2f} m "
           f"(horizontal), exhaust→intake {r['exhaust_intake'] / 1000:.2f} m, "
-          f"deflector→PV {r['hood_array'] / 1000:.2f} m (south wall→PV {r['wall_array'] / 1000:.2f} m)")
+          f"PV→JZ fence {r['array_fence'] / 1000:.2f} m, PV→JZ wall {r['wall_array'] / 1000:.2f} m, "
+          f"in front of ICC360 {r['icc360_front'] / 1000:.2f} m / MTS {r['mts_front'] / 1000:.2f} m")
     if strict and bad:
         raise SystemExit(f"{bad} layout warnings (--strict)")
     return made

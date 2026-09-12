@@ -489,7 +489,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461295.7971296296
+2461295.9468055554
   9
 $TDUCREATE
  40
@@ -497,7 +497,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2461295.7971296296
+2461295.9468055554
   9
 $TDUUPDATE
  40
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{54CE334B-EE3E-43C2-B41B-C303515610E4}
+{F04010AD-9D4A-41A2-928F-81C896894F17}
   9
 $VERSIONGUID
   2
-{9F8CB80A-AFDD-4BE4-91F5-880585EA68F8}
+{1CD427F3-24D4-4CD3-832E-80FB33ADAFFB}
   9
 $EXTNAMES
 290
@@ -13463,7 +13463,7 @@ AcDbText
  40
 80.0
   1
-nosači PV-2 + PV-3
+nosači PV-3 + PV-4
   7
 20
  11
@@ -14145,7 +14145,7 @@ AcDbText
  40
 70.0
   1
-vani na ploči, SJEVER — principijelno
+vani na ploči, JZ strana — principijelno
   7
 20
  11
@@ -15487,7 +15487,7 @@ AcDbText
  40
 70.0
   1
-SJEVERNI zid kontejnera, zapadno od vrata
+SZ zid kontejnera, jugozapadno od vrata
   7
 20
  11
@@ -18449,7 +18449,7 @@ AcDbText
  40
 65.0
   1
-F1 kroz sjeverni zid
+F1 kroz JZ zid
  50
 90.0
   7
@@ -18593,7 +18593,7 @@ AcDbText
  40
 65.0
   1
-SJEVERNI zid, istočno od vrata
+SZ zid, sjeveroistočno od vrata
   7
 20
  11
@@ -18663,7 +18663,7 @@ AcDbText
  40
 65.0
   1
-−48 V iz ICC360, kroz sjeverni zid
+−48 V iz ICC360, kroz JZ zid
  50
 90.0
   7
@@ -22961,7 +22961,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-09-11T17:07:52.685273+00:00
+1.4.4 @ 2026-09-11T20:43:24.792758+00:00
   0
 VISUALSTYLE
   5
@@ -23673,7 +23673,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-09-11T17:07:52.717669+00:00
+1.4.4 @ 2026-09-11T20:43:24.826756+00:00
   0
 ENDSEC
   0

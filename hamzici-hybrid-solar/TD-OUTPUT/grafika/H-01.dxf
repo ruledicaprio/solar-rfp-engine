@@ -489,7 +489,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461295.7971296296
+2461295.9468055554
   9
 $TDUCREATE
  40
@@ -497,7 +497,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2461295.7971296296
+2461295.9468055554
   9
 $TDUUPDATE
  40
@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-1DE
+1DF
   9
 $SURFTAB1
  70
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{5C10BBD6-F106-4C67-864B-2D789E53BA8A}
+{CE25AADD-6B1D-4714-8ED2-537D1DE51872}
   9
 $VERSIONGUID
   2
-{914B3614-A784-40A6-9EC3-320723485B60}
+{B9240CEC-4015-4CFA-A37C-4F10A72F2CEE}
   9
 $EXTNAMES
 290
@@ -3745,7 +3745,7 @@ ACAD
   0
 APPID
   5
-1DB
+1DC
 330
 3
 100
@@ -3759,7 +3759,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-1DC
+1DD
 330
 3
 100
@@ -7289,13 +7289,13 @@ AcDbEntity
 100
 AcDbLine
  10
-10100.0
+19900.0
  20
 18900.0
  30
 0.0
  11
-9900.0
+19700.0
  21
 18900.0
  31
@@ -7313,13 +7313,13 @@ AcDbEntity
 100
 AcDbLine
  10
-10100.0
+19900.0
  20
 22425.0
  30
 0.0
  11
-9900.0
+19700.0
  21
 22425.0
  31
@@ -7339,7 +7339,7 @@ AcDbBlockReference
   2
 _ARCHTICK
  10
-10100.0
+19900.0
  20
 18900.0
  30
@@ -7365,7 +7365,7 @@ AcDbBlockReference
   2
 _ARCHTICK
  10
-10100.0
+19900.0
  20
 22425.0
  30
@@ -7389,13 +7389,13 @@ AcDbEntity
 100
 AcDbLine
  10
-10100.0
+19900.0
  20
 18900.0
  30
 0.0
  11
-10100.0
+19900.0
  21
 20162.5
  31
@@ -7413,13 +7413,13 @@ AcDbEntity
 100
 AcDbLine
  10
-10100.0
+19900.0
  20
 21162.5
  30
 0.0
  11
-10100.0
+19900.0
  21
 22425.0
  31
@@ -7437,7 +7437,7 @@ Kote
 100
 AcDbMText
  10
-10100.0
+19900.0
  20
 20662.5
  30
@@ -7463,7 +7463,7 @@ Defpoints
 100
 AcDbPoint
  10
-10100.0
+19900.0
  20
 18900.0
  30
@@ -7481,7 +7481,7 @@ Defpoints
 100
 AcDbPoint
  10
-10100.0
+19900.0
  20
 18900.0
  30
@@ -7499,7 +7499,7 @@ Defpoints
 100
 AcDbPoint
  10
-10100.0
+19900.0
  20
 22425.0
  30
@@ -7555,13 +7555,13 @@ AcDbEntity
 100
 AcDbLine
  10
-10100.0
+19900.0
  20
 9925.0
  30
 0.0
  11
-9900.0
+19700.0
  21
 9925.0
  31
@@ -7579,13 +7579,13 @@ AcDbEntity
 100
 AcDbLine
  10
-10100.0
+19900.0
  20
 13500.0
  30
 0.0
  11
-9900.0
+19700.0
  21
 13500.0
  31
@@ -7605,7 +7605,7 @@ AcDbBlockReference
   2
 _ARCHTICK
  10
-10100.0
+19900.0
  20
 9925.0
  30
@@ -7631,7 +7631,7 @@ AcDbBlockReference
   2
 _ARCHTICK
  10
-10100.0
+19900.0
  20
 13500.0
  30
@@ -7655,13 +7655,13 @@ AcDbEntity
 100
 AcDbLine
  10
-10100.0
+19900.0
  20
 9925.0
  30
 0.0
  11
-10100.0
+19900.0
  21
 11212.5
  31
@@ -7679,13 +7679,13 @@ AcDbEntity
 100
 AcDbLine
  10
-10100.0
+19900.0
  20
 12212.5
  30
 0.0
  11
-10100.0
+19900.0
  21
 13500.0
  31
@@ -7703,7 +7703,7 @@ Kote
 100
 AcDbMText
  10
-10100.0
+19900.0
  20
 11712.5
  30
@@ -7729,7 +7729,7 @@ Defpoints
 100
 AcDbPoint
  10
-10100.0
+19900.0
  20
 9925.0
  30
@@ -7747,7 +7747,7 @@ Defpoints
 100
 AcDbPoint
  10
-10100.0
+19900.0
  20
 9925.0
  30
@@ -7765,7 +7765,7 @@ Defpoints
 100
 AcDbPoint
  10
-10100.0
+19900.0
  20
 13500.0
  30
@@ -7823,13 +7823,13 @@ AcDbLine
  10
 9000.0
  20
-17600.0
+18878.0
  30
 0.0
  11
 9000.0
  21
-17800.0
+19078.0
  31
 0.0
   0
@@ -7847,13 +7847,13 @@ AcDbLine
  10
 12300.0
  20
-17600.0
+18878.0
  30
 0.0
  11
 12300.0
  21
-17800.0
+19078.0
  31
 0.0
   0
@@ -7873,7 +7873,7 @@ _ARCHTICK
  10
 9000.0
  20
-17600.0
+18878.0
  30
 0.0
  41
@@ -7899,7 +7899,7 @@ _ARCHTICK
  10
 12300.0
  20
-17600.0
+18878.0
  30
 0.0
  41
@@ -7921,13 +7921,13 @@ AcDbLine
  10
 9000.0
  20
-17600.0
+18878.0
  30
 0.0
  11
 10150.0
  21
-17600.0
+18878.0
  31
 0.0
   0
@@ -7945,13 +7945,13 @@ AcDbLine
  10
 11150.0
  20
-17600.0
+18878.0
  30
 0.0
  11
 12300.0
  21
-17600.0
+18878.0
  31
 0.0
   0
@@ -7969,7 +7969,7 @@ AcDbMText
  10
 10650.0
  20
-17600.0
+18878.0
  30
 0.0
  40
@@ -7993,7 +7993,7 @@ AcDbPoint
  10
 9000.0
  20
-17600.0
+18878.0
  30
 0.0
   0
@@ -8011,7 +8011,7 @@ AcDbPoint
  10
 9000.0
  20
-17600.0
+18878.0
  30
 0.0
   0
@@ -8029,7 +8029,7 @@ AcDbPoint
  10
 12300.0
  20
-17600.0
+18878.0
  30
 0.0
   0
@@ -8085,13 +8085,13 @@ AcDbLine
  10
 17700.0
  20
-17600.0
+18878.0
  30
 0.0
  11
 17700.0
  21
-17800.0
+19078.0
  31
 0.0
   0
@@ -8109,13 +8109,13 @@ AcDbLine
  10
 21000.0
  20
-17600.0
+18878.0
  30
 0.0
  11
 21000.0
  21
-17800.0
+19078.0
  31
 0.0
   0
@@ -8135,7 +8135,7 @@ _ARCHTICK
  10
 17700.0
  20
-17600.0
+18878.0
  30
 0.0
  41
@@ -8161,7 +8161,7 @@ _ARCHTICK
  10
 21000.0
  20
-17600.0
+18878.0
  30
 0.0
  41
@@ -8183,13 +8183,13 @@ AcDbLine
  10
 17700.0
  20
-17600.0
+18878.0
  30
 0.0
  11
 18850.0
  21
-17600.0
+18878.0
  31
 0.0
   0
@@ -8207,13 +8207,13 @@ AcDbLine
  10
 19850.0
  20
-17600.0
+18878.0
  30
 0.0
  11
 21000.0
  21
-17600.0
+18878.0
  31
 0.0
   0
@@ -8231,7 +8231,7 @@ AcDbMText
  10
 19350.0
  20
-17600.0
+18878.0
  30
 0.0
  40
@@ -8255,7 +8255,7 @@ AcDbPoint
  10
 17700.0
  20
-17600.0
+18878.0
  30
 0.0
   0
@@ -8273,7 +8273,7 @@ AcDbPoint
  10
 17700.0
  20
-17600.0
+18878.0
  30
 0.0
   0
@@ -8291,7 +8291,7 @@ AcDbPoint
  10
 21000.0
  20
-17600.0
+18878.0
  30
 0.0
   0
@@ -17087,13 +17087,13 @@ AcDbDimension
   3
 M 100
  10
-10100.0
+19900.0
  20
 18900.0
  30
 0.0
  11
-10100.0
+19900.0
  21
 20662.5
  31
@@ -17107,13 +17107,13 @@ M 100
 100
 AcDbAlignedDimension
  13
-10100.0
+19900.0
  23
 18900.0
  33
 0.0
  14
-10100.0
+19900.0
  24
 22425.0
  34
@@ -17141,13 +17141,13 @@ AcDbDimension
   3
 M 100
  10
-10100.0
+19900.0
  20
 9925.0
  30
 0.0
  11
-10100.0
+19900.0
  21
 11712.5
  31
@@ -17161,13 +17161,13 @@ M 100
 100
 AcDbAlignedDimension
  13
-10100.0
+19900.0
  23
 9925.0
  33
 0.0
  14
-10100.0
+19900.0
  24
 13500.0
  34
@@ -17197,13 +17197,13 @@ M 100
  10
 9000.0
  20
-17600.0
+18878.0
  30
 0.0
  11
 10650.0
  21
-17600.0
+18878.0
  31
 0.0
  70
@@ -17217,13 +17217,13 @@ AcDbAlignedDimension
  13
 9000.0
  23
-17600.0
+18878.0
  33
 0.0
  14
 12300.0
  24
-17600.0
+18878.0
  34
 0.0
  50
@@ -17251,13 +17251,13 @@ M 100
  10
 17700.0
  20
-17600.0
+18878.0
  30
 0.0
  11
 19350.0
  21
-17600.0
+18878.0
  31
 0.0
  70
@@ -17271,13 +17271,13 @@ AcDbAlignedDimension
  13
 17700.0
  23
-17600.0
+18878.0
  33
 0.0
  14
 21000.0
  24
-17600.0
+18878.0
  34
 0.0
  50
@@ -17993,7 +17993,7 @@ AcDbText
  40
 220.00000000000003
   1
-vrata 1000 × 2150 mm (SJEVER)
+vrata 1000 × 2150 mm (SZ)
   7
 20
  11
@@ -18285,7 +18285,7 @@ AcDbText
  40
 320.0
   1
-J U G
+J U G O I S T O K
   7
 20
  72
@@ -18315,21 +18315,21 @@ AcDbPolyline
  70
 1
  10
-39000.0
+40414.213562373094
  20
-27200.0
+26614.213562373094
  10
-38560.0
+38476.740981921954
  20
-24900.0
+25298.99494936612
  10
 39000.0
  20
 25200.0
  10
-39440.0
+39098.99494936612
  20
-24900.0
+24676.740981921954
   0
 TEXT
   5
@@ -18345,9 +18345,9 @@ Orijentacija
 100
 AcDbText
  10
-39000.0
+40527.350647362946
  20
-27360.0
+26727.350647362942
  30
 0.0
  40
@@ -18359,9 +18359,9 @@ N
  72
 1
  11
-39000.0
+40527.350647362946
  21
-27360.0
+26727.350647362942
  31
 0.0
 100
@@ -19571,7 +19571,7 @@ AcDbText
  40
 200.0
   1
-postojeća ograda 5,50 × 5,50 m, h = 1,80 m od ploče (2,00 m od terena) — kapija 1,30 m na SJEVERU
+postojeća ograda 5,50 × 5,50 m, h = 1,80 m od ploče (2,00 m od terena) — kapija 1,30 m na SZ strani
   7
 20
  11
@@ -19839,7 +19839,7 @@ AcDbText
  40
 200.0
   1
-postojeći kontejner K2 2300 × 3005 mm — vrata na SJEVERU
+postojeći kontejner K2 2300 × 3005 mm — vrata na SZ strani
   7
 20
  11
@@ -20107,7 +20107,7 @@ AcDbText
  40
 200.0
   1
-klima-uređaj Stulz WDE80 (JUŽNI zid, u sredini) — demontira se
+klima-uređaj Stulz WDE80 (JI zid, u sredini) — demontira se
   7
 20
  11
@@ -20309,7 +20309,7 @@ AcDbText
  40
 210.0
   1
-Vrata kontejnera i kapija ograde su na SJEVERU, malo prema sjeverozapadu
+Prema Google Maps (Naručilac 11.09.2026) kompleks je zakrenut 45°: vrata
   7
 20
  11
@@ -20343,7 +20343,7 @@ AcDbText
  40
 210.0
   1
-(fotografije 08.09.2026, Naručilac 11.09.2026). Ovjereni crtež lokacije iz 2017
+kontejnera i kapija gledaju na SJEVEROZAPAD (SZ), klima-uređaj Stulz na JI.
   7
 20
  11
@@ -20377,7 +20377,7 @@ AcDbText
  40
 210.0
   1
-(GP-BS-10472-291, 01_Situacija 1_200) zakrenut je ≈180° u odnosu na teren;
+Crtež je pravougaon na kompleks (gore SZ, desno SI, dolje JI, lijevo JZ);
   7
 20
  11
@@ -20411,7 +20411,7 @@ AcDbText
  40
 210.0
   1
-ovdje je okrenut prema terenu i nacrtan pravougaono na sjever.
+strelica pokazuje pravi sjever. Ovjereni crtež lokacije iz 2017
   7
 20
  11
@@ -20445,7 +20445,7 @@ AcDbText
  40
 210.0
   1
-Mali preostali zakret NIJE izmjeren — potvrđuje se obilaskom lokacije.
+(GP-BS-10472-291, 01_Situacija 1_200) zakrenut je ≈180° u odnosu na teren.
   7
 20
  11
@@ -20473,19 +20473,19 @@ AcDbText
  10
 28000.0
  20
-20537.5
+21237.5
  30
 0.0
  40
-260.0
+210.0
   1
-NAPOMENE:
+Orijentaciju potvrđuje Ponuđač obilaskom lokacije.
   7
 20
  11
 28000.0
  21
-20537.5
+21237.5
  31
 0.0
 100
@@ -20507,19 +20507,19 @@ AcDbText
  10
 28000.0
  20
-20297.5
+20233.0
  30
 0.0
  40
-210.0
+260.0
   1
-1  Geometrija iz ovjerenog projekta lokacije GP-BS-10472-291 (2017): 01_Situacija 1_200,
+NAPOMENE:
   7
 20
  11
 28000.0
  21
-20297.5
+20233.0
  31
 0.0
 100
@@ -20547,7 +20547,7 @@ AcDbText
  40
 210.0
   1
-    04_Ograda, 01 Osnova, 04 Fasade, 01_Dispozicija S32 m, 3.6.9 Plan uzemljivača objekta.
+1  Geometrija iz ovjerenog projekta lokacije GP-BS-10472-291 (2017): 01_Situacija 1_200,
   7
 20
  11
@@ -20581,7 +20581,7 @@ AcDbText
  40
 210.0
   1
-2  Zakup 12,00 × 12,50 m = 150 m²: k.č. br. 109/1 K.O. Hamzići (novi premjer), općina Čitluk.
+    04_Ograda, 01 Osnova, 04 Fasade, 01_Dispozicija S32 m, 3.6.9 Plan uzemljivača objekta.
   7
 20
  11
@@ -20615,7 +20615,7 @@ AcDbText
  40
 210.0
   1
-3  Kontejner je PRAZAN; na južnom zidu, u sredini, je samo klima-uređaj Stulz WDE80
+2  Zakup 12,00 × 12,50 m = 150 m²: k.č. br. 109/1 K.O. Hamzići (novi premjer), općina Čitluk.
   7
 20
  11
@@ -20649,7 +20649,7 @@ AcDbText
  40
 210.0
   1
-    (≈700 × 500 × 2200 mm, procjena s fotografija; Naručilac 11.09.2026).
+3  Kontejner je PRAZAN; na jugoistočnom (JI) zidu, u sredini, je samo klima-uređaj Stulz WDE80
   7
 20
  11
@@ -20683,7 +20683,7 @@ AcDbText
  40
 210.0
   1
-    Mjere uređaja i otvora u zidu uzimaju se na obilasku lokacije.
+    (≈700 × 500 × 2200 mm, procjena s fotografija; Naručilac 11.09.2026).
   7
 20
  11
@@ -20717,7 +20717,7 @@ AcDbText
  40
 210.0
   1
-4  Rešetkasti stub h = 32 m; platforma P I na +3,0 m je iznad krova
+    Mjere uređaja i otvora u zidu uzimaju se na obilasku lokacije.
   7
 20
  11
@@ -20751,7 +20751,7 @@ AcDbText
  40
 210.0
   1
-    kontejnera (+2,63 / +2,89 m) — izduv agregata ne može završiti iznad krova.
+4  Rešetkasti stub h = 32 m; platforma P I na +3,0 m je iznad krova
   7
 20
  11
@@ -20785,7 +20785,7 @@ AcDbText
  40
 210.0
   1
-5  Uzemljivač FeZn 25×4 mm: prsten u temeljima stopa stuba i dva prstena na dubini
+    kontejnera (+2,63 / +2,89 m) — izduv agregata ne može završiti iznad krova.
   7
 20
  11
@@ -20819,7 +20819,7 @@ AcDbText
  40
 210.0
   1
-    0,8 m oko ploče (kvadrati 7,50 i 10,00 m prema 3.6.9).
+5  Uzemljivač FeZn 25×4 mm: prsten u temeljima stopa stuba i dva prstena na dubini
   7
 20
  11
@@ -20853,7 +20853,7 @@ AcDbText
  40
 210.0
   1
-6  Kapija se otvara prema van: krilo 1,30 m udarilo bi u kontejner (1,25 m od ograde).
+    0,8 m oko ploče (kvadrati 7,50 i 10,00 m prema 3.6.9).
   7
 20
  11
@@ -20887,13 +20887,47 @@ AcDbText
  40
 210.0
   1
-7  Teren uz ploču je na −0,20 m (04_Ograda): ograda je 1,80 m iznad ploče, 2,00 m iznad terena.
+6  Kapija se otvara prema van: krilo 1,30 m udarilo bi u kontejner (1,25 m od ograde).
   7
 20
  11
 28000.0
  21
 16948.0
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+1DB
+330
+17
+100
+AcDbEntity
+  8
+Tekst
+ 62
+7
+100
+AcDbText
+ 10
+28000.0
+ 20
+16643.5
+ 30
+0.0
+ 40
+210.0
+  1
+7  Teren uz ploču je na −0,20 m (04_Ograda): ograda je 1,80 m iznad ploče, 2,00 m iznad terena.
+  7
+20
+ 11
+28000.0
+ 21
+16643.5
  31
 0.0
 100
@@ -21989,7 +22023,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-1DD
+1DE
   0
 DICTIONARYVAR
   5
@@ -22001,7 +22035,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-09-11T17:07:52.391979+00:00
+1.4.4 @ 2026-09-11T20:43:24.476104+00:00
   0
 VISUALSTYLE
   5
@@ -22705,7 +22739,7 @@ X-Ray
   0
 DICTIONARYVAR
   5
-1DD
+1DE
 330
 2D
 100
@@ -22713,7 +22747,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-09-11T17:07:52.474945+00:00
+1.4.4 @ 2026-09-11T20:43:24.559669+00:00
   0
 ENDSEC
   0
