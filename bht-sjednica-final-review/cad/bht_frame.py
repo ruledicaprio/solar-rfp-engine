@@ -316,13 +316,25 @@ def draw_frame(msp, scale, naziv, broj, razmjera, godina="2026.",
     return (fx0, fy0 + X(TB_H)), (fx1, fy1)
 
 
-def north_arrow(msp, x, y, size):
-    """Simple filled north arrow, `size` = overall height in model units."""
+def north_arrow(msp, x, y, size, plan_north=0.0):
+    """Simple filled north arrow, `size` = overall height in model units.
+
+    `plan_north` is the true bearing of the sheet's up direction, for a compound
+    drawn square to the sheet but turned on site (Sjednica 45°, Hamzići 315°,
+    Google Maps 11.09.2026). The arrow is turned by it, so it points at true
+    north: counter-clockwise on the sheet by `plan_north` degrees.
+    """
+    from math import cos, radians, sin
+
     s = size
-    msp.add_lwpolyline([(x, y + s), (x - s*0.22, y - s*0.15), (x, y),
-                        (x + s*0.22, y - s*0.15)],
+    c, sn = cos(radians(plan_north)), sin(radians(plan_north))
+
+    def p(dx, dy):
+        return (x + dx * c - dy * sn, y + dx * sn + dy * c)
+
+    msp.add_lwpolyline([p(0, s), p(-s*0.22, -s*0.15), p(0, 0), p(s*0.22, -s*0.15)],
                        close=True, dxfattribs={"layer": "Orijentacija"})
-    _txt(msp, "N", x, y + s*1.08, s * 0.34, layer="Orijentacija",
+    _txt(msp, "N", *p(0, s*1.08), s * 0.34, layer="Orijentacija",
          color=1, align=TextEntityAlignment.MIDDLE_CENTER)
 
 
