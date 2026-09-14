@@ -233,6 +233,14 @@ def tdjn(path):
     replace(p, "Tabela 1 Geografski položaj objekta sa koordinatama",
             "Tabela 1 Geografski položaj objekata sa koordinatama", 1)
     replace(p, "Objekat ima otežan putni pristup", "Oba objekta imaju otežan putni pristup", 1)
+    # The Buyer supplies the PV modules, batteries and control system, but the tender never
+    # said who moves them from the warehouse to the site; that haul is LOT 2 work and is
+    # priced in Prilog II 5.19.
+    replace(p, "Originalni PV instalacioni materijal će obezbijediti Kupac.",
+            "Originalni PV instalacioni materijal će obezbijediti Kupac. Preuzimanje opreme "
+            "Kupca u skladištu BH Telecom-a (Azići, Bojnička bb, Sarajevo), prevoz do lokacije "
+            "i istovar su obaveza Ponuđača i dio LOT 2 (Prilog I, Tačka 4.9; Prilog II, "
+            "stavka 5.19).", 1)
     # the Sjednica template pencilled Hamzići in as a possible substitute site;
     # in the joint tender it is one of the two sites
     replace(p, "zamjensku lokaciju sličnih karakteristika (Hamzići?), ili",

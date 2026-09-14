@@ -200,8 +200,9 @@ zapremine tu provjeru ne zatvara vlastitom težinom. Pošto traka ispunjava rov,
 ## 4. LOT 2 — Dizel električni agregat i instalacije (obje lokacije)
 
 Na svakoj lokaciji se u postojeći kontejner ugrađuje po jedan agregat sa spremnikom
-goriva. Tačke 4.1–4.7 vrijede za obje lokacije; raspored otvora, izduv i instalacije
-razlikuju se po lokaciji i dati su u Tačkama 4.3–4.5; Tačka 4.8 je samo za Hamziće.
+goriva. Tačke 4.1–4.7 i 4.9 vrijede za obje lokacije; raspored otvora, izduv i
+instalacije razlikuju se po lokaciji i dati su u Tačkama 4.3–4.5; Tačka 4.8 je samo za
+Hamziće.
 
 ### 4.1 Agregat
 
@@ -424,6 +425,24 @@ aktivaciji gašenja **zasebno su iskazani u Prilogu II**.
 - otvori u zidu ostaju za izlaz toplog zraka agregata (Tačka 4.3.B); natpisnu pločicu i
   mjere otvora Ponuđač očitava pri obilasku lokacije
 
+### 4.9 Preuzimanje i transport opreme Kupca — obje lokacije
+
+Opremu hibridnog sistema nabavlja Kupac i predaje je Ponuđaču u svom skladištu.
+Ponuđač je preuzima, prevozi na lokaciju i ugrađuje. Prevoz i rukovanje su dio
+LOT 2 i iskazuju se u Prilogu II, po lokaciji.
+
+| Element | Zahtjev |
+|---|---|
+| Oprema Kupca | fotonaponski moduli iPV585-M2A (12 kom po lokaciji), PVDB 500-15-2B, ispravljači iSSU S4875G2, baterijski moduli LFP i ormar ICC360-HA1-C1 sa pripadajućim modulima; tačan spisak Kupac daje uz narudžbu |
+| Mjesto preuzimanja | skladište BH Telecom d.d., **Azići, Bojnička bb, Sarajevo** |
+| Mjesto isporuke | BS Sjednica (Bileća) i BS Hamzići (Čitluk) — svaka lokacija zasebno |
+| Obuhvat | utovar, osiguranje i učvršćenje tereta, prevoz, istovar na lokaciji i unos do mjesta ugradnje |
+| Vozilo | zatvoreno ili natkriveno vozilo; pristupni put do BS Hamzići je makadam ≈800 m × 3 m, pa Ponuđač bira vozilo koje njime prolazi |
+| Rukovanje | FN moduli u originalnoj ambalaži, uspravno, bez oslanjanja na staklo; baterijski moduli prema uputstvu proizvođača (temperatura, položaj, zaštita polova); ormar bez udara i naginjanja preko dozvoljenog ugla |
+| Termin | preuzimanje se najavljuje skladištu najmanje 3 radna dana ranije; prevoz se usklađuje sa dinamikom montaže — oprema se ne skladišti na lokaciji duže nego što montaža traži |
+| Dokumenti | otpremnica skladišta pri preuzimanju i **zapisnik o preuzimanju opreme na lokaciji** (spisak, količine, stanje ambalaže, serijski brojevi), potpisan od Ponuđača i Kupca |
+| Odgovornost | od potpisa otpremnice do zapisnika o primopredaji radova opremu čuva Ponuđač; oštećenu ili izgubljenu opremu nadoknađuje o svom trošku |
+
 ---
 
 ## 5. Dokazi koji se dostavljaju
@@ -450,6 +469,7 @@ lokaciju**.
 | 11 | Ispitni protokoli elektroinstalacija i otpora uzemljenja (≤10 Ω), po lokaciji | 2 | PRIMOPREDAJA |
 | 12 | Protokol o parametriranju i funkcionalnom ispitivanju integracije DEA–PV–baterija, po lokaciji, uključujući postavljeno ograničenje od 9,5 kW, start pri DOD 85 %, stop pri SoC 60 %, struju punjenja uz potvrdu proizvođača baterija i najkraće vrijeme rada | 2 | PRIMOPREDAJA |
 | 13 | Zapisnik o primopredaji demontiranog klima-uređaja Stulz WDE80 u skladištu Alipašino Polje (Hamzići) | 2 | REALIZACIJA |
+| 14 | Otpremnica skladišta Azići (Bojnička bb) i zapisnik o preuzimanju opreme Kupca na lokaciji, po lokaciji (Tačka 4.9) | 2 | REALIZACIJA |
 
 ## 6. Ispitivanja i puštanje u rad
 

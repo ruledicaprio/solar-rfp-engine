@@ -60,6 +60,7 @@ SINGLE_VALUE.update({
     "static calculation is a precondition for STARTING the works":
         r"uslov\s+(je\s+)?za\s+po[čc]inja\w*\s+radova|PO[ČC]ETAK\s+RADOVA",
     "foundation strip of one constant width": r"jedinstven\w*\s+[šs]irin\w*",
+    "Buyer equipment collected at Azići, Bojnička bb": r"Azi[ćc]i,?\s*Bojni[čc]ka",
 })
 
 CONFLICTS = dict(cc.CONFLICTS)
@@ -133,6 +134,13 @@ BANNED.update({
     "single-site title": r"NAPAJANJA\s+SJEDNICA,\s+BILEĆA\s+\(LOT",
     "single-site phrase in the Odluka": r"na\s+baznoj\s+stanici\s+Sjednica",
     "withdrawn 2017 grid connection presented as existing": r"priključen\w*\s+na\s+EES\s+preko",
+    # The Investor moved the Stulz to the middle of the JI (true south-east) wall on
+    # 11.09.2026. Legitimate east-wall text (the exhaust penetration, the Ø315 fan at
+    # Sjednica) never names the air conditioner, so pairing the two is always the
+    # withdrawn reading.
+    "Stulz on the plan-east wall (withdrawn, Naručilac 11.09.2026)":
+        r"[Kk]lima-?ure[đd]aj\w*[^.]{0,80}\bisto[čc]n|Stulz[^.]{0,80}\bisto[čc]n|"
+        r"\bisto[čc]n\w*\s+zid\w*[^.]{0,60}(Stulz|klima)",
     "2x2 portrait stand (superseded by 4x3L)": r"2\s*reda\s*×\s*2\s*(kolone|modula)",
     "south-facing field (superseded by SW)": r"orijentacij\w*\s+JUG\s*\(azimut",
     "Hamzići PV in the south strip (it is the JZ band)": r"pojasu\s+južno\s+od\s+ploče",

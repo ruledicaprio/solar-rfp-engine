@@ -47,7 +47,10 @@ FIGURES = {
 
 # Values that were wrong once and must not come back, and values that must be
 # there. The Sjednica lists carry over (same system); the Hamzići ones are new.
-FORBIDDEN = bp1.FORBIDDEN + [
+# One inherited rule does not apply here: the single-site Prilog I had no Tačka
+# 4.8, the joint one does (demontaža Stulza), so that ban would fire on a correct
+# cross-reference.
+FORBIDDEN = [r for r in bp1.FORBIDDEN if r[0] != "Tačku 4.8"] + [
     ("Čapljin", "Hamzići su u općini Čitluk"),
     ("AS 36 m", "stub na Hamzićima je 32 m"),
     ("Hamzići?", "zaostali upitnik iz nacrta"),
@@ -83,6 +86,9 @@ REQUIRED = [r for r in bp1.REQUIRED if r not in SUPERSEDED_REQUIRED] \
     # recenzija A. Čolpa, 27.08.2026
     "500 × 2600 mm, jedinstvene širine", "1,170 m³", "9,36 m³", "POČETAK RADOVA",
     "Tehničko rješenje konstrukcije", "se ne zadaju",
+    # preuzimanje i transport opreme Kupca (Tačka 4.9)
+    "Azići, Bojnička bb, Sarajevo", "Preuzimanje i transport", "otpremnica",
+    "iPV585-M2A (12 kom po lokaciji)",
 ]
 N_MEDIA = len(FIGURES)
 
@@ -206,8 +212,33 @@ def run(script):
     subprocess.run([sys.executable, path], check=True)
 
 
+def check_pvsim_matches_design():
+    """Refuse to build while each site's kpis.json was produced for a different array.
+
+    Prilog I §8, the INFO-02 pages and the proračuni all quote pvsim output, while §3.1
+    and the drawings come from cad/design.json. Nothing used to notice when the two
+    drifted apart, which is exactly how the 180° azimuth survived into a package whose
+    field faces 225°. Run `python -m pvsim run --site <id>` first.
+    """
+    import json
+    bad = []
+    for sid, site in paths.SITES.items():
+        d = json.load(open(os.path.join(site["folder"], "cad", "design.json"),
+                           encoding="utf-8"))["array"]
+        k = json.load(open(os.path.join(site["folder"], "review", "pvsim", "kpis.json"),
+                           encoding="utf-8"))["inputs"]["array"]
+        for key in ("tilt_deg", "azimuth_deg", "kWp"):
+            if d[key] != k[key]:
+                bad.append(f"{sid}: design.json {key}={d[key]} but kpis.json {key}={k[key]}")
+    if bad:
+        raise SystemExit("pvsim is out of date with the design:\n  " + "\n  ".join(bad)
+                         + "\n  run: python -m pvsim run --site sjednica"
+                           "  &&  python -m pvsim run --site hamzici")
+
+
 def main():
     os.makedirs(paths.TD, exist_ok=True)
+    check_pvsim_matches_design()
     print("1. figures");        figures()
     print("2. Prilog I");       prilog1()
     print("3. proračuni");      calculations()

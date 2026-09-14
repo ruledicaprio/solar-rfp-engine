@@ -208,6 +208,10 @@ def hamzici_data(doc):
                           "+3,0 m iznad krova kontejnera"),
         ("Klima-uređaj", "Stulz WDE80 (8 kW) na JI zidu — demontira se i odvozi u skladište "
                          "BH Telecom, Alipašino Polje"),
+        ("Oprema Kupca", "FN moduli, PVDB, ispravljači iSSU, baterije i ormar ICC360-HA1-C1 — "
+                         "posebna nabavka Naručioca. Preuzimanje u skladištu BH Telecom, "
+                         "Azići, Bojnička bb, Sarajevo, prevoz na lokaciju i istovar su u "
+                         "LOT 2 (Prilog I, Tačka 4.9; Prilog II, stavka 5.19)"),
         ("Priključak na EES", "NE — priključak projektovan 2017. godine nije izveden"),
         ("Snaga potrošača", "1.180 W nazivno / 1.330 W maksimalno — privremeno, do izmjerene "
                             "potrošnje"),

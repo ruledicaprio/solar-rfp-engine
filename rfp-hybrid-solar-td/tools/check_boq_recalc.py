@@ -310,12 +310,26 @@ def check_sjednica(wbs):
         wb = wbs[lot]
         sj, s = wb[jb.SHEET[lot, "sjednica"]], src[lot]
         a, b = jb.structure(sj)["items"], jb.structure(s)["items"]
-        if list(a) != list(b):
-            fail(f"{sj.title}: item list differs from the source")
+        # items added to BOTH site sheets are not in the source: expect them at their
+        # anchor position, and check them against what joint_boq declares, not the source
+        added = {n: (unit, qty, text)
+                 for n, after, unit, qty, text in jb.BOTH_SITES_NEW_ITEMS.get(lot, [])}
+        want_list = list(b)
+        for n, after, *_ in jb.BOTH_SITES_NEW_ITEMS.get(lot, []):
+            want_list.insert(want_list.index(after) + 1, n)
+        if list(a) != want_list:
+            fail(f"{sj.title}: item list differs from the source" +
+                 (f" + both-sites items {sorted(added)}" if added else ""))
         else:
             # expected = the source text, plus any typo fix the source does not carry yet
             bad, fixed = [], []
             for n in a:
+                if n in added:
+                    unit, qty, text = added[n]
+                    if (sj.cell(a[n], 2).value, sj.cell(a[n], 3).value,
+                            sj.cell(a[n], 4).value) != (text, unit, qty):
+                        bad.append(n)
+                    continue
                 want = s.cell(b[n], 2).value
                 pairs = jb.BOTH_SITES_EDITS.get(lot, {}).get(n)
                 if pairs:
@@ -333,7 +347,8 @@ def check_sjednica(wbs):
             if bad:
                 fail(f"{sj.title}: differs from the source in {bad}")
             else:
-                ok(f"{sj.title}: equal to the source ({len(a)} items)"
+                ok(f"{sj.title}: equal to the source ({len(b)} items)"
+                   + (f" + {len(added)} both-sites item(s) {sorted(added)}" if added else "")
                    + (f"; typo fixes the source lacks: {fixed}" if fixed
                       else "; every typo fix is already in the source"))
         hz = wb[jb.SHEET[lot, "hamzici"]]

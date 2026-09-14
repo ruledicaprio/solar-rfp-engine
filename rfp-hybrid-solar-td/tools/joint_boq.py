@@ -353,6 +353,36 @@ NEW_ITEMS = {
     ],
 }
 
+# New items added to BOTH site sheets of a LOT, same text, unit and quantity, so they are
+# not Hamzići-only changes and never show up in EXPECTED_CHANGES. Same shape as NEW_ITEMS.
+# 5.19 closes a gap the source workbook carried: the Buyer supplies the PV modules, PVDB,
+# rectifiers, batteries and the ICC360 cabinet (TD JN, "posebna nabavka"), but nothing in
+# the tender said who collects them from the warehouse and hauls them to site.
+BOTH_SITES_NEW_ITEMS = {
+    "LOT 2": [
+        ("5.19", "5.18", "kpl", 1,
+         "Preuzimanje opreme Kupca u skladištu BH Telecom d.d. AZIĆI, Bojnička bb, Sarajevo, "
+         "transport do lokacije, istovar i unos do mjesta ugradnje.\n"
+         "OPREMA KUPCA (posebna nabavka): fotonaponski moduli iPV585-M2A (12 kom), PVDB "
+         "500-15-2B, ispravljači iSSU S4875G2, baterijski moduli LFP i ormar hibridnog sistema "
+         "ICC360-HA1-C1 sa pripadajućim modulima. Tačan spisak i mase Kupac daje uz narudžbu.\n"
+         "Stavka obuhvata:\n"
+         " - utovar u skladištu, osiguranje i učvršćenje tereta, prevoz zatvorenim ili "
+         "natkrivenim vozilom, istovar na lokaciji i unos do mjesta ugradnje\n"
+         " - vozilo prilagođeno pristupnom putu lokacije (makadam) — Ponuđač ga bira pri "
+         "obilasku lokacije\n"
+         " - rukovanje prema uputstvu proizvođača: FN moduli u originalnoj ambalaži i uspravno, "
+         "bez oslanjanja na staklo; baterijski moduli uz zaštitu polova i dozvoljenu "
+         "temperaturu; ormar bez udara i naginjanja preko dozvoljenog ugla\n"
+         " - najava skladištu najmanje 3 radna dana prije preuzimanja; prevoz usklađen sa "
+         "dinamikom montaže — oprema se na lokaciji ne skladišti duže nego što montaža traži\n"
+         " - otpremnica skladišta pri preuzimanju i zapisnik o preuzimanju opreme na lokaciji "
+         "(spisak, količine, stanje ambalaže, serijski brojevi), potpisan od Ponuđača i Kupca\n"
+         "Od potpisa otpremnice do zapisnika o primopredaji radova za opremu odgovara Ponuđač. "
+         "Zahtjevi: Prilog I, Tačka 4.9."),
+    ],
+}
+
 EXPECTED_CHANGES = {
     "LOT 1": sorted(set(HAMZICI_LOT1_EDITS) | {n for n, *_ in NEW_ITEMS["LOT 1"]}),
     "LOT 2": sorted(set(HAMZICI_EDITS) | set(HAMZICI_QTY) | set(HAMZICI_REPLACE)
@@ -629,6 +659,7 @@ def site_sheet(wb, src, lot, site, lot1_src, log):
     ws.cell(lot_row, 2).value = f"UKUPNO {lot} — {SITE[site]['up']} (bez PDV-a):"
     apply_text_edits(ws, BOTH_SITES_EDITS.get(lot, {}), log, "source typo fix", idempotent=True)
     apply_note_edits(ws, BOTH_SITES_NOTE_EDITS.get(lot, {}), log, idempotent=True)
+    insert_new_items(ws, BOTH_SITES_NEW_ITEMS.get(lot, []), log)
 
     for sec, (_, _, rsub) in s["sections"].items():      # label clipped in column A
         a, b = ws.cell(rsub, 1), ws.cell(rsub, 2)
@@ -689,7 +720,7 @@ def apply_note_edits(ws, edits, log, idempotent=False):
 
 def apply_hamzici_lot1(ws, log):
     apply_text_edits(ws, HAMZICI_LOT1_EDITS, log)
-    insert_new_items(ws, "LOT 1", log)
+    insert_new_items(ws, NEW_ITEMS["LOT 1"], log)
 
 
 def apply_hamzici_lot2(ws, log):
@@ -708,7 +739,7 @@ def apply_hamzici_lot2(ws, log):
             raise ValueError(f"{ws.title} {n}: unit {ws.cell(r, 3).value!r} != {unit!r}")
         log.append(f"{n}: qty {ws.cell(r, 4).value} -> {qty} {unit}")
         ws.cell(r, 4).value = qty
-    insert_new_items(ws, "LOT 2", log)
+    insert_new_items(ws, NEW_ITEMS["LOT 2"], log)
 
 
 def minor(n):
@@ -716,10 +747,10 @@ def minor(n):
     return int(re.match(r"\d+", n.split(".")[1]).group(0))
 
 
-def insert_new_items(ws, which, log):
-    """NEW_ITEMS[which]: each row goes right after its anchor item; its number must be free
-    and fall numerically between the anchor and the section's next item."""
-    for n, after, unit, qty, text in NEW_ITEMS[which]:
+def insert_new_items(ws, rows, log):
+    """Each (item, after, unit, qty, text) row goes right after its anchor item; its number
+    must be free and fall numerically between the anchor and the section's next item."""
+    for n, after, unit, qty, text in rows:
         items = structure(ws)["items"]
         sec = n.split(".")[0]
         if n in items or after.split(".")[0] != sec:
@@ -936,7 +967,10 @@ def build(lot):
     wb.active = 0
     wb.calculation.fullCalcOnLoad = True
 
-    validate(wb, lot, {SHEET[lot, "sjednica"]: snap})
+    # A Sjednica sheet is a verbatim copy of its source unless a both-sites item was
+    # inserted into it, which shifts every formula below the new row; validate() still
+    # checks those sheets structurally (line formulas, section SUMs, LOT sum).
+    validate(wb, lot, {} if BOTH_SITES_NEW_ITEMS.get(lot) else {SHEET[lot, "sjednica"]: snap})
     out = OUT[lot]
     os.makedirs(os.path.dirname(out), exist_ok=True)
     wb.save(out)

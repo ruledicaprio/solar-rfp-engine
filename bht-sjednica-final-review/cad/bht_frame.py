@@ -309,7 +309,11 @@ def draw_frame(msp, scale, naziv, broj, razmjera, godina="2026.",
     lbl("razmjera:", 121, 11.4);      val(razmjera, 121, 7.4, 3.4)
     # band 0..6 - split at 62 and 118
     lbl("Projektant:", 3, 4.2);       val(projektant, 3, 1.0, 2.3)
-    lbl("ovjerio:", 65, 4.2);         val(ovjerio, 65, 1.0, 2.3)
+    # an empty `ovjerio` leaves the ruled field for a wet signature instead of naming
+    # the designer as their own checker; the label stays so the field is still marked
+    lbl("ovjerio:", 65, 4.2)
+    if ovjerio:
+        val(ovjerio, 65, 1.0, 2.3)
     lbl("godina / broj crteža:", 121, 4.2)
     val(f"{godina}    {broj}", 121, 1.0, 2.8)
 
