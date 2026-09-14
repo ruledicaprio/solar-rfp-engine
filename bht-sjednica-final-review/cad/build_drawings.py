@@ -22,16 +22,18 @@ Drawing frame convention for these sheets: +X = EAST, +Y = NORTH.
 """
 from __future__ import annotations
 
+import itertools
 import json
 import math
 import os
 import sys
 
 import ezdxf
+from ezdxf import bbox
 from ezdxf.enums import TextEntityAlignment as TA
 
-from bht_frame import (A3_H, A3_W, MARGIN, MARGIN_L, TB_W, draw_frame, new_doc,
-                       north_arrow, scale_bar, _txt)
+from bht_frame import (A3_H, A3_W, MARGIN, MARGIN_L, TB_H, TB_W, draw_frame,
+                       new_doc, north_arrow, scale_bar, _txt)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(HERE), "tools"))
@@ -249,7 +251,9 @@ def sheet_s01():
 
     # parcel is placed first, then the compound is derived from it, so the
     # 16.00 x 9.40 m plot fills the drawing window at 1:50
-    PX, PY = 2600, 4500
+    # PY lifts the plan clear of the title block, whose top edge is at y = 2900
+    # at 1:50; at 4500 the parcel's bottom-right corner sat behind it
+    PX, PY = 2600, 4900
     ox, oy = PX + 8000 - 2750, PY + 4700 - 2750
     k = site_plan(msp, ox, oy, SC)
     sx, sy, S = k["slab"]
@@ -262,7 +266,7 @@ def sheet_s01():
     dim_v(msp, sy, sy + S, sx + S, SC, off=900)
     dim_h(msp, cx, cx + CW, cy, SC, off=-1100)
     dim_v(msp, cy, cy + CH, cx, SC, off=-1100)
-    dim_h(msp, px, px + pw, py, SC, off=-1400)
+    dim_h(msp, px, px + pw, py + ph, SC, off=1500)
     dim_v(msp, py, py + ph, px + pw, SC, off=1400)
 
     # annotation - leaders aim into the free strips west and east of the compound
@@ -284,8 +288,8 @@ def sheet_s01():
 
     _txt(msp, "slobodna površina parcele — prostor za buduće nosače FN panela",
          ox + F / 2, py + 750, 2.2 * SC, layer="Tekst", color=8, align=TA.CENTER)
-    _txt(msp, "J U G O Z A P A D", ox + F / 2, py - 1900, 3.2 * SC, layer="Orijentacija",
-         color=1, align=TA.CENTER)
+    _txt(msp, "J U G O Z A P A D", ox + F / 2 - 500, py - 1400, 3.2 * SC,
+         layer="Orijentacija", color=1, align=TA.CENTER)
 
     north_arrow(msp, 19500, 11700, 1700,
                 plan_north=_design()["orientation"]["plan_north_bearing_deg"])
@@ -300,9 +304,8 @@ def sheet_s01():
         (2,   "postojeći prstenasti uzemljivač Fe/Zn 25×4 mm"),
     ])
 
-    note_block(msp, 6400, 3950, SC, "NAPOMENA:", [
-        "Geometrija preuzeta iz ovjerenog projekta lokacije",
-        "(SITE-PROJECT-SJEDNICA-Bileca-K2-S38-m, 01 Situacija 1_200).",
+    note_block(msp, 6400, 3400, SC, "NAPOMENA:", [
+        "Geometrija iz ovjerenog projekta lokacije (01 Situacija 1_200).",
     ])
     return doc
 
@@ -313,6 +316,66 @@ SHEETS = {"S-01": sheet_s01}
 # so every sheet shares one style definition.
 import sheets_new                                                   # noqa: E402
 SHEETS.update(sheets_new.register(sys.modules[__name__]))
+
+
+# --------------------------------------------------------------------------
+# layout check: text off the sheet, text in the title block, text on text.
+# Lives here so both sites run the same gate (it grew on the Hamzići build).
+# --------------------------------------------------------------------------
+def _label(e):
+    t = e.dxftype()
+    if t in ("TEXT", "MTEXT"):
+        s = e.dxf.text if t == "TEXT" else e.plain_text()
+        return f"{t} '{s[:50]}'"
+    return f"{t} [{e.dxf.layer}]"
+
+
+def _text_boxes(e, cache):
+    """(label, (x0, y0, x1, y1)) for a TEXT, or for the text inside a DIMENSION."""
+    if e.dxftype() == "TEXT":
+        items = [e]
+    elif e.dxftype() == "DIMENSION":
+        items = [v for v in e.virtual_entities() if v.dxftype() in ("TEXT", "MTEXT")]
+    else:
+        return []
+    out = []
+    for it in items:
+        b = bbox.extents([it], cache=cache if it is e else None)
+        if not b.has_data:
+            continue
+        (x0, y0, _), (x1, y1, _) = b.extmin, b.extmax
+        # shave a margin so glyphs that merely touch are not reported
+        s = 0.12 * min(x1 - x0, y1 - y0)
+        out.append((_label(it) if it is e else f"DIM '{_label(it)[6:]}",
+                    (x0 + s, y0 + s, x1 - s, y1 - s)))
+    return out
+
+
+def layout_check(doc, sc):
+    frame = getattr(doc, "hz_frame_handles", set())
+    fx0, fy0 = MARGIN_L * sc, MARGIN * sc
+    fx1, fy1 = (A3_W - MARGIN) * sc, (A3_H - MARGIN) * sc
+    tb = ((A3_W - MARGIN - TB_W) * sc, MARGIN * sc,
+          (A3_W - MARGIN) * sc, (MARGIN + TB_H) * sc)
+    cache = bbox.Cache()
+    outside, in_tb, boxes = [], [], []
+    for e in doc.modelspace():
+        if e.dxf.handle in frame:
+            continue
+        b = bbox.extents([e], cache=cache)
+        if not b.has_data:
+            continue
+        (x0, y0, _), (x1, y1, _) = b.extmin, b.extmax
+        if x0 < fx0 - 1 or y0 < fy0 - 1 or x1 > fx1 + 1 or y1 > fy1 + 1:
+            outside.append(_label(e))
+        if x1 > tb[0] + 1 and x0 < tb[2] - 1 and y1 > tb[1] + 1 and y0 < tb[3] - 1:
+            in_tb.append(_label(e))
+        boxes += _text_boxes(e, cache)
+    overlaps = []
+    for (la, a), (lb, b) in itertools.combinations(boxes, 2):
+        if a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3]:
+            overlaps.append(f"{la}  x  {lb}")
+    return outside, in_tb, overlaps
 
 
 def check_extents(doc, name, scale):
@@ -356,13 +419,23 @@ SHEET_SCALE = {"S-01": 50, "S-02": 50, "S-03": 30, "M-01": 25, "E-01": 50}
 def build(names=None):
     os.makedirs(OUT, exist_ok=True)
     made = []
+    print("DXF + extents checks:")
     for name in (names or SHEETS):
+        sc = SHEET_SCALE[name]
         doc = SHEETS[name]()
-        check_extents(doc, name, SHEET_SCALE[name])
+        check_extents(doc, name, sc)           # hard gate: SystemExit if off the A3 sheet
+        outside, in_tb, overlaps = layout_check(doc, sc)
+        n = len(outside) + len(in_tb) + len(overlaps)
+        print(f"  {'OK ' if not n else 'WARN'} {name}  1:{sc}  check_extents OK  "
+              f"outside-frame={len(outside)}  in-title-block={len(in_tb)}  "
+              f"text-overlaps={len(overlaps)}")
+        for tag, rows in (("outside", outside), ("title block", in_tb),
+                          ("overlap", overlaps)):
+            for r in rows[:12]:
+                print(f"       {tag}: {r}")
         p = os.path.join(OUT, f"{name}.dxf")
         doc.saveas(p)
         made.append(p)
-        print("wrote", p)
     return made
 
 

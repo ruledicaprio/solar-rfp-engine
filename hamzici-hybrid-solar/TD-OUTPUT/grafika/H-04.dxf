@@ -489,7 +489,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461298.2912962963
+2461298.324340278
   9
 $TDUCREATE
  40
@@ -497,7 +497,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2461298.2912962963
+2461298.324340278
   9
 $TDUUPDATE
  40
@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-1F9
+1F1
   9
 $SURFTAB1
  70
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{9A856525-BF49-4360-9ACA-38F12D1CBB6E}
+{0CBC4B00-1422-4335-AFD0-9E8C92C5C534}
   9
 $VERSIONGUID
   2
-{A1CAB85B-757B-48A6-8BFE-F6865EAC1D7A}
+{F81CBAFF-27AE-4706-B719-4FC94CDABBEF}
   9
 $EXTNAMES
 290
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -3745,7 +3745,7 @@ ACAD
   0
 APPID
   5
-1F6
+1EE
 330
 3
 100
@@ -3759,7 +3759,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-1F7
+1EF
 330
 3
 100
@@ -21091,7 +21091,7 @@ AcDbText
  40
 52.5
   1
-1  DEA FG Wilson P18-6 (Skid) ili ekv., 18 kVA / 14,4 kW, pobuda PMG ili AREP/AUX; os SZ–JI u sredini, hladnjak JI.
+1  DEA FG Wilson P18-6 (skid) ili ekv., 18 kVA / 14,4 kW; os SZ–JI, hladnjak JI.
   7
 20
  11
@@ -21125,7 +21125,7 @@ AcDbText
  40
 52.5
   1
-2  RASPORED (obavezujući): Stulz je u sredini JUGOISTOČNOG (JI) zida — izlaz zraka hladnjaka kroz njegove otvore,
+2  Izlaz zraka kroz postojeće otvore Stulz (sredina JI zida), ≥0,36 m² bruto, limeni plenum i hauba 700 × 600 — topli zrak NAVIŠE.
   7
 20
  11
@@ -21159,7 +21159,7 @@ AcDbText
  40
 52.5
   1
-    spojene/proširene na ≥0,36 m² bruto (npr. 600 × 600), limeni plenum; višak otvora zatvoriti panelom 60 mm.
+3  Usis 500 × 700 na SI zidu (+0,30). Izduv NO 50 kroz JI zid na ≈+2,30 m, ispod platforme stuba.
   7
 20
  11
@@ -21193,7 +21193,7 @@ AcDbText
  40
 52.5
   1
-3  Vani hauba 700 × 600, zatvorenih bočnih strana, rešetka na vrhu (+1,30): topli zrak ide NAVIŠE.
+4  GRO ≤500 × 250 × 800 na SZ zidu; spremnik 500 l dvoplašni u koritu 1150 × 640; roštilj OBAVEZAN pod skidom i koritom.
   7
 20
  11
@@ -21227,7 +21227,7 @@ AcDbText
  40
 52.5
   1
-4  Usis 500 × 700 na SI zidu (+0,30, novo, uz alternator). Izduv NO 50 iz JZ prolaza kroz JI zid na ≈+2,30 m,
+5  Servisni prolazi 780 / 780 mm i 965 mm do GRO; unos skida 620 mm kroz vrata 990 mm.
   7
 20
  11
@@ -21261,7 +21261,7 @@ AcDbText
  40
 52.5
   1
-    ispod platforme stuba; prigušivač, hvatač iskri, kapa; završetak ≥0,40 m od zida (3,25 m od usisa).
+6  Ventilator Ø315 (JI, izvlačni, D4) i DC razvod −48 V istočno od vrata — H-05.
   7
 20
  11
@@ -21295,285 +21295,13 @@ AcDbText
  40
 52.5
   1
-5  GRO ≤500 × 250 × 800 mm na SZ zidu, jugozapadno od vrata (zid 595 mm); roštilj OBAVEZAN pod skidom i koritom.
+7  Raspored je principijelan; mjere otvora i servisne tačke potvrđuje Ponuđač na licu mjesta. Zahtjevi: Prilog I, Tačka 4.
   7
 20
  11
 600.0
  21
 933.25
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1EE
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-600.0
- 20
-857.125
- 30
-0.0
- 40
-52.5
-  1
-6  Spremnik 500 l DVOPLAŠNI u koritu 1150 × 640, rub 200 mm, u SJEVERNOM uglu (SZ × SI zid).
-  7
-20
- 11
-600.0
- 21
-857.125
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1EF
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-600.0
- 20
-781.0
- 30
-0.0
- 40
-52.5
-  1
-7  SERVIS: prolazi JZ / SI po 780 / 780 mm, 965 mm do GRO; od vrata do korita 945 mm slobodno.
-  7
-20
- 11
-600.0
- 21
-781.0
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1F0
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-600.0
- 20
-704.875
- 30
-0.0
- 40
-52.5
-  1
-8  Unos: skid 620 mm kroz vrata svijetle širine 990 mm, pravo po osi; najprije agregat, zatim spremnik.
-  7
-20
- 11
-600.0
- 21
-704.875
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1F1
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-600.0
- 20
-628.75
- 30
-0.0
- 40
-52.5
-  1
-9  Ventilator Ø315 na JI zidu gore je IZVLAČNI (EC 48 V DC, D4). ICC360-HA1-C1 i MTS vani na JZ strani (H-02).
-  7
-20
- 11
-600.0
- 21
-628.75
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1F2
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-600.0
- 20
-552.625
- 30
-0.0
- 40
-52.5
-  1
-10 Odušak spremnika kroz SZ zid — principijelno: 4,73 m od izduva, 3,23 m od usisa; konačno prema elaboratu ZOP.
-  7
-20
- 11
-600.0
- 21
-552.625
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1F3
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-600.0
- 20
-476.5
- 30
-0.0
- 40
-52.5
-  1
-11 DC razvod −48 V ≈300 × 200 × 150 istočno od vrata: rasvjeta prepreke, vatrodojava, punjač aku., ventilator, predgrijač, D5.
-  7
-20
- 11
-600.0
- 21
-476.5
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1F4
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-600.0
- 20
-400.375
- 30
-0.0
- 40
-52.5
-  1
-12 Rasvjeta: LED 230 V AC iz GRO (F2, radi dok DEA radi) i LED 48 V DC (D5) sa prekidačem uz vrata.
-  7
-20
- 11
-600.0
- 21
-400.375
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1F5
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-600.0
- 20
-324.25
- 30
-0.0
- 40
-52.5
-  1
-13 Raspored je principijelan — Ponuđač ga potvrđuje na licu mjesta (mjere otvora Stulz, servisne tačke agregata).
-  7
-20
- 11
-600.0
- 21
-324.25
  31
 0.0
 100
@@ -22669,7 +22397,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-1F8
+1F0
   0
 DICTIONARYVAR
   5
@@ -22681,7 +22409,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-09-14T06:59:28.862915+00:00
+1.4.4 @ 2026-09-14T07:47:03.066296+00:00
   0
 VISUALSTYLE
   5
@@ -23385,7 +23113,7 @@ X-Ray
   0
 DICTIONARYVAR
   5
-1F8
+1F0
 330
 2D
 100
@@ -23393,7 +23121,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-09-14T06:59:28.912307+00:00
+1.4.4 @ 2026-09-14T07:47:03.115387+00:00
   0
 ENDSEC
   0
