@@ -489,7 +489,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461298.2912847223
+2461298.326585648
   9
 $TDUCREATE
  40
@@ -497,7 +497,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2461298.2912847223
+2461298.326585648
   9
 $TDUUPDATE
  40
@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-152
+151
   9
 $SURFTAB1
  70
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{87469B47-4E5B-4FD9-AA3F-4278B6F53010}
+{3E9B8D2B-0175-4877-B359-0D8771766FD2}
   9
 $VERSIONGUID
   2
-{8D8354F1-D0D9-495F-AD83-D9FD7CE5F9D5}
+{BC205989-90F4-4151-B560-C592417790BC}
   9
 $EXTNAMES
 290
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -3745,7 +3745,7 @@ ACAD
   0
 APPID
   5
-14F
+14E
 330
 3
 100
@@ -3759,7 +3759,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-150
+14F
 330
 3
 100
@@ -6909,7 +6909,7 @@ AcDbLine
  30
 0.0
  11
-240.0
+640.0
  21
 2600.0
  31
@@ -6933,7 +6933,7 @@ AcDbLine
  30
 0.0
  11
-240.0
+640.0
  21
 5534.0
  31
@@ -6953,7 +6953,7 @@ AcDbBlockReference
   2
 _ARCHTICK
  10
-300.0
+700.0
  20
 2600.0
  30
@@ -6979,7 +6979,7 @@ AcDbBlockReference
   2
 _ARCHTICK
  10
-300.0
+700.0
  20
 5534.0
  30
@@ -7003,13 +7003,13 @@ AcDbEntity
 100
 AcDbLine
  10
-300.0
+700.0
  20
 2600.0
  30
 0.0
  11
-300.0
+700.0
  21
 3917.0
  31
@@ -7027,13 +7027,13 @@ AcDbEntity
 100
 AcDbLine
  10
-300.0
+700.0
  20
 4217.0
  30
 0.0
  11
-300.0
+700.0
  21
 5534.0
  31
@@ -7051,7 +7051,7 @@ Kote
 100
 AcDbMText
  10
-300.0
+700.0
  20
 4067.0
  30
@@ -7077,7 +7077,7 @@ Defpoints
 100
 AcDbPoint
  10
-300.0
+700.0
  20
 2600.0
  30
@@ -16297,13 +16297,13 @@ AcDbDimension
   3
 M 30
  10
-300.0
+700.0
  20
 2600.0
  30
 0.0
  11
-300.0
+700.0
  21
 4067.0
  31
@@ -16459,11 +16459,11 @@ AcDbPolyline
  10
 6434.0
  20
-5400.0
+6300.0
  10
 6494.0
  20
-5400.0
+6300.0
   0
 CIRCLE
   5
@@ -16503,7 +16503,7 @@ AcDbText
  10
 6512.0
  20
-5376.9
+6276.9
  30
 0.0
  40
@@ -16515,7 +16515,7 @@ postojeća ograda h=2,10 m
  11
 6512.0
  21
-5376.9
+6276.9
  31
 0.0
 100
@@ -16577,7 +16577,7 @@ AcDbText
  40
 63.0
   1
-1  Polje: 3 reda × 1 modul 585 Wp, položeno; horizontalna projekcija 2434 mm pri 45°; 4 odvojena nosača u nizu.
+1  Polje: 3 reda × 1 modul 585 Wp, položeno; projekcija 2434 mm pri 45°; 4 odvojena nosača u nizu.
   7
 20
  11
@@ -16611,7 +16611,7 @@ AcDbText
  40
 63.0
   1
-2  Dvije temeljne trake po nosaču 500 × 2600 mm, dubina 900 mm, razmak 1600 mm
+2  Dvije trake po nosaču 500 × 2600 mm, d = 900 mm, razmak 1600 mm; C30/37, armatura B500B.
   7
 20
  11
@@ -16645,7 +16645,7 @@ AcDbText
  40
 63.0
   1
-    (druga je iza ravni presjeka); beton C30/37 (XC4+XF3), armatura B500B.
+3  Donja ivica panela +0,50 m, gornja +2,93 m.
   7
 20
  11
@@ -16679,47 +16679,13 @@ AcDbText
  40
 63.0
   1
-3  Donja ivica panela +0,50 m, gornja +2,93 m.
+4  Postojeća ograda h = 2,10 m (projekat lokacije, 04 Ograda).
   7
 20
  11
 700.0
  21
 1153.9500000000003
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-14E
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-700.0
- 20
-1062.6000000000004
- 30
-0.0
- 40
-63.0
-  1
-4  Postojeća ograda h=2,10 m prema projektu lokacije (04 Ograda).
-  7
-20
- 11
-700.0
- 21
-1062.6000000000004
  31
 0.0
 100
@@ -17815,7 +17781,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-151
+150
   0
 DICTIONARYVAR
   5
@@ -17827,7 +17793,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-09-14T06:59:27.978472+00:00
+1.4.4 @ 2026-09-14T07:50:17.747786+00:00
   0
 VISUALSTYLE
   5
@@ -18531,7 +18497,7 @@ X-Ray
   0
 DICTIONARYVAR
   5
-151
+150
 330
 2D
 100
@@ -18539,7 +18505,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-09-14T06:59:27.993768+00:00
+1.4.4 @ 2026-09-14T07:50:17.771228+00:00
   0
 ENDSEC
   0

@@ -437,10 +437,9 @@ def site_data_page(doc):
                             f"{fence:.2f} m".replace(".", ",")),
         ("Antenski stub", "Rešetkasta izvedba, visina 38 m; baza 4,20 m (dno) / "
                           "1,20 m (vrh)"),
-        ("Priključak na EES", "NE — lokacija nije priključena na "
-                              "elektroenergetsku mrežu"),
+        ("Priključak na EES", "Nema"),
         ("TK oprema", "Huawei RRU (3 kom) + BBU/MPLS, −48 VDC"),
-        ("Snaga potrošača", "1.180 W nazivno / 1.330 W maksimalno (sa hlađenjem)"),
+        ("Snaga potrošača", "1.180 W nazivno / 1.330 W maksimalno"),
         ("Sistem napajanja", "Hibridni: FN moduli (primarni) + LFP baterije + "
                              "DEA (rezervni)"),
         ("FN konfiguracija", f"{a['modules_total']} × "
@@ -453,8 +452,8 @@ def site_data_page(doc):
                 f"≤{d['control']['rect_cap_ac_kw']} kW".replace(".", ",")),
         ("Spremnik goriva", f"Dvoplašni, {tk['litres']} l, sa nivo sondom i "
                             f"detekcijom curenja"),
-        ("Orijentacija", "vrata JI, hladnjak DEA SZ, FN polje JZ; ormari ICC i MTS SI "
-                         "(Google Maps, Naručilac 11.09.2026)"),
+        ("Orijentacija", "Vrata JI, hladnjak DEA SZ, FN polje JZ; ormari ICC360 i "
+                         "MTS SI"),
         ("Očekivani rad agregata", f"{r10(e['genset_h_mean'])}~{r10(e['genset_h_p90'])} "
                                    f"h/god"),
     ]
