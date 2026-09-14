@@ -275,7 +275,7 @@ geometrijska referenca.
 | Horizontalna projekcija pri 45° | **2434 mm** |
 | Broj nosača | **4** (PV-1 … PV-4) → ukupno **12 modula = 7,02 kWp** |
 | Niz | 4 × 2278 + 3 × 400 = **10 312 mm**, na JZ platou (zakup 16 × 9,4 m), **400 mm od ograde**, azimut 225° |
-| Masa nosača (procjena) | ≈95 kg — potvrđuje izrađivač proračunom |
+| Masa nosača | **ne zadaje se** — utvrđuje je izrađivač ovjerenim proračunom; u dokazu na podizanje se zanemaruje (v. B.5) |
 
 **Zašto 4 × 1×3 (odluka Naručioca 11.09.2026.):** odvojene male ploče umjesto jednog
 velikog „jedra", niže polje i manji moment po nosaču (B.5), i **isti nosač na obje
@@ -302,16 +302,23 @@ tu ne staje.
 |---|---|
 | Površina izložena vjetru | **7,84 m²** (2278 × 3442 mm) |
 | Krak težišta iznad terena | **1,717 m** |
-| **ULS uzgon** | **13,3 kN** — ne zavisi od visine |
+| **ULS uzgon** | **14,1 kN** — ne zavisi od visine |
 | **Horizontalna sila** | **10,0 kN** |
 | **Moment prevrtanja** | **25,7 kNm** |
 | **Spreg po traci**, razmak 1600 mm | **16,1 kN** |
 
 Krak težišta: `c = b + (3,442/2)·sin45° = b + 1,217 m`.
-Sila: `F = c_f · qp · A = 1,5 · 1,20 · 7,84 = 14,1 kN`, `F_h = F · sin45° = 10,0 kN`.
+Sila: `F = c_f · qp · A = 1,5 · 1,20 · 7,84 = 14,1 kN`, `F_h = F · sin45° = 10,0 kN`,
+`F_v = F · cos45° = 10,0 kN`.
 Moment: `M = 1,5 · F_h · c = 1,5 · 10,0 · 1,717 = 25,7 kNm` (`pvsim/stands.py`, raspored
 4x3L). Zamijenjeni nosač 2×2 portret (3 × 4 modula) imao je 42,6 kNm po nosaču — novi
 je za 40 % niži, a gornja ivica 0,8 m niža.
+
+Uzgon: `1,5 · F_v − 0,9 · G = 1,5 · 9,98 − 0,9 · 0,94 = 14,1 kN`. **Vlastita težina
+konstrukcije se zanemaruje** — kao povoljno dejstvo ona smanjuje uzgon, pa je njeno
+izostavljanje na strani sigurnosti; u `G` ulaze samo moduli (3 × 32 kg = 0,94 kN).
+Stvarnu masu nosača utvrđuje izrađivač ovjerenim proračunom i ona ovaj dokaz može samo
+poboljšati.
 
 **Mjerodavni su uzgon i prevrtanje, a ne nosivost tla.**
 
@@ -321,8 +328,8 @@ je za 40 % niži, a gornja ivica 0,8 m niža.
 |---|---|
 | Broj nosača | 4 |
 | Traka po nosaču | 2 → **ukupno 8 traka** |
-| Dimenzija trake | **400 (gore) / 500 (dolje) × 2600 mm**, **puna dubina 900 mm** |
-| **Zapremina trake** | **1,053 m³** → ukupno **8,42 m³** C30/37 |
+| Dimenzija trake | **500 × 2600 mm, jedinstvena širina po cijeloj dubini** (bez proširenja u dnu), **puna dubina 900 mm** |
+| **Zapremina trake** | **1,170 m³** → ukupno **9,36 m³** C30/37 |
 | Razmak traka (poprečno) | **1600 mm** |
 | Razmak grupa ankera | 1200 mm |
 | Beton | **C30/37 (XC4 + XF3, aerant 4–6 %)** na podlozi C12/15 |
@@ -333,9 +340,14 @@ je za 40 % niži, a gornja ivica 0,8 m niža.
 traku. Uz `γG,stb = 0,9` stabilizujuća težina mora biti ≥17,9 kN, tj. traka ≥0,74 m³:
 
 ```
-puna traka   1,053 m³ × 24 kN/m³  =  25,3 kN  ≥ 17,9 kN   ZADOVOLJAVA
-             (faktorisano: 0,9 × 25,3 = 22,7 kN ≥ 16,1 kN)
+puna traka   1,170 m³ × 24 kN/m³  =  28,1 kN  ≥ 17,9 kN   ZADOVOLJAVA
+             (faktorisano: 0,9 × 28,1 = 25,3 kN ≥ 16,1 kN)
 ```
+
+**Zašto traka nije proširena u dnu.** Rov se u stijeni siječe jednom širinom po cijeloj
+dubini; temelj širi u dnu nego u vrhu tražio bi potkopavanje, što na kršu nije izvodivo.
+Traka je zato jedinstvenog presjeka 500 mm, a rov se ne zatrpava — beton i podložni
+beton ga ispunjavaju do vrha.
 
 Traka manje zapremine ne zatvara ovu provjeru vlastitom težinom i morala bi je
 posuditi od trenja o zasip, što na kršu nije dokaz. Ankeri prenose uzgon u traku, ne
@@ -347,9 +359,13 @@ Izvedene količine (predmjer LOT 1, sekcija 2), po traci i ukupno za 8 traka:
 |---|---|---|
 | Iskop (širina 500, dubina 950 mm) | 1,235 m³ | **9,88 m³** |
 | Podložni beton C12/15, d = 50 mm | 0,065 m³ | **0,52 m³** |
-| Beton C30/37 | 1,053 m³ | **8,42 m³** |
-| Zatrpavanje (klin uz kosinu) | 0,117 m³ | **0,94 m³** |
-| Odvoz viška | — | **8,94 m³** |
+| Beton C30/37 | 1,170 m³ | **9,36 m³** |
+| Zatrpavanje | — | **nema** |
+| Odvoz viška | 1,235 m³ | **9,88 m³** |
+
+Rov je jedinstvene širine, a traka ide punom dubinom, pa ga beton (1,170 m³) i podložni
+beton (0,065 m³) ispunjavaju u cijelosti: **zatrpavanja nema**, a sav iskopani materijal
+se odvozi. Obrada vidljivih gornjih površina traka: 0,50 × 2,60 × 8 = **10,4 m²**.
 
 Dubina i armatura se **potvrđuju ovjerenim proračunom ponuđača** za qp ≥ 1,20 kN/m².
 Temelji se izvode **IZVAN ograđenog platoa**.
@@ -685,9 +701,10 @@ računa sa 45 W pomoćne potrošnje na −48 V: 20 W za SMU, BMS i ispravljače 
 5. **Kapacitet baterija** — riješeno 11.09.2026.: **6 × 150 Ah (48,6 kWh)**, kako navodi
    Odluka; ponuda na dosjeu (6 × ESM-48100A6, 28,8 kWh, uz module od 540 W) je
    zastarjela i Huawei narudžbu treba uskladiti. Proračun A.6 računa sa 48,6 kWh.
-6. **Masa nosača (≈95 kg)** je procjena — potvrđuje je proračun izrađivača.
+6. **Masa nosača se ne zadaje** (komentar recenzenta, 27.08.2026.) — utvrđuje je izrađivač
+   ovjerenim proračunom; dokaz na podizanje je vodi kao zanemarenu (B.5).
 7. **Procijenjena vrijednost LOT 1** (15.000 KM) računata je na raniju zapreminu
-   temeljnih traka; puna dubina iz B.6 nosi 8,42 m³ betona u 8 traka umjesto 2,44 m³.
+   temeljnih traka; puna dubina iz B.6 nosi 9,36 m³ betona u 8 traka umjesto 2,44 m³.
 8. **Struja punjenja baterija** (Prilog I §4.6): simulacija (A.6) pretpostavlja 0,5 C;
    najveću struju punjenja potvrđuje proizvođač baterija. Pri 48,6 kWh ni 0,25 C ne
    ograničava agregat; tek pri 0,15 C rad agregata raste na ≈335 h/god.

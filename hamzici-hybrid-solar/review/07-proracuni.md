@@ -277,23 +277,27 @@ Ista geometrija i isti usvojeni qp kao na Sjednici, pa i ista dejstva (metoda
 ```
 F  = cf · qp · A = 1,5 · 1,20 · 7,84          = 14,1 kN
 Fh = F · sin 45° = 10,0 kN        Fv = 10,0 kN
-G  = (3 · 32 + 95 kg) · 9,81                   =  1,9 kN
-ULS uzgon = 1,5 · 10,0 − 0,9 · 1,9             = 13,3 kN
+G  = 3 · 32 kg · 9,81 (samo moduli)            =  0,94 kN
+ULS uzgon = 1,5 · 10,0 − 0,9 · 0,94            = 14,1 kN
 M  = 1,5 · Fh · (0,50 + 1,721 · sin 45°)       = 25,7 kNm
 spreg po traci = 25,7 / 1,60                   = 16,1 kN
 ```
 
 Moment prevrtanja **25,7 kNm** po nosaču (raniji nosač 3 × 4 portret: 42,6 kNm, −40 %);
-pri izvedenom qp 0,96 kN/m² bio bi 20,6 kNm. Masa rama ≈95 kg je procjena — potvrđuje je
-proizvođač.
+pri izvedenom qp 0,96 kN/m² bio bi 20,6 kNm. **Masa rama se ne zadaje** — kao povoljno
+dejstvo se u dokazu na podizanje zanemaruje, pa u `G` ulaze samo moduli; stvarnu masu
+utvrđuje izrađivač ovjerenim proračunom.
 
 ### B.6 Temelji
 
-Kao Sjednica: **8 traka** (2 po nosaču) 400/500 × 2600 mm, **puna dubina 900 mm**,
-**1,053 m³ po traci → 8,42 m³** C30/37. Potrebno je 0,74 m³ po traci: vlastita težina
-trake 25,3 kN > potrebnih 17,9 kN (spreg 16,1 kN / 0,9), odnosno 0,9 × 25,3 = 22,7 kN > 16,1 kN. Količine:
-podložni beton 0,52 m³, iskop 9,88 m³, zatrpavanje 0,94 m³, odvoz 8,94 m³ (LOT 1,
-sekcija 2). Oba postojeća prstena uzemljivača presijecaju svih 8 traka (D.6).
+Kao Sjednica: **8 traka** (2 po nosaču) **500 × 2600 mm, jedinstvene širine po cijeloj
+dubini** (bez proširenja u dnu — rov u stijeni se siječe jednom širinom), **puna dubina
+900 mm**, **1,170 m³ po traci → 9,36 m³** C30/37. Potrebno je 0,74 m³ po traci: vlastita
+težina trake 28,1 kN > potrebnih 17,9 kN (spreg 16,1 kN / 0,9), odnosno
+0,9 × 28,1 = 25,3 kN > 16,1 kN. Količine: podložni beton 0,52 m³, iskop 9,88 m³,
+**zatrpavanja nema** (beton i podložni beton ispunjavaju rov u cijelosti), odvoz
+9,88 m³, obrada gornjih površina 10,4 m² (LOT 1, sekcija 2). Oba postojeća prstena
+uzemljivača presijecaju svih 8 traka (D.6).
 
 ### B.7 Pod kontejnera i unos opreme
 

@@ -28,7 +28,7 @@ GAMMA_Q, GAMMA_G_FAV = 1.5, 0.9
 CONCRETE_KN_M3 = 24.0
 REV8_STRIP_M3 = 1.485   # 450/550 x 900 x 3300 mm, 07-proracuni B.6
 
-STRIP_4X3L_M3 = 1.053   # 400/500 x 900 x 2600 mm, 07-proracuni B.6 (4x3L)
+STRIP_4X3L_M3 = 1.170   # 500 x 900 x 2600 mm constant section, 07-proracuni B.6 (4x3L)
 
 # "landscape" puts the module's long side across the stand, so the slope is
 # rows x module W instead of rows x module L.
@@ -39,9 +39,13 @@ LAYOUTS = {
     "2x6": {"stands": 2, "cols": 3, "rows": 2, "orient": "portrait", "frame_kg": 159.0,
             "strip_m3": REV8_STRIP_M3,
             "_frame": "Rev <=6 2x6 design: 0,9 G = 3,1 kN -> 351 kg per stand less 6 modules"},
-    "4x3L": {"stands": 4, "cols": 1, "rows": 3, "orient": "landscape", "frame_kg": 95.0,
+    "4x3L": {"stands": 4, "cols": 1, "rows": 3, "orient": "landscape", "frame_kg": 0.0,
              "strip_m3": STRIP_4X3L_M3,
-             "_frame": "estimate for 3 modules on 3,44 m rails; fabricator confirms"},
+             "_frame": "the frame's own weight is NEGLECTED in the uplift proof (favourable "
+                       "action, so omitting it is the safe side). The former 95 kg estimate was "
+                       "withdrawn on the reviewer's comment (Adis Colpa, 27.08.2026, proracun "
+                       "B.3) that it is implausibly small; the real mass follows from the "
+                       "fabricator's certified calculation and is not tendered as a figure."},
 }
 
 

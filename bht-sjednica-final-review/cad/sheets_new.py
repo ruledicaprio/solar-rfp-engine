@@ -15,6 +15,13 @@ from ezdxf.enums import TextEntityAlignment as TA
 from bht_frame import draw_frame, new_doc, north_arrow, scale_bar, _txt
 
 
+def strip_w_txt(fnd):
+    """Strip width for a callout: one figure for the constant section adopted on the
+    reviewer's comment (27.08.2026), top/base only if a taper is ever reinstated."""
+    swt, swb = fnd["strip_w_top"], fnd["strip_w_base"]
+    return f"{swt}" if swt == swb else f"{swt}/{swb}"
+
+
 def register(B):
     """B is the build_drawings module - reuse its helpers so style stays identical."""
     rect, solid_rect, hatch_rect = B.rect, B.solid_rect, B.hatch_rect
@@ -42,7 +49,7 @@ def register(B):
 
         sup, arr, fnd = D["support"], D["array"], D["foundation"]
         fw, proj, n = sup["field_w"], sup["proj"], arr["count"]
-        strip_txt = f"{fnd['strip_w_top']}/{fnd['strip_w_base']} × {fnd['strip_l']}"
+        strip_txt = f"{strip_w_txt(fnd)} × {fnd['strip_l']}"
         # The array stands clear of the compound in the open ground on its true-SW
         # side (plan south) - the whole field, not just the footings, so nothing
         # oversails the fence. Separate stands in one row, 400 mm apart
@@ -309,7 +316,7 @@ def register(B):
         note_block(msp, 700, 1500, SC, "OBJAŠNJENJA:", [
             f"1  Polje: {sup['rows']} reda × {sup['cols']} modul 585 Wp, položeno; horizontalna "
             f"projekcija {proj} mm pri 45°; {arr['count']} odvojena nosača u nizu.",
-            f"2  Dvije temeljne trake po nosaču {fnd['strip_w_top']}/{fnd['strip_w_base']} × "
+            f"2  Dvije temeljne trake po nosaču {strip_w_txt(fnd)} × "
             f"{fnd['strip_l']} mm, dubina {fnd['strip_d']} mm, razmak {sup['strip_spacing']} mm",
             "    (druga je iza ravni presjeka); beton C30/37 (XC4+XF3), armatura B500B.",
             f"3  Donja ivica panela +{b / 1000:.2f} m, gornja +{top / 1000:.2f} m."

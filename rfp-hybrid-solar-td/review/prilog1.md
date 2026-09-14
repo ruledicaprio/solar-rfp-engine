@@ -109,7 +109,7 @@ zahtijevanih 1,20 kN/m²).
 | Pritisak vjetra | qp ≥ 1,20 kN/m² na obje lokacije |
 | Koeficijent sile | cf ≥ 1,5 pri 45° prema EN 1991-1-4 §7.3 |
 | Površina izloženosti vjetru | 7,84 m² po nosaču |
-| Sila podizanja po nosaču | ≥13,3 kN (GSN, γQ = 1,5 / γG,fav = 0,9) |
+| Sila podizanja po nosaču | ≥14,1 kN (GSN, γQ = 1,5 / γG,fav = 0,9; vlastita težina konstrukcije se zanemaruje) |
 | Horizontalna sila po nosaču | ≥10,0 kN (GSN) |
 | **Moment prevrtanja po nosaču** | **≥25,7 kNm (GSN)** |
 | **Spreg po temeljnoj traci** | **≥16,1 kN** pri razmaku traka 1600 mm |
@@ -148,14 +148,17 @@ zahtijevanih 1,20 kN/m²).
 | Beton | C30/37, klasa izloženosti XC4 + XF3, aerant 4–6 %, Dmax 16, S3 |
 | Podložni beton | C12/15, d = 50 mm |
 | Armatura | B500B, zaštitni sloj ≥50 mm |
-| Geometrija | 2 trake po nosaču (×4 nosača = **8 traka po lokaciji**), 400 mm (gore) / 500 mm (dolje) × 2600 mm, **pune dubine 900 mm**, razmak 1600 mm, upravno na niz (pravac JZ–SI) |
-| **Zapremina** | **1,053 m³ po traci → 8,42 m³ po lokaciji** |
+| Geometrija | 2 trake po nosaču (×4 nosača = **8 traka po lokaciji**), **500 × 2600 mm, jedinstvene širine po cijeloj dubini** (bez proširenja u dnu), **pune dubine 900 mm**, razmak 1600 mm, upravno na niz (pravac JZ–SI) |
+| **Zapremina** | **1,170 m³ po traci → 9,36 m³ po lokaciji** |
 | Smještaj | **IZVAN ograđenog platoa**, na JZ strani ograde (Tačka 3.7) |
 | Dubina smrzavanja | temeljna spojnica ispod dubine smrzavanja; Ponuđač navodi vrijednost |
 
-**Traka se betonira punom dubinom rova.** Vlastita težina trake je dio dokaza
-sigurnosti na podizanje: `1,053 m³ × 24 kN/m³ × 0,9 = 22,7 kN` prema sprezi od 16,1 kN
-po traci. Traka manje zapremine tu provjeru ne zatvara vlastitom težinom.
+**Traka se betonira punom dubinom rova, jedinstvene širine.** Rov u stijeni siječe se
+jednom širinom po cijeloj dubini — temelj širi u dnu nego u vrhu tražio bi potkopavanje i
+na kršu nije izvodiv. Vlastita težina trake je dio dokaza sigurnosti na podizanje:
+`1,170 m³ × 24 kN/m³ × 0,9 = 25,3 kN` prema sprezi od 16,1 kN po traci. Traka manje
+zapremine tu provjeru ne zatvara vlastitom težinom. Pošto traka ispunjava rov,
+**zatrpavanja nema** i sav iskopani materijal se odvozi.
 
 ### 3.6 Uzemljenje (LOT 1)
 

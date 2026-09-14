@@ -69,7 +69,7 @@
   "note": "Joint TD (11.09.2026): 4x3L (4 stands of 1x3 landscape) replaces 3x4 at both sites - 7.84 m2 per stand, overturning 25.7 kNm, ULS uplift 13.3 kN at qp 1.20 (pvsim/stands.py). History of the superseded 3x4 follows. 3x4 (2 rows x 2 columns) adopted 2026-08-08 in place of 2x6: sail area per support drops from 15.91 to 10.55 m2 (-34%, not the -50% the BOQ OPCIJA text assumed). Rev 7c (2026-08-12): bottom_edge returns to 500 mm on the Investor's instruction. The 1500 mm of 07-calculations F.6 was not a requirement - it was the freed wind margin deliberately SPENT as height, sized to bring overturning back up to (not past) the old 2x6 design's 64.3 kNm. Banking that margin instead is the safer choice: centroid 3.118 -> 2.118 m and overturning 62.8 -> 42.6 kNm per support (-32%), couple per strip 39.2 -> 26.6 kN over the 1600 mm spacing. Uplift is unchanged at 18.1 kN, being height-independent. NOTE the one thing this does not improve: at 45 deg the panel plane now crosses fence height 1600 mm from the bottom edge instead of 600, so the array's set-back from the fence must be re-confirmed when the supports are sited. Snow was the standing argument against a 500 mm bottom edge (02-construction), and 07-calculations A.3 already set it aside on the Investor's site knowledge - a wind-scoured bura-belt peak with 45 m/s gusts does not accumulate snow; that ruling is what makes this reversal consistent rather than new."
  },
  "foundation": {
-  "strip_w_top": 400,
+  "strip_w_top": 500,
   "strip_w_base": 500,
   "strip_l": 2600,
   "strip_d": 900,
@@ -79,15 +79,15 @@
   "supports": 4,
   "strips_total": 8,
   "blinding_thk": 50,
-  "volume_m3_per_strip": 1.053,
-  "volume_m3_total": 8.42,
+  "volume_m3_per_strip": 1.17,
+  "volume_m3_total": 9.36,
   "blinding_m3_total": 0.52,
   "excavation_m3_total": 9.88,
-  "backfill_m3_total": 0.94,
-  "spoil_m3_total": 8.94,
-  "_quantities": "strip_d 900 is the FULL DEPTH OF CONCRETE, not a trench depth with a thinner footing at the bottom - that is what S-02 draws (a 900 mm block, hatched solid). 4x3L (11.09.2026): volume per strip = ((0.40+0.50)/2) x 0.90 x 2.60 = 1.053 m3, 8 strips = 8.42 m3. Excavation is taken to the underside of the blinding, 950 mm, at the base width 500: 1.235 m3/strip; backfill is only the taper wedge, 0.117 m3/strip, so nearly all the spoil is carted away. The superseded 3x4 had 6 strips of 450/550 x 900 x 3300 = 1.485 m3 (8.91 m3).",
-  "_uplift_check": "The full-depth strip is what the wind case needs. Overturning 25.7 kNm per stand over the 1600 mm strip spacing gives a 16.1 kN uplift couple on the windward strip; the strip's own weight 1.053 x 24 = 25.3 kN, factored 0.9, gives 22.7 kN - adequate on dead weight alone (pvsim/stands.py requires 0.74 m3). The chemical anchors carry uplift into the strip, not into the ground.",
-  "note": "Depth and reinforcement to be confirmed by the bidder's certified calculation for qp >= 1.20 kN/m2. 4 stands = 8 strips (4x3L, 11.09.2026; the 3x4 design had 6)."
+  "backfill_m3_total": 0.0,
+  "spoil_m3_total": 9.88,
+  "_quantities": "strip_d 900 is the FULL DEPTH OF CONCRETE, not a trench depth with a thinner footing at the bottom - that is what S-02 draws (a 900 mm block, hatched solid). The strip is CONSTANT 500 mm wide over the full depth: the 400/500 taper was withdrawn on the reviewer's comment (Adis Colpa, 27.08.2026, proracun B.6) that a footing wider at the bottom cannot be cut in rock. Volume per strip = 0.50 x 0.90 x 2.60 = 1.170 m3, 8 strips = 9.36 m3. The trench is cut at one width, 500 mm, to the underside of the blinding, 950 mm: 1.235 m3/strip, 9.88 m3. Nothing is left to backfill - concrete 1.170 + blinding 0.065 fills the trench exactly - so the whole excavation is carted away (9.88 m3) and the backfill item is deleted. The superseded 3x4 had 6 strips of 450/550 x 900 x 3300 = 1.485 m3 (8.91 m3).",
+  "_uplift_check": "The full-depth strip is what the wind case needs. Overturning 25.7 kNm per stand over the 1600 mm strip spacing gives a 16.1 kN uplift couple on the windward strip; the constant 500 mm strip's own weight 1.170 x 24 = 28.1 kN, factored 0.9, gives 25.3 kN - adequate on dead weight alone (pvsim/stands.py requires 0.74 m3). The chemical anchors carry uplift into the strip, not into the ground; the constant section keeps 250 mm edge distance.",
+  "note": "Depth and reinforcement to be confirmed by the bidder's certified calculation for qp >= 1.20 kN/m2. 4 stands = 8 strips. CONSTANT 500 mm width over the full 900 mm depth (no taper) - reviewer's comment, 27.08.2026."
  },
  "genset": {
   "model": "FG Wilson P18-6 (Skid) ili ekvivalent",

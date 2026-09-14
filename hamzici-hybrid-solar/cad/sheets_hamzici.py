@@ -252,6 +252,13 @@ def dim_free(msp, p1, p2, base, sc, angle=0, text="<>", loc=None):
 # layouts shared between sheets, so the plan, the section and the detail can
 # never drift apart (the Sjednica S-02 / M-01 pair did, twice)
 # --------------------------------------------------------------------------
+
+def strip_w_txt(fnd):
+    """Strip width for a callout: one figure for the constant section adopted on the
+    reviewer's comment (27.08.2026), top/base only if a taper is ever reinstated."""
+    swt, swb = fnd["strip_w_top"], fnd["strip_w_base"]
+    return f"{swt}" if swt == swb else f"{swt}/{swb}"
+
 def array_layout():
     """PV stands and their strips in the true-SW band (plan west), slab-local mm.
 
@@ -793,7 +800,7 @@ def sheet_h02():
     legend(msp, 2600, 7800, SC, [
         (110, f"FN nosači PV-1..PV-{n} — po {sup['modules_each']} × 585 Wp (1 × 3, položeno), "
               f"{arr['tilt_deg']}°, azimut {arr['azimuth_deg']}° (JZ) — 2 stringa × 6"),
-        (32,  f"AB temeljne trake {swt}/{fnd['strip_w_base']} × {sl} mm, "
+        (32,  f"AB temeljne trake {strip_w_txt(fnd)} × {sl} mm, "
               f"d = {fnd['strip_d']} mm, razmak {A['sp']} mm — {len(A['strips'])} kom"),
         (2,   "DC trasa u PEHD Ø50 (isprekidano) — od polja do PVDB uz ICC360"),
         (30,  "DEA 18 kVA (skid), spremnik 500 l u koritu, novi GRO"),
@@ -814,7 +821,7 @@ def sheet_h02():
         f"{n - 1} × {ARRAY_GAP} = {mmc(A['total'])} mm,",
         f"    u pojasu JZ {dec(west)} × {dec(lh)} m, centrirano na ploču; sve je unutar "
         "granice zakupa.",
-        f"3  Temeljne trake {swt}/{fnd['strip_w_base']} × {sl} mm, d = {fnd['strip_d']} mm, "
+        f"3  Temeljne trake {strip_w_txt(fnd)} × {sl} mm, d = {fnd['strip_d']} mm, "
         f"na podložnom betonu {fnd['blinding_thk']} mm,",
         f"    pravac JZ–SI; {mmc(A['margin'])} mm od granice zakupa i od ploče.",
         f"4  Postojeći prsteni uzemljivača (0,8 m; {dec(EARTH_RINGS[0])} i {dec(EARTH_RINGS[1])} m "
@@ -1051,7 +1058,7 @@ def sheet_h03():
          (X(fx0) + 1500, GY + top + 700), SC)
     lead(msp, (x1, GY + 1400), "nosač — CUSTOM izrada", (x1 - 500, GY + 1900), SC)
     lead(msp, (X(sx0 + sl) - 400, GY - 600),
-         f"temeljna traka {fnd['strip_w_top']}/{fnd['strip_w_base']} × {sl}, "
+         f"temeljna traka {strip_w_txt(fnd)} × {sl}, "
          f"d = {fd} — C30/37", (X(sx0 + sl) + 650, GY - 1100), SC)
     lead(msp, (X(-EARTH_RINGS[0]), GY - dr), "2 postojeća prstena FeZn 25×4 na −0,80 — ukrštanje",
          (X(sx0 + sl) + 650, GY - 1450), SC)
@@ -1069,7 +1076,7 @@ def sheet_h03():
     note_block(msp, 700, 1250, SC, "OBJAŠNJENJA:", [
         f"1  Polje: {rows} reda × {sup['cols']} modul 585 Wp, položeno; nagib {arr['tilt_deg']}°, "
         f"projekcija {proj} mm; {arr['count']} odvojena nosača u nizu (H-02).",
-        f"2  Dvije temeljne trake po nosaču {fnd['strip_w_top']}/{fnd['strip_w_base']} × {sl} mm, "
+        f"2  Dvije temeljne trake po nosaču {strip_w_txt(fnd)} × {sl} mm, "
         f"dubina {fd} mm, razmak {A['sp']} mm (druga iza ravni presjeka);",
         f"    beton C30/37 (XC4+XF3), armatura B500B, na podložnom betonu C12/15 d = {bl} mm.",
         f"3  Kote od terena uz FN polje; teren je {minus(TERRAIN)} m ispod ploče (04_Ograda). "
