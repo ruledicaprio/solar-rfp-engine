@@ -54,6 +54,12 @@ SINGLE_VALUE.update({
     "LOT 2 estimate 70.000,00 KM": r"70\.000,00\s*KM",
     "estimate in words (sto hiljada)": r"sto\s+hiljada\s+konvertibilnih\s+maraka",
     "one price form per LOT": r"zaseban\s+za\s+(svaki\s+LOT|LOT\s*1\s+i\s+za\s+LOT\s*2)",
+    # recenzija A. Čolpa, 27.08.2026
+    "bidder's technical solution required with the bid":
+        r"tehni[čc]k\w*\s+rje[šs]enj\w*\s+konstrukcije",
+    "static calculation is a precondition for STARTING the works":
+        r"uslov\s+(je\s+)?za\s+po[čc]inja\w*\s+radova|PO[ČC]ETAK\s+RADOVA",
+    "foundation strip of one constant width": r"jedinstven\w*\s+[šs]irin\w*",
 })
 
 CONFLICTS = dict(cc.CONFLICTS)
@@ -89,9 +95,15 @@ CONFLICTS.update({
         "39,2/39,3 kN (superseded - bottom edge +1,50 m)": r"39[,.][23]\s*kN\b",
     },
     "foundation concrete volume": {
-        "8,42 m³ (correct - 8 strips)": r"8[,.]42\s*m³",
+        "9,36 m³ (correct - 8 constant-section strips)": r"9[,.]36\s*m³",
+        "8,42 m³ (superseded - 400/500 taper)": r"8[,.]42\s*m³",
         "8,91 m³ (superseded - 6 strips)": r"8[,.]91\s*m³",
         "2,44 m³ (superseded - 450x275 footing)": r"2[,.]44\s*m³",
+    },
+    "foundation strip section": {
+        "500 mm constant (correct - reviewer 27.08.2026)": r"500\s*×\s*2600\s*mm",
+        "400/500 taper (withdrawn - cannot be cut in rock)": r"400\s*(mm\s*)?\(gore\)",
+        "450/550 taper (superseded - 3x4)": r"450\s*(mm\s*)?\(gore\)",
     },
     "PV azimuth": {
         "225° (correct - true SW)": r"azimut\w*\s*(od\s*)?225",
@@ -106,6 +118,15 @@ cc.CORRECTION_MARKERS = re.compile(cc.CORRECTION_MARKERS.pattern
 
 BANNED = dict(cc.BANNED)
 BANNED.update({
+    # Reviewer A. Čolpa, 27.08.2026: the per-stand design forces are not tendered as
+    # figures, the estimated stand mass is withdrawn, and the static calculation is a
+    # condition for STARTING the works, not for handover.
+    "static calculation as a handover condition (withdrawn, reviewer 27.08.2026)":
+        r"prora[čc]un\s+se\s+dostavlja[^.]{0,60}primopredaj",
+    "estimated stand mass tendered as a figure (withdrawn, reviewer 27.08.2026)":
+        r"[Mm]asa\s+(nosa[čc]a|rama)[^.|]{0,40}≈\s*\d+\s*kg",
+    "per-stand design forces tendered as required values (withdrawn, reviewer 27.08.2026)":
+        r"Projektne\s+sile\s+po\s+nosa[čc]u[^.]{0,40}podizanje\s*≥",
     "Hamzići placed in Čapljina (it is Čitluk)": r"Čapljin",
     "Hamzići tower as 36 m (it is 32 m)": r"AS\s*36\s*m|visine\s+(h\s*=\s*)?36\s*m",
     "question-mark placeholder": r"Hamzi[ćc]i\?",

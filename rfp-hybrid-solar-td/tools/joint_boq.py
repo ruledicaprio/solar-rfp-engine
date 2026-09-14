@@ -273,7 +273,8 @@ HAMZICI_LOT1_EDITS = {
         ("za konkretnu lokaciju (planinski vrh)", "za konkretnu lokaciju"),
         ("(v. crtež E-01)", "(v. crtež H-05)"),
     ],
-    "2.3": [
+    "2.4": [                                  # beton - 2.3 do prenumeracije sekcije 2
+                                              # (recenzija 27.08.2026, fix_boq_recenzija_a.py)
         ("Klasa XF3 je mjerodavna zbog cikličnog smrzavanja i odmrzavanja u vlažnom stanju na "
          "1076 m n.v.",
          "Klasa XF3: ista specifikacija kao na lokaciji Sjednica, radi jednog opisa za obje "
@@ -487,6 +488,37 @@ def insert_row(ws, at, cross_sheet=False):
         for c in row:
             if isinstance(c.value, str) and c.value.startswith("="):
                 c.value = shift_formula_rows(c.value, at, cross_sheet=cross_sheet)
+
+
+def delete_row(ws, at, cross_sheet=False):
+    """Delete row `at`; row heights, merges and formulas follow the moved rows.
+
+    Mirror of insert_row. The caller must make sure no formula points AT the deleted
+    row - Excel would leave #REF! there - which is checked here."""
+    for row in ws.iter_rows():
+        for c in row:
+            if c.row == at or not (isinstance(c.value, str) and c.value.startswith("=")):
+                continue                       # the deleted row's own formulas go with it
+            for m in REF_RE.finditer(c.value):
+                if int(m.group(4)) == at:
+                    raise ValueError(f"{ws.title}: {c.coordinate} refers to deleted row {at}")
+    for mr in ws.merged_cells.ranges:
+        if mr.min_row <= at <= mr.max_row:
+            raise ValueError(f"{ws.title}: deletion at {at} splits merged range {mr}")
+    dims = {r: ws.row_dimensions[r] for r in list(ws.row_dimensions) if r > at}
+    ws.delete_rows(at)
+    for r in dims:
+        del ws.row_dimensions[r]
+    for r in sorted(dims):
+        dims[r].index = r - 1
+        ws.row_dimensions[r - 1] = dims[r]
+    for mr in ws.merged_cells.ranges:
+        if mr.min_row > at:
+            mr.shift(row_shift=-1)
+    for row in ws.iter_rows():
+        for c in row:
+            if isinstance(c.value, str) and c.value.startswith("="):
+                c.value = shift_formula_rows(c.value, at, n=-1, cross_sheet=cross_sheet)
 
 
 def truncate(ws, last):

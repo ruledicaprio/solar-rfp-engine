@@ -104,16 +104,26 @@ dokazana za stvarna opterećenja i uticaje na lokalitetu. Nijedan kataloški nag
 nosača tipa A nije usklađen sa qp lokacija (deklarisano 0,52–0,87 kN/m² prema
 zahtijevanih 1,20 kN/m²).
 
+**Podatak lokaliteta** (obavezujuće, iz ovjerene projektne dokumentacije lokacije):
+
 | Parametar | Zahtjev |
 |---|---|
 | Pritisak vjetra | qp ≥ 1,20 kN/m² na obje lokacije |
-| Koeficijent sile | cf ≥ 1,5 pri 45° prema EN 1991-1-4 §7.3 |
-| Površina izloženosti vjetru | 7,84 m² po nosaču |
-| Sila podizanja po nosaču | ≥14,1 kN (GSN, γQ = 1,5 / γG,fav = 0,9; vlastita težina konstrukcije se zanemaruje) |
-| Horizontalna sila po nosaču | ≥10,0 kN (GSN) |
-| **Moment prevrtanja po nosaču** | **≥25,7 kNm (GSN)** |
-| **Spreg po temeljnoj traci** | **≥16,1 kN** pri razmaku traka 1600 mm |
+| Koeficijent sile | cf ≥ 1,5 pri 45° prema EN 1991-1-4 §7.3, osim ako se proračunom dokaže drugačije |
 | Mjerodavno | podizanje (uplift) i prevrtanje, a NE nosivost tla |
+
+**Projektne sile po nosaču se ne zadaju.** One proizlaze iz koncepta konstrukcije koji
+Ponuđač nudi i iskazuju se i dokazuju u njegovom tehničkom rješenju i statičkom proračunu
+(Tačka 5, dokaz 2). Vrijednosti u tabeli ispod su **orijentacione**, izvedene za referentnu
+geometriju polja iz Tačke 3.1, i služe samo za procjenu reda veličine:
+
+| Parametar (orijentaciono) | Vrijednost |
+|---|---|
+| Površina izloženosti vjetru | 7,84 m² po nosaču |
+| Sila podizanja po nosaču | 14,1 kN (GSN, γQ = 1,5 / γG,fav = 0,9; vlastita težina konstrukcije se zanemaruje) |
+| Horizontalna sila po nosaču | 10,0 kN (GSN) |
+| Moment prevrtanja po nosaču | 25,7 kNm (GSN) |
+| Spreg po temeljnoj traci | 16,1 kN pri razmaku traka 1600 mm |
 
 ### 3.3 Materijal i izrada konstrukcije
 
@@ -136,9 +146,8 @@ zahtijevanih 1,20 kN/m²).
 | Tip | hemijski (epoksidni/vinilesterski) anker M16 ili M20, sa ETA odobrenjem |
 | Materijal | vruće cinčan ili nehrđajući A4 |
 | Broj | min. 2 ankera po temeljnoj traci, odnosno 4 po nosaču |
-| Nosivost | karakteristična sila čupanja ≥30 kN po ankeru |
-| Dubina ugradnje | prema ETA za konkretnu podlogu (beton / stijena) |
-| **Projektna sila** | ukupno podizanje po nosaču ≥13,3 kN; **sila po traci od momenta prevrtanja ≥16,1 kN** pri razmaku traka 1600 mm — ovo je mjerodavno opterećenje sidrenja |
+| Nosivost i dubina ugradnje | prema ETA za konkretnu podlogu (beton / stijena) i prema statičkom proračunu iz tehničkog rješenja Ponuđača |
+| **Projektne sile ankerisanja** | proizlaze iz koncepta konstrukcije koji Ponuđač nudi i iskazuju se u tehničkom rješenju; mjerodavno opterećenje sidrenja je **sila po traci od momenta prevrtanja** (Tačka 3.2, orijentaciono) |
 | Dokazivanje | ispitivanje čupanjem (pull-out) na ≥10 % ugrađenih ankera, min. 2 po nosaču, do 1,5 × projektne sile, uz zapisnik ovjeren od nadzornog organa |
 
 ### 3.5 Temelji nosača
@@ -421,13 +430,15 @@ aktivaciji gašenja **zasebno su iskazani u Prilogu II**.
 
 Dokazi koji se dostavljaju **uz ponudu** nose oznaku **PONUDA**; dokazi koji se
 dostavljaju **u toku realizacije** nose oznaku **REALIZACIJA**; dokazi koji se
-dostavljaju komisiji **tokom primopredaje** nose oznaku **PRIMOPREDAJA**. Dokazi iz
-realizacije i primopredaje dostavljaju se **za svaku lokaciju**.
+dostavljaju komisiji **tokom primopredaje** nose oznaku **PRIMOPREDAJA**; dokazi koji
+moraju biti pregledani i odobreni **prije početka izvođenja radova** nose oznaku
+**POČETAK RADOVA**. Dokazi iz realizacije i primopredaje dostavljaju se **za svaku
+lokaciju**.
 
 | Br. | Dokaz | LOT | Oznaka |
 |---|---|---|---|
-| 1 | Statički proračun nosive konstrukcije i temelja za qp ≥ 1,20 kN/m² pri 45°, ovjeren i potpisan od ovlaštenog inženjera, sa dokazom na podizanje i prevrtanje — za obje lokacije | 1 | REALIZACIJA |
-| 2 | Tehnički nacrti konstrukcije i temelja | 1 | PONUDA |
+| 1 | Statički proračun nosive konstrukcije i temelja prema standardima iz Tačke 3.2, ovjeren i potpisan od ovlaštenog inženjera, sa dokazom na podizanje i prevrtanje — za obje lokacije. Dostavlja se u sklopu tehničkog rješenja i uslov je za počinjanje radova | 1 | POČETAK RADOVA |
+| 2 | Tehničko rješenje konstrukcije za prihvat fotonaponskih panela za predmetnu lokaciju: tehnički nacrti konstrukcije i temelja, statički proračun i specifikacija materijala | 1 | PONUDA |
 | 3 | Izjava o svojstvima prema EN 1090-1 i klasa izvedbe EXC2 | 1 | REALIZACIJA |
 | 4 | Atesti materijala (čelik) i potvrda o vrućem cinčanju (debljina sloja) | 1 | REALIZACIJA |
 | 5 | ETA certifikat i proračun za hemijska sidra | 1 | REALIZACIJA |

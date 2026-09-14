@@ -60,6 +60,13 @@ FORBIDDEN = bp1.FORBIDDEN + [
     ("≈230 h/god", "Hamzići: ≈270 h/god sa poljem prema JZ"),
     ("≈750 l/god", "Hamzići: ≈900 l/god sa poljem prema JZ"),
     ("1,74 m", "nadvišenje ograde na Hamzićima je 0,93 m (4x3L)"),
+    # recenzija A. Čolpa, 27.08.2026
+    ("400 mm (gore)", "traka je jedinstvene širine 500 mm — recenzent 27.08.2026"),
+    ("(dolje) × 2600", "traka je jedinstvene širine 500 mm — recenzent 27.08.2026"),
+    ("1,053 m³", "traka jedinstvenog presjeka nosi 1,170 m³"),
+    ("8,42 m³", "8 traka jedinstvenog presjeka nose 9,36 m³"),
+    ("uslov za primopredaju", "statički proračun je uslov za počinjanje radova"),
+    ("≥13,3 kN", "projektne sile po nosaču se ne zadaju — tehničko rješenje Ponuđača"),
 ]
 # the Sjednica Rev 9 values this round supersedes, and what replaces them
 SUPERSEDED_REQUIRED = {
@@ -73,6 +80,9 @@ REQUIRED = [r for r in bp1.REQUIRED if r not in SUPERSEDED_REQUIRED] \
     "493 m", "0,93 m", "h = 1,80 m", "3300 mm", "k.č. 109/1", "Stulz WDE80",
     "Alipašino Polje", "0,36 m²", "≈270 h/god", "≈900 l/god", "H-04", "12,3 kW",
     "izvlačni", "≤0,50 m", "3.6.9 Plan uzemljivača", "225°",
+    # recenzija A. Čolpa, 27.08.2026
+    "500 × 2600 mm, jedinstvene širine", "1,170 m³", "9,36 m³", "POČETAK RADOVA",
+    "Tehničko rješenje konstrukcije", "se ne zadaju",
 ]
 N_MEDIA = len(FIGURES)
 
