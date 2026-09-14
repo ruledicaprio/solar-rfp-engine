@@ -19,7 +19,7 @@
   "tilts": [45, 60],
   "strings": 2,
   "modules_per_string": 6,
-  "_src": "Same array as Sjednica: 12 x iPV585-M2A, 2 strings x 6 (design cannot change). Tilt 45 or 60 is under decision (plan Phase 3)."
+  "_src": "Same array as Sjednica: 12 x iPV585-M2A, 2 strings x 6 (design cannot change). 45° adopted (Investor 11.09.2026); 60° is kept as the comparison column of the report. Azimuth 225° (true SW) from design.json."
  },
  "pv": {
   "iam_a_r": 0.16,
@@ -102,9 +102,9 @@
   "_src": "Site visit 08.09.2026 12:11-12:17 CEST, Samsung Galaxy A55. EXIF carries the time and UTC offset but no GPS position and no compass heading, so orientation is checked by eye against the computed sun position, not read from the files."
  },
  "array_position": {
-  "east_m": 0.0,
-  "north_m": -4.49,
-  "_src": "Array centre relative to the tower centre (= slab centre): the middle of the 3 575 mm strip between the slab (half-width 2,70 m) and the south lease line (site_geometry.json, true orientation)."
+  "east_m": -3.08,
+  "north_m": -3.08,
+  "_src": "Array centre relative to the tower centre (= slab centre): the middle of the 3 300 mm true-SW band between the slab (half-width 2,70 m) and the lease line, 4,35 m from the centre at bearing 225° (site_geometry.json; plan north = true NW, Investor 11.09.2026)."
  },
  "obstacles": [
   {
@@ -118,11 +118,12 @@
   }
  ],
  "stands": {
+  "layout": "4x3L",
   "qp_kNm2": 1.2,
   "bottom_edge_m": 0.5,
   "strip_spacing_m": 1.6,
-  "plot_max_width_m": 12.0,
-  "plot_max_depth_m": 3.575,
-  "_src": "qp ≥ 1,20 kN/m² adopted as at Sjednica (one stand design for both sites); the certified 2017 project (JUS U.C7, vm,50,10 = 25 m/s) translates to BAS EN 1991-1-4 qp 0,69-0,96 kN/m². Plot from the certified 01_Situacija 1_200.dwg: lease 12 000 x 12 500 mm (k.č. 109/1 K.O. Hamzići), slab 5 400 mm centred. The photos and the Investor (11.09.2026) put the door and gate on the NORTH side, so the drawing is rotated ≈180° to the site and the strip south of the slab is 3 575 mm (3 300 east and west): a 45° field (3,24 m projection, 3,30 m strips) fits with ≈0,27 m to spare. Geometry: hamzici-hybrid-solar/cad/site_geometry.json."
+  "plot_max_width_m": 12.5,
+  "plot_max_depth_m": 3.3,
+  "_src": "qp ≥ 1,20 kN/m² adopted as at Sjednica (one stand design for both sites); the certified 2017 project (JUS U.C7, vm,50,10 = 25 m/s) translates to BAS EN 1991-1-4 qp 0,69-0,96 kN/m². Plot from the certified 01_Situacija 1_200.dwg: lease 12 000 x 12 500 mm (k.č. 109/1 K.O. Hamzići), slab 5 400 mm centred. Google Maps (Investor 11.09.2026) puts plan north at true NW, so the stands stand in the true-SW band: 3 300 mm deep, 12 500 mm long. The 2x2 portrait field at 45° is 3,24 m deep and does not fit; the adopted 4x3L (4 stands of 1x3 landscape, same at both sites) is 2,43 m deep, leaving 0,87 m for the ICC360 and MTS behind it. Geometry: hamzici-hybrid-solar/cad/site_geometry.json."
  }
 }

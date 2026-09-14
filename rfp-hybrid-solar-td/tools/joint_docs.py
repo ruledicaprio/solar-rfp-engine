@@ -14,10 +14,11 @@ carry the same styles.
 Every replacement states how many times it must match; a template that has
 drifted fails instead of half-editing.
 
-Estimates: the Investor supplies them later, so every amount in the estimate
-paragraphs becomes a placeholder ("___.___,__ KM"). The Sjednica documents
-carried three different totals (50 000, 100 000 and "pedesethiljada" in words
-next to 100 000), so there is nothing to carry over.
+Estimate (Investor, 12.09.2026): 100 000,00 KM bez PDV-a for both sites, LOT 1
+30 000,00 KM and LOT 2 70 000,00 KM. The Sjednica documents carried three
+different totals - 100 000 in the NZ and the Odluka point II, 50 000 (15 000 +
+35 000) in the Odluka's plan paragraphs and one table total, and "pedesethiljada"
+in words next to 100 000 - so every one is set to the Investor's figures here.
 """
 import os
 import re
@@ -33,8 +34,7 @@ sys.path.insert(0, os.path.join(paths.SITES["sjednica"]["folder"], "tools"))
 from ooxml_edit import Part                                         # noqa: E402
 
 SRC = os.path.join(paths.SITES["sjednica"]["folder"], "TD-OUTPUT")
-PH = "___.___,__"                                    # estimate placeholder
-PH_WORDS = "(slovima: ______________ konvertibilnih maraka)"
+WORDS_100K = "(sto hiljada konvertibilnih maraka)"
 
 TITLE_OLD = "SISTEM NAPAJANJA SJEDNICA, BILEĆA (LOT 1 i 2)"
 TITLE_NEW = "SISTEM NAPAJANJA SJEDNICA, BILEĆA I HAMZIĆI, ČITLUK (LOT 1 i 2)"
@@ -52,12 +52,14 @@ ODLUKA_LIMITS_REV9 = (
     "parametriranje upravljačke jedinice za minimalan rad agregata, propisano "
     "Prilogom I TD. Agregat radi u režimu trajne (prime) snage prema ISO 8528-1, sa "
     "ulaznom snagom ispravljača ograničenom na 9,5 kW.")
+# SW-facing fields at both sites (Investor 11.09.2026): the pvsim run at azimuth 225°
 ODLUKA_LIMITS_JOINT = (
     "Satna simulacija energetskog bilansa za 19 godina (pvlib, PVGIS-SARAH3, "
-    "2005–2023) daje očekivani rad agregata od ≈250 h godišnje na lokaciji Sjednica "
-    "i ≈230 h na lokaciji Hamzići (u najlošijim godinama do ≈330 h), uz potrošnju "
-    "goriva od ≈820 l, odnosno ≈750 l godišnje; spremnik od 500 l dopunjava se u "
-    "prosjeku dva puta godišnje. Vrijednosti važe uz parametriranje "
+    "2005–2023) daje očekivani rad agregata od ≈300 h godišnje na lokaciji Sjednica "
+    "i ≈270 h na lokaciji Hamzići (u najlošijim godinama do ≈380 h, odnosno ≈350 h), "
+    "uz potrošnju goriva od ≈990 l, odnosno ≈900 l godišnje; spremnik od 500 l "
+    "dopunjava se u prosjeku dva do tri puta godišnje. Vrijednosti važe za FN polja "
+    "okrenuta prema jugozapadu (azimut 225°, nagib 45°) i uz parametriranje "
     "upravljačke jedinice za minimalan rad agregata, propisano Prilogom I TD. "
     "Agregati rade u režimu trajne (prime) snage prema ISO 8528-1, sa ulaznom "
     "snagom ispravljača ograničenom na 9,5 kW.")
@@ -67,11 +69,13 @@ HAMZICI_OBJECT = [
     "temelj: AB temeljna ploča dim. 5,40 x 5,40 m, na kojoj stoje antenski stub i kontejner",
     "antenski sistem: rešetkasti stub visine h = 32 m, sa platformom na +3,0 m iznad krova kontejnera",
     "objekat: kontejner K2 vanjskih dimenzija 3,00 x 2,30 m, prazan (bez GRO i instalacija), sa "
-    "kompaktnim zidnim klima-uređajem Stulz WDE80 na istočnom zidu, koji se demontira i odvozi u "
+    "kompaktnim zidnim klima-uređajem Stulz WDE80 na jugoistočnom zidu, koji se demontira i "
+    "odvozi u "
     "skladište BH Telecom-a (Alipašino Polje, Sarajevo)",
     "vanjski ormari za TK opremu: Huawei ICC360-HA1-C1 (PowerCube 1000) sa ispravljačima, LFP "
     "baterijama i kontrolerom (zasebna nabavka Naručioca)",
-    "okolina: metalna ograda visine 1,80 m oko temelja 5,40 x 5,40 m, sa kapijom na sjevernoj strani;",
+    "okolina: metalna ograda visine 1,80 m oko temelja 5,40 x 5,40 m, sa kapijom na "
+    "sjeverozapadnoj strani;",
     "zakupljena površina 150 m² (12,00 x 12,50 m), k.č. 109/1 K.O. Hamzići",
     "Lokacija nije priključena na EES (priključak projektovan 2017. godine nije izveden) i DEA "
     "predstavlja rezervni izvor napajanja u okviru hibridnog sistema.",
@@ -157,15 +161,19 @@ def nz(path):
     replace(p, "Predmet nabavke je podijeljen na 2 LOT-a:",
             "Predmet nabavke za obje lokacije je podijeljen na 2 LOT-a:", 1)
     replace(p, "montaža nosača za fotonaponske panele 3 kpl,",
-            "montaža nosača za fotonaponske panele 6 kpl (3 kpl po lokaciji),", 1)
+            "montaža nosača za fotonaponske panele 8 kpl (4 kpl po lokaciji),", 1)
     replace(p, LOT2_OLD + " hibridnog sistema.",
             LOT2_NEW + " hibridnih sistema, te demontaža postojećeg klima-uređaja na "
             "lokaciji Hamzići.", 1)
     replace(p, "Prilog III TD: Situacija Sjednica, Bileća.",
             "Prilog III TD: Situacije Sjednica, Bileća i Hamzići, Čitluk.", 1)
-    replace(p, "100.000,00 KM (pedesethiljada konvertibilnih maraka)", f"{PH} KM {PH_WORDS}", 1)
-    replace(p, "LOT 1 — 30.000,00 KM", f"LOT 1 — {PH} KM", 1)
-    replace(p, "LOT 2 — 70.000,00 KM", f"LOT 2 — {PH} KM", 1)
+    replace(p, "Prilog II TD: Obrazac za cijenu ponude i",
+            "Prilog II TD: Obrazac za cijenu ponude (zaseban za svaki LOT) i", 1)
+    # estimate (Investor, 12.09.2026): 100 000 KM bez PDV-a, LOT 1 30 000 / LOT 2 70 000 -
+    # the amounts of the Sjednica NZ; only the amount in words was wrong
+    replace(p, "100.000,00 KM (pedesethiljada konvertibilnih maraka)", f"100.000,00 KM {WORDS_100K}", 1)
+    replace(p, "LOT 1 — 30.000,00 KM", "LOT 1 — 30.000,00 KM", 1)
+    replace(p, "LOT 2 — 70.000,00 KM", "LOT 2 — 70.000,00 KM", 1)
     replace(p, "Mjesto realizacije je objekat BH Telecoma Sjednica, Bileća (42.9448° N, "
                "18.3236° E, nadmorska visina 1076 m).",
             "Mjesta realizacije su objekti BH Telecoma Sjednica, Bileća (42.9448° N, 18.3236° E, "
@@ -225,6 +233,14 @@ def tdjn(path):
     replace(p, "Tabela 1 Geografski položaj objekta sa koordinatama",
             "Tabela 1 Geografski položaj objekata sa koordinatama", 1)
     replace(p, "Objekat ima otežan putni pristup", "Oba objekta imaju otežan putni pristup", 1)
+    # The Buyer supplies the PV modules, batteries and control system, but the tender never
+    # said who moves them from the warehouse to the site; that haul is LOT 2 work and is
+    # priced in Prilog II 5.19.
+    replace(p, "Originalni PV instalacioni materijal će obezbijediti Kupac.",
+            "Originalni PV instalacioni materijal će obezbijediti Kupac. Preuzimanje opreme "
+            "Kupca u skladištu BH Telecom-a (Azići, Bojnička bb, Sarajevo), prevoz do lokacije "
+            "i istovar su obaveza Ponuđača i dio LOT 2 (Prilog I, Tačka 4.9; Prilog II, "
+            "stavka 5.19).", 1)
     # the Sjednica template pencilled Hamzići in as a possible substitute site;
     # in the joint tender it is one of the two sites
     replace(p, "zamjensku lokaciju sličnih karakteristika (Hamzići?), ili",
@@ -237,6 +253,12 @@ def tdjn(path):
                "opremu (za LOT 2)",
             "nosače PV panela i prateću opremu (za LOT 1), isporučeni agregat i prateću opremu "
             "(za LOT 2)", 2)
+    # Prilog II: one price form per LOT (Investor, 12.09.2026) - the award is per LOT
+    replace(p, "PRILOG II: Obrazac za cijenu ponude (LOT 1 i LOT 2)",
+            "PRILOG II: Obrazac za cijenu ponude, zaseban za LOT 1 i za LOT 2", 1)
+    replace(p, "izražena u KM bez PDV-a. (za jedan ili oba LOT-a)",
+            "izražena u KM bez PDV-a. (za jedan ili oba LOT-a; za svaki LOT kojem ponuda "
+            "pristupa popunjava se, potpisuje i ovjerava zaseban obrazac)", 1)
     items["word/document.xml"] = p.xml.encode("utf-8")
     save(path, items)
 
@@ -248,11 +270,11 @@ def odluka(path):
                   if para_text(m.group(0)).startswith("Objekat Sjednica (Bileća) je 2014."))
     xml = insert_after_paragraph(xml, anchor,
                                  [clone_paragraph(paragraph_by_text(xml, anchor), ODLUKA_HAMZICI)])
-    # amounts standing alone in the financial-plan table cells ("100.000"): done per
-    # <w:t>, because the flat text glues neighbouring cells into "100.000100.000"
-    xml, n_cells = re.subn(r"(<w:t(?:\s[^>]*)?>)\d{2,3}\.000(</w:t>)", r"\g<1>___.___\g<2>", xml)
-    if not n_cells:
-        raise SystemExit("Odluka: no amount cells found in the financial-plan tables")
+    # financial-plan tables: the first table's total reads 50.000 under its 100.000 row.
+    # Done per <w:t>, because the flat text glues neighbouring cells into "100.000100.000"
+    xml, n_cells = re.subn(r"(<w:t(?:\s[^>]*)?>)50\.000(</w:t>)", r"\g<1>100.000\g<2>", xml)
+    if n_cells != 2:
+        raise SystemExit(f"Odluka: expected the two 50.000 table-total cells, found {n_cells}")
     p = Part(xml)
     replace(p, "napajanja Sjednica, Bileća (LOT 1 i 2)",
             "napajanja Sjednica, Bileća i Hamzići, Čitluk (LOT 1 i 2)", 3)
@@ -260,7 +282,7 @@ def odluka(path):
             "na baznim stanicama Sjednica (Bileća) i Hamzići (Čitluk)", 4)
     replace(p, "NA BAZNOJ STANICI SJEDNICA (BILEĆA)",
             "NA BAZNIM STANICAMA SJEDNICA (BILEĆA) I HAMZIĆI (ČITLUK)", 2)
-    replace(p, "(ground mount support) - 3 kpl,", "(ground mount support) - 6 kpl (3 kpl po "
+    replace(p, "(ground mount support) - 3 kpl,", "(ground mount support) - 8 kpl (4 kpl po "
             "lokaciji),", 2)
     replace(p, LOT2_OLD + " hibridnog sistema.",
             LOT2_NEW + " hibridnih sistema, te demontaža postojećeg klima-uređaja na "
@@ -268,19 +290,23 @@ def odluka(path):
     replace(p, LOT2_OLD + " čitavog hibridnog sistema.",
             LOT2_NEW + " čitavih hibridnih sistema, te demontaža postojećeg klima-uređaja na "
             "lokaciji Hamzići.", 1)
-    # estimates -> placeholders (the Investor supplies them)
-    replace(p, "(pedesethiljada konvertibilnih maraka)", PH_WORDS, None)
+    # estimate (Investor, 12.09.2026): 100 000 KM bez PDV-a, LOT 1 30 000 / LOT 2 70 000
+    replace(p, "(pedesethiljada konvertibilnih maraka)", WORDS_100K, 3)
+    replace(p, "ukupno 50.000,00 KM", "ukupno 100.000,00 KM", 2)
+    replace(p, "LOT 1 — 15.000,00 KM i LOT 2 — 35.000,00 KM",
+            "LOT 1 — 30.000,00 KM i LOT 2 — 70.000,00 KM", 2)
     replace(p, "od čega se iznos od 30.000,00 KM odnosi na LOT 1a iznos od 70.000,00 KM na "
-               "LOT 2 —", f"od čega se iznos od {PH} KM odnosi na LOT 1, a iznos od {PH} KM "
-               "na LOT 2. ", 1)
-    replace(p, r"\b\d{1,3}\.000,00 KM", f"{PH} KM", None, regex=True)
+               "LOT 2 —", "od čega se iznos od 30.000,00 KM odnosi na LOT 1, a iznos od "
+               "70.000,00 KM na LOT 2. ", 1)
     # Aneks 2: the approved two-site wording
     replace(p, ODLUKA_LIMITS_REV9, ODLUKA_LIMITS_JOINT, 1)
     replace(p, "smješten u postojeći kontejner. DEA napaja ispravljače.",
             "smješten u postojeći kontejner na svakoj lokaciji. DEA napaja ispravljače.", 1)
+    # 4x3L and SW at both sites (Investor 11.09.2026)
     replace(p, "LOT 1 : metalna konstrukcija sa 3 (tri) nosača za fotonaponske panele",
-            "LOT 1 : metalne konstrukcije sa po 3 (tri) nosača za fotonaponske panele na "
-            "svakoj lokaciji", 1)
+            "LOT 1 : metalne konstrukcije sa po 4 (četiri) odvojena nosača za fotonaponske "
+            "panele na svakoj lokaciji", 1)
+    replace(p, "orijentacije jug (azimut 180°)", "orijentacije jugozapad (azimut 225°)", 1)
     replace(p, "LOT 2: agregatsko postrojenje sa automatskim",
             "LOT 2: dva agregatska postrojenja (po jedno na svakoj lokaciji) sa automatskim", 1)
     replace(p, "postojeći kontejner na lokaciji, dvoplašnim spremnikom",

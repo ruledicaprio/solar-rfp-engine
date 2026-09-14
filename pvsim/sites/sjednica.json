@@ -98,6 +98,7 @@
   "_src": "Prijedlog Odluke, Aneks 2: genset operation ≤250 h/god; one 500 l tank to last ≥1 godina."
  },
  "stands": {
+  "layout": "4x3L",
   "qp_kNm2": 1.2,
   "bottom_edge_m": 0.5,
   "strip_spacing_m": 1.6,

@@ -9,13 +9,13 @@ LOT 1: nosači fotonaponskih panela · LOT 2: dizel električni agregat u kontej
 Ovaj Prilog utvrđuje tehničke zahtjeve i dokaze koje Ponuđač dostavlja **UZ PONUDU**
 kao uslov kvalifikacije — ponuda koja ih ne sadrži smatra se neprihvatljivom.
 
-Na obje lokacije se ugrađuje **isti sistem**: 12 fotonaponskih modula na 3 nosača, isti
+Na obje lokacije se ugrađuje **isti sistem**: 12 fotonaponskih modula na 4 nosača, isti
 agregat sa spremnikom goriva u postojećem kontejneru i isto upravljanje. Zahtjevi koji
 se razlikuju po lokaciji dati su u zasebnim tačkama ili kolonama, sa oznakom lokacije.
 
 U slučaju neslaganja između dokumenata TD mjerodavni su redom: (1) Tenderska
-dokumentacija (TD), (2) Prilog I, (3) Prilog II (Predmjer), (4) Prilog III (grafički
-prilozi).
+dokumentacija (TD), (2) Prilog I, (3) Prilog II (Obrazac za cijenu ponude, zaseban za
+svaki LOT), (4) Prilog III (grafički prilozi).
 
 Prilog III sadrži i preuzete stranice ovjerenih projekata lokacija, koje služe samo kao
 podloga; **mjerodavan raspored opreme i otvora u kontejneru je onaj sa crteža M-01
@@ -33,13 +33,13 @@ podloga; **mjerodavan raspored opreme i otvora u kontejneru je onaj sa crteža M
 | Priključak EES | **NE** | **NE** (projektovan 2017., nije izveden) |
 | Bilans potrošnje | konstantno, 1180 W nazivno / 1330 W maksimalno, −48 V DC | isto kao Sjednica — privremeno, do izmjerene potrošnje |
 | Zakupljeni prostor | ≈150 m² (16,00 × 9,40 m) | 150 m² (12,00 × 12,50 m), k.č. 109/1 K.O. Hamzići |
-| Postojeći objekat | AB ploča 5,40 × 5,40 m, ograda h = 2,10 m, kapija 1,00 m | AB ploča 5,40 × 5,40 m, ograda h = 1,80 m, kapija 1,30 m na SJEVERU |
+| Postojeći objekat | AB ploča 5,40 × 5,40 m, ograda h = 2,10 m, kapija 1,00 m | AB ploča 5,40 × 5,40 m, ograda h = 1,80 m, kapija 1,30 m na SZ strani |
 | Antenski stub | rešetkasti, h = 38 m, baza 4,20 × 4,20 m | rešetkasti, h = 32 m, baza 3,70 × 3,70 m; platforma na +3,0 m iznad krova kontejnera |
-| Kontejner | 3,00 × 2,30 m vanjski, zidni paneli 60 mm, bez opreme; ulazna vrata 900 × 2000 mm na ISTOČNOM zidu | K2 3,00 × 2,30 m vanjski, zidni paneli 60 mm, **prazan, bez GRO i instalacija**; ulazna vrata 1,00 × 2,15 m na SJEVERNOM zidu; na JUŽNOM zidu, u sredini, klima-uređaj Stulz WDE80 koji se demontira (Tačka 4.8) |
+| Kontejner | 3,00 × 2,30 m vanjski, zidni paneli 60 mm, bez opreme; ulazna vrata 900 × 2000 mm na JUGOISTOČNOM (JI) zidu | K2 3,00 × 2,30 m vanjski, zidni paneli 60 mm, **prazan, bez GRO i instalacija**; ulazna vrata 1,00 × 2,15 m na SJEVEROZAPADNOM (SZ) zidu; na JUGOISTOČNOM (JI) zidu, u sredini, klima-uređaj Stulz WDE80 koji se demontira (Tačka 4.8) |
 | Nosivost poda kontejnera | 10,00 kN/m² ukupno (g+p), ravnomjerno raspodijeljeno — ovjereni projekat lokacije, „04 AG dio", tačka 4.4.2.3 | 10,00 kN/m² ukupno (g+p) — ovjereni projekat lokacije, AG dio, tačka 4.4.2 |
-| Sistem napajanja | Huawei ICC360-HA1-C1 (PowerCube 1000) i MTS9302A, vanjski ormari smješteni uz SJEVERNI zid kontejnera | Huawei ICC360-HA1-C1 (PowerCube 1000) — zasebna nabavka Naručioca, kao na Sjednici |
+| Sistem napajanja | Huawei ICC360-HA1-C1 (PowerCube 1000) i MTS9302A, vanjski ormari smješteni uz SJEVEROISTOČNI (SI) zid kontejnera, u sjeni | Huawei ICC360-HA1-C1 (PowerCube 1000) i MTS — zasebna nabavka Naručioca, kao na Sjednici; vanjski ormari na ploči sa JZ strane, iza FN polja |
 | Uzemljenje | postojeći prstenasti uzemljivač Fe/Zn 25 × 4 mm | postojeći uzemljivač Fe/Zn 25 × 4 mm: prsten u temeljima stopa stuba i prsten na dubini 0,8 m |
-| Orijentacija | prema Prilogu III (S-01) | vrata i kapija na sjeveru, malo prema sjeverozapadu (fotografije lokacije); ovjereni crtež iz 2017. je zakrenut ≈180° i orijentacija se potvrđuje obilaskom |
+| Orijentacija | kompleks je zakrenut 45° (Google Maps, Naručilac 11.09.2026): vrata JI, hladnjak agregata SZ, FN polje JZ, vanjski ormari SI; crteži su pravougaoni na kompleks, strelica pokazuje pravi sjever (S-01) | kompleks je zakrenut 45° (Google Maps, Naručilac 11.09.2026): vrata i kapija SZ, klima-uređaj Stulz i hladnjak agregata JI, FN polje JZ; ovjereni crtež iz 2017. je zakrenut ≈180°; orijentacija se potvrđuje obilaskom (H-01) |
 
 ### 1.1 Klimatski i geotehnički uslovi
 
@@ -85,17 +85,17 @@ razlike su u Tački 3.7.
 
 | Parametar | Zahtjev |
 |---|---|
-| Broj PV nosača | 3 kom × 4 modula po lokaciji (ukupno 6 kom) |
-| Broj PV stringova | 2 stringa × 6 modula (Voc ≈309 V, Imp 13,67 A) po lokaciji — po jedan string na svaku od dvije rute PVDB ormara; string se prostire preko dva nosača |
-| Broj PV modula | 12 × 585 Wp = 7,02 kWp po lokaciji; 4 modula po nosaču, 2 reda × 2 stupca, portret |
+| Broj PV nosača | 4 odvojena nosača × 3 modula po lokaciji (ukupno 8 kom), u jednom nizu sa razmakom 400 mm, dužina niza 10 312 mm — odvojeni nosači umjesto jednog kontinuiranog polja, radi manjeg opterećenja vjetrom po nosaču (Naručilac 11.09.2026) |
+| Broj PV stringova | 2 stringa × 6 modula (Voc ≈309 V, Imp 13,67 A) po lokaciji — po jedan string na svaku od dvije rute PVDB ormara; string se prostire preko dva nosača (PV-1 + PV-2, PV-3 + PV-4) |
+| Broj PV modula | 12 × 585 Wp = 7,02 kWp po lokaciji; 3 modula po nosaču, 3 reda × 1 stupac, položeno (landscape) |
 | Tip PV modula | Huawei iPV585-M2A (2278 × 1134 × 30 mm) |
 | Nagib | fiksno 45° |
-| Azimut | 180° (JUG) |
-| Širina PV polja | 2305 mm (poprečna greda 2918 mm, bočni prepust 306,5 mm) |
-| Dužina PV polja po nagibu | 4576 mm (2 × 2278 mm) |
-| Horizontalna projekcija | 3236 mm pri 45° |
-| Donja / gornja ivica | **+0,50 m / +3,74 m** |
-| Površina izloženosti vjetru | 10,55 m² po nosaču |
+| Azimut | 225° (pravi JUGOZAPAD); niz paralelan sa JZ ogradom (Naručilac 11.09.2026) |
+| Širina PV polja | 2278 mm (poprečna greda 2891 mm, bočni prepust 306,5 mm) |
+| Dužina PV polja po nagibu | 3442 mm (3 × 1134 mm + 2 × 20 mm) |
+| Horizontalna projekcija | 2434 mm pri 45° |
+| Donja / gornja ivica | **+0,50 m / +2,93 m** |
+| Površina izloženosti vjetru | 7,84 m² po nosaču |
 
 ### 3.2 Projektna opterećenja konstrukcije
 
@@ -104,16 +104,26 @@ dokazana za stvarna opterećenja i uticaje na lokalitetu. Nijedan kataloški nag
 nosača tipa A nije usklađen sa qp lokacija (deklarisano 0,52–0,87 kN/m² prema
 zahtijevanih 1,20 kN/m²).
 
+**Podatak lokaliteta** (obavezujuće, iz ovjerene projektne dokumentacije lokacije):
+
 | Parametar | Zahtjev |
 |---|---|
 | Pritisak vjetra | qp ≥ 1,20 kN/m² na obje lokacije |
-| Koeficijent sile | cf ≥ 1,5 pri 45° prema EN 1991-1-4 §7.3 |
-| Površina izloženosti vjetru | 10,55 m² po nosaču |
-| Sila podizanja po nosaču | ≥18,1 kN (GSN, γQ = 1,5 / γG,fav = 0,9) |
-| Horizontalna sila po nosaču | ≥13,4 kN (GSN) |
-| **Moment prevrtanja po nosaču** | **≥42,6 kNm (GSN)** |
-| **Spreg po temeljnoj traci** | **≥26,6 kN** pri razmaku traka 1600 mm |
+| Koeficijent sile | cf ≥ 1,5 pri 45° prema EN 1991-1-4 §7.3, osim ako se proračunom dokaže drugačije |
 | Mjerodavno | podizanje (uplift) i prevrtanje, a NE nosivost tla |
+
+**Projektne sile po nosaču se ne zadaju.** One proizlaze iz koncepta konstrukcije koji
+Ponuđač nudi i iskazuju se i dokazuju u njegovom tehničkom rješenju i statičkom proračunu
+(Tačka 5, dokaz 2). Vrijednosti u tabeli ispod su **orijentacione**, izvedene za referentnu
+geometriju polja iz Tačke 3.1, i služe samo za procjenu reda veličine:
+
+| Parametar (orijentaciono) | Vrijednost |
+|---|---|
+| Površina izloženosti vjetru | 7,84 m² po nosaču |
+| Sila podizanja po nosaču | 14,1 kN (GSN, γQ = 1,5 / γG,fav = 0,9; vlastita težina konstrukcije se zanemaruje) |
+| Horizontalna sila po nosaču | 10,0 kN (GSN) |
+| Moment prevrtanja po nosaču | 25,7 kNm (GSN) |
+| Spreg po temeljnoj traci | 16,1 kN pri razmaku traka 1600 mm |
 
 ### 3.3 Materijal i izrada konstrukcije
 
@@ -136,9 +146,8 @@ zahtijevanih 1,20 kN/m²).
 | Tip | hemijski (epoksidni/vinilesterski) anker M16 ili M20, sa ETA odobrenjem |
 | Materijal | vruće cinčan ili nehrđajući A4 |
 | Broj | min. 2 ankera po temeljnoj traci, odnosno 4 po nosaču |
-| Nosivost | karakteristična sila čupanja ≥30 kN po ankeru |
-| Dubina ugradnje | prema ETA za konkretnu podlogu (beton / stijena) |
-| **Projektna sila** | ukupno podizanje po nosaču ≥18,1 kN; **sila po traci od momenta prevrtanja ≥26,6 kN** pri razmaku traka 1600 mm — ovo je mjerodavno opterećenje sidrenja |
+| Nosivost i dubina ugradnje | prema ETA za konkretnu podlogu (beton / stijena) i prema statičkom proračunu iz tehničkog rješenja Ponuđača |
+| **Projektne sile ankerisanja** | proizlaze iz koncepta konstrukcije koji Ponuđač nudi i iskazuju se u tehničkom rješenju; mjerodavno opterećenje sidrenja je **sila po traci od momenta prevrtanja** (Tačka 3.2, orijentaciono) |
 | Dokazivanje | ispitivanje čupanjem (pull-out) na ≥10 % ugrađenih ankera, min. 2 po nosaču, do 1,5 × projektne sile, uz zapisnik ovjeren od nadzornog organa |
 
 ### 3.5 Temelji nosača
@@ -148,18 +157,21 @@ zahtijevanih 1,20 kN/m²).
 | Beton | C30/37, klasa izloženosti XC4 + XF3, aerant 4–6 %, Dmax 16, S3 |
 | Podložni beton | C12/15, d = 50 mm |
 | Armatura | B500B, zaštitni sloj ≥50 mm |
-| Geometrija | 2 trake po nosaču (×3 nosača = **6 traka po lokaciji**), 450 mm (gore) / 550 mm (dolje) × 3300 mm, **pune dubine 900 mm**, razmak 1600 mm, pravac SJEVER–JUG |
-| **Zapremina** | **1,485 m³ po traci → 8,91 m³ po lokaciji** |
-| Smještaj | **IZVAN ograđenog platoa**, južno od ograde (Tačka 3.7) |
+| Geometrija | 2 trake po nosaču (×4 nosača = **8 traka po lokaciji**), **500 × 2600 mm, jedinstvene širine po cijeloj dubini** (bez proširenja u dnu), **pune dubine 900 mm**, razmak 1600 mm, upravno na niz (pravac JZ–SI) |
+| **Zapremina** | **1,170 m³ po traci → 9,36 m³ po lokaciji** |
+| Smještaj | **IZVAN ograđenog platoa**, na JZ strani ograde (Tačka 3.7) |
 | Dubina smrzavanja | temeljna spojnica ispod dubine smrzavanja; Ponuđač navodi vrijednost |
 
-**Traka se betonira punom dubinom rova.** Vlastita težina trake je dio dokaza
-sigurnosti na podizanje: `1,485 m³ × 24 kN/m³ × 0,9 = 32,1 kN` prema traženih 29,6 kN
-po traci. Traka manje zapremine tu provjeru ne zatvara vlastitom težinom.
+**Traka se betonira punom dubinom rova, jedinstvene širine.** Rov u stijeni siječe se
+jednom širinom po cijeloj dubini — temelj širi u dnu nego u vrhu tražio bi potkopavanje i
+na kršu nije izvodiv. Vlastita težina trake je dio dokaza sigurnosti na podizanje:
+`1,170 m³ × 24 kN/m³ × 0,9 = 25,3 kN` prema sprezi od 16,1 kN po traci. Traka manje
+zapremine tu provjeru ne zatvara vlastitom težinom. Pošto traka ispunjava rov,
+**zatrpavanja nema** i sav iskopani materijal se odvozi.
 
 ### 3.6 Uzemljenje (LOT 1)
 
-- povezivanje **sva tri nosača** na svakoj lokaciji na postojeći uzemljivač Fe/Zn 25 × 4 mm
+- povezivanje **sva četiri nosača** na svakoj lokaciji na postojeći uzemljivač Fe/Zn 25 × 4 mm
 - vodič: bakarno uže ≥50 mm² prema EN 62305-3, Tabela 7, otporno na UV i ukopavanje
 - **NIJE dozvoljen** H07V-K 25 mm² (unutrašnji instalacioni vodič)
 - bimetalni (Cu/Fe-Zn) ukrsni komadi otporni na galvansku koroziju
@@ -167,7 +179,7 @@ po traci. Traka manje zapremine tu provjeru ne zatvara vlastitom težinom.
 - DC kablovi na razmaku ≥0,5 m od odvoda gromobranske instalacije
 - FN polja su na obje lokacije unutar zone zaštite antenskog stuba (metoda kotrljajuće
   sfere, LPL I) — dodatne hvataljke nisu potrebne
-- **Hamzići:** temeljne trake presijecaju dva postojeća prstena uzemljivača Fe/Zn 25 × 4 mm
+- **Hamzići:** svih 8 temeljnih traka u JZ pojasu presijeca dva postojeća prstena uzemljivača Fe/Zn 25 × 4 mm
   na dubini 0,8 m (1,05 m i 2,30 m od ivice ploče, ovjereni `3.6.9 Plan uzemljivača`).
   Ponuđač ih locira i otkopava, pa ih premješta ispod ili oko trake ili premošćuje istim
   materijalom — prsten se ne prekida trajno; otpor uzemljenja mjeri prije i poslije radova
@@ -177,10 +189,10 @@ po traci. Traka manje zapremine tu provjeru ne zatvara vlastitom težinom.
 | Parametar | BS Sjednica | BS Hamzići |
 |---|---|---|
 | Kota ograde | h = 2,10 m (ovjereni `04 Ograda`) | h = 1,80 m od ploče (ovjereni `04_Ograda`); teren oko ploče je na −0,20 m, pa je ograda 2,00 m iznad terena |
-| Nadvišenje ograde | 1,64 m | 1,74 m |
-| Raspoloživi prostor | južno od ograde, unutar zakupljene parcele 16,00 × 9,40 m | pojas južno od ploče dubine 3575 mm i širine 12,00 m, unutar zakupa 12,00 × 12,50 m — dubina polja 3236 mm i trake 3300 mm staju uz ≈0,27 m rezerve |
-| Položaj nosača | Ponuđač utvrđuje odmak od ograde tako da ravan panela nigdje ne dodiruje ogradu, a konstrukcija ostane unutar parcele | nosači okrenuti na jug; ako ivica zakupa odstupa od pravca istok–zapad, nosači se postavljaju stepenasto ili paralelno sa ivicom uz odstupanje azimuta ≤15°; položaj potvrđuje Ponuđač geodetskim snimanjem |
-| Prepreke | nema | listopadno stablo JJI–JI od stuba (≈7–9 m, 15–20 m, izvan zakupa) zasjenjuje polje u zimskim jutrima (≈3–10 % decembarske proizvodnje); stablo se ne uklanja — polje postaviti tako da se zasjenjenje umanji |
+| Nadvišenje ograde | 0,83 m | 0,93 m |
+| Raspoloživi prostor | na JZ strani ograde, unutar zakupljene parcele 16,00 × 9,40 m; niz 10 312 mm | pojas na JZ strani ploče dubine 3300 mm i dužine 12,50 m, unutar zakupa 12,00 × 12,50 m — projekcija polja 2434 mm i trake 2600 mm staju sa po 350 mm od granice zakupa i od ploče; niz 10 312 mm centriran na ploču |
+| Položaj nosača | niz paralelan sa JZ ogradom; Ponuđač utvrđuje odmak od ograde tako da ravan panela nigdje ne dodiruje ogradu, a konstrukcija ostane unutar parcele | nosači okrenuti na JZ (azimut 225°), niz paralelan sa granicom zakupa; iza niza, na ploči sa JZ strane, stoje vanjski ormari ICC360-HA1-C1 i MTS (0,85 m slobodno ispred njih); položaj potvrđuje Ponuđač geodetskim snimanjem |
+| Prepreke | nema | listopadno stablo JJI–JI od stuba (≈7–9 m, 15–20 m, izvan zakupa) zasjenjuje polje samo u zimskim jutrima (do ≈2 % decembarske proizvodnje; polje okrenuto na JZ ga uglavnom izbjegava); stablo se ne uklanja |
 | Grafički prilozi | S-01, S-02, S-03 | H-01, H-02, H-03 |
 
 ---
@@ -188,8 +200,9 @@ po traci. Traka manje zapremine tu provjeru ne zatvara vlastitom težinom.
 ## 4. LOT 2 — Dizel električni agregat i instalacije (obje lokacije)
 
 Na svakoj lokaciji se u postojeći kontejner ugrađuje po jedan agregat sa spremnikom
-goriva. Tačke 4.1–4.7 vrijede za obje lokacije; raspored otvora, izduv i instalacije
-razlikuju se po lokaciji i dati su u Tačkama 4.3–4.5; Tačka 4.8 je samo za Hamziće.
+goriva. Tačke 4.1–4.7 i 4.9 vrijede za obje lokacije; raspored otvora, izduv i
+instalacije razlikuju se po lokaciji i dati su u Tačkama 4.3–4.5; Tačka 4.8 je samo za
+Hamziće.
 
 ### 4.1 Agregat
 
@@ -261,42 +274,43 @@ izvesti usis, izlaz i izduv na istom zidu, niti dovod zraka kroz ulazna vrata.
 
 | Element | Zid i položaj |
 |---|---|
-| Usisna žaluzina 500 × 700 | **SJEVERNI zid, istočni kraj**; donja ivica +0,30 m od poda. Sjeverna strana je zasjenjena i daje najhladniji usisni zrak; žaluzina se postavlja istočno od vanjskih ormara ICC360-HA1-C1/MTS9302A |
-| Kanal hladnjaka + izlazna žaluzina 600 × 600 | **ZAPADNI zid**, na osi hladnjaka agregata; kanal najkraćim putem od hladnjaka kroz zid, **razvijena površina ≈1,0 m²** |
-| Izduv | uz **ZAPADNI zid**, završetak iznad krova (Tačka 4.4) |
-| Odušna cijev spremnika | **JUŽNI zid**, istočni kraj |
-| Ventilator prostora Ø315 | **ISTOČNI zid**, gore (donja ivica ≈+1,75 m), sjeverno od ulaznih vrata |
+| Usisna žaluzina 500 × 700 | **SJEVEROISTOČNI (SI) zid, jugoistočni kraj**; donja ivica +0,30 m od poda. SI strana je zasjenjena i daje najhladniji usisni zrak; žaluzina se postavlja jugoistočno od vanjskih ormara ICC360-HA1-C1/MTS9302A |
+| Kanal hladnjaka + izlazna žaluzina 600 × 600 | **SJEVEROZAPADNI (SZ) zid**, na osi hladnjaka agregata; kanal najkraćim putem od hladnjaka kroz zid, **razvijena površina ≈1,0 m²** |
+| Izduv | uz **SZ zid**, završetak iznad krova (Tačka 4.4) |
+| Odušna cijev spremnika | **JUGOZAPADNI (JZ) zid**, jugoistočni kraj |
+| Ventilator prostora Ø315 | **JUGOISTOČNI (JI) zid**, gore (donja ivica ≈+1,75 m), sjeveroistočno od ulaznih vrata |
 | Minimalna razdaljina | ≥3 m prostorno između usisa zraka, izduva i odušne cijevi |
 
-Ukrsno strujanje **usis SJEVER → agregat → izlaz ZAPAD**. Nije dozvoljeno usmjeriti topli
-zrak ili izduv prema SJEVERNOJ strani, gdje su vanjski ormari i usis svježeg zraka.
+Ukrsno strujanje **usis SI → agregat → izlaz SZ**. Nije dozvoljeno usmjeriti topli
+zrak ili izduv prema SI strani, gdje su vanjski ormari i usis svježeg zraka.
 
 ![Slika 5 — BS Sjednica: raspored opreme i otvora u kontejneru, crtež M-01 (Prilog III)](../TD-OUTPUT/grafika/prilog1/m01-raspored.png){width=100%}
 
 #### 4.3.B Raspored otvora — BS Hamzići (crtež H-04)
 
 Izlaz toplog zraka hladnjaka ide kroz **postojeće otvore klima-uređaja Stulz** u
-sredini južnog zida (Tačka 4.8). Projekat klimatizacije iz 2017. predviđa dva otvora
+sredini jugoistočnog (JI) zida (Tačka 4.8). Projekat klimatizacije iz 2017. predviđa dva otvora
 300 × 700 mm; stvarne otvore ugrađenog uređaja Ponuđač mjeri pri obilasku.
 
 | Element | Zid i položaj |
 |---|---|
-| Usisna žaluzina 500 × 700 | **ZAPADNI zid**, novi otvor uz alternator (sjeverni kraj agregata), sjeverno od spremnika; donja ivica +0,30 m od poda |
-| Plenum hladnjaka + izlaz | **JUŽNI zid, u sredini** — kroz postojeće otvore klima-uređaja Stulz, spojene/proširene na **≥0,36 m² bruto**, sa fiksnom žaluzinom; nekorišteni dio otvora zatvara se sendvič panelom 60 mm iste izvedbe kao zid; plenum od pocinčanog lima, razvijena površina ≈1,5 m² |
-| Hauba | vani na južnom zidu, 700 × 600 mm, od pocinčanog lima, zatvorenih bočnih strana i dna, sa rešetkom na vrhu (≈+1,30 m): topli zrak ide **NAVIŠE**, ne prema FN polju (≈0,77 m južnije); ≥1,0 m od nogu stuba |
-| Izduv | **ISTOČNI zid**, horizontalno na ≈+2,30 m, ispod platforme stuba; prigušivač u istočnom prolazu; završetak ≥0,40 m od zida (Tačka 4.4) |
-| Agregat | duža osa **SJEVER–JUG**, u sredini kontejnera, hladnjak na jugu; servisna strana je **istočna** (0,78 m), sjeverni kraj 0,97 m do GRO, zapadna strana 0,78 m (uz korito spremnika 0,14 m) — Ponuđač potvrđuje da su servisne tačke agregata dostupne sa istočne strane i sjevernog kraja |
-| Spremnik 500 l | u **JUGOZAPADNOM uglu**, uz južni i zapadni zid, 0,14 m od agregata; izduv je na istočnoj strani agregata |
-| Odušna cijev spremnika | principijelno kroz **JUŽNI zid** uz zapadni kraj, pa stojećom cijevi između kontejnera i južne ograde, završetak na +2,80 m; ≥3 m od završetka izduva i od usisne žaluzine, ≥1 m od ormara Huawei; konačno prema elaboratu zaštite od požara |
-| Ventilator prostora Ø315 | **ZAPADNI zid**, gore, sjeverno od usisne žaluzine; **izvlačni** (izbacuje zrak iz prostora) |
-| GRO | **SJEVERNI zid**, zapadno od ulaznih vrata; raspoloživi zid je 0,595 m, pa je **širina GRO ≤0,50 m** |
-| Huawei ICC360-HA1-C1 | vanjski ormar na ploči, sjeverno od kontejnera, između sjeverozapadne noge stuba i krila ulaznih vrata, vratima prema prolazu kapija–vrata; napaja se iz GRO kroz sjeverni zid |
-| Minimalna razdaljina | ≥3 m prostorno između usisne žaluzine, završetka izduva i odušne cijevi (H-04: završetak izduva–usis 3,2 m); izvlačni ventilator je izlazni otvor i ne ulazi u ovaj uslov |
+| Usisna žaluzina 500 × 700 | **SJEVEROISTOČNI (SI) zid**, novi otvor uz alternator (SZ kraj agregata), neposredno jugoistočno od korita spremnika; donja ivica +0,30 m od poda |
+| Plenum hladnjaka + izlaz | **JUGOISTOČNI (JI) zid, u sredini** — kroz postojeće otvore klima-uređaja Stulz, spojene/proširene na **≥0,36 m² bruto**, sa fiksnom žaluzinom; nekorišteni dio otvora zatvara se sendvič panelom 60 mm iste izvedbe kao zid; plenum od pocinčanog lima, razvijena površina ≈1,5 m² |
+| Hauba | vani na JI zidu, 700 × 600 mm, od pocinčanog lima, zatvorenih bočnih strana i dna, sa rešetkom na vrhu (≈+1,30 m): topli zrak ide **NAVIŠE**, dalje od FN polja (JZ strana) i od ormara Huawei; ≥1,0 m od nogu stuba |
+| Izduv | iz JZ prolaza kroz **JUGOISTOČNI (JI) zid**, jugozapadno od haube, horizontalno na ≈+2,30 m, ispod platforme stuba; prigušivač u JZ prolazu; završetak ≥0,40 m od zida (Tačka 4.4) |
+| Agregat | duža osa **SZ–JI**, u sredini kontejnera, hladnjak na JI; prolazi po 0,78 m na SI i JZ strani (u JZ prolazu su izduv i prigušivač), SZ kraj 0,97 m do GRO — Ponuđač potvrđuje da su servisne tačke agregata dostupne sa SI strane i SZ kraja |
+| Spremnik 500 l | u **SJEVERNOM uglu** (SZ × SI zid, prema pravom sjeveru — Naručilac 11.09.2026), uz SZ kraj agregata; od vrata do korita ostaje 0,945 m slobodnog prolaza za unos agregata |
+| Odušna cijev spremnika | principijelno kroz **SJEVEROZAPADNI (SZ) zid**, sjeveroistočno od ulaznih vrata, pa stojećom cijevi između kontejnera i SZ ograde, izvan krila vrata, završetak na +2,80 m; ≥3 m od završetka izduva i od usisne žaluzine, ≥1 m od ormara Huawei; konačno prema elaboratu zaštite od požara |
+| Ventilator prostora Ø315 | **JUGOISTOČNI (JI) zid**, gore, sjeveroistočno od haube; **izvlačni** (izbacuje zrak iz prostora) |
+| GRO | **SJEVEROZAPADNI (SZ) zid**, jugozapadno od ulaznih vrata; raspoloživi zid je 0,595 m, pa je **širina GRO ≤0,50 m** |
+| DC razvod −48 V | **SZ zid**, sjeveroistočno od ulaznih vrata, iznad spremnika (≈300 × 200 × 150 mm) |
+| Huawei ICC360-HA1-C1 i MTS | vanjski ormari na ploči sa JZ strane kontejnera, između dvije JZ noge stuba, iza FN polja i u njegovoj sjeni; vrata prema kontejneru, 0,85 m slobodno ispred ormara; napajanje iz GRO (izvod F1) i −48 V kroz JZ zid; kratka DC trasa od FN polja do PVDB uz ICC360; tip i mjere MTS potvrđuje Naručilac (principijelno) |
+| Minimalna razdaljina | ≥3 m prostorno između usisne žaluzine, završetka izduva i odušne cijevi (H-04: završetak izduva–usis 3,25 m); izvlačni ventilator je izlazni otvor i ne ulazi u ovaj uslov |
 
-Ukrsno strujanje **usis ZAPAD → agregat → izlaz JUG, hauba naviše**; hladnjak agregata je
-uz južni zid, na mjestu otvora klima-uređaja. Izlaz gleda prema FN polju, pa ga hauba
-usmjerava naviše; izduv ide na istok, dalje od polja i ulaznih vrata (sjever). Mjere
-otvora Stulz se uzimaju pri obilasku, pa je raspored na crtežu H-04 principijelan —
+Ukrsno strujanje **usis SI → agregat → izlaz JI, hauba naviše**; hladnjak agregata je
+uz JI zid, na mjestu otvora klima-uređaja, a hauba topli zrak usmjerava naviše. Izduv
+izlazi na JI strani, jugozapadno od haube, dalje od ulaznih vrata (SZ), od usisa (SI) i
+od ormara (JZ). Mjere otvora Stulz se uzimaju pri obilasku, pa je raspored na crtežu H-04 principijelan —
 Ponuđač ga potvrđuje na licu mjesta.
 
 ![Slika 6 — BS Hamzići: raspored opreme i otvora u kontejneru, crtež H-04 (Prilog III)](../TD-OUTPUT/grafika/prilog1/h04-raspored.png){width=100%}
@@ -315,8 +329,8 @@ Ponuđač ga potvrđuje na licu mjesta.
 
 | Trasa i završetak | BS Sjednica | BS Hamzići |
 |---|---|---|
-| Trasa | 1 m od elastičnog umetka do prigušivača sa jednim lukom 90°; do 4 m od prigušivača do izlaza, uspon uz **ZAPADNI zid** kontejnera | ≈1 m do prigušivača, zatim ≈3 m **horizontalno kroz ISTOČNI zid** na visini ≈+2,30 m, sa termoizolacionom čahurom u prolazu kroz zid |
-| Završetak | **iznad krova, usmjeren naviše**, sa kapom protiv upada padavina, ≥3 m od usisa zraka i odušne cijevi | **horizontalno, usmjeren na istok**, ≥0,40 m od zida, ispod platforme stuba (+3,0 m) koja je iznad krova kontejnera — završetak iznad krova nije moguć; kapa protiv padavina, ≥3 m od usisa zraka i odušne cijevi; ne usmjeravati na noge stuba ni kablove |
+| Trasa | 1 m od elastičnog umetka do prigušivača sa jednim lukom 90°; do 4 m od prigušivača do izlaza, uspon uz **SZ zid** kontejnera | ≈1 m do prigušivača u JZ prolazu, zatim ≈1,5 m do **JI zida** i horizontalno kroz njega na visini ≈+2,30 m, sa termoizolacionom čahurom u prolazu kroz zid |
+| Završetak | **iznad krova, usmjeren naviše**, sa kapom protiv upada padavina, ≥3 m od usisa zraka i odušne cijevi | **horizontalno, usmjeren na JI**, ≥0,40 m od zida, ispod platforme stuba (+3,0 m) koja je iznad krova kontejnera — završetak iznad krova nije moguć; kapa protiv padavina, ≥3 m od usisa zraka i odušne cijevi; ne usmjeravati na noge stuba ni kablove |
 | Izolacija | ≈3,0 m² | ≈2,5 m² |
 
 ### 4.5 Elektroinstalacije i zaštite
@@ -345,7 +359,7 @@ sredstvom zaštite od indirektnog dodira.
 |---|---|---|
 | Postojeći strujni krugovi | snimiti stanje i prevezati postojeće krugove u novi GRO; signalna rasvjeta antenskog stuba (K7) prelazi na DC razvod −48 V | kontejner je **prazan — nema GRO ni krugova**: nova rasvjeta (2 LED svjetiljke IP65 ≥1500 lm; jedna je za 48 V DC na DC razvodu, pa je svjetlo dostupno i kad agregat ne radi), 2 utičnice 230 V/16 A IP44, kablovi u kanalicama; postojeća svjetiljka za obilježavanje stuba prelazi na DC razvod −48 V |
 | Klima-uređaj | — | **bez kruga za klima-uređaj** (demontira se, Tačka 4.8) |
-| Smještaj GRO | SJEVERNI zid, uz vanjski ormar koji napaja | SJEVERNI zid, zapadno od ulaznih vrata; **širina ≤0,50 m** (raspoloživi zid 0,595 m); ormar Huawei je vani, uz sjeverni zid (Tačka 4.3.B) |
+| Smještaj GRO | SI zid, uz vanjske ormare koje napaja | SZ zid, jugozapadno od ulaznih vrata; **širina ≤0,50 m** (raspoloživi zid 0,595 m); ormari Huawei su vani, na JZ strani (Tačka 4.3.B) |
 | Grafički prilog | E-01 | H-05 |
 
 **Trajni potrošači — napajanje sa −48 V DC (obje lokacije).** Agregat je jedini izvor
@@ -376,7 +390,7 @@ izvoda sa vlastitim zaštitnim prekidačem — preko novog **DC razvoda −48 V*
   iz Tačke 5, stavka 12:
   - start agregata pri dubini pražnjenja baterija **DOD 85 %** (SoC 15 %)
   - zaustavljanje agregata pri **SoC 60 %** — ostatak punjenja preuzima fotonaponsko
-    polje; punjenje baterija agregatom do vrha povećava rad agregata za 11–18 %
+    polje; punjenje baterija agregatom do vrha povećava rad agregata za 10–16 %
   - struja punjenja baterija podešena tako da ne ograničava agregat ispod 9,5 kW: na
     najveću vrijednost koju dozvoljava BMS baterijskih modula (proračun pretpostavlja
     0,5 C), uz pisanu potvrdu proizvođača
@@ -403,7 +417,7 @@ aktivaciji gašenja **zasebno su iskazani u Prilogu II**.
 ### 4.8 Demontaža klima-uređaja Stulz — samo BS Hamzići
 
 - postojeći kompaktni zidni klima-uređaj **Stulz WDE80** (8 kW, rashladni medij R407C) na
-  istočnom zidu kontejnera se odspaja (230 V AC, 48 V DC, signalizacija) i demontira
+  jugoistočnom (JI) zidu kontejnera, u sredini, se odspaja (230 V AC, 48 V DC, signalizacija) i demontira
   **bez otvaranja rashladnog kruga**
 - uređaj se pakuje za transport, utovara i prevozi u skladište **BH Telecom d.d.,
   Alipašino Polje, Sarajevo**, uz istovar i **zapisnik o primopredaji** (tip, serijski
@@ -411,19 +425,39 @@ aktivaciji gašenja **zasebno su iskazani u Prilogu II**.
 - otvori u zidu ostaju za izlaz toplog zraka agregata (Tačka 4.3.B); natpisnu pločicu i
   mjere otvora Ponuđač očitava pri obilasku lokacije
 
+### 4.9 Preuzimanje i transport opreme Kupca — obje lokacije
+
+Opremu hibridnog sistema nabavlja Kupac i predaje je Ponuđaču u svom skladištu.
+Ponuđač je preuzima, prevozi na lokaciju i ugrađuje. Prevoz i rukovanje su dio
+LOT 2 i iskazuju se u Prilogu II, po lokaciji.
+
+| Element | Zahtjev |
+|---|---|
+| Oprema Kupca | fotonaponski moduli iPV585-M2A (12 kom po lokaciji), PVDB 500-15-2B, ispravljači iSSU S4875G2, baterijski moduli LFP i ormar ICC360-HA1-C1 sa pripadajućim modulima; tačan spisak Kupac daje uz narudžbu |
+| Mjesto preuzimanja | skladište BH Telecom d.d., **Azići, Bojnička bb, Sarajevo** |
+| Mjesto isporuke | BS Sjednica (Bileća) i BS Hamzići (Čitluk) — svaka lokacija zasebno |
+| Obuhvat | utovar, osiguranje i učvršćenje tereta, prevoz, istovar na lokaciji i unos do mjesta ugradnje |
+| Vozilo | zatvoreno ili natkriveno vozilo; pristupni put do BS Hamzići je makadam ≈800 m × 3 m, pa Ponuđač bira vozilo koje njime prolazi |
+| Rukovanje | FN moduli u originalnoj ambalaži, uspravno, bez oslanjanja na staklo; baterijski moduli prema uputstvu proizvođača (temperatura, položaj, zaštita polova); ormar bez udara i naginjanja preko dozvoljenog ugla |
+| Termin | preuzimanje se najavljuje skladištu najmanje 3 radna dana ranije; prevoz se usklađuje sa dinamikom montaže — oprema se ne skladišti na lokaciji duže nego što montaža traži |
+| Dokumenti | otpremnica skladišta pri preuzimanju i **zapisnik o preuzimanju opreme na lokaciji** (spisak, količine, stanje ambalaže, serijski brojevi), potpisan od Ponuđača i Kupca |
+| Odgovornost | od potpisa otpremnice do zapisnika o primopredaji radova opremu čuva Ponuđač; oštećenu ili izgubljenu opremu nadoknađuje o svom trošku |
+
 ---
 
 ## 5. Dokazi koji se dostavljaju
 
 Dokazi koji se dostavljaju **uz ponudu** nose oznaku **PONUDA**; dokazi koji se
 dostavljaju **u toku realizacije** nose oznaku **REALIZACIJA**; dokazi koji se
-dostavljaju komisiji **tokom primopredaje** nose oznaku **PRIMOPREDAJA**. Dokazi iz
-realizacije i primopredaje dostavljaju se **za svaku lokaciju**.
+dostavljaju komisiji **tokom primopredaje** nose oznaku **PRIMOPREDAJA**; dokazi koji
+moraju biti pregledani i odobreni **prije početka izvođenja radova** nose oznaku
+**POČETAK RADOVA**. Dokazi iz realizacije i primopredaje dostavljaju se **za svaku
+lokaciju**.
 
 | Br. | Dokaz | LOT | Oznaka |
 |---|---|---|---|
-| 1 | Statički proračun nosive konstrukcije i temelja za qp ≥ 1,20 kN/m² pri 45°, ovjeren i potpisan od ovlaštenog inženjera, sa dokazom na podizanje i prevrtanje — za obje lokacije | 1 | REALIZACIJA |
-| 2 | Tehnički nacrti konstrukcije i temelja | 1 | PONUDA |
+| 1 | Statički proračun nosive konstrukcije i temelja prema standardima iz Tačke 3.2, ovjeren i potpisan od ovlaštenog inženjera, sa dokazom na podizanje i prevrtanje — za obje lokacije. Dostavlja se u sklopu tehničkog rješenja i uslov je za počinjanje radova | 1 | POČETAK RADOVA |
+| 2 | Tehničko rješenje konstrukcije za prihvat fotonaponskih panela za predmetnu lokaciju: tehnički nacrti konstrukcije i temelja, statički proračun i specifikacija materijala | 1 | PONUDA |
 | 3 | Izjava o svojstvima prema EN 1090-1 i klasa izvedbe EXC2 | 1 | REALIZACIJA |
 | 4 | Atesti materijala (čelik) i potvrda o vrućem cinčanju (debljina sloja) | 1 | REALIZACIJA |
 | 5 | ETA certifikat i proračun za hemijska sidra | 1 | REALIZACIJA |
@@ -435,6 +469,7 @@ realizacije i primopredaje dostavljaju se **za svaku lokaciju**.
 | 11 | Ispitni protokoli elektroinstalacija i otpora uzemljenja (≤10 Ω), po lokaciji | 2 | PRIMOPREDAJA |
 | 12 | Protokol o parametriranju i funkcionalnom ispitivanju integracije DEA–PV–baterija, po lokaciji, uključujući postavljeno ograničenje od 9,5 kW, start pri DOD 85 %, stop pri SoC 60 %, struju punjenja uz potvrdu proizvođača baterija i najkraće vrijeme rada | 2 | PRIMOPREDAJA |
 | 13 | Zapisnik o primopredaji demontiranog klima-uređaja Stulz WDE80 u skladištu Alipašino Polje (Hamzići) | 2 | REALIZACIJA |
+| 14 | Otpremnica skladišta Azići (Bojnička bb) i zapisnik o preuzimanju opreme Kupca na lokaciji, po lokaciji (Tačka 4.9) | 2 | REALIZACIJA |
 
 ## 6. Ispitivanja i puštanje u rad
 
@@ -470,21 +505,28 @@ ograničenih na 9,5 kW, uz parametriranje SMU iz Tačke 4.6. Metoda, provjera
 prema PVGIS-u, gubici i osjetljivost na postavke su u proračunima lokacija, dio A.6.
 **Vrijednosti su informativne i ne mijenjaju zahtjeve Tačaka 3 i 4.**
 
+Polja su na obje lokacije okrenuta na **pravi jugozapad (azimut 225°)**, u jednom nizu
+paralelnom sa JZ ogradom (Naručilac 11.09.2026). Okrenuta na jug (180°), ista polja bi
+dala ≈9 % više energije godišnje i ≈21 % više u decembru, a agregat bi radio ≈50 h
+godišnje manje. Očekivani rad agregata je zato na obje lokacije iznad cilja od 250 h
+godišnje iz RFI; to je svjesno prihvaćena cijena orijentacije JZ (proračuni lokacija,
+dio A.6).
+
 | Pokazatelj | BS Sjednica | BS Hamzići |
 |---|---|---|
-| FN proizvodnja na DC sabirnici | ≈10 140 kWh/god (1 444 kWh/kWp) | ≈10 450 kWh/god (1 488 kWh/kWp) |
+| FN proizvodnja na DC sabirnici | ≈9 240 kWh/god (1 317 kWh/kWp) | ≈9 580 kWh/god (1 365 kWh/kWp) |
 | Potrošnja | ≈10 790 kWh/god | ≈10 860 kWh/god |
-| Decembar: FN / potrošnja | ≈560 / ≈910 kWh | ≈600 / ≈910 kWh |
-| Solarni udio u potrošnji | 79,2 % | 81,0 % |
-| **Rad agregata** | **≈250 h/god**; u 9 od 10 godina do ≈310 h; najviše ≈330 h | **≈230 h/god**; u 9 od 10 godina do ≈270 h; najviše ≈310 h |
-| Startova agregata | ≈90 godišnje, najviše ≈120 | ≈80 godišnje, najviše ≈110 |
-| **Potrošnja goriva** | **≈820 l/god**; spremnik od 500 l dopunjava se dva puta godišnje | **≈750 l/god**; spremnik od 500 l dopunjava se dva puta godišnje |
+| Decembar: FN / potrošnja | ≈440 / ≈910 kWh | ≈480 / ≈910 kWh |
+| Solarni udio u potrošnji | 74,7 % | 77,0 % |
+| **Rad agregata** | **≈300 h/god**; u 9 od 10 godina do ≈360 h; najviše ≈380 h | **≈270 h/god**; u 9 od 10 godina do ≈320 h; najviše ≈350 h |
+| Startova agregata | ≈110 godišnje, najviše ≈130 | ≈100 godišnje, najviše ≈120 |
+| **Potrošnja goriva** | **≈990 l/god**; spremnik od 500 l dopunjava se dva do tri puta godišnje | **≈900 l/god**; spremnik od 500 l dopunjava se dva puta godišnje |
 | Nepokrivena potrošnja | 0 | 0 |
 
 Bez parametriranja iz Tačke 4.6 (zaustavljanje pri SoC 90 %, uobičajena struja
-punjenja) agregat bi radio ≈280 h i trošio ≈910 l godišnje na Sjednici, odnosno ≈250 h
-i ≈830 l na Hamzićima. Na Hamzićima vrijednosti važe bez zasjenjenja stablom; sa
-stablom rad agregata raste za 5–23 h godišnje.
+punjenja) agregat bi radio ≈330 h i trošio ≈1 090 l godišnje na Sjednici, odnosno ≈300 h
+i ≈1 000 l na Hamzićima. Na Hamzićima vrijednosti važe bez zasjenjenja stablom; sa
+stablom rad agregata raste za 1–10 h godišnje.
 
 ![Slika 7 — BS Sjednica: mjesečni energetski bilans (prosjek i raspon 2005–2023)](../TD-OUTPUT/grafika/prilog1/energetski-bilans-sjednica.png){width=100%}
 

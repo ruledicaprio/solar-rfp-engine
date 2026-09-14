@@ -12,12 +12,14 @@ only the changes below are made.
                                     adds 1.6, the existing earth rings under the strips
     LOT 2 Sjednica, LOT 2 Hamzići   genset in the existing container - Hamzići differs
                                     only where the site differs (HAMZICI_*, NEW_ITEMS)
-    REKAPITULACIJA                  totals of the four sheets, discount, 17 % VAT,
-                                    notes, date and signature
+    REKAPITULACIJA LOT n            the LOT's two site totals, its own discount and
+                                    17 % VAT, notes, date and signature
 
-The source REKAPITULACIJA / NAPOMENA / Datum blocks below each LOT subtotal are
-dropped - the totals live on the REKAPITULACIJA sheet, which finds every subtotal
-cell by its label, never by a hard-coded row.
+One workbook per LOT (Investor, 12.09.2026): the award is per LOT and a bidder may
+offer only one, so each LOT is a complete price form of its own - its two site
+sheets and its REKAPITULACIJA. The source REKAPITULACIJA / NAPOMENA / Datum blocks
+below each LOT subtotal are dropped; the recap finds every subtotal cell by its
+label, never by a hard-coded row.
 
 Source defects fixed on the way (listed again in the run summary):
   * fit-to-width printing is switched on - the source carries fitToWidth=1 but
@@ -31,7 +33,7 @@ Source defects fixed on the way (listed again in the run summary):
   * LOT 2 item 4.5 pointed to the outlet louvre as "Tačka 4.7" (the intake) - it is
     4.6, fixed on both site sheets (BOTH_SITES_EDITS).
 
-    python joint_boq.py          writes paths.PRILOG2 (TD_OUT redirects it)
+    python joint_boq.py          writes paths.PRILOG2_LOT, one file per LOT (TD_OUT redirects)
 """
 import os
 import re
@@ -47,7 +49,7 @@ import paths  # noqa: E402
 
 SRC = os.path.join(paths.SITES["sjednica"]["folder"], "TD-OUTPUT",
                    "3.1 PRILOG II TD - predmjer Sjednica Bileca.xlsx")
-OUT = paths.PRILOG2
+OUT = paths.PRILOG2_LOT                  # {lot: path} - one workbook per LOT
 
 SITE = {
     "sjednica": {"up": "BS SJEDNICA", "title": "BS SJEDNICA (BILEĆA)", "label": "BS Sjednica (Bileća)"},
@@ -55,9 +57,10 @@ SITE = {
 }
 LOTS = ("LOT 1", "LOT 2")
 SHEET = {(lot, s): f"{lot} {paths.SITES[s]['name']}" for lot in LOTS for s in SITE}
-LOT_SHEETS = [SHEET[lot, s] for lot in LOTS for s in SITE]
-REKAP = "REKAPITULACIJA"
-SHEET_ORDER = LOT_SHEETS + [REKAP]
+SITE_SHEETS = {lot: [SHEET[lot, s] for s in SITE] for lot in LOTS}
+LOT_SHEETS = [n for lot in LOTS for n in SITE_SHEETS[lot]]
+REKAP = {lot: f"REKAPITULACIJA {lot}" for lot in LOTS}
+SHEET_ORDER = {lot: SITE_SHEETS[lot] + [REKAP[lot]] for lot in LOTS}
 
 SRC_SITE = " SJEDNICA, BILEĆA"           # how the source title rows name the site
 JOINT = "\nBS SJEDNICA I BS HAMZIĆI"     # ... and the joint tender (own line: fits any sheet)
@@ -70,36 +73,36 @@ LOT_RE = re.compile(r"^UKUPNO LOT (\d) —")   # LOT subtotal "UKUPNO LOT 2 — 
 #                                              source recap's "UKUPNO LOT 1 (bez PDV-a)")
 LINE = '=IF(AND(D{r}<>"",E{r}<>""),D{r}*E{r},"")'   # source line-total pattern
 
-# ---- REKAPITULACIJA labels (the check script imports these) -----------------
+# ---- REKAPITULACIJA labels, one recap per LOT (the check script imports these) --
 LBL_SITE = {(lot, s): f"{SITE[s]['label']} — {lot} bez PDV-a [KM]:" for lot in LOTS for s in SITE}
 LBL_LOT_TOTAL = {lot: f"UKUPNO {lot} (BS Sjednica + BS Hamzići) bez PDV-a [KM]:" for lot in LOTS}
-LBL_TOTAL = "SVE UKUPNO (LOT 1 + LOT 2) bez PDV-a [KM]:"
 LBL_POPUST = "Popust [%]:"
-LBL_DISC = "SVE UKUPNO sa popustom bez PDV-a [KM]:"
+LBL_DISC = {lot: f"UKUPNO {lot} sa popustom bez PDV-a [KM]:" for lot in LOTS}
 LBL_VAT = "Iznos PDV-a (17 %) [KM]:"
-LBL_GRAND = "SVE UKUPNO sa popustom i PDV-om [KM]:"
+LBL_GRAND = {lot: f"UKUPNO {lot} sa popustom i PDV-om [KM]:" for lot in LOTS}
 
 # ---- BS Hamzići, LOT 2: what differs from Sjednica -------------------------
 # Text edits are exact (old, new) replacements inside the Sjednica item text; each
 # old fragment must occur exactly once, so everything else in the item is kept.
 HAMZICI_EDITS = {
     "4.5": [
-        ("Kanal je PRELAZNI KOMAD od prirubnice hladnjaka do žaluzine 600 × 600 mm kroz ZAPADNI zid; "
-         "hladnjak je 60 mm od zida, pa je razvijena površina ≈1,0 m².",
+        # Sjednica wording since fix_boq_sw_4x3l.py (walls by true direction, 11.09.2026)
+        ("Kanal je PRELAZNI KOMAD od prirubnice hladnjaka do žaluzine 600 × 600 mm kroz "
+         "SJEVEROZAPADNI (SZ) zid; hladnjak je 60 mm od zida, pa je razvijena površina ≈1,0 m².",
          "Kanal je PLENUM od prirubnice hladnjaka do POSTOJEĆIH OTVORA demontiranog klima-uređaja "
-         "Stulz (Tačka 5.15) u sredini JUŽNOG zida kontejnera, sa prirubnicama, fleksibilnim spojem "
-         "prema hladnjaku (Tačka 4.4) i brtvljenjem; razvijena površina ≈1,5 m²."),
+         "Stulz (Tačka 5.15) u sredini JUGOISTOČNOG (JI) zida kontejnera, sa prirubnicama, "
+         "fleksibilnim spojem prema hladnjaku (Tačka 4.4) i brtvljenjem; razvijena površina ≈1,5 m²."),
         ("RASPORED (OBAVEZNO, prema crtežu M-01): kanal se vodi najkraćim putem od radijatora kroz "
-         "ZAPADNI zid kontejnera do izlazne žaluzine iz Tačke 4.6.",   # after BOTH_SITES_EDITS
+         "SJEVEROZAPADNI (SZ) zid kontejnera do izlazne žaluzine iz Tačke 4.6.",   # after T1
          "RASPORED (OBAVEZNO, prema crtežu H-04): kanal se vodi najkraćim putem od radijatora do "
-         "postojećih otvora klima-uređaja Stulz u sredini JUŽNOG zida kontejnera, u kojima se "
-         "ugrađuje izlazna žaluzina iz Tačke 4.6."),
+         "postojećih otvora klima-uređaja Stulz u sredini JUGOISTOČNOG (JI) zida kontejnera, u "
+         "kojima se ugrađuje izlazna žaluzina iz Tačke 4.6."),
     ],
     "4.6": [
         ("Isporuka i montaža fiksne žaluzine na kraju kanala za odvod toplog zraka, dimenzija "
          "600 × 600 mm, sa zaštitnom mrežicom, komplet sa montažnim materijalom.",
          "Prilagođenje postojećih otvora demontiranog klima-uređaja Stulz (Tačka 5.15) u sredini "
-         "JUŽNOG zida kontejnera za izlaz toplog zraka sa hladnjaka agregata: spajanje i/ili "
+         "JUGOISTOČNOG (JI) zida kontejnera za izlaz toplog zraka sa hladnjaka agregata: spajanje i/ili "
          "proširenje otvora na žaluzinu bruto površine ≥0,36 m² (npr. 600 × 600 mm), sa ojačanim "
          "okvirom u zidnom panelu; isporuka i montaža fiksne žaluzine na kraju kanala za odvod "
          "toplog zraka, sa zaštitnom mrežicom protiv insekata i ptica, komplet sa montažnim "
@@ -107,42 +110,46 @@ HAMZICI_EDITS = {
          "sa rešetkom na vrhu (≈+1,30 m) — topli zrak se usmjerava NAVIŠE, ne prema FN polju; hauba "
          "najmanje 1,0 m od nogu stuba; neiskorišteni dio postojećih otvora zatvoriti sendvič "
          "panelom d=60 mm istovjetnim zidu kontejnera, sa brtvljenjem."),
-        ("RASPORED (OBAVEZNO, prema crtežu M-01): žaluzina se ugrađuje u ZAPADNI zid kontejnera, na "
-         "osi radijatora agregata. Topli zrak i izduv se NE smiju izbacivati prema SJEVERNOJ strani, "
-         "gdje se nalaze postojeći vanjski ormari ICC360-HA1-C1 i MTS9302A i gdje se nalazi usis "
-         "svježeg zraka.",
-         "RASPORED (OBAVEZNO, prema crtežu H-04): žaluzina se ugrađuje u JUŽNI zid kontejnera, na "
-         "mjestu postojećih otvora klima-uređaja Stulz u sredini zida, sa haubom koja topli zrak "
-         "usmjerava naviše. Topli zrak i izduv se NE smiju izbacivati "
-         "prema SJEVERNOJ strani, gdje se nalaze ulazna vrata kontejnera, niti prema usisu svježeg "
-         "zraka na ZAPADNOM zidu (Tačka 4.7)."),
+        ("RASPORED (OBAVEZNO, prema crtežu M-01): žaluzina se ugrađuje u SJEVEROZAPADNI (SZ) zid "
+         "kontejnera, na osi radijatora agregata. Topli zrak i izduv se NE smiju izbacivati prema "
+         "SJEVEROISTOČNOJ (SI) strani, gdje se nalaze postojeći vanjski ormari ICC360-HA1-C1 i "
+         "MTS9302A i gdje se nalazi usis svježeg zraka.",
+         "RASPORED (OBAVEZNO, prema crtežu H-04): žaluzina se ugrađuje u JUGOISTOČNI (JI) zid "
+         "kontejnera, na mjestu postojećih otvora klima-uređaja Stulz u sredini zida, sa haubom "
+         "koja topli zrak usmjerava naviše. Topli zrak i izduv se NE smiju izbacivati prema "
+         "SJEVEROZAPADNOJ (SZ) strani, gdje su ulazna vrata kontejnera, prema JUGOZAPADNOJ (JZ) "
+         "strani, gdje su vanjski ormari ICC360-HA1-C1 i MTS i FN polje, niti prema usisu svježeg "
+         "zraka na SJEVEROISTOČNOM (SI) zidu (Tačka 4.7)."),
     ],
     "4.7": [
-        ("RASPORED (OBAVEZNO, prema crtežu M-01): žaluzina se ugrađuje u SJEVERNI zid kontejnera, na "
-         "istočnom kraju, sa donjom ivicom na cca 0,30 m od poda. Sjeverna strana je zasjenjena i daje "
-         "najhladniji usisni zrak, čime se poboljšava hlađenje agregata. Žaluzina se postavlja istočno "
-         "od vanjskih ormara ICC360-HA1-C1/MTS9302A kako se ne bi usisavao topli zrak sa njih.",
-         "RASPORED (OBAVEZNO, prema crtežu H-04): žaluzina se ugrađuje u ZAPADNI zid kontejnera, uz "
-         "alternator (sjeverni kraj agregata), sjeverno od spremnika, sa donjom ivicom na cca 0,30 m "
-         "od poda."),
-        ("spremnika ≥3 m.", "spremnika ≥3 m (H-04: 3,2 m uz završetak izduva 0,40 m od zida)."),
+        ("RASPORED (OBAVEZNO, prema crtežu M-01): žaluzina se ugrađuje u SJEVEROISTOČNI (SI) zid "
+         "kontejnera, na jugoistočnom kraju, sa donjom ivicom na cca 0,30 m od poda. Sjeveroistočna "
+         "strana je zasjenjena veći dio dana i daje najhladniji usisni zrak, čime se poboljšava "
+         "hlađenje agregata. Žaluzina se postavlja jugoistočno od vanjskih ormara "
+         "ICC360-HA1-C1/MTS9302A kako se ne bi usisavao topli zrak sa njih.",
+         "RASPORED (OBAVEZNO, prema crtežu H-04): žaluzina se ugrađuje u SJEVEROISTOČNI (SI) zid "
+         "kontejnera, uz alternator (sjeverozapadni kraj agregata), jugoistočno od korita "
+         "spremnika, sa donjom ivicom na cca 0,30 m od poda; sjeveroistočna strana je zasjenjena "
+         "veći dio dana."),
+        ("spremnika ≥3 m.", "spremnika ≥3 m (H-04: ≥3,2 m do završetka izduva i do oduška "
+         "spremnika)."),
     ],
     "4.10": [
         ("izvedena izvan kontejnera i završena IZNAD KROVA, usmjereno naviše, sa kapom protiv upada "
          "padavina.",
-         "izvedena izvan kontejnera HORIZONTALNO kroz ISTOČNI zid kontejnera na visini ≈+2,30 m, "
-         "usmjereno prema istoku, sa kapom protiv upada padavina. Prodor kroz zid izvesti sa termički "
+         "izvedena izvan kontejnera HORIZONTALNO kroz JUGOISTOČNI (JI) zid kontejnera, iz "
+         "jugozapadnog (JZ) prolaza, zapadno od haube, na visini ≈+2,30 m, usmjereno prema "
+         "jugoistoku, sa kapom protiv upada padavina. Prodor kroz zid izvesti sa termički "
          "izolovanom zaštitnom čahurom."),
         ("od prigušivača do izlaza iznad krova, do 4 m.",
-         "od prigušivača do izlaza kroz istočni zid, do 4 m."),
-        ("TRASA: fleksibilni spoj i prigušivač neposredno iza motora, uspon uz ZAPADNI zid kontejnera, "
-         "završetak IZNAD KROVA usmjeren naviše, sa hvatačem iskri.",
-         "TRASA: fleksibilni spoj neposredno iza motora, prigušivač u istočnom prolazu, horizontalni "
-         "izlaz kroz ISTOČNI "
-         "zid kontejnera na ≈+2,30 m, usmjeren prema istoku, sa završetkom ≥0,40 m od zida — dalje od "
-         "FN polja i od ulaznih vrata, "
-         "sa hvatačem iskri. Završetak iznad krova NIJE moguć: "
-         "platforma antenskog stuba na +3,0 m nalazi se iznad krova kontejnera."),
+         "od prigušivača do izlaza kroz JI zid, do 4 m."),
+        ("TRASA: fleksibilni spoj i prigušivač neposredno iza motora, uspon uz SJEVEROZAPADNI (SZ) "
+         "zid kontejnera, završetak IZNAD KROVA usmjeren naviše, sa hvatačem iskri.",
+         "TRASA: fleksibilni spoj neposredno iza motora, prigušivač u jugozapadnom (JZ) prolazu, "
+         "horizontalni izlaz kroz JUGOISTOČNI (JI) zid kontejnera na ≈+2,30 m, zapadno od haube, "
+         "sa završetkom ≥0,40 m od zida — dalje od FN polja, ormara i ulaznih vrata, sa hvatačem "
+         "iskri. Završetak iznad krova NIJE moguć: platforma antenskog stuba na +3,0 m nalazi se "
+         "iznad krova kontejnera."),
         ("protutlak ≈1,9 kPa", "protutlak ≈1,6 kPa"),          # hamzici review/07 C.4
     ],
     # Site facts (hamzici-hybrid-solar/cad/*.json, review/07-proracuni.md, joint Prilog I).
@@ -154,21 +161,22 @@ HAMZICI_EDITS = {
          "(≈77 % derativane prime snage na 493 m n.v. i +40 °C, koja iznosi 12,3 kW)"),
     ],
     "4.1": [
-        ("unos kroz kapiju na sredini istočne strane ograde (svijetla širina cca 1,00 m) i ulazna "
-         "vrata kontejnera 900 × 2000 mm;",
-         "unos kroz kapiju na SJEVERNOJ strani ograde (svijetla širina 1,30 m) i ulazna vrata "
-         "kontejnera na SJEVERNOM zidu, 1,00 × 2,15 m — skid 620 mm kroz vrata svijetle širine "
-         "990 mm, pravo po osi; najprije spremnik, zatim agregat;"),
+        ("unos kroz kapiju na sredini jugoistočne strane ograde (svijetla širina cca 1,00 m) i "
+         "ulazna vrata kontejnera 900 × 2000 mm;",
+         "unos kroz kapiju na SJEVEROZAPADNOJ (SZ) strani ograde (svijetla širina 1,30 m) i ulazna "
+         "vrata kontejnera na SZ zidu, 1,00 × 2,15 m — skid 620 mm kroz vrata svijetle širine "
+         "990 mm, pravo po osi; najprije agregat, zatim spremnik;"),
         ("SERVISNI PROSTOR ( prema crtežu M-01): agregat se postavlja CENTRIRANO u slobodnom prostoru "
-         "kontejnera, sa najmanje 720 mm sa JUŽNE i 720 mm sa SJEVERNE strane (520 mm na dijelu gdje je "
-         "GRO) te 1155 mm sa ISTOČNE strane. Sa ZAPADNE strane je hladnjak, koji izduvava u kanal kroz "
-         "zid i ne servisira se s te strane",
-         "SERVISNI PROSTOR (prema crtežu H-04): os agregata SJEVER–JUG u sredini kontejnera; slobodan "
-         "prostor: ISTOČNA strana 0,78 m (servisna strana), sjeverni kraj 0,97 m do čela GRO, ZAPADNA "
-         "strana 0,78 m, uz korito spremnika 0,14 m. Sa JUŽNE strane je hladnjak, koji preko plenuma "
-         "od 0,12 m izduvava kroz postojeće otvore klima-uređaja Stulz u sredini JUŽNOG zida, u haubu "
-         "koja topli zrak usmjerava naviše (Tačke 4.5 i 4.6) i ne servisira se s te strane. Ponuđač "
-         "potvrđuje da su servisna mjesta agregata dostupna sa istočne strane i sa sjevernog kraja"),
+         "kontejnera, sa najmanje 720 mm sa JUGOZAPADNE i 720 mm sa SJEVEROISTOČNE strane (520 mm na "
+         "dijelu gdje je GRO) te 1155 mm sa JUGOISTOČNE strane. Sa SJEVEROZAPADNE strane je hladnjak, "
+         "koji izduvava u kanal kroz zid i ne servisira se s te strane",
+         "SERVISNI PROSTOR (prema crtežu H-04): os agregata SZ–JI u sredini kontejnera; slobodan "
+         "prostor: jugozapadna (JZ) strana 0,78 m, sjeveroistočna (SI) strana 0,78 m, kraj prema SZ "
+         "0,97 m do čela GRO; od vrata do korita spremnika 0,95 m slobodno. Sa JUGOISTOČNE (JI) "
+         "strane je hladnjak, koji preko plenuma od 0,12 m izduvava kroz postojeće otvore "
+         "klima-uređaja Stulz u sredini JI zida, u haubu koja topli zrak usmjerava naviše (Tačke 4.5 "
+         "i 4.6) i ne servisira se s te strane. Ponuđač potvrđuje da su servisna mjesta agregata "
+         "dostupna sa JZ i SI strane i sa SZ kraja"),
     ],
     "4.8": [
         # the source (fix_boq_dc_aux.py D2) makes it a 48 V DC EC fan off the DC razvod that
@@ -177,26 +185,25 @@ HAMZICI_EDITS = {
          "aksijalnog EC ventilatora 48 V DC, izvlačnog — izbacuje zrak iz prostora, za prinudnu "
          "ventilaciju prostora agregata"),
         ("RASPORED (prema crtežu M-01)", "RASPORED (prema crtežu H-04)"),
-        ("ventilator se ugrađuje u ISTOČNI zid kontejnera, u gornjoj zoni (donja ivica cca 1,75 m), "
-         "sjeverno od ulaznih vrata.",
-         "ventilator se ugrađuje u ZAPADNI zid kontejnera, u gornjoj zoni, sjeverno od usisne "
-         "žaluzine iz Tačke 4.7."),
+        ("ventilator se ugrađuje u JUGOISTOČNI (JI) zid kontejnera, u gornjoj zoni (donja ivica "
+         "cca 1,75 m), sjeveroistočno od ulaznih vrata.",
+         "ventilator se ugrađuje u JUGOISTOČNI (JI) zid kontejnera, u gornjoj zoni, sjeveroistočno "
+         "od haube (Tačka 4.6)."),
     ],
     "4.2": [
-        ("smještaj u JUGOISTOČNI ugao kontejnera, prema crtežu M-01",
-         "smještaj u JUGOZAPADNOM uglu kontejnera, prema crtežu H-04 — prihvatno korito "
-         "1150 × 640 mm uz južni i zapadni zid, 0,14 m od agregata; izduvni cjevovod je na istočnoj "
-         "strani agregata"),
+        ("smještaj u JUŽNI ugao kontejnera (uz JZ i JI zid), prema crtežu M-01",
+         "smještaj u SJEVERNI ugao kontejnera (uz SZ i SI zid), prema crtežu H-04 — prihvatno "
+         "korito 1150 × 640 mm uz SZ i SI zid; izduvni cjevovod je na jugozapadnoj strani agregata"),
         ("odušna cijev izvedena IZVAN kontejnera, otvor zaštićen metalnom mrežicom;",
-         "odušna cijev izvedena IZVAN kontejnera kroz JUŽNI zid, uz zapadni kraj, do stojeće cijevi "
-         "između kontejnera i južne ograde (završetak +2,80 m) — principijelno prema H-04, konačno "
-         "prema elaboratu zaštite od požara; najmanje 3 m od završetka izduva i od usisa zraka; "
-         "otvor zaštićen metalnom mrežicom;"),
+         "odušna cijev izvedena IZVAN kontejnera kroz SZ zid, sjeveroistočno od vrata, do stojeće "
+         "cijevi između kontejnera i SZ ograde (završetak +2,80 m) — principijelno prema H-04, "
+         "konačno prema elaboratu zaštite od požara; najmanje 3 m od završetka izduva i od usisa "
+         "zraka; otvor zaštićen metalnom mrežicom;"),
     ],
     "4.12": [
         ("Za trasu do 5 m iz Tačke 4.10 i vanjski prečnik izolacije ≈165 mm razvijena površina je "
          "≈3,0 m².",
-         "Za trasu iz Tačke 4.10 (≈1 m do prigušivača, zatim ≈3 m horizontalno kroz ISTOČNI zid) i "
+         "Za trasu iz Tačke 4.10 (≈1 m do prigušivača u JZ prolazu, zatim ≈2 m do JI zida) i "
          "vanjski prečnik izolacije ≈165 mm razvijena površina je ≈2,5 m²."),
     ],
     "5.3": [
@@ -209,19 +216,20 @@ HAMZICI_EDITS = {
              "vanjski sistem zaštite od munje (rešetkasti antenski stub h=32 m, platforme na "
              "+3,0 / +12,0 / +30,0 m)"),
             ("Ormar zidni sa nosačima, orijentacionih dimenzija 0,60 × 0,25 × 0,80 m (Š×D×V)",
-             "Ormar zidni sa nosačima, za SJEVERNI zid zapadno od ulaznih vrata (širina zida 0,595 m), "
-             "širine ≤0,50 m — orijentacionih dimenzija npr. 0,50 × 0,25 × 0,80 m (Š×D×V)")],
+             "Ormar zidni sa nosačima, za SZ zid jugozapadno od ulaznih vrata (širina zida "
+             "0,595 m), širine ≤0,50 m — orijentacionih dimenzija npr. 0,50 × 0,25 × 0,80 m "
+             "(Š×D×V)")],
     "5.11": [("vanjski sistem zaštite od munje i antenski stub h=38 m",
               "vanjski sistem zaštite od munje i rešetkasti antenski stub h=32 m (platforme na "
               "+3,0 / +12,0 / +30,0 m)")],
     "5.13": [("zbog dužine DC trase od 25 m.", "zbog dužine DC trase od ≈20 m u jednom smjeru."),
              ("i crtež E-01)", "i crtež H-05)")],
-    # Huawei ICC360-HA1-C1 stands outdoors on the slab, north strip west of the door.
+    # Huawei ICC360-HA1-C1 and the MTS stand outdoors on the slab, JZ side, behind the PV row.
     "5.5": [
         ("Isporuka i polaganje veza na dionici hibridni sistem — DEA:",
-         "Isporuka i polaganje veza na dionici hibridni sistem — DEA; ormar Huawei ICC360-HA1-C1 "
-         "stoji na ploči, u sjevernom pojasu zapadno od ulaznih vrata (principijelno), a veza sa GRO "
-         "vodi ≈3–5 m kroz SJEVERNI zid kontejnera:"),
+         "Isporuka i polaganje veza na dionici hibridni sistem — DEA; ormari Huawei ICC360-HA1-C1 "
+         "i MTS stoje na ploči na JZ strani, iza FN polja (principijelno), a veza sa GRO vodi "
+         "≈3–5 m kroz JZ zid kontejnera:"),
         ("energetski kabl dužine do 15 m", "energetski kabl dužine ≈3–5 m"),
         ("signalni kabl dužine do 15 m", "signalni kabl dužine ≈3–5 m"),
         ("komunikacioni Ethernet kabl dužine do 15 m", "komunikacioni Ethernet kabl dužine ≈3–5 m"),
@@ -242,20 +250,21 @@ HAMZICI_LOT1_EDITS = {
         ("Nagib je zadržan zbog decembarskog prinosa — pri podnevnoj visini Sunca 23,6° na 42,94° N "
          "nagib 45° ostvaruje 93 % direktnog zračenja u odnosu na 85 % pri 35°, a decembar je "
          "mjerodavni mjesec za dimenzionisanje autonomnog sistema",
-         "Listopadno stablo JJI–JI od stuba (≈7–9 m, 15–20 m, izvan zakupa) zasjenjuje polje u "
-         "zimskim jutrima; stablo se ne uklanja — Ponuđač postavlja polje tako da se zasjenjenje "
-         "umanji (Prilog I, Tačka 3.7)"),
-        ("smještaj: nosači se temelje IZVAN ograđenog platoa, južno od ograde, u pojasu širine cca "
-         "1950 mm;",
+         "Listopadno stablo JJI–JI od stuba (≈7–9 m, 15–20 m, izvan zakupa) ostaje; pri polju "
+         "okrenutom prema jugozapadu njegov uticaj je mali (Prilog I, Tačka 3.7)"),
+        # Sjednica wording since fix_boq_sw_4x3l.py (4x3L, SW, 11.09.2026)
+        ("smještaj: nosači se temelje IZVAN ograđenog platoa, jugozapadno od ograde (JZ strana), "
+         "cca 0,40 m od ograde;",
          "smještaj (43,288012° N, 17,624794° E, 493 m n.v.): nosači se temelje IZVAN ograđenog "
-         "platoa, južno od ploče i ograde, u pojasu južno od ploče dubine 3575 mm i širine 12,00 m, "
-         "unutar zakupa k.č. 109/1 K.O. Hamzići (12,00 × 12,50 m);"),
-        ("gornja (sjeverna) ivica panela je 1,64 m iznad kote ograde h=2,10 m. Ponuđač provjerava da "
-         "konstrukcija u cijelosti ostaje unutar zakupljene parcele 16,00 × 9,40 m",
-         "gornja (sjeverna) ivica panela je 1,74 m iznad vrha ograde — ograda je h=1,80 m iznad ploče, "
-         "odnosno 2,00 m iznad vanjskog terena, koji je uz ploču na −0,20 m (ovjereni 04_Ograda). "
-         "Ponuđač provjerava da "
-         "konstrukcija u cijelosti ostaje unutar zakupa 12,00 × 12,50 m"),
+         "platoa, jugozapadno od ploče i ograde, u pojasu dubine 3300 mm i dužine 12,50 m (JZ "
+         "strana), unutar zakupa k.č. 109/1 K.O. Hamzići (12,00 × 12,50 m); trake 350 mm od granice "
+         "zakupa i od ploče;"),
+        ("gornja (sjeveroistočna) ivica panela je 0,83 m iznad kote ograde h=2,10 m. Ponuđač "
+         "provjerava da konstrukcija u cijelosti ostaje unutar zakupljene parcele 16,00 × 9,40 m",
+         "gornja (sjeveroistočna) ivica panela je 0,93 m iznad vrha ograde — ograda je h=1,80 m "
+         "iznad ploče, odnosno 2,00 m iznad vanjskog terena, koji je uz ploču na −0,20 m (ovjereni "
+         "04_Ograda). Ponuđač provjerava da konstrukcija u cijelosti ostaje unutar zakupa "
+         "12,00 × 12,50 m"),
         ("prema ovjerenoj projektnoj dokumentaciji lokacije i BAS EN 1991-1-4 sa BiH nacionalnim "
          "aneksom, uz primjenu faktora orografije za izloženi planinski vrh na 1076 m n.v.",
          "prema BAS EN 1991-1-4 sa BiH nacionalnim aneksom — ista vrijednost kao na lokaciji "
@@ -264,7 +273,8 @@ HAMZICI_LOT1_EDITS = {
         ("za konkretnu lokaciju (planinski vrh)", "za konkretnu lokaciju"),
         ("(v. crtež E-01)", "(v. crtež H-05)"),
     ],
-    "2.3": [
+    "2.4": [                                  # beton - 2.3 do prenumeracije sekcije 2
+                                              # (recenzija 27.08.2026, fix_boq_recenzija_a.py)
         ("Klasa XF3 je mjerodavna zbog cikličnog smrzavanja i odmrzavanja u vlažnom stanju na "
          "1076 m n.v.",
          "Klasa XF3: ista specifikacija kao na lokaciji Sjednica, radi jednog opisa za obje "
@@ -334,11 +344,42 @@ NEW_ITEMS = {
     "LOT 2": [
         ("5.15", "5.14", "kpl", 1,
          "Odspajanje (230 V AC, 48 V DC, signalizacija) i demontaža postojećeg kompaktnog zidnog "
-         "klima-uređaja Stulz WDE80 (8 kW) na JUŽNOM zidu kontejnera, u sredini, BEZ otvaranja "
+         "klima-uređaja Stulz WDE80 (8 kW) na JUGOISTOČNOM (JI) zidu kontejnera, u sredini, BEZ "
+         "otvaranja "
          "rashladnog "
          "kruga; pakovanje, utovar i transport u skladište BH Telecom d.d. na Alipašinom Polju, "
          "Sarajevo, istovar i zapisnik o primopredaji (tip, serijski broj, stanje). Otvori u zidu "
          "ostaju i koriste se za izlaz toplog zraka agregata (Tačka 4.6)."),
+    ],
+}
+
+# New items added to BOTH site sheets of a LOT, same text, unit and quantity, so they are
+# not Hamzići-only changes and never show up in EXPECTED_CHANGES. Same shape as NEW_ITEMS.
+# 5.19 closes a gap the source workbook carried: the Buyer supplies the PV modules, PVDB,
+# rectifiers, batteries and the ICC360 cabinet (TD JN, "posebna nabavka"), but nothing in
+# the tender said who collects them from the warehouse and hauls them to site.
+BOTH_SITES_NEW_ITEMS = {
+    "LOT 2": [
+        ("5.19", "5.18", "kpl", 1,
+         "Preuzimanje opreme Kupca u skladištu BH Telecom d.d. AZIĆI, Bojnička bb, Sarajevo, "
+         "transport do lokacije, istovar i unos do mjesta ugradnje.\n"
+         "OPREMA KUPCA (posebna nabavka): fotonaponski moduli iPV585-M2A (12 kom), PVDB "
+         "500-15-2B, ispravljači iSSU S4875G2, baterijski moduli LFP i ormar hibridnog sistema "
+         "ICC360-HA1-C1 sa pripadajućim modulima. Tačan spisak i mase Kupac daje uz narudžbu.\n"
+         "Stavka obuhvata:\n"
+         " - utovar u skladištu, osiguranje i učvršćenje tereta, prevoz zatvorenim ili "
+         "natkrivenim vozilom, istovar na lokaciji i unos do mjesta ugradnje\n"
+         " - vozilo prilagođeno pristupnom putu lokacije (makadam) — Ponuđač ga bira pri "
+         "obilasku lokacije\n"
+         " - rukovanje prema uputstvu proizvođača: FN moduli u originalnoj ambalaži i uspravno, "
+         "bez oslanjanja na staklo; baterijski moduli uz zaštitu polova i dozvoljenu "
+         "temperaturu; ormar bez udara i naginjanja preko dozvoljenog ugla\n"
+         " - najava skladištu najmanje 3 radna dana prije preuzimanja; prevoz usklađen sa "
+         "dinamikom montaže — oprema se na lokaciji ne skladišti duže nego što montaža traži\n"
+         " - otpremnica skladišta pri preuzimanju i zapisnik o preuzimanju opreme na lokaciji "
+         "(spisak, količine, stanje ambalaže, serijski brojevi), potpisan od Ponuđača i Kupca\n"
+         "Od potpisa otpremnice do zapisnika o primopredaji radova za opremu odgovara Ponuđač. "
+         "Zahtjevi: Prilog I, Tačka 4.9."),
     ],
 }
 
@@ -357,9 +398,13 @@ NOTES = [
        "Nabavka je podijeljena na dva LOT-a prema vrsti radova: LOT 1 — konstrukcija nosača za "
        "fotonaponske panele, LOT 2 — agregatsko postrojenje (DEA) u postojećem kontejneru. Svaki LOT "
        "obuhvata OBJE lokacije: BS Sjednica (Bileća) i BS Hamzići (Čitluk).")]),
+    # new notes: {lot} and {sheets} are filled in per LOT workbook (build_rekap)
     (None,
-     "- Cijene se upisuju posebno za svaku lokaciju, na listovima „" + "“, „".join(LOT_SHEETS[:-1])
-     + "“ i „" + LOT_SHEETS[-1] + "“; iznosi se automatski prenose u ovu rekapitulaciju."),
+     "- Ovaj obrazac se odnosi na {lot}. Za drugi LOT popunjava se, potpisuje i ovjerava zaseban "
+     "obrazac; ponuđač koji ne pristupa drugom LOT-u ne dostavlja njegov obrazac."),
+    (None,
+     "- Cijene se upisuju posebno za svaku lokaciju, na listovima {sheets}; iznosi se "
+     "automatski prenose u ovu rekapitulaciju."),
     ("- Ugovorne obaveze nastaju po upućivanju pismenog zahtjeva/narudžbe od strane BH Telecom-a.", []),
     ("- Količine u Tačkama 2. i 5. su orijentacione i utvrđene na osnovu podataka iz RFI dokumente. "
      "Konačne količine utvrđuju se elaboratom montaže i geodetskim snimkom, a obračunavaju se po "
@@ -475,6 +520,37 @@ def insert_row(ws, at, cross_sheet=False):
                 c.value = shift_formula_rows(c.value, at, cross_sheet=cross_sheet)
 
 
+def delete_row(ws, at, cross_sheet=False):
+    """Delete row `at`; row heights, merges and formulas follow the moved rows.
+
+    Mirror of insert_row. The caller must make sure no formula points AT the deleted
+    row - Excel would leave #REF! there - which is checked here."""
+    for row in ws.iter_rows():
+        for c in row:
+            if c.row == at or not (isinstance(c.value, str) and c.value.startswith("=")):
+                continue                       # the deleted row's own formulas go with it
+            for m in REF_RE.finditer(c.value):
+                if int(m.group(4)) == at:
+                    raise ValueError(f"{ws.title}: {c.coordinate} refers to deleted row {at}")
+    for mr in ws.merged_cells.ranges:
+        if mr.min_row <= at <= mr.max_row:
+            raise ValueError(f"{ws.title}: deletion at {at} splits merged range {mr}")
+    dims = {r: ws.row_dimensions[r] for r in list(ws.row_dimensions) if r > at}
+    ws.delete_rows(at)
+    for r in dims:
+        del ws.row_dimensions[r]
+    for r in sorted(dims):
+        dims[r].index = r - 1
+        ws.row_dimensions[r - 1] = dims[r]
+    for mr in ws.merged_cells.ranges:
+        if mr.min_row > at:
+            mr.shift(row_shift=-1)
+    for row in ws.iter_rows():
+        for c in row:
+            if isinstance(c.value, str) and c.value.startswith("="):
+                c.value = shift_formula_rows(c.value, at, n=-1, cross_sheet=cross_sheet)
+
+
 def truncate(ws, last):
     """Drop every row below `last` - cells, heights and merges."""
     for key in [k for k in ws._cells if k[0] > last]:
@@ -583,6 +659,7 @@ def site_sheet(wb, src, lot, site, lot1_src, log):
     ws.cell(lot_row, 2).value = f"UKUPNO {lot} — {SITE[site]['up']} (bez PDV-a):"
     apply_text_edits(ws, BOTH_SITES_EDITS.get(lot, {}), log, "source typo fix", idempotent=True)
     apply_note_edits(ws, BOTH_SITES_NOTE_EDITS.get(lot, {}), log, idempotent=True)
+    insert_new_items(ws, BOTH_SITES_NEW_ITEMS.get(lot, []), log)
 
     for sec, (_, _, rsub) in s["sections"].items():      # label clipped in column A
         a, b = ws.cell(rsub, 1), ws.cell(rsub, 2)
@@ -643,7 +720,7 @@ def apply_note_edits(ws, edits, log, idempotent=False):
 
 def apply_hamzici_lot1(ws, log):
     apply_text_edits(ws, HAMZICI_LOT1_EDITS, log)
-    insert_new_items(ws, "LOT 1", log)
+    insert_new_items(ws, NEW_ITEMS["LOT 1"], log)
 
 
 def apply_hamzici_lot2(ws, log):
@@ -662,7 +739,7 @@ def apply_hamzici_lot2(ws, log):
             raise ValueError(f"{ws.title} {n}: unit {ws.cell(r, 3).value!r} != {unit!r}")
         log.append(f"{n}: qty {ws.cell(r, 4).value} -> {qty} {unit}")
         ws.cell(r, 4).value = qty
-    insert_new_items(ws, "LOT 2", log)
+    insert_new_items(ws, NEW_ITEMS["LOT 2"], log)
 
 
 def minor(n):
@@ -670,10 +747,10 @@ def minor(n):
     return int(re.match(r"\d+", n.split(".")[1]).group(0))
 
 
-def insert_new_items(ws, which, log):
-    """NEW_ITEMS[which]: each row goes right after its anchor item; its number must be free
-    and fall numerically between the anchor and the section's next item."""
-    for n, after, unit, qty, text in NEW_ITEMS[which]:
+def insert_new_items(ws, rows, log):
+    """Each (item, after, unit, qty, text) row goes right after its anchor item; its number
+    must be free and fall numerically between the anchor and the section's next item."""
+    for n, after, unit, qty, text in rows:
         items = structure(ws)["items"]
         sec = n.split(".")[0]
         if n in items or after.split(".")[0] != sec:
@@ -710,8 +787,12 @@ def style_row(ws, r, src, sr, cols="ABCDEF"):
         ws[f"{col}{r}"]._style = copy(src[f"{col}{sr}"]._style)
 
 
-def build_rekap(wb, src1, src2, log):
-    ws = wb.create_sheet(REKAP)
+def build_rekap(wb, lot, src1, src2, log):
+    """REKAPITULACIJA of one LOT: its two site totals, discount, 17 % VAT, notes, date and
+    signature. Styles and page setup come from the source LOT 2 sheet, as before: portrait
+    A4, so the totals, the notes and the signature print on one page for either LOT."""
+    src_lot = src1 if lot == "LOT 1" else src2
+    ws = wb.create_sheet(REKAP[lot])
     for col in "ABCD":
         ws.column_dimensions[col].width = src2.column_dimensions[col].width
     for col in "EF":
@@ -722,8 +803,8 @@ def build_rekap(wb, src1, src2, log):
 
     ws["A1"] = src2["A1"].value
     style_row(ws, 1, src2, 1, "A")
-    ws["A2"] = "OBRAZAC ZA CIJENU PONUDE - REKAPITULACIJA (LOT 1 + LOT 2)"
-    ws["A3"] = replace_once(src1["A3"].value, SRC_SITE, JOINT, "REKAPITULACIJA A3")
+    ws["A2"] = f"OBRAZAC ZA CIJENU PONUDE - {lot} - REKAPITULACIJA"
+    ws["A3"] = replace_once(src1["A3"].value, SRC_SITE, JOINT, f"{REKAP[lot]} A3")
     for r in (2, 3):
         style_row(ws, r, src2, r, "A")
         ws.merge_cells(f"A{r}:F{r}")
@@ -737,51 +818,42 @@ def build_rekap(wb, src1, src2, log):
         ws.row_dimensions[r].height = src2.row_dimensions[r].height
 
     # source styles: 65 = REKAPITULACIJA head, 14 = section head, 66 = value row,
-    # 68 = total row, 63 = LOT total (the grand total), 74/75 = NAPOMENA
-    head, sect, val, tot, grand = 65, 14, 66, 68, 63
+    # 68 = total row (also the grand total: row 63 printed it unstyled), 74/75 = NAPOMENA
+    head, sect, val, tot = 65, 14, 66, 68
     r = 8
     style_row(ws, r, src2, head)
     ws[f"B{r}"] = "REKAPITULACIJA"
-    lot_title = {"LOT 1": src1["B10"].value, "LOT 2": src2["B10"].value}
-    total_row = {}
-    for lot in LOTS:
+    r += 1
+    style_row(ws, r, src2, sect)
+    ws[f"B{r}"] = src_lot["B10"].value
+    first = r + 1
+    for site in SITE:
         r += 1
-        style_row(ws, r, src2, sect)
-        ws[f"B{r}"] = lot_title[lot]
-        first = r + 1
-        for site in SITE:
-            r += 1
-            style_row(ws, r, src2, val)
-            style_row(ws, r, src2, 16, "B")           # Arial 9 like the item texts
-            name = SHEET[lot, site]
-            lot_row = structure(wb[name])["lot_row"]
-            ws[f"B{r}"] = LBL_SITE[lot, site]
-            ws[f"F{r}"] = f"='{name}'!F{lot_row}"
-        r += 1
-        style_row(ws, r, src2, tot)
-        ws[f"B{r}"] = LBL_LOT_TOTAL[lot]
-        ws[f"F{r}"] = f"=SUM(F{first}:F{r - 1})"
-        total_row[lot] = r
-    r_tot, r_pop, r_disc, r_vat, r_grand = r + 1, r + 2, r + 3, r + 4, r + 5
-    style_row(ws, r_tot, src2, tot)
-    ws[f"B{r_tot}"] = LBL_TOTAL
-    ws[f"F{r_tot}"] = "=" + "+".join(f"F{total_row[lot]}" for lot in LOTS)
+        style_row(ws, r, src2, val)
+        style_row(ws, r, src2, 16, "B")               # Arial 9 like the item texts
+        name = SHEET[lot, site]
+        ws[f"B{r}"] = LBL_SITE[lot, site]
+        ws[f"F{r}"] = f"='{name}'!F{structure(wb[name])['lot_row']}"
+    r_lot, r_pop, r_disc, r_vat, r_grand = r + 1, r + 2, r + 3, r + 4, r + 5
+    style_row(ws, r_lot, src2, tot)
+    ws[f"B{r_lot}"] = LBL_LOT_TOTAL[lot]
+    ws[f"F{r_lot}"] = f"=SUM(F{first}:F{r})"
     style_row(ws, r_pop, src2, tot, "AB")
     style_row(ws, r_pop, src2, val, "CDEF")          # bordered input cell for the discount
     ws[f"B{r_pop}"] = LBL_POPUST
     style_row(ws, r_disc, src2, tot)
-    ws[f"B{r_disc}"] = LBL_DISC
-    ws[f"F{r_disc}"] = f'=F{r_tot}*(1-IF(F{r_pop}="",0,F{r_pop}/100))'
+    ws[f"B{r_disc}"] = LBL_DISC[lot]
+    ws[f"F{r_disc}"] = f'=F{r_lot}*(1-IF(F{r_pop}="",0,F{r_pop}/100))'
     style_row(ws, r_vat, src2, tot)
     ws[f"B{r_vat}"] = LBL_VAT
     ws[f"F{r_vat}"] = f"=F{r_disc}*0.17"
-    style_row(ws, r_grand, src2, grand)
-    ws[f"B{r_grand}"] = LBL_GRAND
+    style_row(ws, r_grand, src2, tot)
+    ws[f"B{r_grand}"] = LBL_GRAND[lot]
     ws[f"F{r_grand}"] = f"=F{r_disc}+F{r_vat}"
     for rr in range(8, r_grand + 1):
         ws.row_dimensions[rr].height = 15
 
-    # NAPOMENA - the source notes, checked verbatim, then adapted to two sites
+    # NAPOMENA - the source notes, checked verbatim, then adapted to two sites and one LOT
     r_note = find_row(src2, "NAPOMENA:")
     src_notes = []
     rr = r_note + 1
@@ -791,6 +863,7 @@ def build_rekap(wb, src1, src2, log):
     expected = [s for s, _ in NOTES if s is not None]
     if src_notes != expected:
         raise ValueError(f"source NAPOMENA changed:\n{src_notes}")
+    sheets = " i ".join(f"„{n}“" for n in SITE_SHEETS[lot])
     r = r_grand + 2
     style_row(ws, r, src2, r_note, "AB")
     ws[f"B{r}"] = "NAPOMENA:"
@@ -799,7 +872,7 @@ def build_rekap(wb, src1, src2, log):
         r += 1
         style_row(ws, r, src2, r_note + 1, "AB")
         if source is None:
-            text = edits
+            text = edits.format(lot=lot, sheets=sheets)
         else:
             text = source
             for old, new in edits:
@@ -825,13 +898,13 @@ def build_rekap(wb, src1, src2, log):
     ws.print_options = copy(src2.print_options)
     ws.HeaderFooter = copy(src2.HeaderFooter)
     print_setup(ws, r)
-    log.append(f"{REKAP}: totals rows 10-{r_grand}, {len(NOTES)} notes, signature row {r}")
+    log.append(f"{REKAP[lot]}: totals rows 10-{r_grand}, {len(NOTES)} notes, signature row {r}")
     return ws
 
 
-def validate(wb, src_formulas):
+def validate(wb, lot, src_formulas):
     """Structural self-check before saving."""
-    for name in LOT_SHEETS:
+    for name in SITE_SHEETS[lot]:
         ws = wb[name]
         s = structure(ws)
         bad = []
@@ -863,54 +936,55 @@ def validate(wb, src_formulas):
             raise AssertionError(f"{name}: {bad}")
 
 
-def main():
+def build(lot):
+    """One LOT's price form: its two site sheets and its REKAPITULACIJA."""
     wb = openpyxl.load_workbook(SRC)
     src1, src2 = wb["LOT 1"], wb["LOT 2"]
-    inspect_source(wb)
-    snap = {}
-    for src in (src1, src2):
-        last = structure(src)["lot_row"]
-        snap[src.title] = {c.coordinate: c.value for row in src.iter_rows(max_row=last) for c in row
-                           if isinstance(c.value, str) and c.value.startswith("=")}
+    src = src1 if lot == "LOT 1" else src2
+    last = structure(src)["lot_row"]
+    snap = {c.coordinate: c.value for row in src.iter_rows(max_row=last) for c in row
+            if isinstance(c.value, str) and c.value.startswith("=")}
 
     fixes, changes = [], []
-    for lot, src in (("LOT 1", src1), ("LOT 2", src2)):
-        for site in SITE:
-            site_sheet(wb, src, lot, site, src1, fixes)
-    apply_hamzici_lot1(wb[SHEET["LOT 1", "hamzici"]], changes)
-    apply_hamzici_lot2(wb[SHEET["LOT 2", "hamzici"]], changes)
-    build_rekap(wb, src1, src2, fixes)
+    for site in SITE:
+        site_sheet(wb, src, lot, site, src1, fixes)
+    apply = apply_hamzici_lot1 if lot == "LOT 1" else apply_hamzici_lot2
+    apply(wb[SHEET[lot, "hamzici"]], changes)
+    build_rekap(wb, lot, src1, src2, fixes)
 
     heights = {}
-    for name in LOT_SHEETS:
+    for name in SITE_SHEETS[lot]:
         ws = wb[name]
         heights[name] = autofit_rows(ws)
         print_setup(ws, ws.max_row)
-    heights[REKAP] = autofit_rows(wb[REKAP])
+    heights[REKAP[lot]] = autofit_rows(wb[REKAP[lot]])
 
     wb.remove(src1)
     wb.remove(src2)
-    wb._sheets = [wb[n] for n in SHEET_ORDER]
+    wb._sheets = [wb[n] for n in SHEET_ORDER[lot]]
     for i, ws in enumerate(wb.worksheets):
         ws.sheet_view.tabSelected = i == 0
     wb.active = 0
     wb.calculation.fullCalcOnLoad = True
 
-    unchanged = {SHEET["LOT 1", "sjednica"]: snap["LOT 1"], SHEET["LOT 2", "sjednica"]: snap["LOT 2"]}
-    validate(wb, unchanged)
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    wb.save(OUT)
+    # A Sjednica sheet is a verbatim copy of its source unless a both-sites item was
+    # inserted into it, which shifts every formula below the new row; validate() still
+    # checks those sheets structurally (line formulas, section SUMs, LOT sum).
+    validate(wb, lot, {} if BOTH_SITES_NEW_ITEMS.get(lot) else {SHEET[lot, "sjednica"]: snap})
+    out = OUT[lot]
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    wb.save(out)
 
-    print(f"\nwritten {OUT}")
+    print(f"\nwritten {out}")
     for ws in wb.worksheets:
         extra = ""
-        if ws.title in LOT_SHEETS:
+        if ws.title in SITE_SHEETS[lot]:
             s = structure(ws)
             extra = (f", {len(s['items'])} items, LOT subtotal F{s['lot_row']} = "
                      f"{ws.cell(s['lot_row'], 6).value}")
         print(f"  {ws.title}: {ws.max_row} rows, print area {ws.print_area}, "
               f"{heights[ws.title]} rows set to auto-fit{extra}")
-    print("Hamzići changes:")
+    print(f"{lot} Hamzići changes:")
     for c in changes:
         print("  " + c)
     print("fixes / notes:")
@@ -919,6 +993,12 @@ def main():
     props = getattr(wb, "custom_doc_props", None)
     if props is not None:
         print(f"custom document properties kept: {[p.name for p in props.props]}")
+
+
+def main():
+    inspect_source(openpyxl.load_workbook(SRC))
+    for lot in LOTS:
+        build(lot)
 
 
 if __name__ == "__main__":

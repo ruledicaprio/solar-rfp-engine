@@ -86,3 +86,63 @@ Procjena iz fotografija 08.09.2026 (bez geodetskog snimka): listopadno stablo 7�
 
 Uticaj je mali prema nalazu iz tačke 3, pa stablo ostaje. Detalji:
 `hamzici-hybrid-solar/review/pvsim/photo/zasjenjenje.json`.
+
+---
+
+## 5. Dopuna 11.09.2026. — prava orijentacija, azimut JZ, nosač 4 × 1×3
+
+Tačke 1–4 su pisane uz pretpostavku da su kompleksi okrenuti prema sjeveru. Snimci iz
+Google Maps (Naručilac, 11.09.2026.) pokazuju da su oba kompleksa **zakrenuta 45°**:
+
+| | Plan „gore" je | Vrata | Hladnjak agregata | FN plato | Ormari ICC / MTS |
+|---|---|---|---|---|---|
+| Sjednica | SI (azimut 45°) | JI | SZ | JZ | SI, u sjeni |
+| Hamzići | SZ (azimut 315°) | SZ | JI | JZ (pojas 3,30 × 12,5 m) | JZ, iza FN polja |
+
+Crteži ostaju pravougaoni na kompleks, sa strelicom sjevera zakrenutom za 45°; zidovi i
+strane u svim dokumentima nose prave smjerove (SI, JI, JZ, SZ). Na Hamzićima nije JI
+(stablo, put prema SI).
+
+### 5.1 Odluke
+
+| Tema | Odluka |
+|---|---|
+| Azimut polja, obje lokacije | **225° (jugozapad)** — jedan niz paralelno sa ogradom na JZ strani; Naručilac poznaje lokacije (visok albedo, popodnevna toplota) i prihvata cijenu iz 5.2 |
+| Nagib, obje lokacije | **45°** (60° na Hamzićima nije potreban, v. 5.3) |
+| Nosač, obje lokacije | **4 odvojena nosača × 3 modula, položeno (1 × 3)** — `pvsim/stands.py` raspored 4x3L; nema jednog velikog „jedra" |
+| Rad agregata u dokumentima | **300~360 h/god** (Sjednica) i **270~320 h/god** (Hamzići) — prosjek ~ P90, zaokruženo na 10 h |
+
+Ove odluke zamjenjuju redove „nosači i nagib" iz tačke 1 i brojeve iz tačaka 2–4 za
+azimut 180°.
+
+### 5.2 Cijena orijentacije JZ (45°, `pvsim`, 2005–2023)
+
+| | Sjednica jug | **Sjednica JZ** | Hamzići jug | **Hamzići JZ** |
+|---|---|---|---|---|
+| FN na DC sabirnici, kWh/god | 10 137 | **9 242** (−8,8 %) | 10 448 | **9 585** (−8,3 %) |
+| Decembar FN, kWh | 560 | **444** (−21 %) | 601 | **475** (−21 %) |
+| DEA h/god prosjek / P90 / najgora | 247 / 307 / 327 | **299 / 364 / 376** | 226 / 271 / 307 | **273 / 319 / 346** |
+| Gorivo, l/god | 815 | **988** | 746 | **903** |
+| Razlika JZ − jug | | **+52 h, +173 l** | | **+47 h, +157 l** |
+
+JZ nijedan mjesec ne daje više od juga (jun i jul su jednaki); gubitak je od novembra do
+februara, kad agregat radi. Albedo 0,35 umjesto 0,20 smanjuje rad agregata JZ polja za
+6–14 h/god, ali jednako pomaže i jugu. **Prosjek rada agregata sada je iznad 250 h/god iz
+RFI na obje lokacije** — to je cijena ove odluke i navodi se otvoreno u proračunima.
+Stablo kod Hamzića uz JZ polje dodaje samo 1–10 h/god.
+
+### 5.3 Nosač 4 × 1×3 prema 3 × 2×2 (qp 1,20 kN/m², 45°)
+
+| Po nosaču | 3 × 2×2 portret (dosadašnji) | **4 × 1×3 položeno** |
+|---|---|---|
+| Polje | 2,30 × 4,58 = 10,55 m² | **2,28 × 3,44 = 7,84 m²** |
+| Dubina / gornja ivica | 3,24 m / +3,74 m | **2,43 m / +2,93 m** |
+| Moment prevrtanja (qp 0,96 na Hamzićima) | 42,6 (34,1) kNm | **25,7 (20,6) kNm** |
+| ULS uzgon | 18,1 kN | **13,3 kN** |
+| Trake | 6 × 1,485 m³ = 8,91 m³ | **8 × 1,053 m³ = 8,42 m³** |
+| Niz | 7,7 m | **10,3 m** |
+
+Na Hamzićima je JZ pojas dubok 3,30 m: polje 2×2 pri 45° (3,24 m) tu ne staje, a 4 × 1×3
+(2,43 m) staje i ostavlja 0,87 m za ormare ICC360 i MTS iza polja. Nagib 60° sa 2×2
+(dubina 2,29 m) bi stao, ali daje +20 h/god i moment 49–73 kNm — zato 45° i 1×3. Masa
+okvira (≈95 kg) je procjena; mjerodavan je ovjereni proračun Ponuđača.

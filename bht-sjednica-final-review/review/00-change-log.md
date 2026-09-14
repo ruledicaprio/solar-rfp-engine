@@ -1183,3 +1183,38 @@ predmjer i Prilog I §3 se ne mijenjaju.
   koje Naručilac tek dostavlja.**
 - Stranice Priloga III (naslovna, opšti podaci, INFO-02), Priloga I (§4.6, §8),
   Odluke i proračuna (A.6, C.5) renderovane i pregledane.
+
+---
+
+## §28 — dopuna Rev 9 (11.09.2026.): prava orijentacija, polje JZ, nosač 4 × 1×3
+
+### Orijentacija
+
+Google Maps (Naručilac, 11.09.2026.) pokazuje da je kompleks zakrenut 45°: plan „gore"
+je **SI**. Vrata su na JI, hladnjak agregata (izlaz zraka i izduv) na SZ, FN plato na JZ,
+ormari ICC i MTS na SI. Crteži ostaju pravougaoni na kompleks, sa strelicom sjevera
+zakrenutom za 45° (`bht_frame.north_arrow(..., plan_north=45)`); svi zidovi i strane
+nose prave smjerove. Hamzići: plan „gore" je SZ (315°).
+
+### Polje na jugozapad, nosač 4 × 1×3
+
+Niz nosača paralelan sa ogradom gleda na **225°**. Cijena prema jugu: +52 h/god rada
+agregata i +173 l/god goriva (decembar −21 %); prosjek je sada ≈300 h/god, iznad
+250 h iz RFI — navedeno otvoreno u 07-proracuni A.6 i u `09-odluka-nosaci-nagib.md` §5.
+Nosač je **4 × 1×3 položeno** (isti na obje lokacije): 7,84 m², moment 25,7 kNm umjesto
+42,6, gornja ivica +2,93 m, 8 traka 400/500 × 900 × 2600 = 8,42 m³.
+
+### Izmjene
+
+| Fajl | Izmjena |
+|---|---|
+| `pvsim/` | raspored nosača 4x3L (`stands.py`), azimut 225° iz `design.json`; izvještaji ponovo pokrenuti (commit e42bbaa) |
+| `cad/design.json` | `support`, `array` (4 nosača, 225°, +2,93 m), `wind`, `foundation` (8 traka), novi blok `orientation`; `energy` preko `sync_energy.py` |
+| `cad/sheets_new.py`, `build_drawings.py` | S-02: 4 nosača 1 × 3 i trake iz `design.json`; S-01/S-02 zakrenuta strelica sjevera; S-03, M-01: pravi smjerovi; M-01 i E-01: novi **DC razvod −48 V** (D1–D6), sklopka izvora „1 DEA · 0 · 2 rezerva" |
+| `3.2 Prilog III …pdf` | memorandum BH Telecom u zaglavlju A4 stranica i INFO-02; stranice-razdjelnici A i B uklonjene (naslov bloka na stranici sa fotografijom); opšti podaci bez reda „Kontejner" i napomene, kraći red DEA, novi red „Orijentacija", zadnji red „Očekivani rad agregata 300~360 h/god" |
+| `review/07-proracuni.md` | orijentacija; A.5, A.6 pri 225° sa tabelom jug/JZ i albedom; B.3–B.6 za 4 × 1×3; C.1, C.3, C.5, C.7, D.1, D.6, E, F |
+| `review/09-odluka-nosaci-nagib.md` | §5 — odluke 11.09.2026. |
+
+Hamzići (zajednički paket): kompleks preuređen prema pravoj orijentaciji — ormari ICC360 i
+MTS na JZ strani iza FN polja, spremnik u sjevernom uglu, usis na SI zidu, izduv kroz JI
+zid (`hamzici-hybrid-solar/cad/sheets_hamzici.py`, H-01…H-05).

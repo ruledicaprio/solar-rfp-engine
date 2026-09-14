@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
-"""Recalculation check for the joint bill of quantities (Prilog II).
+"""Recalculation check for the joint price forms (Prilog II, one workbook per LOT).
 
-Copies the workbook written by joint_boq.py to a scratch folder, puts a unit
-price of 100 KM into every priced item row, lets LibreOffice (headless, private
-profile) recalculate it, and checks the recalculated values against sums
-computed here in Python:
+Copies the two workbooks written by joint_boq.py to a scratch folder, puts a
+unit price of 100 KM into every priced item row, lets LibreOffice (headless,
+private profile) recalculate them, and checks the recalculated values against
+sums computed here in Python:
 
   * every line total = quantity x 100;
-  * every section subtotal, every LOT subtotal and every REKAPITULACIJA total
-    equals the Python sum (run twice: no discount, and a 5 % discount);
+  * every section subtotal, every LOT subtotal and every total of the LOT's own
+    REKAPITULACIJA (discount, 17 % VAT) equals the Python sum (run twice: no
+    discount, and a 5 % discount);
   * no #REF!/#VALUE!/#NAME?/... anywhere, before or after recalculation;
-  * the delivered file itself carries no prices and no simulation/energy
-    figures.
+  * the delivered files carry no prices and no simulation/energy figures.
 
 It also prints a COVERAGE diff: every Sjednica item number must exist in the
 Hamzići sheet of the same LOT, and every Hamzići-only change is listed.
 
-    python check_boq_recalc.py [--xlsx FILE] [--scratch DIR]
+    python check_boq_recalc.py [--xlsx LOT1_FILE LOT2_FILE] [--scratch DIR]
 
 Exit code 0 = all checks passed.
 """
@@ -119,12 +119,12 @@ def scan_errors(wb, label):
         ok(f"{label}: no #REF!/#VALUE!/#NAME?/Err: values")
 
 
-def check_delivered(wb):
+def check_delivered(wb, lot):
     """The file as delivered: formulas only, no prices, no energy figures."""
-    print("\n[1] Delivered file")
+    print(f"\n[1] Delivered file, {lot}")
     names = wb.sheetnames
-    if names != jb.SHEET_ORDER:
-        fail(f"sheet order {names} != {jb.SHEET_ORDER}")
+    if names != jb.SHEET_ORDER[lot]:
+        fail(f"{lot}: sheet order {names} != {jb.SHEET_ORDER[lot]}")
     else:
         ok(f"sheets {names}")
     scan_errors(wb, "formulas")
@@ -141,7 +141,7 @@ def check_delivered(wb):
                         info.append(f"{ws.title}!{c.coordinate} ({m.group(0)})")
     if info:
         print("  info: source text mentions irradiation/yield in", ", ".join(info))
-    for name in jb.LOT_SHEETS:
+    for name in jb.SITE_SHEETS[lot]:
         ws = wb[name]
         s = jb.structure(ws)
         priced = [n for n, r in s["items"].items() if s["priced"][n]]
@@ -163,26 +163,26 @@ def check_delivered(wb):
                f"({ws.page_setup.fitToWidth}x{ws.page_setup.fitToHeight})")
 
 
-def price_copy(src, dst, discount):
+def price_copy(src, dst, discount, lot):
     wb = openpyxl.load_workbook(src)
     n = 0
-    for name in jb.LOT_SHEETS:
+    for name in jb.SITE_SHEETS[lot]:
         ws = wb[name]
         s = jb.structure(ws)
         for item, r in s["items"].items():
             if s["priced"][item]:
                 ws.cell(r, 5).value = PRICE
                 n += 1
-    rk = wb[jb.REKAP]
+    rk = wb[jb.REKAP[lot]]
     rk.cell(jb.find_row(rk, jb.LBL_POPUST), 6).value = discount
     wb.save(dst)
     return n
 
 
-def expected(wb_formulas):
+def expected(wb_formulas, lot):
     """Python-side totals from quantities (the unrecalculated workbook)."""
     exp = {}
-    for name in jb.LOT_SHEETS:
+    for name in jb.SITE_SHEETS[lot]:
         ws = wb_formulas[name]
         s = jb.structure(ws)
         lines = {r: float(ws.cell(r, 4).value) * PRICE
@@ -195,11 +195,11 @@ def expected(wb_formulas):
     return exp
 
 
-def check_recalc(path, exp, discount):
-    print(f"\n[2] Recalculated by LibreOffice, unit price {PRICE:g}, discount {discount:g} %")
+def check_recalc(path, exp, discount, lot):
+    print(f"\n[2] {lot} recalculated by LibreOffice, unit price {PRICE:g}, discount {discount:g} %")
     wb = openpyxl.load_workbook(path, data_only=True)
-    scan_errors(wb, "values")
-    for name in jb.LOT_SHEETS:
+    scan_errors(wb, f"{lot} values")
+    for name in jb.SITE_SHEETS[lot]:
         ws = wb[name]
         e = exp[name]
         bad = [(r, ws.cell(r, 6).value, v) for r, v in e["lines"].items()
@@ -220,43 +220,37 @@ def check_recalc(path, exp, discount):
             fail(f"{name}: LOT subtotal F{rl}={got} != {v:.2f}")
         else:
             ok(f"{name}: LOT subtotal F{rl} = {got:,.2f}")
-    rk = wb[jb.REKAP]
-    lot = {n: exp[n]["lot"][1] for n in jb.LOT_SHEETS}
-    l1 = lot[jb.SHEET["LOT 1", "sjednica"]] + lot[jb.SHEET["LOT 1", "hamzici"]]
-    l2 = lot[jb.SHEET["LOT 2", "sjednica"]] + lot[jb.SHEET["LOT 2", "hamzici"]]
-    tot = l1 + l2
+    rk = wb[jb.REKAP[lot]]
+    site = {s: exp[jb.SHEET[lot, s]]["lot"][1] for s in jb.SITE}
+    tot = sum(site.values())
     disc = tot * (1 - discount / 100.0)
-    want = {
-        jb.LBL_SITE["LOT 1", "sjednica"]: lot[jb.SHEET["LOT 1", "sjednica"]],
-        jb.LBL_SITE["LOT 1", "hamzici"]: lot[jb.SHEET["LOT 1", "hamzici"]],
-        jb.LBL_LOT_TOTAL["LOT 1"]: l1,
-        jb.LBL_SITE["LOT 2", "sjednica"]: lot[jb.SHEET["LOT 2", "sjednica"]],
-        jb.LBL_SITE["LOT 2", "hamzici"]: lot[jb.SHEET["LOT 2", "hamzici"]],
-        jb.LBL_LOT_TOTAL["LOT 2"]: l2,
-        jb.LBL_TOTAL: tot,
+    want = {jb.LBL_SITE[lot, s]: v for s, v in site.items()}
+    want.update({
+        jb.LBL_LOT_TOTAL[lot]: tot,
         jb.LBL_POPUST: discount,
-        jb.LBL_DISC: disc,
+        jb.LBL_DISC[lot]: disc,
         jb.LBL_VAT: disc * VAT,
-        jb.LBL_GRAND: disc * (1 + VAT),
-    }
+        jb.LBL_GRAND[lot]: disc * (1 + VAT),
+    })
     for label, v in want.items():
         r = jb.find_row(rk, label)
         got = rk.cell(r, 6).value
         if label == jb.LBL_POPUST and not discount:      # left empty = no discount
             if got not in (None, ""):
-                fail(f"REKAPITULACIJA F{r} '{label}' should be empty, is {got!r}")
+                fail(f"{rk.title} F{r} '{label}' should be empty, is {got!r}")
             else:
-                ok(f"REKAPITULACIJA F{r} {label} empty (no discount)")
+                ok(f"{rk.title} F{r} {label} empty (no discount)")
             continue
         if not isinstance(got, (int, float)) or abs(got - v) > TOL:
-            fail(f"REKAPITULACIJA F{r} '{label}' = {got} != {v:.2f}")
+            fail(f"{rk.title} F{r} '{label}' = {got} != {v:.2f}")
         else:
-            ok(f"REKAPITULACIJA F{r} {label} {got:,.2f}")
+            ok(f"{rk.title} F{r} {label} {got:,.2f}")
 
 
-def coverage(wb):
+def coverage(wbs):
     print("\n[3] COVERAGE (Sjednica -> Hamzići)")
-    for lot in ("LOT 1", "LOT 2"):
+    for lot in jb.LOTS:
+        wb = wbs[lot]
         sj, hz = wb[jb.SHEET[lot, "sjednica"]], wb[jb.SHEET[lot, "hamzici"]]
         a, b = jb.structure(sj)["items"], jb.structure(hz)["items"]
         missing = [n for n in a if n not in b]
@@ -294,28 +288,48 @@ def coverage(wb):
 # Sjednica-only facts (and superseded Hamzići values) that must not survive in a Hamzići
 # sheet - including the Sjednica drawing numbers, now that the H-01..H-05 map is in.
 SJEDNICA_FACTS = re.compile(r"1076|42,94|16,00 × 9,40|h=2,10|h=38|planinsk|11,6 kW|≈82 %|93 %|"
-                            r"trase od 25 m|dužini 25 m|900 × 2000|istočne strane ograde|"
-                            r"1,94 m|4\.4\.2\.3|720 mm|1155 mm|CENTRIRANO|JUGOISTOČNI ugao|"
+                            r"trase od 25 m|dužini 25 m|900 × 2000|jugoistočne strane ograde|"
+                            r"1,94 m|4\.4\.2\.3|720 mm|1155 mm|CENTRIRANO|"
+                            r"JUŽNI ugao kontejnera \(uz JZ|cca 0,40 m od ograde|0,83 m|"
                             r"0,60 × 0,25|≈1,9 kPa|dužine do 15 m|\b[MSE]-0\d\b|"
                             # superseded Hamzići layout: Stulz and discharge on the east wall
                             r"ISTOČNE strane je hladnjak|južnom kraju istočnog zida|"
                             r"uz ISTOČNI zid kontejnera, sjeverno od agregata|"
                             r"sa istočnog zida kontejnera|Stulz \(Tačka 5\.15\) na ISTOČNOM|"
-                            r"ugrađuje u ISTOČNI zid kontejnera, na mjestu")
+                            r"ugrađuje u ISTOČNI zid kontejnera, na mjestu|"
+                            # superseded Hamzići layout of the plan-frame round (before the
+                            # 45° orientation, 11.09.2026): walls named as if door = north
+                            r"sredini JUŽNOG zida|u ZAPADNI zid|JUGOZAPADNOM uglu|kroz ISTOČNI "
+                            r"zid|sjevernom pojasu|na JUŽNOM zidu|pojasu južno od ploče|1,74 m")
 
 
-def check_sjednica(wb):
+def check_sjednica(wbs):
     print("\n[4] Sjednica sheets vs source; Sjednica facts left in Hamzići sheets")
     src = openpyxl.load_workbook(jb.SRC)
     for lot in ("LOT 1", "LOT 2"):
+        wb = wbs[lot]
         sj, s = wb[jb.SHEET[lot, "sjednica"]], src[lot]
         a, b = jb.structure(sj)["items"], jb.structure(s)["items"]
-        if list(a) != list(b):
-            fail(f"{sj.title}: item list differs from the source")
+        # items added to BOTH site sheets are not in the source: expect them at their
+        # anchor position, and check them against what joint_boq declares, not the source
+        added = {n: (unit, qty, text)
+                 for n, after, unit, qty, text in jb.BOTH_SITES_NEW_ITEMS.get(lot, [])}
+        want_list = list(b)
+        for n, after, *_ in jb.BOTH_SITES_NEW_ITEMS.get(lot, []):
+            want_list.insert(want_list.index(after) + 1, n)
+        if list(a) != want_list:
+            fail(f"{sj.title}: item list differs from the source" +
+                 (f" + both-sites items {sorted(added)}" if added else ""))
         else:
             # expected = the source text, plus any typo fix the source does not carry yet
             bad, fixed = [], []
             for n in a:
+                if n in added:
+                    unit, qty, text = added[n]
+                    if (sj.cell(a[n], 2).value, sj.cell(a[n], 3).value,
+                            sj.cell(a[n], 4).value) != (text, unit, qty):
+                        bad.append(n)
+                    continue
                 want = s.cell(b[n], 2).value
                 pairs = jb.BOTH_SITES_EDITS.get(lot, {}).get(n)
                 if pairs:
@@ -333,7 +347,8 @@ def check_sjednica(wb):
             if bad:
                 fail(f"{sj.title}: differs from the source in {bad}")
             else:
-                ok(f"{sj.title}: equal to the source ({len(a)} items)"
+                ok(f"{sj.title}: equal to the source ({len(b)} items)"
+                   + (f" + {len(added)} both-sites item(s) {sorted(added)}" if added else "")
                    + (f"; typo fixes the source lacks: {fixed}" if fixed
                       else "; every typo fix is already in the source"))
         hz = wb[jb.SHEET[lot, "hamzici"]]
@@ -397,31 +412,36 @@ def check_dc(wb):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--xlsx", default=paths.PRILOG2)
+    ap.add_argument("--xlsx", nargs=2, metavar=("LOT1", "LOT2"),
+                    default=[paths.PRILOG2_LOT[lot] for lot in jb.LOTS])
     ap.add_argument("--scratch", default=os.environ.get("BOQ_SCRATCH")
                     or os.path.join(tempfile.gettempdir(), "boq_check"))
     args = ap.parse_args()
     scratch = os.path.abspath(args.scratch)
     os.makedirs(scratch, exist_ok=True)
-    src = os.path.join(scratch, "joint_boq.xlsx")
-    shutil.copyfile(args.xlsx, src)
-    print(f"checking {args.xlsx}\nscratch  {scratch}")
+    print(f"scratch  {scratch}")
 
-    wb = openpyxl.load_workbook(src)
-    check_delivered(wb)
-    exp = expected(wb)
-
-    priced0 = os.path.join(scratch, "priced_nodisc.xlsx")
-    priced5 = os.path.join(scratch, "priced_disc5.xlsx")
-    n = price_copy(src, priced0, None)
-    price_copy(src, priced5, DISCOUNT)
-    print(f"\nunit price {PRICE:g} written into {n} priced item rows")
-    out0, out5 = recalc([priced0, priced5], os.path.join(scratch, "recalc"), os.path.join(scratch, "lo"))
-    check_recalc(out0, exp, 0.0)
-    check_recalc(out5, exp, DISCOUNT)
-    coverage(wb)
-    check_sjednica(wb)
-    check_dc(wb)
+    wbs, exp, priced = {}, {}, []
+    for lot, path in zip(jb.LOTS, args.xlsx):
+        tag = lot.replace(" ", "").lower()
+        src = os.path.join(scratch, f"joint_boq_{tag}.xlsx")
+        shutil.copyfile(path, src)
+        print(f"\nchecking {path}")
+        wbs[lot] = openpyxl.load_workbook(src)
+        check_delivered(wbs[lot], lot)
+        exp[lot] = expected(wbs[lot], lot)
+        p0 = os.path.join(scratch, f"priced_{tag}_nodisc.xlsx")
+        p5 = os.path.join(scratch, f"priced_{tag}_disc5.xlsx")
+        n = price_copy(src, p0, None, lot)
+        price_copy(src, p5, DISCOUNT, lot)
+        print(f"\n{lot}: unit price {PRICE:g} written into {n} priced item rows")
+        priced += [(lot, p0, 0.0), (lot, p5, DISCOUNT)]
+    outs = recalc([p for _, p, _ in priced], os.path.join(scratch, "recalc"), os.path.join(scratch, "lo"))
+    for (lot, _, discount), out in zip(priced, outs):
+        check_recalc(out, exp[lot], discount, lot)
+    coverage(wbs)
+    check_sjednica(wbs)
+    check_dc(wbs["LOT 2"])
 
     print()
     if FAILS:

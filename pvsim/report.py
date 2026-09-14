@@ -147,6 +147,15 @@ def run(site, offline=False):
 
 
 # --------------------------------------------------------------------------
+_POINTS = ("sjever", "sjeveroistok", "istok", "jugoistok", "jug", "jugozapad", "zapad",
+           "sjeverozapad")
+
+
+def _azimuth(az):
+    """225 -> 'azimut 225° (jugozapad)'."""
+    return f"azimut {az:g}° ({_POINTS[round(az / 45) % 8]})"
+
+
 def markdown(doc):
     s = doc["inputs"]
     tilts = list(doc["tilts"])
@@ -163,8 +172,8 @@ def markdown(doc):
 
     w("## Metoda\n")
     w(f"- **Ozračenje:** PVGIS v5.3 `seriescalc`, SARAH3 + ERA5 (temperatura, vjetar), "
-      f"satno za {K[tilts[0]]['n_years']} godina; horizont iz PVGIS DEM-a; polje jug, "
-      f"nagib {' i '.join(t + '°' for t in tilts)}.")
+      f"satno za {K[tilts[0]]['n_years']} godina; horizont iz PVGIS DEM-a; polje "
+      f"{_azimuth(s['array']['azimuth_deg'])}, nagib {' i '.join(t + '°' for t in tilts)}.")
     w("- **FN lanac:** refleksija Martin-Ruiz (a_r 0,16), temperatura modula Faiman "
       "(26,9 / 6,2), model modula Huld c-Si (PVGIS), mjesečno zaprljanje i snijeg, "
       "neusklađenost i LID, DC kablovi 0,78 % pri Imp, optimizatori 99,0 %, iSSU "

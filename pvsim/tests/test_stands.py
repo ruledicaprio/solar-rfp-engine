@@ -35,7 +35,39 @@ def test_60_degrees_geometry_and_moment_range():
     assert lo["snow_mu1"] == 0.0
 
 
-def test_compare_covers_both_layouts_and_tilts():
+def test_4x3L_landscape_at_45():
+    """The adopted stand (11.09.2026): 4 stands of 3 modules in landscape."""
+    r = stands.stand("4x3L", 45, 1.20, MODULE, bottom_edge=0.5, strip_spacing=1.6)
+    assert (r["stands"], r["modules_per_stand"], r["strips"]) == (4, 3, 8)
+    assert r["field_w_m"] == pytest.approx(2.278, abs=0.001)
+    assert r["field_slope_m"] == pytest.approx(3.442, abs=0.001)
+    assert r["depth_m"] == pytest.approx(2.434, abs=0.002)      # fits the 3,30 m band
+    assert r["top_edge_m"] == pytest.approx(2.934, abs=0.002)
+    assert r["M_kNm"] == pytest.approx(25.7, abs=0.1)
+    assert r["strip_m3_required"] < r["strip_m3_adopted"] == stands.STRIP_4X3L_M3
+
+
+def test_4x3L_strip_is_a_constant_section():
+    """Reviewer 27.08.2026 (proracun B.6): no footing wider at the bottom - it cannot be
+    cut in rock. The strip is one width, 500 mm, over the full 900 mm depth."""
+    assert stands.STRIP_4X3L_M3 == pytest.approx(0.500 * 0.900 * 2.600, abs=0.001)
+    r = stands.stand("4x3L", 45, 1.20, MODULE, bottom_edge=0.5, strip_spacing=1.6)
+    dead = stands.STRIP_4X3L_M3 * stands.CONCRETE_KN_M3 * stands.GAMMA_G_FAV
+    assert r["couple_kN"] == pytest.approx(16.1, abs=0.1)
+    assert dead / r["couple_kN"] > 1.5          # holds the uplift couple on weight alone
+
+
+def test_4x3L_neglects_the_frame_self_weight():
+    """Reviewer 27.08.2026 (proracun B.3): the estimated stand mass is withdrawn. The
+    frame's weight is favourable, so dropping it is the safe side; only the modules
+    count as stabilising dead load."""
+    assert stands.LAYOUTS["4x3L"]["frame_kg"] == 0.0
+    r = stands.stand("4x3L", 45, 1.20, MODULE, bottom_edge=0.5, strip_spacing=1.6)
+    assert r["G_kN"] == pytest.approx(3 * MODULE["kg"] * 9.81 / 1000.0, abs=0.001)
+    assert r["uplift_uls_kN"] == pytest.approx(14.1, abs=0.1)
+
+
+def test_compare_covers_all_layouts_and_tilts():
     rows = stands.compare(config.load("sjednica"))
     combos = {(r["layout"], r["tilt"]) for r in rows}
-    assert combos == {("3x4", 45), ("3x4", 60), ("2x6", 45), ("2x6", 60)}
+    assert combos == {(lay, t) for lay in ("3x4", "2x6", "4x3L") for t in (45, 60)}

@@ -271,7 +271,7 @@ def sheet_s01():
     leader(msp, (cx + CW + 350, cy + CH / 2 + 250),
            "ULAZNA VRATA 900 × 2000 mm (ISTOČNA strana)", 2100, 1250, SC)
     leader(msp, (cx + 700, cy + CH + 480),
-           "vanjski ormari (SJEVER): Huawei ICC360-HA1-C1 i MTS9302A",
+           "vanjski ormari (SI): Huawei ICC360-HA1-C1 i MTS9302A",
            -3400, 1750, SC)
     leader(msp, (k["tower_c"][0] - 2100, k["tower_c"][1] - 2100),
            "noge rešetkastog antenskog stuba h=38 m,", -3050, -1450, SC)
@@ -284,16 +284,17 @@ def sheet_s01():
 
     _txt(msp, "slobodna površina parcele — prostor za buduće nosače FN panela",
          ox + F / 2, py + 750, 2.2 * SC, layer="Tekst", color=8, align=TA.CENTER)
-    _txt(msp, "J U G", ox + F / 2, py - 1900, 3.2 * SC, layer="Orijentacija",
+    _txt(msp, "J U G O Z A P A D", ox + F / 2, py - 1900, 3.2 * SC, layer="Orijentacija",
          color=1, align=TA.CENTER)
 
-    north_arrow(msp, 19500, 11700, 1700)
+    north_arrow(msp, 19500, 11700, 1700,
+                plan_north=_design()["orientation"]["plan_north_bearing_deg"])
     scale_bar(msp, 1300, 3700, SC, total_m=5, step_m=1)
 
     legend(msp, 1300, 3050, SC, [
         (8,   "postojeća ograda h=2,10 m sa kapijom (svijetla širina 1,00 m)"),
         (254, "postojeća AB temeljna ploča 5,40 × 5,40 m"),
-        (6,   "postojeći kontejner za TK opremu — vrata na ISTOK"),
+        (6,   "postojeći kontejner za TK opremu — vrata na JI"),
         (5,   "noge antenskog stuba, baza 4,20 × 4,20 m"),
         (30,  "vanjski ormari: ICC360-HA1-C1 (hibridni sistem) i MTS9302A (TK)"),
         (2,   "postojeći prstenasti uzemljivač Fe/Zn 25×4 mm"),

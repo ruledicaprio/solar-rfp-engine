@@ -37,7 +37,8 @@ FIGURES = {
     "agregat-celni.png": os.path.join(SJ, "TD-OUTPUT", "grafika", "prilog1", "agregat-celni.png"),
     "spremnik-bocni.png": os.path.join(SJ, "TD-OUTPUT", "grafika", "prilog1", "spremnik-bocni.png"),
     "spremnik-odozgo.png": os.path.join(SJ, "TD-OUTPUT", "grafika", "prilog1", "spremnik-odozgo.png"),
-    "m01-raspored.png": os.path.join(SJ, "TD-OUTPUT", "grafika", "prilog1", "m01-raspored.png"),
+    # rendered from the current sheet, like H-04 (the stored PNG predates the true orientation)
+    "m01-raspored.png": os.path.join(SJ, "TD-OUTPUT", "grafika", "M-01.pdf"),
     "h04-raspored.png": os.path.join(HZ, "TD-OUTPUT", "grafika", "H-04.pdf"),
     "energetski-bilans-sjednica.png": os.path.join(SJ, "review", "pvsim", "fig", "f1_bilans_t45.png"),
     "energetski-bilans-hamzici.png": os.path.join(HZ, "review", "pvsim", "fig", "f1_bilans_t45.png"),
@@ -46,18 +47,48 @@ FIGURES = {
 
 # Values that were wrong once and must not come back, and values that must be
 # there. The Sjednica lists carry over (same system); the Hamzići ones are new.
-FORBIDDEN = bp1.FORBIDDEN + [
+# One inherited rule does not apply here: the single-site Prilog I had no Tačka
+# 4.8, the joint one does (demontaža Stulza), so that ban would fire on a correct
+# cross-reference.
+FORBIDDEN = [r for r in bp1.FORBIDDEN if r[0] != "Tačku 4.8"] + [
     ("Čapljin", "Hamzići su u općini Čitluk"),
     ("AS 36 m", "stub na Hamzićima je 32 m"),
     ("Hamzići?", "zaostali upitnik iz nacrta"),
-    ("1,94 m", "nadvišenje ograde na Hamzićima je 1,74 m: teren je 0,20 m ispod ploče"),
-    ("ISTOČNI zid, južni kraj", "Stulz je u sredini JUŽNOG zida (Naručilac 11.09.2026)"),
-    ("duža osa istok–zapad", "agregat na Hamzićima stoji po osi SJEVER–JUG"),
+    ("1,94 m", "nadvišenje ograde na Hamzićima je 0,93 m: teren je 0,20 m ispod ploče"),
+    ("ISTOČNI zid, južni kraj", "Stulz je u sredini JI zida (Naručilac 11.09.2026)"),
+    ("duža osa istok–zapad", "agregat na Hamzićima stoji po osi SZ–JI"),
+    # 11.09.2026: true orientation, SW fields, 4x3L stand at both sites
+    ("azimut 180°", "polja su okrenuta prema jugozapadu, azimut 225°"),
+    ("2 reda × 2", "nosač je 1 × 3 modula, položeno (4x3L)"),
+    ("≈230 h/god", "Hamzići: ≈270 h/god sa poljem prema JZ"),
+    ("≈750 l/god", "Hamzići: ≈900 l/god sa poljem prema JZ"),
+    ("1,74 m", "nadvišenje ograde na Hamzićima je 0,93 m (4x3L)"),
+    # recenzija A. Čolpa, 27.08.2026
+    ("400 mm (gore)", "traka je jedinstvene širine 500 mm — recenzent 27.08.2026"),
+    ("(dolje) × 2600", "traka je jedinstvene širine 500 mm — recenzent 27.08.2026"),
+    ("1,053 m³", "traka jedinstvenog presjeka nosi 1,170 m³"),
+    ("8,42 m³", "8 traka jedinstvenog presjeka nose 9,36 m³"),
+    ("uslov za primopredaju", "statički proračun je uslov za počinjanje radova"),
+    ("≥13,3 kN", "projektne sile po nosaču se ne zadaju — tehničko rješenje Ponuđača"),
 ]
-REQUIRED = bp1.REQUIRED + [
-    "493 m", "1,74 m", "h = 1,80 m", "3575 mm", "k.č. 109/1", "Stulz WDE80",
-    "Alipašino Polje", "0,36 m²", "≈230 h/god", "≈750 l/god", "H-04", "12,3 kW",
-    "izvlačni", "≤0,50 m", "3.6.9 Plan uzemljivača",
+# the Sjednica Rev 9 values this round supersedes, and what replaces them
+SUPERSEDED_REQUIRED = {
+    "42,6 kNm": "25,7 kNm", "26,6 kN": "16,1 kN", "1,485 m³": None, "8,91 m³": None,
+    "+0,50 m / +3,74 m": None, "1,64 m": "0,83 m", "18,1 kN": None, "13,4 kN": None,
+    "≈250 h/god": "≈300 h/god", "≈820 l/god": "≈990 l/god",
+    "SJEVERNI zid, istočni kraj": None, "JUŽNI zid": None,
+}
+REQUIRED = [r for r in bp1.REQUIRED if r not in SUPERSEDED_REQUIRED] \
+    + [v for v in SUPERSEDED_REQUIRED.values() if v] + [
+    "493 m", "0,93 m", "h = 1,80 m", "3300 mm", "k.č. 109/1", "Stulz WDE80",
+    "Alipašino Polje", "0,36 m²", "≈270 h/god", "≈900 l/god", "H-04", "12,3 kW",
+    "izvlačni", "≤0,50 m", "3.6.9 Plan uzemljivača", "225°",
+    # recenzija A. Čolpa, 27.08.2026
+    "500 × 2600 mm, jedinstvene širine", "1,170 m³", "9,36 m³", "POČETAK RADOVA",
+    "Tehničko rješenje konstrukcije", "se ne zadaju",
+    # preuzimanje i transport opreme Kupca (Tačka 4.9)
+    "Azići, Bojnička bb, Sarajevo", "Preuzimanje i transport", "otpremnica",
+    "iPV585-M2A (12 kom po lokaciji)",
 ]
 N_MEDIA = len(FIGURES)
 
@@ -156,11 +187,11 @@ def calc_pdf(md, outs, required):
 def calculations():
     calc_pdf(os.path.join(SJ, "review", "07-proracuni.md"),
              [os.path.join(paths.TD, "proracuni_BS_Sjednica_Bileca.pdf")],
-             ["A.6 Energetski bilans", "≈250 h/god", "42,6 kNm", "D.8 Trajni potrošači"])
+             ["A.6 Energetski bilans", "≈300 h/god", "25,7 kNm", "D.8 Trajni potrošači"])
     calc_pdf(os.path.join(HZ, "review", "07-proracuni.md"),
              [os.path.join(paths.TD, "proracuni_BS_Hamzici_Citluk.pdf"),
               os.path.join(HZ, "review", "07-proracuni_hamzici.pdf")],
-             ["A.6 Energetski bilans", "≈230 h/god", "42,6 kNm", "Stulz WDE80", "D.9 Trajni potrošači"])
+             ["A.6 Energetski bilans", "≈270 h/god", "25,7 kNm", "Stulz WDE80", "D.9 Trajni potrošači"])
 
 
 def drawings():
@@ -181,8 +212,33 @@ def run(script):
     subprocess.run([sys.executable, path], check=True)
 
 
+def check_pvsim_matches_design():
+    """Refuse to build while each site's kpis.json was produced for a different array.
+
+    Prilog I §8, the INFO-02 pages and the proračuni all quote pvsim output, while §3.1
+    and the drawings come from cad/design.json. Nothing used to notice when the two
+    drifted apart, which is exactly how the 180° azimuth survived into a package whose
+    field faces 225°. Run `python -m pvsim run --site <id>` first.
+    """
+    import json
+    bad = []
+    for sid, site in paths.SITES.items():
+        d = json.load(open(os.path.join(site["folder"], "cad", "design.json"),
+                           encoding="utf-8"))["array"]
+        k = json.load(open(os.path.join(site["folder"], "review", "pvsim", "kpis.json"),
+                           encoding="utf-8"))["inputs"]["array"]
+        for key in ("tilt_deg", "azimuth_deg", "kWp"):
+            if d[key] != k[key]:
+                bad.append(f"{sid}: design.json {key}={d[key]} but kpis.json {key}={k[key]}")
+    if bad:
+        raise SystemExit("pvsim is out of date with the design:\n  " + "\n  ".join(bad)
+                         + "\n  run: python -m pvsim run --site sjednica"
+                           "  &&  python -m pvsim run --site hamzici")
+
+
 def main():
     os.makedirs(paths.TD, exist_ok=True)
+    check_pvsim_matches_design()
     print("1. figures");        figures()
     print("2. Prilog I");       prilog1()
     print("3. proračuni");      calculations()

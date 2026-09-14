@@ -87,3 +87,8 @@ hamzici-hybrid-solar/EQUIPEMENT/
 # 08.09.2026 site photos, full resolution; this folder also holds two unrelated
 # items (mliniste-full.mp4, Icao9303/) that belong to other work
 hamzici-hybrid-solar/hamzici-photos/
+
+# --- rfp-hybrid-solar-td/report: the build script is committed; the report template,
+# the measured NetEco data of other BH Telecom sites and the built page stay local
+# (this repo is public)
+rfp-hybrid-solar-td/report/local/
