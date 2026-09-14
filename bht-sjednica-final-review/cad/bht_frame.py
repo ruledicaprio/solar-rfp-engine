@@ -317,6 +317,12 @@ def draw_frame(msp, scale, naziv, broj, razmjera, godina="2026.",
     lbl("godina / broj crteža:", 121, 4.2)
     val(f"{godina}    {broj}", 121, 1.0, 2.8)
 
+    # Everything drawn up to here is frame and title block. Record it so
+    # build_drawings.layout_check can skip it (the Hamzići _sheet() wrapper
+    # used to do this itself; doing it here covers both sites).
+    if msp.doc is not None:
+        msp.doc.hz_frame_handles = {e.dxf.handle for e in msp}
+
     return (fx0, fy0 + X(TB_H)), (fx1, fy1)
 
 

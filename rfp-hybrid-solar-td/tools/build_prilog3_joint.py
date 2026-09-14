@@ -55,6 +55,7 @@ CERTIFIED = [
 PHOTOS = [("20260908_121209_sunce.jpg", "Antenski stub i kontejner; pogled prema jugu-jugoistoku"),
           ("20260908_121141_sunce.jpg", "Kontejner sa klima-uređajem Stulz WDE80 (demontira se)")]
 H_SHEETS = ["H-01", "H-02", "H-03", "H-04", "H-05"]
+PVSIM_BAR_PX = 46             # caption strip `pvsim photo` adds (pvsim/photo.py, bar)
 ORANGE, GREY, INK = (0.96, 0.51, 0.12), (0.35, 0.35, 0.35), (0.04, 0.04, 0.04)
 POINTS = ("sjever", "sjeveroistok", "istok", "jugoistok", "jug", "jugozapad", "zapad",
           "sjeverozapad")
@@ -77,7 +78,8 @@ def fonts(page):
     return bp3.arial(page)
 
 
-def line(page, font, txt, y, size, colour=INK, x0=50, x1=545, align=1):
+def line(page, font, txt, y, size, colour=INK, x0=50, x1=None, align=1):
+    x1 = page.rect.width - 50 if x1 is None else x1
     if page.insert_textbox(fitz.Rect(x0, y, x1, y + size * 3.4), txt, fontname=font,
                            fontsize=size, color=colour, align=align) < 0:
         raise SystemExit(f"Prilog III: {txt[:50]!r} nije stalo")
@@ -87,7 +89,8 @@ def headline(page, y, letter, site, place):
     """Block headline, in place of the separator pages (Investor, 11.09.2026)."""
     reg, bold = fonts(page)
     line(page, bold, f"{letter}.  BS {site.upper()} ({place.upper()})", y, 16, align=0)
-    page.draw_line(fitz.Point(50, y + 28), fitz.Point(545, y + 28), color=ORANGE, width=1.6)
+    page.draw_line(fitz.Point(50, y + 28), fitz.Point(page.rect.width - 50, y + 28),
+                   color=ORANGE, width=1.6)
     return y + 38
 
 
@@ -133,25 +136,39 @@ def photo_page_sj(doc, sj):
 
 
 def photo_page_hz(doc):
-    page = doc.new_page(width=595, height=842)
+    """A4 LANDSCAPE, the two site photos side by side (Investor, 14.09.2026).
+    Portrait stacked them at 290 pt high and left most of the page empty."""
+    W, H = 842, 595
+    page = doc.new_page(width=W, height=H)
     y = headline(page, bp3.memo_header(page) + 4, "B", "Hamzići", "Čitluk")
     reg, bold = fonts(page)
     line(page, reg, "Fotografije postojećeg stanja lokacije, 08.09.2026.", y, 9.5, GREY,
          align=0)
-    y += 22
-    for name, caption in PHOTOS:
+    y += 20
+    gap, margin = 24, 50
+    w = (W - 2 * margin - gap) / len(PHOTOS)
+    avail = H - y - 28                       # room left for the image and its caption
+    for i, (name, caption) in enumerate(PHOTOS):
         path = os.path.join(HZ, "review", "pvsim", "photo", name)
         pix = fitz.Pixmap(path)
-        w = 495
-        h = w * pix.height / pix.width
-        if h > 290:
-            h = 290
-            w = h * pix.width / pix.height
-        x0 = (595 - w) / 2
-        page.insert_image(fitz.Rect(x0, y, x0 + w, y + h), filename=path)
-        line(page, reg, caption, y + h + 4, 8.5, GREY)
-        y += h + 30
-    if y > 842 - 12:
+        # These were shot in portrait and stored turned on their side, so the mast
+        # lay across the page. ROTATE=270 (i.e. 90° clockwise) stands it up. The
+        # 46 px caption strip `pvsim photo` adds along the bottom is cropped off -
+        # turned with the image it would run vertically up the side; the view is
+        # named in the caption below instead.
+        clip = fitz.IRect(0, 0, pix.width, pix.height - PVSIM_BAR_PX)
+        cropped = fitz.Pixmap(pix.colorspace, clip, pix.alpha)
+        cropped.copy(pix, clip)
+        pix = cropped
+        iw, ih = w, w * pix.width / pix.height      # portrait once turned
+        if ih > avail - 16:
+            ih = avail - 16
+            iw = ih * pix.height / pix.width
+        x0 = margin + i * (w + gap) + (w - iw) / 2
+        page.insert_image(fitz.Rect(x0, y, x0 + iw, y + ih), pixmap=pix, rotate=270)
+        line(page, reg, caption, y + ih + 5, 8.5, GREY,
+             x0=margin + i * (w + gap), x1=margin + i * (w + gap) + w, align=0)
+    if y + avail > H - 12:
         raise SystemExit("Hamzići photo page: the photos do not fit")
 
 
@@ -200,31 +217,28 @@ def hamzici_data(doc):
         ("Objekat", "Bazna stanica HAMZIĆI"),
         ("Općina", "Čitluk"),
         ("Koordinate", "43,2880° N,  17,6248° E"),
-        ("Nadmorska visina", "493 m (projekat lokacije: 500 m)"),
+        ("Nadmorska visina", "493 m"),
         ("Zakupljena površina", "150 m² (12,00 × 12,50 m), k.č. 109/1 K.O. Hamzići (novi premjer)"),
         ("Betonski temelj", "5,40 × 5,40 m, sa metalnom ogradom visine 1,80 m; kapija 1,30 m "
                             "na SZ strani"),
         ("Antenski stub", "Rešetkasta izvedba, visina 32 m; baza 3,70 × 3,70 m; platforma na "
                           "+3,0 m iznad krova kontejnera"),
-        ("Klima-uređaj", "Stulz WDE80 (8 kW) na JI zidu — demontira se i odvozi u skladište "
-                         "BH Telecom, Alipašino Polje"),
-        ("Oprema Kupca", "FN moduli, PVDB, ispravljači iSSU, baterije i ormar ICC360-HA1-C1 — "
-                         "posebna nabavka Naručioca. Preuzimanje u skladištu BH Telecom, "
-                         "Azići, Bojnička bb, Sarajevo, prevoz na lokaciju i istovar su u "
-                         "LOT 2 (Prilog I, Tačka 4.9; Prilog II, stavka 5.19)"),
-        ("Priključak na EES", "NE — priključak projektovan 2017. godine nije izveden"),
-        ("Snaga potrošača", "1.180 W nazivno / 1.330 W maksimalno — privremeno, do izmjerene "
-                            "potrošnje"),
-        ("Sistem napajanja", "Hibridni: FN moduli (primarni) + LFP baterije + DEA (rezervni), "
-                             "isti kao na lokaciji Sjednica"),
+        ("Klima-uređaj", "Stulz WDE80, 8 kW, u sredini JI zida; demontaža i odvoz u "
+                         "skladište Alipašino Polje (LOT 2)"),
+        ("Oprema Kupca", "FN moduli, PVDB, iSSU, baterije, ICC360-HA1-C1 — nabavka "
+                         "Naručioca; preuzimanje u skladištu Azići, Bojnička bb, Sarajevo, "
+                         "prevoz i istovar u LOT 2 (Prilog I, Tačka 4.9)"),
+        ("Priključak na EES", "Nema; priključak projektovan 2017. nije izveden"),
+        ("Snaga potrošača", "1.180 W nazivno / 1.330 W maksimalno"),
+        ("Sistem napajanja", "Hibridni: FN moduli + LFP baterije + DEA (rezervni)"),
         ("FN konfiguracija", f"{a['modules_total']} × iPV585-M2A ({num(a['kWp'], 2)} kWp) na "
                              f"{a['count']} nosača po {sup['modules_each']} modula (položeno), "
                              f"nagib {a['tilt_deg']}°, azimut {a['azimuth_deg']}° (JZ)"),
         ("DEA", f"{g['kVA']:g} kVA / {num(g['kW'], 1)} kW, skid u kontejneru; ulaz "
                 f"ispravljača ≤{num(ctl['rect_cap_ac_kw'], 1)} kW"),
         ("Spremnik goriva", "Dvoplašni, 500 l, sa nivo sondom i detekcijom curenja"),
-        ("Orijentacija", "vrata i kapija SZ, hladnjak DEA JI, FN polje JZ; ormari ICC360 i MTS "
-                         "na JZ strani, iza FN polja (Google Maps, Naručilac 11.09.2026)"),
+        ("Orijentacija", "Vrata i kapija SZ, hladnjak DEA JI, FN polje JZ; ormari ICC360 i "
+                         "MTS na JZ strani, iza FN polja"),
         ("Očekivani rad agregata", f"{r10(e['genset_h_mean'])}~{r10(e['genset_h_p90'])} h/god"),
     ]
     table_page(doc, "1.  OPŠTI PODACI O LOKACIJI — BS HAMZIĆI", rows)

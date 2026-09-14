@@ -37,62 +37,6 @@ from ezdxf import bbox         # noqa: E402
 GRAFIKA = os.path.join(os.path.dirname(HERE), "TD-OUTPUT", "grafika")
 
 
-def _label(e):
-    t = e.dxftype()
-    if t in ("TEXT", "MTEXT"):
-        s = e.dxf.text if t == "TEXT" else e.plain_text()
-        return f"{t} '{s[:50]}'"
-    return f"{t} [{e.dxf.layer}]"
-
-
-def _text_boxes(e, cache):
-    """(label, (x0, y0, x1, y1)) for a TEXT, or for the text inside a DIMENSION."""
-    if e.dxftype() == "TEXT":
-        items = [e]
-    elif e.dxftype() == "DIMENSION":
-        items = [v for v in e.virtual_entities() if v.dxftype() in ("TEXT", "MTEXT")]
-    else:
-        return []
-    out = []
-    for it in items:
-        b = bbox.extents([it], cache=cache if it is e else None)
-        if not b.has_data:
-            continue
-        (x0, y0, _), (x1, y1, _) = b.extmin, b.extmax
-        # shave a margin so glyphs that merely touch are not reported
-        s = 0.12 * min(x1 - x0, y1 - y0)
-        out.append((_label(it) if it is e else f"DIM '{_label(it)[6:]}",
-                    (x0 + s, y0 + s, x1 - s, y1 - s)))
-    return out
-
-
-def layout_check(doc, sc):
-    frame = getattr(doc, "hz_frame_handles", set())
-    fx0, fy0 = MARGIN_L * sc, MARGIN * sc
-    fx1, fy1 = (A3_W - MARGIN) * sc, (A3_H - MARGIN) * sc
-    tb = ((A3_W - MARGIN - TB_W) * sc, MARGIN * sc,
-          (A3_W - MARGIN) * sc, (MARGIN + TB_H) * sc)
-    cache = bbox.Cache()
-    outside, in_tb, boxes = [], [], []
-    for e in doc.modelspace():
-        if e.dxf.handle in frame:
-            continue
-        b = bbox.extents([e], cache=cache)
-        if not b.has_data:
-            continue
-        (x0, y0, _), (x1, y1, _) = b.extmin, b.extmax
-        if x0 < fx0 - 1 or y0 < fy0 - 1 or x1 > fx1 + 1 or y1 > fy1 + 1:
-            outside.append(_label(e))
-        if x1 > tb[0] + 1 and x0 < tb[2] - 1 and y1 > tb[1] + 1 and y0 < tb[3] - 1:
-            in_tb.append(_label(e))
-        boxes += _text_boxes(e, cache)
-    overlaps = []
-    for (la, a), (lb, b) in itertools.combinations(boxes, 2):
-        if a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3]:
-            overlaps.append(f"{la}  x  {lb}")
-    return outside, in_tb, overlaps
-
-
 def build(names, strict=False):
     os.makedirs(GRAFIKA, exist_ok=True)
     made, bad = [], 0
@@ -101,7 +45,7 @@ def build(names, strict=False):
         fn, sc = H.SHEETS[name]
         doc = fn()
         B.check_extents(doc, name, sc)          # hard gate: SystemExit if off the A3 sheet
-        outside, in_tb, overlaps = layout_check(doc, sc)
+        outside, in_tb, overlaps = B.layout_check(doc, sc)
         n = len(outside) + len(in_tb) + len(overlaps)
         bad += n
         print(f"  {'OK ' if not n else 'WARN'} {name}  1:{sc}  check_extents OK  "

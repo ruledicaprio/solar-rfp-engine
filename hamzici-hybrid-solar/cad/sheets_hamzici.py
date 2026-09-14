@@ -626,7 +626,7 @@ def sheet_h01():
          (WX, P(0, 2900)[1]), SC)
     lead(msp, P(-EARTH_RINGS[1], 1500), "uzemljivač — 2 prstena na 0,8 m",
          (WX, P(0, 1400)[1]), SC)
-    lead(msp, P(lcx - lf / 2, lcy), f"noge stuba h = {tw['height'] // 1000} m, {lf} × {lf} mm",
+    lead(msp, P(lcx - lf / 2, lcy), f"noge stuba {lf} × {lf} mm",
          (WX, P(0, -300)[1]), SC)
     # east
     gx0 = fe["gate"]["hinge"][0]
@@ -663,20 +663,16 @@ def sheet_h01():
 
     y = _orientation_note(msp, SC, 23000)
     note_block(msp, NOTES_X, y - 700, SC, "NAPOMENE:", [
-        "1  Geometrija iz ovjerenog projekta lokacije GP-BS-10472-291 (2017): 01_Situacija 1_200,",
-        "    04_Ograda, 01 Osnova, 04 Fasade, 01_Dispozicija S32 m, 3.6.9 Plan uzemljivača objekta.",
-        f"2  Zakup {dec(12000)} × {dec(12500)} m = 150 m²: {GEO['parcel']['cadastral']}.",
-        "3  Kontejner je PRAZAN; na jugoistočnom (JI) zidu, u sredini, je samo klima-uređaj "
-        "Stulz WDE80",
-        "    (≈700 × 500 × 2200 mm, procjena s fotografija; Naručilac 11.09.2026).",
-        "    Mjere uređaja i otvora u zidu uzimaju se na obilasku lokacije.",
-        f"4  Rešetkasti stub h = {tw['height'] // 1000} m; platforma P I na +3,0 m je iznad krova",
-        "    kontejnera (+2,63 / +2,89 m) — izduv agregata ne može završiti iznad krova.",
-        "5  Uzemljivač FeZn 25×4 mm: prsten u temeljima stopa stuba i dva prstena na dubini",
-        "    0,8 m oko ploče (kvadrati 7,50 i 10,00 m prema 3.6.9).",
-        "6  Kapija se otvara prema van: krilo 1,30 m udarilo bi u kontejner (1,25 m od ograde).",
-        f"7  Teren uz ploču je na {minus(TERRAIN)} m (04_Ograda): ograda je {dec(fe['height'])} m "
-        f"iznad ploče, {dec(FENCE_ABOVE_GROUND)} m iznad terena.",
+        "1  Geometrija iz ovjerenog projekta lokacije GP-BS-10472-291 (2017).",
+        f"2  Zakup {dec(12000)} × {dec(12500)} m = 150 m², k.č. br. 109/1, općina Čitluk.",
+        "3  Kontejner je PRAZAN; u sredini JI zida je Stulz WDE80 (≈700 × 500 × 2200).",
+        f"4  Stub h = {tw['height'] // 1000} m; platforma P I (+3,0 m) je iznad krova "
+        "(+2,63 / +2,89 m).",
+        "5  Uzemljivač FeZn 25×4: prsten u temeljima stopa i dva prstena na 0,8 m.",
+        "6  Kapija se otvara prema van; krilo 1,30 m udarilo bi u kontejner.",
+        f"7  Teren uz ploču je na {minus(TERRAIN)} m; ograda {dec(fe['height'])} m iznad ploče, "
+        f"{dec(FENCE_ABOVE_GROUND)} m iznad terena.",
+        "8  Mjere uređaja i otvora uzimaju se na obaveznom obilasku lokacije.",
     ])
     return doc
 
@@ -773,8 +769,8 @@ def sheet_h02():
     lead(msp, P(A["sx0"] + 40, A["strips"][0]), f"temeljne trake ({len(A['strips'])} kom)",
          (WX, P(0, -2900)[1]), SC)
     lead(msp, P(A["sx0"] + 40, A["strips"][1]),
-         f"trake {mmc(A['margin'])} mm od zakupa i od ploče", (WX, P(0, -1300)[1]), SC)
-    lead(msp, P(-EARTH_RINGS[1], A["strips"][2]), "prsteni uzemljivača × trake (LOT 1)",
+         f"trake {mmc(A['margin'])} mm od zakupa/ploče", (WX, P(0, -1300)[1]), SC)
+    lead(msp, P(-EARTH_RINGS[1], A["strips"][2]), "prsteni × trake (LOT 1)",
          (WX, P(0, 700)[1]), SC)
     lead(msp, P(fx0 + 300, yt), "DC trasa Ø50 → PVDB / ICC360",
          (WX, P(0, 3700)[1]), SC)
@@ -813,27 +809,16 @@ def sheet_h02():
     y = _orientation_note(msp, SC, 23000)
     b_, top_ = arr["bottom_edge"], arr["top_edge"]
     note_block(msp, NOTES_X, y - 700, SC, "NAPOMENE:", [
-        f"1  Nosači su okrenuti prema JUGOZAPADU (azimut {arr['azimuth_deg']}°), nagib "
-        f"{arr['tilt_deg']}°; donja ivica panela +{dec(b_)} m,",
-        f"    gornja +{dec(top_)} m — {dec(PV_OVER_FENCE)} m iznad vrha ograde (ograda "
-        f"{dec(GEO['fence']['height'])} m iznad ploče = {dec(FENCE_ABOVE_GROUND)} m iznad terena).",
-        f"2  {n} odvojena nosača u jednom nizu (Naručilac 11.09.2026): {n} × {mmc(fw)} + "
-        f"{n - 1} × {ARRAY_GAP} = {mmc(A['total'])} mm,",
-        f"    u pojasu JZ {dec(west)} × {dec(lh)} m, centrirano na ploču; sve je unutar "
-        "granice zakupa.",
-        f"3  Temeljne trake {strip_w_txt(fnd)} × {sl} mm, d = {fnd['strip_d']} mm, "
-        f"na podložnom betonu {fnd['blinding_thk']} mm,",
-        f"    pravac JZ–SI; {mmc(A['margin'])} mm od granice zakupa i od ploče.",
-        f"4  Postojeći prsteni uzemljivača (0,8 m; {dec(EARTH_RINGS[0])} i {dec(EARTH_RINGS[1])} m "
-        "od ploče): ukrštanja sa temeljnim trakama —",
-        "    lociranje, otkopavanje i premještanje ili premoštavanje prstena (LOT 1).",
-        "5  Vjetar qp ≥ 1,20 kN/m² — nosač CUSTOM izrade; ovjereni statički proračun",
-        "    dostavlja Ponuđač.",
-        "6  Raspored u kontejneru prema H-04; izlaz zraka kroz otvore Stulz (JI) i haubu naviše.",
-        "7  Ormari ICC360-HA1-C1 i MTS — principijelno, potvrđuju se na licu mjesta; iza FN",
-        "    polja, u njegovoj sjeni; napajanje iz GRO (izvod F1) kroz JZ zid. Odušak spremnika",
-        "    kroz SZ zid — principijelno, konačno prema elaboratu zaštite od požara",
-        "    (≥3 m od izduva i usisa, ≥1 m od ormara).",
+        f"1  Nosači na JUGOZAPAD (azimut {arr['azimuth_deg']}°), nagib {arr['tilt_deg']}°; "
+        f"ivica panela +{dec(b_)} / +{dec(top_)} m.",
+        f"2  {n} odvojena nosača u nizu: {n} × {mmc(fw)} + {n - 1} × {ARRAY_GAP} = "
+        f"{mmc(A['total'])} mm, u pojasu JZ.",
+        f"3  Temeljne trake {strip_w_txt(fnd)} × {sl} mm, d = {fnd['strip_d']} mm, na "
+        f"podložnom betonu {fnd['blinding_thk']} mm.",
+        "4  Postojeći prsteni uzemljivača (0,8 m) ukrštaju temeljne trake — LOT 1.",
+        "5  Vjetar qp ≥ 1,20 kN/m²; nosač CUSTOM izrade, proračun dostavlja Ponuđač.",
+        "6  Raspored u kontejneru prema H-04.",
+        "7  Ormari ICC360-HA1-C1 i MTS iza FN polja, u sjeni — principijelno.",
     ])
     return doc
 
@@ -1342,38 +1327,21 @@ def sheet_h04():
     _txt(msp, "PRESJEK 1–1  (os agregata — pogled prema SI, SZ lijevo)", 6000, 6900,
          2.4 * SC, color=7)
 
+    # The normative wording lives in Prilog I, Tačka 4; the sheet carries only what a
+    # reader needs at the drawing - dimensions, positions and the one-line rule.
     note_block(msp, 600, 1450, SC, "NAPOMENE:", [
-        "1  DEA FG Wilson P18-6 (Skid) ili ekv., 18 kVA / 14,4 kW, pobuda PMG ili AREP/AUX; "
-        "os SZ–JI u sredini, hladnjak JI.",
-        "2  RASPORED (obavezujući): Stulz je u sredini JUGOISTOČNOG (JI) zida — izlaz zraka "
-        "hladnjaka kroz njegove otvore,",
-        "    spojene/proširene na ≥0,36 m² bruto (npr. 600 × 600), limeni plenum; višak "
-        "otvora zatvoriti panelom 60 mm.",
-        f"3  Vani hauba {HOOD_W} × {HOOD_D}, zatvorenih bočnih strana, rešetka na vrhu "
-        f"(+{dec(HOOD_Z)}): topli zrak ide NAVIŠE.",
-        f"4  Usis 500 × 700 na SI zidu (+0,30, novo, uz alternator). Izduv NO 50 iz JZ prolaza "
-        f"kroz JI zid na ≈+{dec(EXH_Z)} m,",
-        f"    ispod platforme stuba; prigušivač, hvatač iskri, kapa; završetak ≥{dec(EXH_OUT)} m "
-        f"od zida ({dec(chk['exhaust_intake'])} m od usisa).",
-        f"5  GRO ≤{GRO_W} × {GRO_D} × {GRO_H} mm na SZ zidu, jugozapadno od vrata "
-        f"(zid {L['gro_wall']:.0f} mm); roštilj OBAVEZAN pod skidom i koritom.",
-        f"6  Spremnik 500 l DVOPLAŠNI u koritu {kada['L']} × {kada['W']}, rub "
-        f"{kada['rim_mm']} mm, u SJEVERNOM uglu (SZ × SI zid).",
-        f"7  SERVIS: prolazi JZ / SI po {L['clr']['west']:.0f} / {L['clr']['east']:.0f} mm, "
-        f"{L['clr']['north_gro']:.0f} mm do GRO; od vrata do korita "
-        f"{L['clr']['doorway']:.0f} mm slobodno.",
-        "8  Unos: skid 620 mm kroz vrata svijetle širine 990 mm, pravo po osi; najprije "
-        "agregat, zatim spremnik.",
-        "9  Ventilator Ø315 na JI zidu gore je IZVLAČNI (EC 48 V DC, D4). ICC360-HA1-C1 i MTS "
-        "vani na JZ strani (H-02).",
-        f"10 Odušak spremnika kroz SZ zid — principijelno: {dec(chk['vent_exhaust'])} m "
-        f"od izduva, {dec(chk['vent_intake'])} m od usisa; konačno prema elaboratu ZOP.",
-        f"11 DC razvod −48 V ≈{DCB_W} × {DCB_H} × {DCB_D} istočno od vrata: rasvjeta "
-        "prepreke, vatrodojava, punjač aku., ventilator, predgrijač, D5.",
-        "12 Rasvjeta: LED 230 V AC iz GRO (F2, radi dok DEA radi) i LED 48 V DC (D5) sa "
-        "prekidačem uz vrata.",
-        "13 Raspored je principijelan — Ponuđač ga potvrđuje na licu mjesta (mjere otvora "
-        "Stulz, servisne tačke agregata).",
+        "1  DEA FG Wilson P18-6 (skid) ili ekv., 18 kVA / 14,4 kW; os SZ–JI, hladnjak JI.",
+        f"2  Izlaz zraka kroz postojeće otvore Stulz (sredina JI zida), ≥0,36 m² bruto, "
+        f"limeni plenum i hauba {HOOD_W} × {HOOD_D} — topli zrak NAVIŠE.",
+        f"3  Usis 500 × 700 na SI zidu (+0,30). Izduv NO 50 kroz JI zid na ≈+{dec(EXH_Z)} m, "
+        "ispod platforme stuba.",
+        f"4  GRO ≤{GRO_W} × {GRO_D} × {GRO_H} na SZ zidu; spremnik 500 l dvoplašni u koritu "
+        f"{kada['L']} × {kada['W']}; roštilj OBAVEZAN pod skidom i koritom.",
+        f"5  Servisni prolazi {L['clr']['west']:.0f} / {L['clr']['east']:.0f} mm i "
+        f"{L['clr']['north_gro']:.0f} mm do GRO; unos skida 620 mm kroz vrata 990 mm.",
+        "6  Ventilator Ø315 (JI, izvlačni, D4) i DC razvod −48 V istočno od vrata — H-05.",
+        "7  Raspored je principijelan; mjere otvora i servisne tačke potvrđuje Ponuđač na "
+        "licu mjesta. Zahtjevi: Prilog I, Tačka 4.",
     ])
     return doc
 
@@ -1392,9 +1360,15 @@ def sheet_h05():
     per_string = arr["modules_total"] // 2
     wp = int(round(arr["kWp"] * 1000 / arr["modules_total"]))
 
-    def box(x, y, w, h, label, sub="", sub2="", color=7, new=False):
+    def box(x, y, w, h, label, sub="", sub2="", color=7, new=False, kupac=False):
+        # single 45° lines = Contractor's supply and installation; cross-hatch =
+        # equipment the BUYER supplies, which the Contractor only installs and
+        # connects (Prilog I 4.9, Prilog II 5.19). ANSI37 is spaced wider because a
+        # cross-hatch at the same scale reads twice as dense and hides the sub-labels.
         if new:
             hatch_rect(msp, x, y, w, h, LY, "ANSI31", SC * 4, 8)
+        if kupac:
+            hatch_rect(msp, x, y, w, h, LY, "ANSI37", SC * 8, 8)
         rect(msp, x, y, w, h, LY, color=color, lw=50)
         n = 1 + bool(sub) + bool(sub2)
         yy = y + h / 2 + (n - 1) * 95
@@ -1416,13 +1390,16 @@ def sheet_h05():
 
     # ---- PV DC chain (as E-01): 2 strings x 6, DC SPD at the array, PVDB, 2 x iSSU
     kwp_s = dec(arr["kWp"] * 1000 / 2)
-    box(1300, 12800, 2600, 1000, "STRING 1", f"{per_string} × {wp} Wp = {kwp_s} kWp", color=5)
-    box(1300, 11350, 2600, 1000, "STRING 2", f"{per_string} × {wp} Wp = {kwp_s} kWp", color=5)
+    box(1300, 12800, 2600, 1000, "STRING 1", f"{per_string} × {wp} Wp = {kwp_s} kWp", color=5,
+        kupac=True)
+    box(1300, 11350, 2600, 1000, "STRING 2", f"{per_string} × {wp} Wp = {kwp_s} kWp", color=5,
+        kupac=True)
     _txt(msp, "nosači PV-1 + PV-2", 1300, 12600, 1.6 * SC, color=8)
     _txt(msp, "nosači PV-3 + PV-4", 1300, 11150, 1.6 * SC, color=8)
     box(4500, 12800, 1900, 1000, "SPD DC tip 2", "na polju · string 1", color=1)
     box(4500, 11350, 1900, 1000, "SPD DC tip 2", "na polju · string 2", color=1)
-    box(7100, 11900, 2600, 1300, "PVDB 500-15-2B", "IP55 · 2 rute", "DC SPD tip 2", color=5)
+    box(7100, 11900, 2600, 1300, "PVDB 500-15-2B", "IP55 · 2 rute", "DC SPD tip 2", color=5,
+        kupac=True)
     wire((3900, 13300), (4500, 13300), color=5)
     wire((3900, 11850), (4500, 11850), color=5)
     wire((6400, 13300), (6750, 13300), (6750, 12850), (7100, 12850), color=5)
@@ -1433,15 +1410,15 @@ def sheet_h05():
     # ---- Huawei ICC360-HA1-C1 (Buyer's equipment)
     enclosure(11600, 6700, 4800, 7500, 30, "Huawei ICC360-HA1-C1 (oprema Kupca)",
               "vani na ploči, JZ strana — principijelno")
-    box(12000, 12900, 2000, 800, "iSSU S4875G2", "MPPT · ruta 1", color=30)
-    box(12000, 11500, 2000, 800, "iSSU S4875G2", "MPPT · ruta 2", color=30)
+    box(12000, 12900, 2000, 800, "iSSU S4875G2", "MPPT · ruta 1", color=30, kupac=True)
+    box(12000, 11500, 2000, 800, "iSSU S4875G2", "MPPT · ruta 2", color=30, kupac=True)
     box(12000, 9300, 2000, 1100, "ISPRAVLJAČI", "R4875 · AC → −48 V",
-        f"ulaz ≤{dec(ctl['rect_cap_ac_kw'] * 1000, 1)} kW (SMU)", color=30)
+        f"ulaz ≤{dec(ctl['rect_cap_ac_kw'] * 1000, 1)} kW (SMU)", color=30, kupac=True)
     wire((14700, 7400), (14700, 13400), lw=70)
     _txt(msp, "−48 V DC", 14780, 13450, 1.6 * SC, color=7)
     for y in (13300, 11900, 9850):
         wire((14000, y), (14700, y), color=30)
-    box(15000, 12700, 1250, 900, "BATERIJA", "LFP −48 V", color=5)
+    box(15000, 12700, 1250, 900, "BATERIJA", "LFP −48 V", color=5, kupac=True)
     box(15000, 10900, 1250, 900, "DC TK", "oprema TK", color=7)
     box(15000, 7700, 1250, 1000, "DC IZLAZ", "rezerva, prekidač", color=7)
     for y in (13150, 11350, 8200):
@@ -1547,8 +1524,10 @@ def sheet_h05():
     rect(msp, 1300, 700, 700, 300, LY, color=8)
     _txt(msp, "isporuka i montaža Izvođača (DEA, GRO, DC razvod −48 V)", 2150, 790,
          1.6 * SC, color=7)
+    hatch_rect(msp, 7300, 700, 700, 300, LY, "ANSI37", SC * 8, 8)
     rect(msp, 7300, 700, 700, 300, LY, color=8)
-    _txt(msp, "oprema Kupca (FN, ICC360) i potrošači", 8150, 790, 1.6 * SC, color=7)
+    _txt(msp, "oprema Kupca (FN, PVDB, iSSU, baterije, ICC360)", 8150, 790,
+         1.6 * SC, color=7)
     return doc
 
 

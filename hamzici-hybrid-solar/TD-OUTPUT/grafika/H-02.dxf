@@ -489,7 +489,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461298.2912962963
+2461298.324328704
   9
 $TDUCREATE
  40
@@ -497,7 +497,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2461298.2912962963
+2461298.324328704
   9
 $TDUUPDATE
  40
@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-297
+28F
   9
 $SURFTAB1
  70
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{77AEEFDF-126B-427E-B562-91778BDD4457}
+{58F9C82D-922E-499D-89E1-28BC6115CCAA}
   9
 $VERSIONGUID
   2
-{B3B8B559-BC85-4A50-834A-FDE1DE8CF465}
+{1EEFA665-24E4-4A73-969C-B3818E90D1F1}
   9
 $EXTNAMES
 290
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -3745,7 +3745,7 @@ ACAD
   0
 APPID
   5
-294
+28C
 330
 3
 100
@@ -3759,7 +3759,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-295
+28D
 330
 3
 100
@@ -22511,7 +22511,7 @@ AcDbText
  40
 220.00000000000003
   1
-trake 350 mm od zakupa i od ploče
+trake 350 mm od zakupa/ploče
   7
 20
  72
@@ -22599,7 +22599,7 @@ AcDbText
  40
 220.00000000000003
   1
-prsteni uzemljivača × trake (LOT 1)
+prsteni × trake (LOT 1)
   7
 20
  72
@@ -25599,7 +25599,7 @@ AcDbText
  40
 210.0
   1
-1  Nosači su okrenuti prema JUGOZAPADU (azimut 225°), nagib 45°; donja ivica panela +0,50 m,
+1  Nosači na JUGOZAPAD (azimut 225°), nagib 45°; ivica panela +0,50 / +2,93 m.
   7
 20
  11
@@ -25633,7 +25633,7 @@ AcDbText
  40
 210.0
   1
-    gornja +2,93 m — 0,93 m iznad vrha ograde (ograda 1,80 m iznad ploče = 2,00 m iznad terena).
+2  4 odvojena nosača u nizu: 4 × 2278 + 3 × 400 = 10312 mm, u pojasu JZ.
   7
 20
  11
@@ -25667,7 +25667,7 @@ AcDbText
  40
 210.0
   1
-2  4 odvojena nosača u jednom nizu (Naručilac 11.09.2026): 4 × 2278 + 3 × 400 = 10312 mm,
+3  Temeljne trake 500 × 2600 mm, d = 900 mm, na podložnom betonu 50 mm.
   7
 20
  11
@@ -25701,7 +25701,7 @@ AcDbText
  40
 210.0
   1
-    u pojasu JZ 3,30 × 12,50 m, centrirano na ploču; sve je unutar granice zakupa.
+4  Postojeći prsteni uzemljivača (0,8 m) ukrštaju temeljne trake — LOT 1.
   7
 20
  11
@@ -25735,7 +25735,7 @@ AcDbText
  40
 210.0
   1
-3  Temeljne trake 500 × 2600 mm, d = 900 mm, na podložnom betonu 50 mm,
+5  Vjetar qp ≥ 1,20 kN/m²; nosač CUSTOM izrade, proračun dostavlja Ponuđač.
   7
 20
  11
@@ -25769,7 +25769,7 @@ AcDbText
  40
 210.0
   1
-    pravac JZ–SI; 350 mm od granice zakupa i od ploče.
+6  Raspored u kontejneru prema H-04.
   7
 20
  11
@@ -25803,285 +25803,13 @@ AcDbText
  40
 210.0
   1
-4  Postojeći prsteni uzemljivača (0,8 m; 1,05 i 2,30 m od ploče): ukrštanja sa temeljnim trakama —
+7  Ormari ICC360-HA1-C1 i MTS iza FN polja, u sjeni — principijelno.
   7
 20
  11
 28000.0
  21
 18166.0
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-28C
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-17861.5
- 30
-0.0
- 40
-210.0
-  1
-    lociranje, otkopavanje i premještanje ili premoštavanje prstena (LOT 1).
-  7
-20
- 11
-28000.0
- 21
-17861.5
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-28D
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-17557.0
- 30
-0.0
- 40
-210.0
-  1
-5  Vjetar qp ≥ 1,20 kN/m² — nosač CUSTOM izrade; ovjereni statički proračun
-  7
-20
- 11
-28000.0
- 21
-17557.0
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-28E
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-17252.5
- 30
-0.0
- 40
-210.0
-  1
-    dostavlja Ponuđač.
-  7
-20
- 11
-28000.0
- 21
-17252.5
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-28F
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-16948.0
- 30
-0.0
- 40
-210.0
-  1
-6  Raspored u kontejneru prema H-04; izlaz zraka kroz otvore Stulz (JI) i haubu naviše.
-  7
-20
- 11
-28000.0
- 21
-16948.0
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-290
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-16643.5
- 30
-0.0
- 40
-210.0
-  1
-7  Ormari ICC360-HA1-C1 i MTS — principijelno, potvrđuju se na licu mjesta; iza FN
-  7
-20
- 11
-28000.0
- 21
-16643.5
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-291
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-16339.0
- 30
-0.0
- 40
-210.0
-  1
-    polja, u njegovoj sjeni; napajanje iz GRO (izvod F1) kroz JZ zid. Odušak spremnika
-  7
-20
- 11
-28000.0
- 21
-16339.0
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-292
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-16034.5
- 30
-0.0
- 40
-210.0
-  1
-    kroz SZ zid — principijelno, konačno prema elaboratu zaštite od požara
-  7
-20
- 11
-28000.0
- 21
-16034.5
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-293
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-15730.0
- 30
-0.0
- 40
-210.0
-  1
-    (≥3 m od izduva i usisa, ≥1 m od ormara).
-  7
-20
- 11
-28000.0
- 21
-15730.0
  31
 0.0
 100
@@ -27177,7 +26905,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-296
+28E
   0
 DICTIONARYVAR
   5
@@ -27189,7 +26917,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-09-14T06:59:28.694812+00:00
+1.4.4 @ 2026-09-14T07:47:02.896167+00:00
   0
 VISUALSTYLE
   5
@@ -27893,7 +27621,7 @@ X-Ray
   0
 DICTIONARYVAR
   5
-296
+28E
 330
 2D
 100
@@ -27901,7 +27629,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-09-14T06:59:28.758286+00:00
+1.4.4 @ 2026-09-14T07:47:02.962165+00:00
   0
 ENDSEC
   0
