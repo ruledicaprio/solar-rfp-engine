@@ -267,7 +267,9 @@ SINGLE_VALUE = {
     "fuel tank": r"500\s*l\b",
     "site altitude": r"1076\s*m",
     # closed in Rev 2 - each was specified nowhere or in only one document
-    "tower obstruction lighting (G-9)": r"rasvjet[ae]\s+prepreke",
+    # renamed "rasvjeta prepreke" -> "rasvjeta stuba" (Naručilac, 15.09.2026);
+    # the old term is still accepted so the Rev 9 package keeps passing
+    "tower obstruction lighting (G-9)": r"rasvjet[ae]\s+(stuba|prepreke)",
     "type 1+2 AC SPD (G-6)": r"[Tt]ip\s*1\s*\+\s*2|TIP\s*1\s*\+\s*2",
     "signal-line SPD (G-6)": r"61643-21",
     "fire elaborate priced (G-5)": r"elaborat[a]?\s+za[šs]tite\s+od\s+po[žz]ara",

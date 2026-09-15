@@ -13,7 +13,7 @@ Sheets:
     S-02  Buduće stanje                    1:50
     S-03  Presjek A-A                      1:30
     M-01  Agregat u kontejneru             1:25
-    E-01  Jednopolna shema                 -
+    E-01  Jednopolna šema — novi GRO i DC razvod -48 V   -
 
 Model space is millimetres at 1:1; the sheet frame is scaled by the plot
 denominator, following the site project's convention.

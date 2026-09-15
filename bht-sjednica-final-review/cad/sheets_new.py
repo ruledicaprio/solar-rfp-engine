@@ -13,6 +13,7 @@ import math
 from ezdxf.enums import TextEntityAlignment as TA
 
 from bht_frame import draw_frame, new_doc, north_arrow, scale_bar, _txt
+import single_line
 
 
 FAN_D = 315        # room fan, EC 48 V DC - design.json ventilation.room_fan_m3h
@@ -79,7 +80,9 @@ def register(B):
                              dxfattribs={"layer": "Panel", "color": 8})
             # strips run across the row under the full horizontal projection of
             # the panel, two per stand at the strip spacing
-            sl, sw = sup["strip_l"], sup["strip_w"]
+            # width comes from the foundation block, which the reviewer's 27.08.2026
+            # change made one constant width; support.strip_w is a stale 400 mm
+            sl, sw = fnd["strip_l"], fnd["strip_w_top"]
             for so in (fw / 2 - sup["strip_spacing"] / 2,
                        fw / 2 + sup["strip_spacing"] / 2):
                 rect(msp, ax + so - sw / 2, ay - (sl - proj) / 2, sw, sl,
@@ -182,7 +185,7 @@ def register(B):
         draw_frame(msp, SC, naziv="Presjek A–A kroz nosač FN panela", broj="S-03",
                    razmjera="1:30")
 
-        sup, arr = D["support"], D["array"]
+        sup, arr, fnd = D["support"], D["array"], D["foundation"]
         C_H = D["container"]["height"]
         proj = sup["proj"]
         b, top = arr["bottom_edge"], arr["top_edge"]
@@ -207,10 +210,10 @@ def register(B):
         msp.add_line((x1, y1), (x1, GY), dxfattribs={"layer": "Konstrukcija", "color": 5})
         msp.add_line((x0, y0), (x1, GY), dxfattribs={"layer": "Konstrukcija", "color": 8})
         # ONE strip in this section, not two pads under the panel ends: the two
-        # 450 x 3300 strips run NORTH-SOUTH at 1600 mm centres EAST-WEST, so
-        # section A-A sees one of them over its full length and the other
-        # directly behind the section plane.
-        sl, sw = sup["strip_l"], sup["strip_w"]
+        # 500 x 2600 strips run across the row at 1600 mm centres, so section A-A
+        # sees one of them over its full length and the other directly behind the
+        # section plane.
+        sl = fnd["strip_l"]
         fnd_x = x0 - (sl - proj) / 2
         rect(msp, fnd_x, GY - 900, sl, 900, "Temelj", color=32, lw=50)
         hatch_rect(msp, fnd_x, GY - 900, sl, 900, "Temelj", "ANSI31",
@@ -321,7 +324,7 @@ def register(B):
         leader(msp, (fx, GY + 1300), "postojeća ograda h=2,10 m",
                900, 2400, SC)
 
-        fnd = D["foundation"]
+        fnd = D["foundation"]                       # already bound above; kept explicit
         note_block(msp, 700, 1500, SC, "OBJAŠNJENJA:", [
             f"1  Polje: {sup['rows']} reda × {sup['cols']} modul 585 Wp, položeno; projekcija "
             f"{proj} mm pri 45°; {arr['count']} odvojena nosača u nizu.",
@@ -580,130 +583,29 @@ def register(B):
 
     # ------------------------------------------------------------------ E-01
     def sheet_e01():
+        """The single-line scheme. Identical to Hamzići H-05 - both sheets are drawn
+        by single_line.draw(); only the per-site wall names and routes differ. It used
+        to be a separate block diagram with no consumers and two unhatched boxes."""
         SC = 50
+        D = _design()
         doc = new_doc()
         msp = doc.modelspace()
-        draw_frame(msp, SC, naziv="Jednopolna shema — hibridni sistem napajanja",
+        draw_frame(msp, SC, naziv="Jednopolna šema — novi GRO i DC razvod −48 V",
                    broj="E-01", razmjera="—")
-        L = "Sema"
-
-        def box(x, y, w, h, label, sub="", color=7):
-            rect(msp, x, y, w, h, L, color=color, lw=50)
-            _txt(msp, label, x + w / 2, y + h / 2 + (150 if sub else -80),
-                 2.2 * SC, layer="Tekst", color=7, align=TA.MIDDLE_CENTER)
-            if sub:
-                _txt(msp, sub, x + w / 2, y + h / 2 - 330, 1.8 * SC,
-                     layer="Tekst", color=8, align=TA.MIDDLE_CENTER)
-            return (x + w, y + h / 2), (x, y + h / 2)
-
-        def wire(a, b, color=7):
-            pts = [a, b] if abs(a[1] - b[1]) < 1 else [a, (b[0], a[1]), b]
-            msp.add_lwpolyline(pts, dxfattribs={"layer": L, "color": color,
-                                                "lineweight": 35})
-
-        Y = 10200
-        # 12 modules wired as 2 strings of 6, not 3 of 4: the priced PVDB500-15-2B
-        # has two outputs, and 6 x 51,55 V = 309 V Voc sits inside the iSSU's
-        # 85-435 V window. A string therefore spans two supports.
-        # The supply boundary is read off the hatch: single 45° lines are what the
-        # Contractor supplies and installs, cross-hatch is equipment the BUYER supplies
-        # and the Contractor only installs and connects (Prilog I 4.9, Prilog II 5.19).
-        # Two PATTERNS, not one pattern turned: the PDF plotter ignores hatch rotation.
-        # Hatches go down before the boxes so the outlines stay on top.
-        def lot2(x, y, w, h):
-            hatch_rect(msp, x, y, w, h, L, "ANSI31", SC * 4, 8)
-
-        def kupac(x, y, w, h):
-            hatch_rect(msp, x, y, w, h, L, "ANSI37", SC * 8, 8)
-
-        for _b in ((1600, Y - 700, 2900, 1300),      # STRING 1
-                   (1600, Y - 3500, 2900, 1300),     # STRING 2
-                   (8400, Y - 2100, 2500, 1300),     # PVDB
-                   (11900, Y - 2100, 2600, 1300),    # iSSU
-                   (11900, Y - 6200, 2600, 1300),    # ispravljači
-                   (15900, Y - 6200, 2500, 1300)):   # baterija
-            kupac(*_b)
-
-        s1r, _ = box(1600, Y - 700, 2900, 1300, "STRING 1", "6 × 585 Wp = 3,51 kWp", 5)
-        s2r, _ = box(1600, Y - 3500, 2900, 1300, "STRING 2", "6 × 585 Wp = 3,51 kWp", 5)
-        _txt(msp, "nosači PV-1 + PV-2", 1600, Y - 900, 1.8 * SC,
-             layer="Tekst", color=8)
-        _txt(msp, "nosači PV-3 + PV-4", 1600, Y - 3700, 1.8 * SC,
-             layer="Tekst", color=8)
-        spd1r, spd1l = box(5500, Y - 700, 1900, 1300, "SPD DC", "tip 2 · string 1", 1)
-        spd2r, spd2l = box(5500, Y - 3500, 1900, 1300, "SPD DC", "tip 2 · string 2", 1)
-        pvdbr, pvdbl = box(8400, Y - 2100, 2500, 1300, "PVDB",
-                           "500-15-2B · IP55 · 2 rute", 5)
-        issur, issul = box(11900, Y - 2100, 2600, 1300, "iSSU", "S4875G2 · MPPT", 30)
-        wire(s1r, spd1l, 5)
-        wire(s2r, spd2l, 5)
-        wire(spd1r, (pvdbl[0], pvdbl[1] + 300), 5)
-        wire(spd2r, (pvdbl[0], pvdbl[1] - 300), 5)
-        wire(pvdbr, issul, 5)
-
-        for _x, _y, _w, _h in ((1600, Y - 6200, 2900, 1300),
-                               (5500, Y - 6200, 1900, 1300),
-                               (8400, Y - 6200, 2500, 1300),
-                               (8400, Y - 4300, 2500, 800)):
-            lot2(_x, _y, _w, _h)
-
-        gr, _ = box(1600, Y - 6200, 2900, 1300, "DEA 18 kVA", "14,4 kW · skid", 30)
-        atsr, atsl = box(5500, Y - 6200, 1900, 1300, "SKLOPKA IZVORA", "1 DEA · 0 · 2 rezerva",
-                         30)
-        grol, gror = box(8400, Y - 6200, 2500, 1300, "GRO",
-                         "sekcije AGREGAT / SOLAR", 30)
-        wire(gr, atsl, 30)
-        wire(atsr, gror if False else (8400, Y - 5550), 30)
-        box(8400, Y - 4300, 2500, 800, "SPD AC  tip 1+2", "", 1)
-        msp.add_lwpolyline([(9650, Y - 4900), (9650, Y - 4300)],
-                           dxfattribs={"layer": L, "color": 1, "lineweight": 35})
-
-        rectr, rectl = box(11900, Y - 6200, 2600, 1300, "ISPRAVLJAČI",
-                           "R4875 · −48 V DC", 30)
-        wire((10900, Y - 5550), rectl, 30)
-        battr, battl = box(15900, Y - 6200, 2500, 1300, "BATERIJA", "LFP  −48 V", 5)
-        dcr, dcl = box(15900, Y - 1100, 2500, 1300, "DC RAZVOD",
-                       "potrošači 1,18 kW", 7)
-        wire(issur, dcl, 30)
-        wire(rectr, battl, 30)
-        msp.add_lwpolyline([(17150, Y - 4900), (17150, Y - 1100)],
-                           dxfattribs={"layer": L, "color": 7, "lineweight": 50})
-        # new DC razvod -48 V for the always-on loads (LOT 2), tapped off the bus
-        lot2(18000, Y - 3500, 2000, 1300)
-        box(18000, Y - 3500, 2000, 1300, "DC −48 V", "NOVO · D1–D6", 30)
-        wire((17150, Y - 2850), (18000, Y - 2850), 30)
-
-        # Earth bar raised so the bonding stubs actually reach the equipment they
-        # bond, and drawn as a yellow-green pair - the PE colour convention, and
-        # it separates the bar from every other line on the sheet at a glance.
-        EB = Y - 7000
-        msp.add_lwpolyline([(1600, EB), (18400, EB)],
-                           dxfattribs={"layer": "Uzemljenje", "color": 2,
-                                       "lineweight": 70})
-        msp.add_lwpolyline([(1600, EB - 90), (18400, EB - 90)],
-                           dxfattribs={"layer": "Uzemljenje", "color": 3,
-                                       "lineweight": 70})
-        for x in (3050, 9650, 13200, 17150):
-            msp.add_lwpolyline([(x, EB), (x, Y - 6200)],
-                               dxfattribs={"layer": "Uzemljenje", "color": 2,
-                                           "lineweight": 50})
-        _txt(msp, "postojeći prstenasti uzemljivač Fe/Zn 25×4 · R ≤ 10 Ω · nosači FN "
-                  "na Cu uže 50 mm²", 1600, EB - 620, 2.3 * SC, layer="Tekst", color=7)
-
-        note_block(msp, 1600, Y - 8100, SC, "NAPOMENE:", h=2.3, lines=[
-            "1  Lokacija nije na mreži; DEA je jedini AC izvor. Sklopka: 1 DEA · 0 · 2 rezerva.",
-            "2  TN-S, spoj N–PE samo u novom GRO. Odvodnici: AC tip 1+2, DC tip 2 po stringu.",
-            "3  FN: 12 modula = 2 stringa × 6 (PV-1 + PV-2, PV-3 + PV-4); PVDB ima 2 rute.",
-            "4  DC razvod −48 V (novo), D1–D6: trajni potrošači prema Prilogu I, Tačka 4.5.",
-        ])
-
-        # supply-boundary keys, one row along the bottom (as H-05)
-        for kx, pat, sc_, txt in ((1600, "ANSI31", 4, "isporuka i montaža Izvođača (LOT 2)"),
-                                  (7200, "ANSI37", 8, "oprema Kupca — ugradnja u LOT 2")):
-            hatch_rect(msp, kx, Y - 9500, 700, 300, L, pat, SC * sc_, 8)
-            rect(msp, kx, Y - 9500, 700, 300, L, color=8)
-            _txt(msp, txt, kx + 850, Y - 9420, 2.0 * SC, layer="Tekst", color=7)
+        single_line.draw(msp, SC, D, B, {
+            "huawei_title": "Huawei ICC360-HA1-C1 + MTS9302A (oprema Kupca)",
+            "huawei_sub": "vani na ploči, SI strana — u sjeni",
+            "gro_title": "GRO (AC) — NOVO",
+            "gro_sub": "SI zid kontejnera, uz vanjske ormare",
+            "f1_route": "F1 kroz SI zid",
+            "dc_wall": "SI zid, uz GRO",
+            "dc_feed": "−48 V iz ICC360, kroz SI zid",
+            "earth_text": "postojeći prstenasti uzemljivač Fe/Zn 25×4 · R ≤ 10 Ω "
+                          "· nosači FN vezani Cu užetom 50 mm² preko bimetalnih spojeva",
+            "note4_tail": "Kontejner je prazan — nema zatečenih izvoda.",
+        })
         return doc
+
 
     return {"S-02": sheet_s02, "S-03": sheet_s03, "M-01": sheet_m01,
             "E-01": sheet_e01}
