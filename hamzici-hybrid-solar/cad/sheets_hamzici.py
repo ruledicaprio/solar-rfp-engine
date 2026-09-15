@@ -47,6 +47,7 @@ from ezdxf.enums import TextEntityAlignment as TA                  # noqa: E402
 from bht_frame import (A3_H, A3_W, MARGIN, MARGIN_L, TB_H, TB_W,   # noqa: E402
                        draw_frame, new_doc, north_arrow, scale_bar, _txt)
 import build_drawings as B                                          # noqa: E402
+import genset                                                       # noqa: E402
 import single_line                                                  # noqa: E402
 
 rect, solid_rect, hatch_rect = B.rect, B.solid_rect, B.hatch_rect
@@ -415,10 +416,12 @@ def plan_equipment(msp, X0, Y0, L, sc, detail):
     if detail:
         fx, fy, fw, fd = L["frame"]
         rect(msp, X0 + fx, Y0 + fy, fw, fd, "Konstrukcija", color=5, lw=35)
-    rect(msp, X0 + sx, Y0 + sy, sl, sw, "Agregat", color=30, lw=50)
+    # the set itself: same outline and the same dimension chain as M-01 draws
+    # (genset.py), radiator at the JI end so the fan faces the discharge
+    gp = genset.plan(msp, B, X0 + sx, Y0 + sy, sc, D, radiator="S",
+                     labels=detail, dims=detail, detail=2 if detail else 0)
     if detail:
-        # radiator band at the JI end, sheet-metal plenum from it to the wall
-        rect(msp, X0 + sx, Y0 + sy, sl, 180, "Agregat", color=4, lw=35)
+        # sheet-metal plenum from the radiator face to the wall
         rect(msp, X0 + sx, Y0 + t, sl, sy - t, "Ventilacija", color=4, lw=35)
     d0, d1 = L["discharge"]
     solid_rect(msp, X0 + d0, Y0, d1 - d0, t, "Ventilacija", 4)
@@ -435,10 +438,11 @@ def plan_equipment(msp, X0, Y0, L, sc, detail):
     solid_rect(msp, X0 + f0, Y0, f1 - f0, t, "Ventilacija", 4)
 
     kx, ky, kw, kh = L["kada"]
-    rect(msp, X0 + kx, Y0 + ky, kw, kh, "Agregat", color=1 if detail else 30, lw=35)
     if detail:
-        tx, ty, tw, th = L["tank"]
-        rect(msp, X0 + tx, Y0 + ty, tw, th, "Agregat", color=30, lw=35)
+        genset.tank_plan(msp, B, X0 + kx, Y0 + ky, sc, D, long_axis="y",
+                         dims=False)
+    else:
+        rect(msp, X0 + kx, Y0 + ky, kw, kh, "Agregat", color=30, lw=35)
     gx, gy, gw, gd = L["gro"]
     if not detail:
         solid_rect(msp, X0 + gx, Y0 + gy, gw, gd, "Novi1", 30)
@@ -1175,8 +1179,6 @@ def sheet_h04():
     # labels in the plan
     _txt(msp, "DEA 18 kVA / 14,4 kW", ox + ax - 60, oy + sy0 + sl * 0.55, 1.8 * SC,
          color=7, align=TA.MIDDLE_CENTER, rotation=90)
-    _txt(msp, f"skid {sl} × {sw}", ox + ax + 150, oy + sy0 + sl * 0.55, 1.4 * SC,
-         color=8, align=TA.MIDDLE_CENTER, rotation=90)
     _txt(msp, "HLADNJAK", ox + ax, oy + sy0 + 90, 1.3 * SC, color=8, align=TA.MIDDLE_CENTER)
     _txt(msp, "spremnik 500 l", ox + tx + tw_ / 2 - 40, oy + ty + 120, 1.6 * SC,
          color=7, rotation=90)
@@ -1270,7 +1272,8 @@ def sheet_h04():
     # beyond the cut: the tank in its tray, the DC razvod on the SZ wall, the
     # intake in the SI wall (behind the genset, dashed), the room fan in the JI wall
     rect(msp, S_(ky + kh), syo, kh, kada["rim_mm"], "Agregat", color=1)
-    rect(msp, S_(ty + th), syo + 40, th, tk["H"], "Agregat", color=30)
+    genset.tank_elev(msp, B, S_(ty + th), syo + 40, SC, D, view="long",
+                     dims=False)
     rect(msp, S_(by + bd), syo + DCB_Z, bd, DCB_H, "Novi1", color=30)
     e = rect(msp, S_(i1), syo + iz0, i1 - i0, iz1 - iz0, "Ventilacija", color=4, lw=35)
     ltype(e, "DASHED", SC, 1)
@@ -1279,11 +1282,9 @@ def sheet_h04():
     rect(msp, S_(L["lights"]["DC"][1]) - 200, syo + H_LO - 90, 400, 60, "Sema", color=2)
     # frame, skid (cut along its length), radiator band, plenum to the opening
     rect(msp, S_(fy + fdep), syo, fdep, FRAME_H, "Konstrukcija", color=5, lw=35)
-    rect(msp, S_(sy1), syo + FRAME_H, sl, g["skid_H"], "Agregat", color=30, lw=50)
-    hatch_rect(msp, S_(sy1), syo + FRAME_H, sl, g["skid_H"], "Agregat", "ANSI31",
-               SC * 0.3, 30)
-    rect(msp, S_(sy0 + 180), syo + FRAME_H + 100, 180, g["skid_H"] - 150, "Agregat",
-         color=4, lw=35)
+    # the set in elevation: same outline M-01 carries (genset.py).  This section
+    # looks the other way, so the radiator end lands on the RIGHT - flip=True.
+    genset.elev(msp, B, S_(sy1), syo + FRAME_H, SC, D, flip=True, labels=False)
     msp.add_lwpolyline([(S_(sy0), syo + FRAME_H + 150), (S_(t), syo + dz0),
                         (S_(t), syo + dz1), (S_(sy0), syo + FRAME_H + g["skid_H"] - 50)],
                        close=True, dxfattribs={"layer": "Ventilacija", "color": 4,

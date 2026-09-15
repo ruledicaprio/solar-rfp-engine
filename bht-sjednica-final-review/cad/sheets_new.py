@@ -13,6 +13,7 @@ import math
 from ezdxf.enums import TextEntityAlignment as TA
 
 from bht_frame import draw_frame, new_doc, north_arrow, scale_bar, _txt
+import genset
 import single_line
 
 
@@ -126,7 +127,10 @@ def register(B):
         solid_rect(msp, cx + CW - 60, cy + 1900 - FAN_D / 2, 60, FAN_D,
                    "Ventilacija", 4)
 
-        rect(msp, gx, gy, g["skid_L"], g["skid_W"], "Agregat", color=30, lw=50)
+        # same outline as M-01, one step less detail: at 1:50 the radiator face
+        # and the two masses read, the connections do not
+        genset.plan(msp, B, gx, gy, SC, D, radiator="W", labels=False,
+                    dims=False, detail=1)
         _txt(msp, "DEA 18 kVA", gx + g["skid_L"] / 2, gy + g["skid_W"] / 2,
              1.7 * SC, layer="Tekst", color=7, align=TA.MIDDLE_CENTER)
         # tank only - the drip tray is an M-01 detail and clutters a 1:50 site plan
@@ -400,14 +404,14 @@ def register(B):
         gx, gy = ox + 180, oy + 840
         rect(msp, gx - 60, gy - 60, g["skid_L"] + 120, g["skid_W"] + 120,
              "Konstrukcija", color=5, lw=35)
-        rect(msp, gx, gy, g["skid_L"], g["skid_W"], "Agregat", color=30, lw=50)
-        _txt(msp, "DEA 18 kVA / 14,4 kW, skid", gx + g["skid_L"] / 2,
-             gy + g["skid_W"] / 2, 1.9 * SC, layer="Tekst", color=7,
-             align=TA.MIDDLE_CENTER)
-        # radiator end (WEST) marked as a band across the skid
-        rect(msp, gx, gy, 180, g["skid_W"], "Agregat", color=4, lw=35)
-        _txt(msp, "RADIJATOR", gx + 90, gy + g["skid_W"] + 130, 1.4 * SC,
-             layer="Tekst", color=8, align=TA.CENTER)
+        # the set itself: outline with the assemblies, and the only dimension
+        # chain on the equipment (genset.py; H-04 draws the same geometry)
+        gp = genset.plan(msp, B, gx, gy, SC, D, radiator="W")
+        leader(msp, gp["radiator_face"], "radijator", -420, 700, SC)
+        leader(msp, gp["panel"], "komandni ormar", 260, 620, SC)
+        # the set designation, as H-04 carries it in its own plan
+        _txt(msp, "DEA 18 kVA / 14,4 kW", gx + g["skid_L"] + 200, gy + 180,
+             1.6 * SC, layer="Tekst", color=7)
 
         # radiator duct straight out the WEST wall + discharge louvre 600x600
         dy_c = gy + g["skid_W"] / 2                       # radiator axis
@@ -442,9 +446,8 @@ def register(B):
         # doorway and the route the 620 mm skid takes to its place both stay
         # clear, which is the whole point of moving the tank here.
         bx, by = ox + 1795, oy + t
-        rect(msp, bx, by, lay["L"], lay["W"], "Agregat", color=1, lw=35)
-        tx, ty = bx + (lay["L"] - tk["L"]) / 2, by + (lay["W"] - tk["W"]) / 2
-        rect(msp, tx, ty, tk["L"], tk["W"], "Agregat", color=30, lw=35)
+        tp = genset.tank_plan(msp, B, bx, by, SC, D, long_axis="x", dims=False)
+        tx, ty = tp["tank"][0], tp["tank"][1]
         _txt(msp, "spremnik 500 l", tx + tk["L"] / 2, ty + tk["W"] / 2,
              1.7 * SC, layer="Tekst", color=7, align=TA.MIDDLE_CENTER)
         _txt(msp, "dvoplašni", tx + tk["L"] / 2, ty + tk["W"] / 2 - 230,
@@ -517,9 +520,7 @@ def register(B):
 
         # genset elevation, radiator end at the WEST (left) wall - same x as the plan
         gxs = sxo + (gx - ox)
-        rect(msp, gxs, syo, g["skid_L"], g["skid_H"], "Agregat", color=30, lw=50)
-        hatch_rect(msp, gxs, syo, g["skid_L"], g["skid_H"], "Agregat",
-                   "ANSI31", SC * 0.3, 30)
+        ge = genset.elev(msp, B, gxs, syo, SC, D, flip=False, labels=False)
 
         # radiator duct + discharge louvre through the WEST wall
         rect(msp, sxo + t, syo + 380, gxs - sxo - t, 640, "Ventilacija", color=4,
@@ -531,8 +532,10 @@ def register(B):
         # run, then the riser up the WEST wall and through the roof. The silencer
         # used to be drawn floating 50 mm above the run and overhanging its east
         # end, which read as a component connected to nothing.
+        # the flex starts at the engine top, not at the top of the 1020 mm
+        # envelope: that is the control panel's height, not the engine's
         EY = syo + 1600
-        msp.add_lwpolyline([(sxo + 1100, syo + g["skid_H"]), (sxo + 1100, EY),
+        msp.add_lwpolyline([ge["exhaust"], (sxo + 1100, EY),
                             (sxo + 260, EY), (sxo + 260, syo + H + 380)],
                            dxfattribs={"layer": "Ventilacija", "color": 1,
                                        "lineweight": 70})
