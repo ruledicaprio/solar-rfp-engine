@@ -14,12 +14,14 @@ Both sheets are now this one function. What genuinely differs per site - the wal
 box sits on, the cable route, the earthing arrangement - comes in through `cfg`;
 nothing else may diverge.
 
-Hatch convention, identical on both sheets:
+Supply convention, identical on both sheets - a band along the BOTTOM EDGE of each
+box, not a hatch across its face:
     ANSI31, single 45° lines  = the Contractor supplies and installs it
     ANSI37, cross-hatch       = the BUYER supplies it, the Contractor installs and
                                 connects it only (Prilog I 4.9, Prilog II 5.19)
-ANSI37 is spaced twice as wide because a cross-hatch at the same scale reads twice
-as dense and swallows the sub-labels.
+Across the whole face the pattern came out as two or three long diagonals through
+the labels at this scale - it read as neither hatch nor text. In a 180-unit band it
+is dense enough to be recognised as a pattern and the face stays clean.
 
 `B` is the build_drawings module, passed in rather than imported, because
 build_drawings imports the sheet modules - importing it back here would be a cycle.
@@ -47,6 +49,9 @@ def ltype(e, name, sc, k=3.0):
     return e
 
 
+BAND_H = 180        # visina trake isporuke; 3,6 mm na 1:50
+
+
 def draw(msp, SC, D, B, cfg):
     """Draw the scheme into `msp`. `cfg` carries only the per-site differences."""
     rect, hatch_rect, note_block = B.rect, B.hatch_rect, B.note_block
@@ -56,11 +61,23 @@ def draw(msp, SC, D, B, cfg):
     wp = int(round(arr["kWp"] * 1000 / arr["modules_total"]))
     cap_w = dec(ctl["rect_cap_ac_kw"] * 1000, 1)
 
+    def band(x, y, w, h, pattern, scale):
+        """Traka isporuke uz donju ivicu kutije, umjesto šrafure preko cijelog lica.
+
+        Preko cijele kutije šrafura je na ovom mjerilu davala dvije-tri velike
+        dijagonale koje su išle kroz natpise: nije se čitala ni kao šrafura ni
+        kao tekst.  U traci je gušća, pa se prepoznaje kao uzorak, a lice kutije
+        ostaje čisto."""
+        hb = min(BAND_H, 0.25 * h)
+        hatch_rect(msp, x, y, w, hb, LY, pattern, scale, 8)
+        msp.add_line((x, y + hb), (x + w, y + hb),
+                     dxfattribs={"layer": LY, "color": 8})
+
     def box(x, y, w, h, label, sub="", sub2="", color=7, new=False, kupac=False):
         if new:
-            hatch_rect(msp, x, y, w, h, LY, "ANSI31", SC * 4, 8)
+            band(x, y, w, h, "ANSI31", SC * 0.5)
         if kupac:
-            hatch_rect(msp, x, y, w, h, LY, "ANSI37", SC * 8, 8)
+            band(x, y, w, h, "ANSI37", SC * 0.6)
         rect(msp, x, y, w, h, LY, color=color, lw=50)
         n = 1 + bool(sub) + bool(sub2)
         yy = y + h / 2 + (n - 1) * 95
@@ -222,11 +239,14 @@ def draw(msp, SC, D, B, cfg):
         "6  Nazivne struje F4–F5 i D1–D6 su orijentacione; presjeke i selektivnost potvrđuje "
         "Izvođač. ICC360 — principijelno.",
     ])
-    hatch_rect(msp, 1300, 700, 700, 300, LY, "ANSI31", SC * 4, 8)
-    rect(msp, 1300, 700, 700, 300, LY, color=8)
-    _txt(msp, "isporuka i montaža Izvođača (DEA, GRO, DC razvod −48 V)", 2150, 790,
-         1.6 * SC, color=7)
-    hatch_rect(msp, 7300, 700, 700, 300, LY, "ANSI37", SC * 8, 8)
-    rect(msp, 7300, 700, 700, 300, LY, color=8)
-    _txt(msp, "oprema Kupca (FN, PVDB, iSSU, baterije, ICC360)", 8150, 790,
-         1.6 * SC, color=7)
+    # uzorci u legendi su umanjene kutije, sa istom trakom uz donju ivicu
+    for lx, pat, sc_, txt in (
+            (1300, "ANSI31", SC * 0.5,
+             "isporuka i montaža Izvođača (DEA, GRO, DC razvod −48 V)"),
+            (7300, "ANSI37", SC * 0.6,
+             "oprema Kupca (FN, PVDB, iSSU, baterije, ICC360)")):
+        hatch_rect(msp, lx, 700, 700, 150, LY, pat, sc_, 8)
+        msp.add_line((lx, 850), (lx + 700, 850),
+                     dxfattribs={"layer": LY, "color": 8})
+        rect(msp, lx, 700, 700, 500, LY, color=8)
+        _txt(msp, txt, lx + 850, 890, 1.6 * SC, color=7)
