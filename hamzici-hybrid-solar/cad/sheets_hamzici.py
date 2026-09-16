@@ -49,6 +49,7 @@ from bht_frame import (A3_H, A3_W, MARGIN, MARGIN_L, TB_H, TB_W,   # noqa: E402
 import build_drawings as B                                          # noqa: E402
 import genset                                                       # noqa: E402
 import single_line                                                  # noqa: E402
+import sw_view                                                      # noqa: E402
 
 rect, solid_rect, hatch_rect = B.rect, B.solid_rect, B.hatch_rect
 dim_h, dim_v, leader = B.dim_h, B.dim_v, B.leader
@@ -594,13 +595,17 @@ NOTES_X = 28000                  # right-hand note column on the plans
 
 
 def _orientation_note(msp, sc, y):
+    """Six lines of provenance and reasoning reduced to the two that are drawing
+    data.  The source (Google Maps) and the 180° discrepancy against the 2017
+    certified sheet were an argument for the orientation, not a requirement; the
+    Investor took that class of text out of Prilog I on 15.09.2026 and it has no
+    more place on a drawing.  What a reader needs is which way the compound
+    faces and that the Bidder confirms it on site."""
     return note_block(msp, NOTES_X, y, sc, "NAPOMENA — ORIJENTACIJA:", [
-        "Prema Google Maps (Naručilac 11.09.2026) kompleks je zakrenut 45°: vrata",
-        "kontejnera i kapija gledaju na SJEVEROZAPAD (SZ), klima-uređaj Stulz na JI.",
-        "Crtež je pravougaon na kompleks (gore SZ, desno SI, dolje JI, lijevo JZ);",
-        "strelica pokazuje pravi sjever. Ovjereni crtež lokacije iz 2017",
-        "(GP-BS-10472-291, 01_Situacija 1_200) zakrenut je ≈180° u odnosu na teren.",
-        "Orijentaciju potvrđuje Ponuđač obilaskom lokacije.",
+        "Kompleks je zakrenut 45°: vrata kontejnera i kapija gledaju na SJEVEROZAPAD",
+        "(SZ), klima-uređaj Stulz na JI, FN polje na JZ. Crtež je pravougaon na",
+        "kompleks (gore SZ, desno SI, dolje JI, lijevo JZ); strelica pokazuje pravi",
+        "sjever. Orijentaciju potvrđuje Ponuđač obilaskom lokacije.",
     ])
 
 
@@ -674,7 +679,7 @@ def sheet_h01():
         f"4  Stub h = {tw['height'] // 1000} m; platforma P I (+3,0 m) je iznad krova "
         "(+2,63 / +2,89 m).",
         "5  Uzemljivač FeZn 25×4: prsten u temeljima stopa i dva prstena na 0,8 m.",
-        "6  Kapija se otvara prema van; krilo 1,30 m udarilo bi u kontejner.",
+        "6  Kapija se otvara prema van; krilo 1,30 m.",
         f"7  Teren uz ploču je na {minus(TERRAIN)} m; ograda {dec(fe['height'])} m iznad ploče, "
         f"{dec(FENCE_ABOVE_GROUND)} m iznad terena.",
         "8  Mjere uređaja i otvora uzimaju se na obaveznom obilasku lokacije.",
@@ -821,9 +826,9 @@ def sheet_h02():
         f"3  Temeljne trake {strip_w_txt(fnd)} × {sl} mm, d = {fnd['strip_d']} mm, na "
         f"podložnom betonu {fnd['blinding_thk']} mm.",
         "4  Postojeći prsteni uzemljivača (0,8 m) ukrštaju temeljne trake — LOT 1.",
-        "5  Vjetar qp ≥ 1,20 kN/m²; nosač CUSTOM izrade, proračun dostavlja Ponuđač.",
+        "5  Nosač i temelji — tehničko rješenje i statički proračun Ponuđača.",
         "6  Raspored u kontejneru prema H-04.",
-        "7  Ormari ICC360-HA1-C1 i MTS iza FN polja, u sjeni — principijelno.",
+        "7  Ormari ICC360-HA1-C1 i MTS iza FN polja — principijelno.",
     ])
     return doc
 
@@ -1046,7 +1051,7 @@ def sheet_h03():
     lead(msp, (x0 + ux * km + nx * MT, y0 + uy * km + ny * MT),
          f"FN moduli {mod['model'].split(' /')[0]} {mod['L']} × {MW}, položeno, {rows} reda",
          (X(fx0) + 1500, GY + top + 700), SC)
-    lead(msp, (x1, GY + 1400), "nosač — CUSTOM izrada", (x1 - 500, GY + 1900), SC)
+    lead(msp, (x1, GY + 1400), "nosač FN panela", (x1 - 500, GY + 1900), SC)
     lead(msp, (X(sx0 + sl) - 400, GY - 600),
          f"temeljna traka {strip_w_txt(fnd)} × {sl}, "
          f"d = {fd} — C30/37", (X(sx0 + sl) + 650, GY - 1100), SC)
@@ -1063,7 +1068,7 @@ def sheet_h03():
     _txt(msp, "S J E V E R O I S T O K  →", X(fe_e) - 1500, GY - 650, 2.4 * SC,
          layer="Orijentacija", color=1)
 
-    note_block(msp, 700, 1250, SC, "OBJAŠNJENJA:", [
+    note_block(msp, 700, 1250, SC, "NAPOMENE:", [
         f"1  Polje: {rows} reda × {sup['cols']} modul 585 Wp, položeno; nagib {arr['tilt_deg']}°, "
         f"projekcija {proj} mm; {arr['count']} odvojena nosača u nizu (H-02).",
         f"2  Dvije temeljne trake po nosaču {strip_w_txt(fnd)} × {sl} mm, "
@@ -1077,8 +1082,8 @@ def sheet_h03():
         "    premještanje ili premoštavanje prstena (LOT 1).",
         f"5  Trake su {mmc(A['margin'])} mm od granice zakupa (JZ) i od ploče (SI); "
         "položaj presjeka na H-02.",
-        "6  Stub, platforma P I (+3,0 m), kontejner i ormari šematski; ICC360 i MTS stoje iza "
-        "FN polja, u njegovoj sjeni.",
+        "6  Stub, platforma P I (+3,0 m), kontejner i ormari šematski; ICC360 i MTS su iza "
+        "FN polja.",
     ])
     return doc
 
@@ -1372,5 +1377,93 @@ def sheet_h05():
 
 
 
+# --------------------------------------------------------------------------
+# H-06  Pogled sa jugozapada                                             1:50
+# --------------------------------------------------------------------------
+def sheet_h06():
+    """Pogled sa jugozapada na cijeli kompleks — parnjak Sjednicinom S-04.
+
+    Hamzići se crtaju pravougaono na kompleks, a plan-ZAPAD je pravi JUGOZAPAD,
+    pa je ovo elevacija duž plan-ose X.  Vodoravna osa lista je plan-Y, okrenuta:
+    u = 5400 − y, tako da je lijevo SZ a desno JI, isto kao na S-04.  Zbog toga
+    je PV-1, koji na H-02 leži na najmanjem y, ovdje krajnje desno.
+
+    Mjerilo 1:50 i stub prekinut na +9,50 m — v. sw_view i S-04.
+    """
+    SC = 50
+    doc, msp = _sheet(SC, "Pogled sa JUGOZAPADA — kompleks sa FN poljem",
+                      "H-06", "1:50")
+
+    sup, arr = D["support"], D["array"]
+    A = array_layout()
+    fe, c, tw = GEO["fence"], GEO["container"], GEO["tower"]
+    S = GEO["slab"]["size"][1]
+    fw, n = sup["field_w"], arr["count"]
+    CW = c["external"][1]                       # 3005 mm po plan-osi Y
+
+    # u = 5400 − y, pa +U_OFF da niz počne na 1900 kao na S-04
+    U_OFF = 1900 - (S - A["stands"][-1] - fw)
+    def U(y):
+        return S - y + U_OFF
+
+    total = A["total"]
+    Z = 3800                                    # gornja ivica ploče
+    TERR = TERRAIN                              # teren je 200 mm ispod ploče
+    stands = [(U(ay + fw), f"PV-{i}") for i, ay in enumerate(A["stands"], 1)]
+    mid = U(S / 2)
+    CUT = 9500
+
+    cfg = {
+        "z0": Z, "terrain": TERR,
+        "view": (mid - total / 2 - 600, mid + total / 2 + 600),
+        "slab": (U(S), S, 300),
+        "tower": sw_view.load_profile(HERE), "u_axis": mid, "cut": CUT,
+        "container": (U(c["origin"][1] + CW), CW),
+        "c_lo": c["heights"]["eave_low"], "c_hi": c["heights"]["eave_high"],
+        # ograda je 1,80 m iznad ploče, a stoji na terenu 0,20 m niže
+        "fence": (U(fe["origin"][1] + fe["size"][1]), fe["size"][1],
+                  FENCE_ABOVE_GROUND),
+        "stands": stands, "stand_w": fw,
+        "dim_u": mid + total / 2 + 700,
+        "left": "S Z", "right": "J I",
+    }
+    k = sw_view.draw(msp, B, SC, D, cfg)
+    z_top = Z + CUT
+
+    _txt(msp, "POGLED SA JUGOZAPADA  (pravac gledanja azimut 45°)",
+         mid - total / 2 - 600, z_top + 800, 2.6 * SC, color=7)
+    lead(msp, (mid, Z + c["heights"]["eave_high"]), "postojeći kontejner K2",
+         (mid + 1800, Z + c["heights"]["eave_high"] + 2100), SC)
+    lead(msp, (mid + 800, Z + 7400),
+         f"antenski stub {tw['height'] // 1000} m — silueta iz ovjerenog projekta",
+         (mid + 3200, Z + 8900), SC)
+    lead(msp, (stands[-1][0] + fw / 2, Z + TERR + arr["top_edge"] - 300),
+         f"FN polje {n} × 3 modula 585 Wp, azimut {arr['azimuth_deg']}°, "
+         f"nagib {arr['tilt_deg']}°",
+         (stands[-1][0] + fw / 2 + 900, Z + TERR + arr["top_edge"] + 2600), SC)
+
+    NX = mid + total / 2 + 2600
+    legend(msp, NX, z_top + 300, SC, [
+        (110, "LOT 1 — FN moduli i nosači (ispred ograde, JZ)"),
+        (5,   "postojeći antenski stub — silueta iz ovjerenog projekta"),
+        (6,   "postojeći kontejner K2 na postojećoj ploči"),
+        (8,   f"postojeća ograda {dec(fe['height'])} m iznad ploče"),
+    ], col_w=44.0 * SC)
+    note_block(msp, NX, z_top - 2400, SC, "NAPOMENE:", [
+        "1  Prava ortogonalna elevacija u pravcu azimuta 45°;",
+        "    visine i širine su mjerljive.",
+        "2  Paneli gledaju u posmatrača pod 45°, pa se po visini",
+        f"    vide skraćeno: +{dec(arr['bottom_edge'])} do "
+        f"+{dec(arr['top_edge'])} m od terena.",
+        f"3  Teren uz FN polje je {minus(TERRAIN)} m ispod ploče; ograda",
+        f"    je {dec(FENCE_ABOVE_GROUND)} m iznad terena.",
+        f"4  Stub je prikazan do +{dec(CUT)} m i prekinut; h = "
+        f"{tw['height'] // 1000} m",
+        "    prema ovjerenom projektu (list 462 — 01_Dispozicija S32 m).",
+        "5  Zahtjevi: Prilog I, Tačke 3 i 4.",
+    ])
+    return doc
+
+
 SHEETS = {"H-01": (sheet_h01, 100), "H-02": (sheet_h02, 100), "H-03": (sheet_h03, 30),
-          "H-04": (sheet_h04, 25), "H-05": (sheet_h05, 50)}
+          "H-04": (sheet_h04, 25), "H-05": (sheet_h05, 50), "H-06": (sheet_h06, 50)}

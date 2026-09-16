@@ -413,7 +413,8 @@ def check_extents(doc, name, scale):
         raise SystemExit(f"{name}: content outside the A3 sheet — " + "; ".join(bad))
 
 
-SHEET_SCALE = {"S-01": 50, "S-02": 50, "S-03": 30, "M-01": 25, "E-01": 50}
+SHEET_SCALE = {"S-01": 50, "S-02": 50, "S-03": 30, "S-04": 50,
+               "M-01": 25, "E-01": 50}
 
 
 def build(names=None):

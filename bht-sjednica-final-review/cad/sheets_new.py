@@ -9,13 +9,17 @@ S-01 lives in build_drawings.py; this module is imported by it.
 from __future__ import annotations
 
 import math
+import os
 
 from ezdxf.enums import TextEntityAlignment as TA
 
 from bht_frame import draw_frame, new_doc, north_arrow, scale_bar, _txt
 import genset
 import single_line
+import sw_view
 
+
+HERE = os.path.dirname(os.path.abspath(__file__))
 
 FAN_D = 315        # room fan, EC 48 V DC - design.json ventilation.room_fan_m3h
 
@@ -172,8 +176,11 @@ def register(B):
             (30,  "LOT 2 — DEA 18 kVA u skid izvedbi i dvoplašni spremnik 500 l"),
             (4,   "LOT 2 — usisna žaluzina (SI); kanal, žaluzina i izduv (SZ); ventilator (JI)"),
         ])
+        # Note 1 carried 'qp >= 1,20 kN/m2' and 'CUSTOM izrade' long after the
+        # Investor's 15.09.2026 decision took both out of Prilog I and the BOQ:
+        # actions are the Bidder's to adopt, and the stand is not named a type.
         note_block(msp, 1200, bot - 180, SC, "NAPOMENE:", [
-            "1  Vjetar qp ≥ 1,20 kN/m²; nosač CUSTOM izrade, proračun dostavlja Ponuđač.",
+            "1  Nosač i temelji — tehničko rješenje i statički proračun Ponuđača.",
             f"2  Temelji IZVAN ograde; ivica panela +{arr['bottom_edge'] / 1000:.2f} / "
             f"+{arr['top_edge'] / 1000:.2f} m.".replace(".", ",", 2),
             "3  Zahtjevi: Prilog I, Tačke 3 i 4.",
@@ -329,7 +336,9 @@ def register(B):
                900, 2400, SC)
 
         fnd = D["foundation"]                       # already bound above; kept explicit
-        note_block(msp, 700, 1500, SC, "OBJAŠNJENJA:", [
+        # "NAPOMENE", as every other sheet: the block carries drawing data, and
+        # the TD no longer explains itself on the sheets (Naručilac 15.09.2026)
+        note_block(msp, 700, 1500, SC, "NAPOMENE:", [
             f"1  Polje: {sup['rows']} reda × {sup['cols']} modul 585 Wp, položeno; projekcija "
             f"{proj} mm pri 45°; {arr['count']} odvojena nosača u nizu.",
             f"2  Dvije trake po nosaču {strip_w_txt(fnd)} × {fnd['strip_l']} mm, d = "
@@ -610,5 +619,98 @@ def register(B):
         return doc
 
 
-    return {"S-02": sheet_s02, "S-03": sheet_s03, "M-01": sheet_m01,
-            "E-01": sheet_e01}
+    # ------------------------------------------------------------------ S-04
+    def sheet_s04():
+        """Pogled sa jugozapada na cijeli kompleks.
+
+        Sjednica se crta pravougaono na kompleks, pri čemu je plan-JUG pravi
+        JUGOZAPAD, pa je ovo obična elevacija duž plan-ose Y: vodoravna osa lista
+        je plan-X, lijevo SZ, desno JI.  Kompleks je zakrenut 45° i FN polje
+        gleda u 225°, dakle pravo u posmatrača.
+
+        Mjerilo je 1:50, isto kao na S-02, pa se FN polje, ograda i kontejner
+        čitaju; stub je prelomljen.  Na 1:150, u kojem 38 m stuba staje cijelo,
+        prizemlje je 20 mm visoko i ne kaže ništa — a ono je ovdje predmet.
+        """
+        SC = 50
+        D = _design()
+        doc = new_doc()
+        msp = doc.modelspace()
+        draw_frame(msp, SC, naziv="Pogled sa JUGOZAPADA — kompleks sa FN poljem",
+                   broj="S-04", razmjera="1:50")
+
+        sup, arr = D["support"], D["array"]
+        C = D["container"]
+        F = GEO["fence"]["size"][0]                 # 5500
+        S = GEO["slab"]["size"][0]                  # 5400
+        fw, n = sup["field_w"], arr["count"]
+        gap = 400
+        CW = C["ext"][0]                            # 3005 mm po plan-osi X
+
+        # Koordinate pogleda: u = plan-X, nula na JZ uglu ograde.  Ploča je
+        # uvučena 50 mm unutar ograde, kontejner je centriran na ploči.
+        total = n * fw + (n - 1) * gap
+        # A3 na 1:50: okvir 1000..20500 × 500..14350, sastavnica x>11500 i
+        # y<2900.  Niz počinje na 1900, a teren na 3800, pa sve što ide ispod
+        # terena (ploča do 3500, kota širine na 3450, strane svijeta na 3350)
+        # ostaje iznad sastavnice.
+        U0 = 1900 + (total - F) / 2                 # ograda; niz je širi od nje
+        Z = 3800                                    # gornja ivica ploče = teren
+        slab_u = U0 + (F - S) / 2
+        mid = U0 + F / 2
+        stands = [(mid - total / 2 + i * (fw + gap), f"PV-{i + 1}")
+                  for i in range(n)]
+
+        # stub se prekida na +9,50 m; cijeli se ne prikazuje (v. sw_view._tower)
+        tp = sw_view.load_profile(HERE)
+        CUT = 9500
+
+        cfg = {
+            "z0": Z,
+            "terrain": 0,                           # teren je u nivou ploče (S-03)
+            "view": (mid - total / 2 - 600, mid + total / 2 + 600),
+            "slab": (slab_u, S, 300),
+            "tower": tp, "u_axis": mid, "cut": CUT,
+            "container": (slab_u + (S - CW) / 2, CW),
+            "c_lo": C["height"], "c_hi": C["height_high_eave"],
+            "fence": (U0, F, GEO["fence"]["height"]),
+            "stands": stands, "stand_w": fw,
+            "dim_u": mid + total / 2 + 700,
+            "left": "S Z", "right": "J I",
+        }
+        k = sw_view.draw(msp, B, SC, D, cfg)
+        z_top = Z + CUT                             # oznaka prekida stuba
+
+        _txt(msp, "POGLED SA JUGOZAPADA  (pravac gledanja azimut 45°)",
+             mid - total / 2 - 600, z_top + 800, 2.6 * SC, layer="Tekst", color=7)
+        # kontejner se sa JZ vidi samo u razmaku između nosača, iznad ograde
+        leader(msp, (mid, Z + C["height_high_eave"]), "postojeći kontejner K2",
+               1800, 2100, SC)
+        leader(msp, (mid + 800, Z + 7400),
+               "antenski stub 38 m — silueta iz ovjerenog projekta", 2400, 1500, SC)
+        leader(msp, (stands[0][0] + fw / 2, Z + arr["top_edge"] - 300),
+               f"FN polje {n} × 3 modula 585 Wp, azimut {arr['azimuth_deg']}°, "
+               f"nagib {arr['tilt_deg']}°", 900, 2600, SC)
+
+        NX = mid + total / 2 + 2600
+        legend(msp, NX, z_top + 300, SC, [
+            (110, "LOT 1 — FN moduli i nosači (ispred ograde, JZ)"),
+            (5,   "postojeći antenski stub — silueta iz ovjerenog projekta"),
+            (6,   "postojeći kontejner K2 na postojećoj ploči"),
+            (8,   "postojeća ograda h = 2,10 m"),
+        ], col_w=44.0 * SC)
+        note_block(msp, NX, z_top - 2400, SC, "NAPOMENE:", [
+            "1  Prava ortogonalna elevacija u pravcu azimuta 45°;",
+            "    visine i širine su mjerljive.",
+            "2  Paneli gledaju u posmatrača pod 45°, pa se po visini",
+            f"    vide skraćeno: +{arr['bottom_edge'] / 1000:.2f} do "
+            f"+{arr['top_edge'] / 1000:.2f} m.".replace(".", ",", 2),
+            "3  Stub je prikazan do +9,50 m i prekinut; h = 38 m prema",
+            "    ovjerenom projektu (list 462 — 01_ANTENSKI STUB 38 m).",
+            "4  Zahtjevi: Prilog I, Tačke 3 i 4.",
+        ])
+        return doc
+
+
+    return {"S-02": sheet_s02, "S-03": sheet_s03, "S-04": sheet_s04,
+            "M-01": sheet_m01, "E-01": sheet_e01}

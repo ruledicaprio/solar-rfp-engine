@@ -5,7 +5,7 @@ Prilog III of the joint tender: one annex, two site blocks.
     cover (joint)
     A. BS Sjednica  - photo page with the block headline, site data, S-01..E-01,
                       the seven K2 sheets, INFO-02
-    B. BS Hamzići   - photos with the block headline, site data, H-01..H-05,
+    B. BS Hamzići   - photos with the block headline, site data, H-01..H-06,
                       sheets of the certified 2017 project (as reference), INFO-02
 
 The A4 pages and both INFO-02 pages carry the BH Telecom memorandum as their
@@ -38,7 +38,7 @@ import build_prilog3 as bp3                                         # noqa: E402
 sys.modules["paths"] = _joint_paths
 
 SJ_ANNEX = bp3.OUT            # Sjednica Prilog III (16 pages): photo and K2 sheets
-SJ_SHEETS = ["S-01", "S-02", "S-03", "M-01", "E-01"]
+SJ_SHEETS = ["S-01", "S-02", "S-03", "S-04", "M-01", "E-01"]
 HZ_PROJECT = os.path.join(HZ, "GP BS HAMZIĆI_Čitluk K2 i AS 36 m")
 _AG = os.path.join(HZ_PROJECT, "4 - ARHITEKTONSKO GRADJEVINSKI DIO", "6 Graficki dio")
 CERTIFIED = [
@@ -54,7 +54,7 @@ CERTIFIED = [
 ]
 PHOTOS = [("20260908_121209_sunce.jpg", "Antenski stub i kontejner; pogled prema jugu-jugoistoku"),
           ("20260908_121141_sunce.jpg", "Kontejner sa klima-uređajem Stulz WDE80 (demontira se)")]
-H_SHEETS = ["H-01", "H-02", "H-03", "H-04", "H-05"]
+H_SHEETS = ["H-01", "H-02", "H-03", "H-04", "H-05", "H-06"]
 PVSIM_BAR_PX = 46             # caption strip `pvsim photo` adds (pvsim/photo.py, bar)
 ORANGE, GREY, INK = (0.96, 0.51, 0.12), (0.35, 0.35, 0.35), (0.04, 0.04, 0.04)
 POINTS = ("sjever", "sjeveroistok", "istok", "jugoistok", "jug", "jugozapad", "zapad",

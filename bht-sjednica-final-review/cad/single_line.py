@@ -200,8 +200,8 @@ def draw(msp, SC, D, B, cfg):
     _txt(msp, cfg["earth_text"], 1300, 2760, 1.6 * SC, color=7)
 
     note_block(msp, 1300, 2450, SC, "NAPOMENE:", h=1.8, lines=[
-        "1  Lokacija NIJE na mreži — DEA je jedini AC izvor; izvodi GRO su pod naponom samo dok "
-        "DEA radi. Trajni potrošači su na DC razvodu −48 V.",
+        "1  DEA je jedini AC izvor; izvodi GRO su pod naponom samo dok DEA radi. Trajni "
+        "potrošači su na DC razvodu −48 V.",
         "2  TN-S: jedini spoj N–PE je u novom GRO; R ≤ 10 Ω. Odvodnici: AC tip 1+2, DC tip 2 po "
         "stringu, signalni vodovi EN 61643-21.",
         "3  DEA sa nezavisnom pobudom PMG ili AREP/AUX (≥3 × In ≈ 78 A, ≥10 s); RCD 63 A / 300 mA "

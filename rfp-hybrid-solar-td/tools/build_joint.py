@@ -74,6 +74,8 @@ FORBIDDEN = [r for r in bp1.FORBIDDEN if r[0] != "Tačku 4.8"] + [
     ("qp ≥", "dejstvo vjetra usvaja Ponuđač prema BAS EN 1991-1-4 + BiH NA"),
     ("cf ≥", "koeficijent sile usvaja Ponuđač u svom proračunu"),
     ("≥10 % ugrađenih ankera", "pull-out je min. 2 ankera po lokaciji"),
+    ("CUSTOM", "konstrukciju bira Ponuđač; tip se ne imenuje"),
+    ("Google Maps", "navodi se samo orijentacija, bez izvora i obrazloženja"),
 ]
 # the Sjednica Rev 9 values this round supersedes, and what replaces them
 SUPERSEDED_REQUIRED = {
@@ -216,6 +218,42 @@ def site_script(folder, script):
     subprocess.run([sys.executable, path], check=True, cwd=os.path.dirname(path))
 
 
+def sheet_text(dxf):
+    """Every TEXT/MTEXT string on one sheet, as it will print."""
+    import ezdxf
+
+    out = []
+    doc = ezdxf.readfile(dxf)
+    for e in doc.modelspace():
+        if e.dxftype() == "TEXT":
+            out.append(e.dxf.text)
+        elif e.dxftype() == "MTEXT":
+            out.append(e.text)
+    return out
+
+
+def check_drawing_text(site, dxfs):
+    """Run FORBIDDEN over the sheets themselves.
+
+    The bans were only ever applied to Prilog I and, through joint_boq, to the
+    predmjer.  Nothing read the drawings, so S-02 and H-02 kept printing
+    'qp >= 1,20 kN/m2' and 'nosač CUSTOM izrade' - and H-01/H-02 kept the Google
+    Maps provenance - for a full round after the Investor's 15.09.2026 decision
+    removed all three everywhere else.  A ban that covers the prose but not the
+    sheets bound into the same annex is not a ban.
+    """
+    bad = []
+    for dxf in sorted(dxfs):
+        for line in sheet_text(dxf):
+            for needle, why in FORBIDDEN:
+                if needle in line:
+                    bad.append(f"{os.path.basename(dxf)}: {needle!r} ({why})\n"
+                               f"      {line.strip()[:110]}")
+    if bad:
+        raise SystemExit(f"{site}: forbidden text on the sheets:\n    "
+                         + "\n    ".join(bad))
+
+
 def drawings():
     """Rebuild each site's sheets, then copy them into the joint annex folder.
 
@@ -238,6 +276,7 @@ def drawings():
                 stale.append(os.path.basename(f))
         if stale:
             raise SystemExit(f"{site}: export older than the DXF: {', '.join(sorted(stale))}")
+        check_drawing_text(site, [f for f in src if f.endswith(".dxf")])
         dst = os.path.join(paths.GRAFIKA, site)
         os.makedirs(dst, exist_ok=True)
         for f in src:
