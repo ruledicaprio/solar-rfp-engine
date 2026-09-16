@@ -126,13 +126,13 @@ def draw(msp, SC, D, B, cfg):
     msp.add_circle((4200, 8900), 60, dxfattribs={"layer": LY, "color": 7})
     _txt(msp, "poz. 2 — rezerva", 4050, 8860, 1.5 * SC, color=8, align=TA.RIGHT)
     enclosure(4400, 5000, 6700, 5900, 30, cfg["gro_title"], cfg["gro_sub"])
-    box(4700, 9300, 2200, 1100, "Q0 SKLOPKA IZVORA", "4p · 1-0-2 · 63 A",
+    box(4700, 9300, 2200, 1100, "Q0 SKLOPKA IZVORA", "4p · 1-0-2 · 50 A",
         "1 DEA · 0 · 2 rezerva", color=30, new=True)
     wire((3900, 10100), (4700, 10100), color=30)
     wire((4260, 8900), (4500, 8900), (4500, 9550), (4700, 9550), color=30)
     _txt(msp, "1", 4580, 10150, 1.4 * SC, color=8)
     _txt(msp, "2", 4580, 9600, 1.4 * SC, color=8)
-    box(4700, 7500, 2200, 1000, "FI0 · RCD 4p", "63 A / 300 mA · S-tip", color=30, new=True)
+    box(4700, 7500, 2200, 1000, "FI0 · RCD 4p", "50 A / 300 mA · S-tip", color=30, new=True)
     wire((5800, 9300), (5800, 8500), color=30)
     wire((5800, 8900), (7500, 8900), color=1)
     box(7500, 8450, 2300, 900, "SPD AC tip 1+2", "Iimp ≥12,5 kA/pol · Up ≤1,5 kV",
@@ -204,7 +204,7 @@ def draw(msp, SC, D, B, cfg):
         "potrošači su na DC razvodu −48 V.",
         "2  TN-S: jedini spoj N–PE je u novom GRO; R ≤ 10 Ω. Odvodnici: AC tip 1+2, DC tip 2 po "
         "stringu, signalni vodovi EN 61643-21.",
-        "3  DEA sa nezavisnom pobudom PMG ili AREP/AUX (≥3 × In ≈ 78 A, ≥10 s); RCD 63 A / 300 mA "
+        "3  DEA sa nezavisnom pobudom PMG ili AREP/AUX (≥3 × In ≈ 78 A, ≥10 s); RCD 50 A / 300 mA "
         "S-tip je obavezan.",
         f"4  Ulaz ispravljača ograničen na {cap_w} kW dok radi DEA (SMU). {cfg['note4_tail']}",
         f"5  FN: {arr['modules_total']} modula = 2 stringa × {per_string}; PVDB ima 2 rute → "

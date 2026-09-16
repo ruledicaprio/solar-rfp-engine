@@ -489,7 +489,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461300.206550926
+2461300.228125
   9
 $TDUCREATE
  40
@@ -497,7 +497,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2461300.206550926
+2461300.228125
   9
 $TDUUPDATE
  40
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{217269D9-2642-4979-A962-571092E2A506}
+{79AD4F0B-8EA5-4622-9325-2F1450468E36}
   9
 $VERSIONGUID
   2
-{F332C1E1-B63D-42FB-96C5-17D071071191}
+{C91021BD-0144-4CD8-A3F2-E0F96DACE617}
   9
 $EXTNAMES
 290
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -17015,7 +17015,7 @@ AcDbText
  40
 75.0
   1
-4p · 1-0-2 · 63 A
+4p · 1-0-2 · 50 A
   7
 20
  72
@@ -17383,7 +17383,7 @@ AcDbText
  40
 75.0
   1
-63 A / 300 mA · S-tip
+50 A / 300 mA · S-tip
   7
 20
  72
@@ -23717,7 +23717,7 @@ AcDbText
  40
 90.0
   1
-3  DEA sa nezavisnom pobudom PMG ili AREP/AUX (≥3 × In ≈ 78 A, ≥10 s); RCD 63 A / 300 mA S-tip je obavezan.
+3  DEA sa nezavisnom pobudom PMG ili AREP/AUX (≥3 × In ≈ 78 A, ≥10 s); RCD 50 A / 300 mA S-tip je obavezan.
   7
 20
  11
@@ -25253,7 +25253,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-09-16T02:57:26.703574+00:00
+1.4.4 @ 2026-09-16T03:28:30.765316+00:00
   0
 VISUALSTYLE
   5
@@ -25965,7 +25965,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-09-16T02:57:26.777456+00:00
+1.4.4 @ 2026-09-16T03:28:30.826982+00:00
   0
 ENDSEC
   0

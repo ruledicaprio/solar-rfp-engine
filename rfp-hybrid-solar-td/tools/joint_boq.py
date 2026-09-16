@@ -266,6 +266,14 @@ BOTH_SITES_EDITS = {
                  "do izlazne žaluzine iz Tačke 4.6.")],
         "4.2": [("ojačanja poda iz Tačke 4.4.",             # the grillage is 4.3, 4.4 the
                  "ojačanja poda iz Tačke 4.3.")],           # radiator's flexible joint
+        # 16.09.2026, odluka Naručioca: sklopke i RCD na agregatu sa 63 A na 50 A.
+        # In agregata je 26,0 A (18 kVA / 400 V), deratirana prime 20,8 A, pa 50 A
+        # ostavlja faktor 1,9 - 63 A je bilo predimenzionirano.  Prekostrujna
+        # zaštita se NE mijenja i ostaje C 32 A: agregat daje ≈78 A (3 × In, PMG),
+        # što je 2,4 × 32 A ali samo 1,56 × 50 A, pa bi podizanje oslabilo zaštitu.
+        "5.6": [("za odabir izvora, 1-0-2, 63 A", "za odabir izvora, 1-0-2, 50 A"),
+                ("3p dvopoložajna sklopka 0-1, 63 A", "3p dvopoložajna sklopka 0-1, 50 A"),
+                ("(RCD) 63 A / 300 mA", "(RCD) 50 A / 300 mA")],
     },
 }
 # ---- LOT 1, items written out in full (15.09.2026) -------------------------
