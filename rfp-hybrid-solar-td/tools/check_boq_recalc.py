@@ -314,6 +314,13 @@ def check_sjednica(wbs):
         # anchor position, and check them against what joint_boq declares, not the source
         added = {n: (unit, qty, text)
                  for n, after, unit, qty, text in jb.BOTH_SITES_NEW_ITEMS.get(lot, [])}
+        # items rewritten whole on the Sjednica sheet too (BOTH_SITES_REPLACE, and the
+        # per-site SITE_REPLACE): the source text is deliberately superseded, so they are
+        # checked against what joint_boq declares, exactly as the added items are
+        rewritten = {n: (unit, qty, text) for n, (_, unit, qty, text) in
+                     {**jb.BOTH_SITES_REPLACE.get(lot, {}),
+                      **jb.SITE_REPLACE.get(lot, {}).get("sjednica", {})}.items()}
+        added = {**added, **rewritten}
         want_list = list(b)
         for n, after, *_ in jb.BOTH_SITES_NEW_ITEMS.get(lot, []):
             want_list.insert(want_list.index(after) + 1, n)

@@ -70,18 +70,27 @@ FORBIDDEN = [r for r in bp1.FORBIDDEN if r[0] != "Tačku 4.8"] + [
     ("8,42 m³", "8 traka jedinstvenog presjeka nose 9,36 m³"),
     ("uslov za primopredaju", "statički proračun je uslov za počinjanje radova"),
     ("≥13,3 kN", "projektne sile po nosaču se ne zadaju — tehničko rješenje Ponuđača"),
+    # odluka Naručioca 15.09.2026: ni dejstva se ne zadaju, samo standardi
+    ("qp ≥", "dejstvo vjetra usvaja Ponuđač prema BAS EN 1991-1-4 + BiH NA"),
+    ("cf ≥", "koeficijent sile usvaja Ponuđač u svom proračunu"),
+    ("≥10 % ugrađenih ankera", "pull-out je min. 2 ankera po lokaciji"),
+    ("CUSTOM", "konstrukciju bira Ponuđač; tip se ne imenuje"),
+    ("Google Maps", "navodi se samo orijentacija, bez izvora i obrazloženja"),
 ]
 # the Sjednica Rev 9 values this round supersedes, and what replaces them
 SUPERSEDED_REQUIRED = {
-    "42,6 kNm": "25,7 kNm", "26,6 kN": "16,1 kN", "1,485 m³": None, "8,91 m³": None,
+    "42,6 kNm": None, "26,6 kN": None, "1,485 m³": None, "8,91 m³": None,
     "+0,50 m / +3,74 m": None, "1,64 m": "0,83 m", "18,1 kN": None, "13,4 kN": None,
     "≈250 h/god": "≈300 h/god", "≈820 l/god": "≈990 l/god",
     "SJEVERNI zid, istočni kraj": None, "JUŽNI zid": None,
+    # odluka Naručioca 15.09.2026: Prilog I ne nosi nijednu brojku opterećenja —
+    # dejstva i izvedene sile ostaju samo u proračunima lokacija
+    "1,20 kN/m²": None, "0,6 kN/m²": None,
 }
 REQUIRED = [r for r in bp1.REQUIRED if r not in SUPERSEDED_REQUIRED] \
     + [v for v in SUPERSEDED_REQUIRED.values() if v] + [
     "493 m", "0,93 m", "h = 1,80 m", "3300 mm", "k.č. 109/1", "Stulz WDE80",
-    "Alipašino Polje", "0,36 m²", "≈270 h/god", "≈900 l/god", "H-04", "12,3 kW",
+    "Alipašino Polje", "0,36 m²", "≈270 h/god", "≈900 l/god", "H-04",
     "izvlačni", "≤0,50 m", "3.6.9 Plan uzemljivača", "225°",
     # recenzija A. Čolpa, 27.08.2026
     "500 × 2600 mm, jedinstvene širine", "1,170 m³", "9,36 m³", "POČETAK RADOVA",
@@ -194,14 +203,85 @@ def calculations():
              ["A.6 Energetski bilans", "≈270 h/god", "25,7 kNm", "Stulz WDE80", "D.9 Trajni potrošači"])
 
 
+#   Sjednica writes DXF and exports in two steps; Hamzići's builder does both.
+SITE_BUILDERS = {
+    "sjednica": ("build_drawings.py", "export.py"),
+    "hamzici": ("build_hamzici.py",),
+}
+
+
+def site_script(folder, script):
+    """Run one site's drawing script from its own cad/ folder."""
+    path = os.path.join(folder, "cad", script)
+    if not os.path.exists(path):
+        raise SystemExit(f"missing drawing script {path}")
+    subprocess.run([sys.executable, path], check=True, cwd=os.path.dirname(path))
+
+
+def sheet_text(dxf):
+    """Every TEXT/MTEXT string on one sheet, as it will print."""
+    import ezdxf
+
+    out = []
+    doc = ezdxf.readfile(dxf)
+    for e in doc.modelspace():
+        if e.dxftype() == "TEXT":
+            out.append(e.dxf.text)
+        elif e.dxftype() == "MTEXT":
+            out.append(e.text)
+    return out
+
+
+def check_drawing_text(site, dxfs):
+    """Run FORBIDDEN over the sheets themselves.
+
+    The bans were only ever applied to Prilog I and, through joint_boq, to the
+    predmjer.  Nothing read the drawings, so S-02 and H-02 kept printing
+    'qp >= 1,20 kN/m2' and 'nosač CUSTOM izrade' - and H-01/H-02 kept the Google
+    Maps provenance - for a full round after the Investor's 15.09.2026 decision
+    removed all three everywhere else.  A ban that covers the prose but not the
+    sheets bound into the same annex is not a ban.
+    """
+    bad = []
+    for dxf in sorted(dxfs):
+        for line in sheet_text(dxf):
+            for needle, why in FORBIDDEN:
+                if needle in line:
+                    bad.append(f"{os.path.basename(dxf)}: {needle!r} ({why})\n"
+                               f"      {line.strip()[:110]}")
+    if bad:
+        raise SystemExit(f"{site}: forbidden text on the sheets:\n    "
+                         + "\n    ".join(bad))
+
+
 def drawings():
+    """Rebuild each site's sheets, then copy them into the joint annex folder.
+
+    This used to copy only. A site whose DXF had been regenerated without its export
+    step then shipped a stale DWG/PDF into Prilog III - the sheet in the annex showed
+    the previous revision while the DXF beside it was current, and nothing said so.
+    Building here makes the annex a function of the sources, and the mtime check below
+    refuses to copy an export that is older than the DXF it is supposed to represent.
+    """
     for site, folder, pattern in (("sjednica", SJ, "[SME]-0*"), ("hamzici", HZ, "H-0*")):
+        for script in SITE_BUILDERS[site]:
+            site_script(folder, script)
         src = glob.glob(os.path.join(folder, "TD-OUTPUT", "grafika", pattern))
+        stale = []
+        for f in src:
+            if f.endswith(".dxf"):
+                continue
+            dxf = os.path.splitext(f)[0] + ".dxf"
+            if os.path.exists(dxf) and os.path.getmtime(f) < os.path.getmtime(dxf) - 1:
+                stale.append(os.path.basename(f))
+        if stale:
+            raise SystemExit(f"{site}: export older than the DXF: {', '.join(sorted(stale))}")
+        check_drawing_text(site, [f for f in src if f.endswith(".dxf")])
         dst = os.path.join(paths.GRAFIKA, site)
         os.makedirs(dst, exist_ok=True)
         for f in src:
             shutil.copy(f, dst)
-        print(f"  drawings {site}: {len(src)} files")
+        print(f"  drawings {site}: {len(src)} files (rebuilt)")
 
 
 def run(script):

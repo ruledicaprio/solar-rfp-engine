@@ -245,34 +245,9 @@ HAMZICI_QTY = {"5.1": ("m1", 20), "5.2": ("m", 30), "5.3": ("m", 30), "5.12": ("
 
 # ---- BS Hamzići, LOT 1: same stands and foundations, only the site facts differ
 HAMZICI_LOT1_EDITS = {
-    "1.1": [
-        # no energy figures in Prilog II: the Sjednica December-yield sentence gives way
-        ("Nagib je zadržan zbog decembarskog prinosa — pri podnevnoj visini Sunca 23,6° na 42,94° N "
-         "nagib 45° ostvaruje 93 % direktnog zračenja u odnosu na 85 % pri 35°, a decembar je "
-         "mjerodavni mjesec za dimenzionisanje autonomnog sistema",
-         "Listopadno stablo JJI–JI od stuba (≈7–9 m, 15–20 m, izvan zakupa) ostaje; pri polju "
-         "okrenutom prema jugozapadu njegov uticaj je mali (Prilog I, Tačka 3.7)"),
-        # Sjednica wording since fix_boq_sw_4x3l.py (4x3L, SW, 11.09.2026)
-        ("smještaj: nosači se temelje IZVAN ograđenog platoa, jugozapadno od ograde (JZ strana), "
-         "cca 0,40 m od ograde;",
-         "smještaj (43,288012° N, 17,624794° E, 493 m n.v.): nosači se temelje IZVAN ograđenog "
-         "platoa, jugozapadno od ploče i ograde, u pojasu dubine 3300 mm i dužine 12,50 m (JZ "
-         "strana), unutar zakupa k.č. 109/1 K.O. Hamzići (12,00 × 12,50 m); trake 350 mm od granice "
-         "zakupa i od ploče;"),
-        ("gornja (sjeveroistočna) ivica panela je 0,83 m iznad kote ograde h=2,10 m. Ponuđač "
-         "provjerava da konstrukcija u cijelosti ostaje unutar zakupljene parcele 16,00 × 9,40 m",
-         "gornja (sjeveroistočna) ivica panela je 0,93 m iznad vrha ograde — ograda je h=1,80 m "
-         "iznad ploče, odnosno 2,00 m iznad vanjskog terena, koji je uz ploču na −0,20 m (ovjereni "
-         "04_Ograda). Ponuđač provjerava da konstrukcija u cijelosti ostaje unutar zakupa "
-         "12,00 × 12,50 m"),
-        ("prema ovjerenoj projektnoj dokumentaciji lokacije i BAS EN 1991-1-4 sa BiH nacionalnim "
-         "aneksom, uz primjenu faktora orografije za izloženi planinski vrh na 1076 m n.v.",
-         "prema BAS EN 1991-1-4 sa BiH nacionalnim aneksom — ista vrijednost kao na lokaciji "
-         "Sjednica, radi jedne konstrukcije za obje lokacije (iz ovjerenog projekta lokacije, "
-         "493 m n.v., izvodi se 0,69–0,96 kN/m²)."),
-        ("za konkretnu lokaciju (planinski vrh)", "za konkretnu lokaciju"),
-        ("(v. crtež E-01)", "(v. crtež H-05)"),
-    ],
+    # 1.1 is no longer patched here: since 15.09.2026 the item is written out in full,
+    # per site, by SITE_REPLACE - the old (old, new) pairs targeted sentences that the
+    # shortened text no longer contains.
     "2.4": [                                  # beton - 2.3 do prenumeracije sekcije 2
                                               # (recenzija 27.08.2026, fix_boq_recenzija_a.py)
         ("Klasa XF3 je mjerodavna zbog cikličnog smrzavanja i odmrzavanja u vlažnom stanju na "
@@ -291,8 +266,153 @@ BOTH_SITES_EDITS = {
                  "do izlazne žaluzine iz Tačke 4.6.")],
         "4.2": [("ojačanja poda iz Tačke 4.4.",             # the grillage is 4.3, 4.4 the
                  "ojačanja poda iz Tačke 4.3.")],           # radiator's flexible joint
+        # 16.09.2026, odluka Naručioca: sklopke i RCD na agregatu sa 63 A na 50 A.
+        # In agregata je 26,0 A (18 kVA / 400 V), deratirana prime 20,8 A, pa 50 A
+        # ostavlja faktor 1,9 - 63 A je bilo predimenzionirano.  Prekostrujna
+        # zaštita se NE mijenja i ostaje C 32 A: agregat daje ≈78 A (3 × In, PMG),
+        # što je 2,4 × 32 A ali samo 1,56 × 50 A, pa bi podizanje oslabilo zaštitu.
+        # 16.09.2026, drugi dio: zatvara se RED-09 iz 03-electrical.md. Iz njegove
+        # tabele ispravki su ranije usvojeni RCD 300 mA S-tip i RCBO 30 mA tip A,
+        # a dvije nisu — trofazni dovod je ostao na tri jednopolna prekidača, a
+        # dovod ispravljača na 32 A bez stepenovanja. Uz to sklopka 0-1 nije
+        # prekidala N, što na TN-S ostrvskom sistemu sa jedinom N-PE vezom u ovom
+        # ormaru nije formalnost, i nije bio zadan tip RCD-a iza prekidačkih
+        # ispravljača.
+        "5.6": [("za odabir izvora, 1-0-2, 63 A", "za odabir izvora, 1-0-2, 50 A"),
+                ("3p dvopoložajna sklopka 0-1, 63 A", "3p dvopoložajna sklopka 0-1, 50 A"),
+                ("(RCD) 63 A / 300 mA", "(RCD) 50 A / 300 mA"),
+                ("3p dvopoložajna sklopka 0-1, 50 A, sa pomoćnim kontaktom",
+                 "4p dvopoložajna sklopka (QS) 0-1, 50 A, sa prekidanjem neutralnog "
+                 "vodiča i sa pomoćnim kontaktom"),
+                ("3 kom 1p automatski prekidač, C, 32 A, 10 kA, za zaštitu napajanja "
+                 "preko DEA",
+                 "1 kom 4p (3P+N) kompaktni prekidač (Q1) 32 A, sa podesivim magnetnim "
+                 "okidanjem, za zaštitu napajanja preko DEA; tri nezavisna jednopolna "
+                 "uređaja na trofaznom dovodu NISU prihvatljiva — jednopolno okidanje "
+                 "ostavlja agregat u jednofaznom radu sa dvije faze pod naponom i ne "
+                 "prekida neutralni vodič"),
+                ("(RCD) 50 A / 300 mA, S-tip (selektivna), za cjelokupni napojni krug "
+                 "iza sklopke izvora",
+                 "(RCD) 50 A / 300 mA, S-tip (selektivna), najmanje TIP A — tip AC NIJE "
+                 "prihvatljiv jer se iza sklopke napajaju prekidački ispravljači; "
+                 "konačan tip prema dokumentaciji proizvođača ispravljačkog sistema; za "
+                 "cjelokupni napojni krug iza sklopke izvora"),
+                ("1 kom 3p automatski prekidač, C, 32 A, 10 kA, za AC napajanje "
+                 "ispravljačkog sistema",
+                 "1 kom 3p automatski prekidač, C, 20 A, 10 kA, za AC napajanje "
+                 "ispravljačkog sistema (projektna struja 14,4 A pri ograničenju ulazne "
+                 "snage ispravljača na 9,5 kW iz Tačke 3.1)")],
     },
 }
+# ---- LOT 1, items written out in full (15.09.2026) -------------------------
+# The reviewer asked for 1.1-1.3 to be simplified (K1-K3, 27.08.2026) and the Investor
+# then removed every load figure from the tender: actions and design forces follow from
+# the bidder's own tehničko rješenje, so the predmjer states scope, not a design. The
+# source item 1.1 ran to ~4 000 characters of justification; patching it sentence by
+# sentence no longer worked, so 1.1-1.3 are replaced whole.
+def _lot1_11(smjestaj, crtez):
+    return (
+        "Isporuka i montaža nosive metalne konstrukcije (ground mount support) za prihvat "
+        "fotonaponskih panela:\n"
+        " - 4 odvojena nosača u jednom nizu, svaki za 3 fotonaponska modula (3 reda × 1 kolona, "
+        "položeno); razmak između nosača 400 mm, dužina niza 10 312 mm\n"
+        " - nagib fiksno 45°, orijentacija JUGOZAPAD (azimut 225°), niz paralelan sa "
+        "jugozapadnom ogradom\n"
+        " - gabariti po nosaču: širina polja 2278 mm (poprečna greda 2891 mm, bočni prepust "
+        "306,5 mm), dužina polja po nagibu 3442 mm, horizontalna projekcija 2434 mm pri nagibu "
+        "45°; donja ivica panela na +0,50 m, gornja ivica na +2,93 m od nivoa terena\n"
+        f" - {smjestaj}\n"
+        " - materijal, antikorozivna zaštita, zavarivanje i spojni pribor prema Prilogu I, "
+        "Tačka 3.3\n"
+        " - uključeno ožičenje i povezivanje panela do PVDB distribucije preko po-string DC "
+        f"odvodnika prenapona (v. crtež {crtez}): 12 modula se povezuje u DVA STRINGA po 6 modula "
+        "(string 1 — nosači PV-1 i PV-2; string 2 — nosači PV-3 i PV-4), po jedan string na svaku "
+        "od dvije rute PVDB ormara\n"
+        " - UZ PONUDU: Ponuđač je obavezan da uz ponudu dostavi tehničko rješenje konstrukcije za "
+        "prihvat fotonaponskih panela za predmetnu lokaciju, sa obaveznim statičkim proračunom "
+        "(Tačka 1.3) i specifikacijom materijala. Tehničko rješenje mora biti pregledano i "
+        "odobreno prije početka izvođenja radova")
+
+
+_LOT1_START = "Isporuka i montaža nosive metalne konstrukcije"
+
+# item -> (expected start of the source text, unit, qty, new text), per site
+SITE_REPLACE = {
+    "LOT 1": {
+        "sjednica": {"1.1": (_LOT1_START, "kpl", 4, _lot1_11(
+            "smještaj: nosači se temelje IZVAN ograđenog platoa, jugozapadno od ograde (JZ "
+            "strana), cca 0,40 m od ograde; odmak od ograde Ponuđač utvrđuje pri poziciranju "
+            "nosača tako da ravan panela nigdje ne dodiruje ogradu; gornja (sjeveroistočna) "
+            "ivica panela je 0,83 m iznad kote ograde h=2,10 m. Ponuđač provjerava da "
+            "konstrukcija u cijelosti ostaje unutar zakupljene parcele 16,00 × 9,40 m",
+            "E-01"))},
+        "hamzici": {"1.1": (_LOT1_START, "kpl", 4, _lot1_11(
+            "smještaj (43,288012° N, 17,624794° E, 493 m n.v.): nosači se temelje IZVAN "
+            "ograđenog platoa, jugozapadno od ploče i ograde, u pojasu dubine 3300 mm i dužine "
+            "12,50 m (JZ strana), unutar zakupa k.č. 109/1 K.O. Hamzići (12,00 × 12,50 m); trake "
+            "350 mm od granice zakupa i od ploče; gornja (sjeveroistočna) ivica panela je 0,93 m "
+            "iznad vrha ograde — ograda je h=1,80 m iznad ploče, odnosno 2,00 m iznad vanjskog "
+            "terena, koji je uz ploču na −0,20 m (ovjereni 04_Ograda)",
+            "H-05"))},
+    },
+}
+
+# Items replaced as a whole on BOTH site sheets: item -> (expected start, unit, qty, text)
+BOTH_SITES_REPLACE = {
+    "LOT 1": {
+        "1.2": ("Isporuka i ugradnja sistema sidrenja", "kpl", 4,
+                "Isporuka i ugradnja sistema sidrenja nosive konstrukcije iz Tačke 1.1 u "
+                "stijenu/beton, hemijskim (epoksidnim) ankerima.\n"
+                " - tip: hemijski (epoksidni/vinilesterski) anker M16 ili M20 sa ETA odobrenjem za "
+                "ugradnju u beton i/ili stijenu, vruće cinčan ili nehrđajući A4\n"
+                " - broj: najmanje 2 ankera po temeljnoj traci, odnosno 4 ankera po nosaču\n"
+                " - nosivost i dubina ugradnje: prema ETA za konkretnu podlogu i prema statičkom "
+                "proračunu iz Tačke 1.3; projektne sile ankerisanja proizlaze iz koncepta "
+                "konstrukcije koji Ponuđač nudi i iskazuju se u tehničkom rješenju\n"
+                " - dokazivanje: ispitivanje čupanjem (pull-out test) na najmanje 2 ankera po "
+                "lokaciji, do 1,5 × projektne sile iz odobrenog tehničkog rješenja, uz zapisnik "
+                "ovjeren od nadzornog organa"),
+        "1.3": ("Statički proračun nosive konstrukcije", "kpl", 1,
+                "Statički proračun nosive konstrukcije i temelja, ovjeren i potpisan od strane "
+                "ovlaštenog inženjera.\n"
+                " - dokaz na dejstvo vjetra prema BAS EN 1991-1-4 sa BiH nacionalnim aneksom, "
+                "uključujući faktor orografije za lokalitet\n"
+                " - dokaz na opterećenje snijegom prema BAS EN 1991-1-3 i na radijalni led prema "
+                "ovjerenoj projektnoj dokumentaciji lokacije\n"
+                " - dokaz sigurnosti na podizanje (uplift) i prevrtanje prema BAS EN 1990\n"
+                " - dimenzionisanje čelične konstrukcije prema BAS EN 1993-1-1, izvedba prema "
+                "BAS EN 1090-2\n"
+                " - dimenzionisanje temelja i sidrenja prema stvarnim geotehničkim uslovima "
+                "(kamenito tlo), uz navođenje dubine smrzavanja za lokalitet\n"
+                "NAPOMENA: Statički proračun se dostavlja u sklopu tehničkog rješenja i uslov je "
+                "za počinjanje radova. Prije početka izvođenja radova tehničko rješenje mora biti "
+                "pregledano i odobreno."),
+    },
+    # Both containers are empty (Investor, 15.09.2026), so Sjednica no longer surveys and
+    # rewires 7 existing circuits either - the item becomes the same new-installation scope
+    # Hamzići already had. "rasvjeta prepreke" is renamed "rasvjeta stuba" throughout.
+    "LOT 2": {
+        "5.10": ("Snimanje postojećeg stanja i prevezivanje postojećih strujnih krugova", "kpl", 1,
+                 "Isporuka, montaža i povezivanje rasvjete i utičnica kontejnera — kontejner je "
+                 "PRAZAN, bez postojećih električnih instalacija. Obuhvata:\n"
+                 " - 1 kom LED svjetiljka IP65, svjetlosnog toka ≥1500 lm, 230 V iz GRO; druga "
+                 "svjetiljka kontejnera je LED svjetiljka 48 V DC sa prekidačem uz vrata iz Tačke "
+                 "5.16, koja daje svjetlo i kad agregat ne radi\n"
+                 " - 2 kom utičnica 230 V / 16 A, IP44\n"
+                 " - prekidač rasvjete\n"
+                 " - bezhalogeni kablovi položeni u PVC kanalice, priključak na novi GRO iz "
+                 "Tačke 5.6\n"
+                 " - postojeća SIGNALNA RASVJETA (rasvjeta stuba) antenskog stuba NE napaja se iz "
+                 "GRO: priključuje se na DC razvod −48 V iz Tačke 5.16, svjetiljka prema Tački "
+                 "5.17 — rasvjeta stuba je trajno noćno opterećenje i ne smije biti isključena "
+                 "prilikom rekonfiguracije napajanja\n"
+                 " - Ponuđač mjeri stvarnu snagu rasvjete stuba i dostavlja je Kupcu radi provjere "
+                 "energetskog bilansa (Prilog I, Tačka 1)\n"
+                 "Komplet sa spojnim materijalom, oznakama, ispitivanjem i jednopolnom shemom "
+                 "izvedenog stanja."),
+    },
+}
+
 BOTH_SITES_NOTE_EDITS = {
     "LOT 2": {"OPŠTE NAPOMENE UZ TAČKU 4:": [
         ("roštilj za raznošenje opterećenja iz Tačke 4.4 OBAVEZAN",
@@ -307,25 +427,9 @@ HAMZICI_NOTE_EDITS = {
 }
 
 # Items replaced as a whole: item -> (expected start of the Sjednica text, unit, qty, new text)
-HAMZICI_REPLACE = {
-    "5.10": ("Snimanje postojećeg stanja i prevezivanje postojećih strujnih krugova", "kpl", 1,
-             "Isporuka, montaža i povezivanje rasvjete i utičnica kontejnera — kontejner je PRAZAN, "
-             "bez postojećih električnih instalacija. Obuhvata:\n"
-             " - 1 kom LED svjetiljka IP65, svjetlosnog toka ≥1500 lm, 230 V iz GRO; druga svjetiljka "
-             "kontejnera je LED svjetiljka 48 V DC sa prekidačem uz vrata iz Tačke 5.16, koja daje "
-             "svjetlo i kad agregat ne radi\n"
-             " - 2 kom utičnica 230 V / 16 A, IP44\n"
-             " - prekidač rasvjete\n"
-             " - bezhalogeni kablovi položeni u PVC kanalice, priključak na novi GRO iz Tačke 5.6\n"
-             " - postojeća SIGNALNA RASVJETA (rasvjeta prepreke) antenskog stuba NE napaja se iz GRO: "
-             "priključuje se na DC razvod −48 V iz Tačke 5.16, svjetiljka prema Tački 5.17 — rasvjeta "
-             "prepreke je trajno noćno opterećenje i ne smije biti isključena prilikom rekonfiguracije "
-             "napajanja\n"
-             " - Ponuđač mjeri stvarnu snagu rasvjete prepreke i dostavlja je Kupcu radi provjere "
-             "energetskog bilansa (Prilog I, Tačka 1)\n"
-             "Komplet sa spojnim materijalom, oznakama, ispitivanjem i jednopolnom shemom izvedenog "
-             "stanja."),
-}
+# 5.10 moved to BOTH_SITES_REPLACE on 15.09.2026: both containers count as empty, so the
+# item is identical at the two sites and is no longer a Hamzići delta.
+HAMZICI_REPLACE = {}
 
 # New Hamzići items per LOT: (item, after, unit, qty, text). The row goes right after item
 # `after`; its number must be free and fall numerically between `after` and the section's
@@ -383,10 +487,17 @@ BOTH_SITES_NEW_ITEMS = {
     ],
 }
 
+def _site_replaced(lot):
+    """Items whose whole text is written per site - they differ between the two sheets."""
+    per_site = SITE_REPLACE.get(lot, {})
+    return set().union(*(set(d) for d in per_site.values())) if per_site else set()
+
+
 EXPECTED_CHANGES = {
-    "LOT 1": sorted(set(HAMZICI_LOT1_EDITS) | {n for n, *_ in NEW_ITEMS["LOT 1"]}),
+    "LOT 1": sorted(set(HAMZICI_LOT1_EDITS) | _site_replaced("LOT 1")
+                    | {n for n, *_ in NEW_ITEMS["LOT 1"]}),
     "LOT 2": sorted(set(HAMZICI_EDITS) | set(HAMZICI_QTY) | set(HAMZICI_REPLACE)
-                    | {n for n, *_ in NEW_ITEMS["LOT 2"]}),
+                    | _site_replaced("LOT 2") | {n for n, *_ in NEW_ITEMS["LOT 2"]}),
 }
 
 # ---- NAPOMENA (source LOT 2 notes, adapted to two sites) --------------------
@@ -659,6 +770,9 @@ def site_sheet(wb, src, lot, site, lot1_src, log):
     ws.cell(lot_row, 2).value = f"UKUPNO {lot} — {SITE[site]['up']} (bez PDV-a):"
     apply_text_edits(ws, BOTH_SITES_EDITS.get(lot, {}), log, "source typo fix", idempotent=True)
     apply_note_edits(ws, BOTH_SITES_NOTE_EDITS.get(lot, {}), log, idempotent=True)
+    # whole-item rewrites: first the ones shared by both sites, then the per-site ones
+    apply_replacements(ws, BOTH_SITES_REPLACE.get(lot, {}), log)
+    apply_replacements(ws, SITE_REPLACE.get(lot, {}).get(site, {}), log)
     insert_new_items(ws, BOTH_SITES_NEW_ITEMS.get(lot, []), log)
 
     for sec, (_, _, rsub) in s["sections"].items():      # label clipped in column A
@@ -718,6 +832,19 @@ def apply_note_edits(ws, edits, log, idempotent=False):
                    + (f", {len(pairs) - done} already in the source" if done < len(pairs) else ""))
 
 
+def apply_replacements(ws, mapping, log):
+    """Replace whole items: item -> (expected source start, unit, qty, new text)."""
+    if not mapping:
+        return
+    items = structure(ws)["items"]
+    for n, (start, unit, qty, text) in mapping.items():
+        r = items[n]
+        if not str(ws.cell(r, 2).value).startswith(start):
+            raise ValueError(f"{ws.title} {n}: unexpected source text")
+        ws.cell(r, 2).value, ws.cell(r, 3).value, ws.cell(r, 4).value = text, unit, qty
+        log.append(f"{ws.title}: {n} replaced ({unit} x {qty}, {len(text)} chars)")
+
+
 def apply_hamzici_lot1(ws, log):
     apply_text_edits(ws, HAMZICI_LOT1_EDITS, log)
     insert_new_items(ws, NEW_ITEMS["LOT 1"], log)
@@ -726,13 +853,8 @@ def apply_hamzici_lot1(ws, log):
 def apply_hamzici_lot2(ws, log):
     apply_text_edits(ws, HAMZICI_EDITS, log)
     apply_note_edits(ws, HAMZICI_NOTE_EDITS["LOT 2"], log)
+    apply_replacements(ws, HAMZICI_REPLACE, log)
     items = structure(ws)["items"]
-    for n, (start, unit, qty, text) in HAMZICI_REPLACE.items():
-        r = items[n]
-        if not str(ws.cell(r, 2).value).startswith(start):
-            raise ValueError(f"{ws.title} {n}: unexpected source text")
-        ws.cell(r, 2).value, ws.cell(r, 3).value, ws.cell(r, 4).value = text, unit, qty
-        log.append(f"{n}: replaced ({unit} x {qty})")
     for n, (unit, qty) in HAMZICI_QTY.items():
         r = items[n]
         if ws.cell(r, 3).value != unit:

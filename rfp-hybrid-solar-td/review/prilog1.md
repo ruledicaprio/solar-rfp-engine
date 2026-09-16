@@ -4,22 +4,9 @@
 LOT 1: nosači fotonaponskih panela · LOT 2: dizel električni agregat u kontejneru —
 **svaki LOT obuhvata obje lokacije**
 
-**Verzija:** Rev 1 zajedničke TD, 11.09.2026. (za lokaciju Sjednica nastavak Rev 9)
-
-Ovaj Prilog utvrđuje tehničke zahtjeve i dokaze koje Ponuđač dostavlja **UZ PONUDU**
-kao uslov kvalifikacije — ponuda koja ih ne sadrži smatra se neprihvatljivom.
-
 Na obje lokacije se ugrađuje **isti sistem**: 12 fotonaponskih modula na 4 nosača, isti
 agregat sa spremnikom goriva u postojećem kontejneru i isto upravljanje. Zahtjevi koji
 se razlikuju po lokaciji dati su u zasebnim tačkama ili kolonama, sa oznakom lokacije.
-
-U slučaju neslaganja između dokumenata TD mjerodavni su redom: (1) Tenderska
-dokumentacija (TD), (2) Prilog I, (3) Prilog II (Obrazac za cijenu ponude, zaseban za
-svaki LOT), (4) Prilog III (grafički prilozi).
-
-Prilog III sadrži i preuzete stranice ovjerenih projekata lokacija, koje služe samo kao
-podloga; **mjerodavan raspored opreme i otvora u kontejneru je onaj sa crteža M-01
-(Sjednica) i H-04 (Hamzići).**
 
 ---
 
@@ -35,23 +22,26 @@ podloga; **mjerodavan raspored opreme i otvora u kontejneru je onaj sa crteža M
 | Zakupljeni prostor | ≈150 m² (16,00 × 9,40 m) | 150 m² (12,00 × 12,50 m), k.č. 109/1 K.O. Hamzići |
 | Postojeći objekat | AB ploča 5,40 × 5,40 m, ograda h = 2,10 m, kapija 1,00 m | AB ploča 5,40 × 5,40 m, ograda h = 1,80 m, kapija 1,30 m na SZ strani |
 | Antenski stub | rešetkasti, h = 38 m, baza 4,20 × 4,20 m | rešetkasti, h = 32 m, baza 3,70 × 3,70 m; platforma na +3,0 m iznad krova kontejnera |
-| Kontejner | 3,00 × 2,30 m vanjski, zidni paneli 60 mm, bez opreme; ulazna vrata 900 × 2000 mm na JUGOISTOČNOM (JI) zidu | K2 3,00 × 2,30 m vanjski, zidni paneli 60 mm, **prazan, bez GRO i instalacija**; ulazna vrata 1,00 × 2,15 m na SJEVEROZAPADNOM (SZ) zidu; na JUGOISTOČNOM (JI) zidu, u sredini, klima-uređaj Stulz WDE80 koji se demontira (Tačka 4.8) |
+| Kontejner | 3,00 × 2,30 m vanjski, zidni paneli 60 mm, **prazan, bez GRO i instalacija**; ulazna vrata 900 × 2000 mm na JUGOISTOČNOM (JI) zidu | K2 3,00 × 2,30 m vanjski, zidni paneli 60 mm, **prazan, bez GRO i instalacija**; ulazna vrata 1,00 × 2,15 m na SJEVEROZAPADNOM (SZ) zidu; na JUGOISTOČNOM (JI) zidu, u sredini, klima-uređaj Stulz WDE80 koji se demontira (Tačka 4.8) |
 | Nosivost poda kontejnera | 10,00 kN/m² ukupno (g+p), ravnomjerno raspodijeljeno — ovjereni projekat lokacije, „04 AG dio", tačka 4.4.2.3 | 10,00 kN/m² ukupno (g+p) — ovjereni projekat lokacije, AG dio, tačka 4.4.2 |
 | Sistem napajanja | Huawei ICC360-HA1-C1 (PowerCube 1000) i MTS9302A, vanjski ormari smješteni uz SJEVEROISTOČNI (SI) zid kontejnera, u sjeni | Huawei ICC360-HA1-C1 (PowerCube 1000) i MTS — zasebna nabavka Naručioca, kao na Sjednici; vanjski ormari na ploči sa JZ strane, iza FN polja |
 | Uzemljenje | postojeći prstenasti uzemljivač Fe/Zn 25 × 4 mm | postojeći uzemljivač Fe/Zn 25 × 4 mm: prsten u temeljima stopa stuba i prsten na dubini 0,8 m |
-| Orijentacija | kompleks je zakrenut 45° (Google Maps, Naručilac 11.09.2026): vrata JI, hladnjak agregata SZ, FN polje JZ, vanjski ormari SI; crteži su pravougaoni na kompleks, strelica pokazuje pravi sjever (S-01) | kompleks je zakrenut 45° (Google Maps, Naručilac 11.09.2026): vrata i kapija SZ, klima-uređaj Stulz i hladnjak agregata JI, FN polje JZ; ovjereni crtež iz 2017. je zakrenut ≈180°; orijentacija se potvrđuje obilaskom (H-01) |
+| Orijentacija | kompleks je zakrenut 45°: vrata JI, hladnjak agregata SZ, FN polje JZ, vanjski ormari SI; crteži su pravougaoni na kompleks, strelica pokazuje pravi sjever (S-01) | kompleks je zakrenut 45°: vrata i kapija SZ, klima-uređaj Stulz i hladnjak agregata JI, FN polje JZ (H-01) |
 
 ### 1.1 Klimatski i geotehnički uslovi
 
-| Uticaj | BS Sjednica | BS Hamzići | Napomena |
-|---|---|---|---|
-| **Vjetar** | **qp ≥ 1,20 kN/m²** (udar 3 s ≈ 45 m/s) | **qp ≥ 1,20 kN/m²** (izvedeno iz ovjerenog projekta 0,69–0,96 kN/m²) | BAS EN 1991-1-4 + BiH NA — **mjerodavno dejstvo**; jedna konstrukcija za obje lokacije |
-| Snijeg | μ₁ = 0,4 pri 45°; ≈0,5 m opažene visine → ≈0,6 kN/m² | sk = 2,10 kN/m² (projekat) → ≈0,84 kN/m² na ravni panela | prema BAS EN 1991-1-3 + BiH NA; provjera obavezna, nije mjerodavna |
-| **Led** | radijalni 20 mm, gustina 300 kg/m³ | radijalni 20 mm, gustina 500 kg/m³ (projekat stuba) | mjerodavan kao akrecija na profile i spojeve |
-| Temperatura | −25 °C do +50 °C | −25 °C do +50 °C; projektni ambijent +40 °C | radni opseg opreme |
-| Gustina zraka | 1,04–1,09 kg/m³ | 1,06–1,12 kg/m³ | derating agregata i dimenzionisanje ventilacije |
-| Tlo | kamenito (krš); nosivost ≥100 kPa | krš; σdop = 150 kPa, bez podzemne vode (projekat) | Ponuđač potvrđuje geomehaničkim uvidom |
-| Smrzavanje | temeljna spojnica ispod dubine smrzavanja | isto | Ponuđač navodi usvojenu dubinu u dnevniku/knjizi |
+Dejstva vjetra, snijega i leda Ponuđač usvaja sam, za konkretnu lokaciju, prema
+standardima iz Tačke 2 i ovjerenoj projektnoj dokumentaciji lokacije iz Priloga III.
+
+| Uticaj | BS Sjednica | BS Hamzići |
+|---|---|---|
+| Vjetar | prema BAS EN 1991-1-4 + BiH NA, uključujući faktor orografije | isto |
+| Snijeg | prema BAS EN 1991-1-3 + BiH NA | isto |
+| Led | radijalni led prema ovjerenoj projektnoj dokumentaciji lokacije | isto |
+| Temperatura | −25 °C do +50 °C | −25 °C do +50 °C; projektni ambijent +40 °C |
+| Gustina zraka | 1,04–1,09 kg/m³ | 1,06–1,12 kg/m³ |
+| Tlo | kamenito (krš); nosivost ≥100 kPa | krš; σdop = 150 kPa, bez podzemne vode |
+| Smrzavanje | temeljna spojnica ispod dubine smrzavanja; Ponuđač navodi usvojenu dubinu | isto |
 
 ## 2. Referentni standardi
 
@@ -97,33 +87,31 @@ razlike su u Tački 3.7.
 | Donja / gornja ivica | **+0,50 m / +2,93 m** |
 | Površina izloženosti vjetru | 7,84 m² po nosaču |
 
-### 3.2 Projektna opterećenja konstrukcije
+### 3.2 Tehničko rješenje nosive konstrukcije
 
-**Izrada konstrukcije:** zahtijeva se **CUSTOM IZRADA** konstrukcije dimenzionisana i
-dokazana za stvarna opterećenja i uticaje na lokalitetu. Nijedan kataloški nagib Huawei
-nosača tipa A nije usklađen sa qp lokacija (deklarisano 0,52–0,87 kN/m² prema
-zahtijevanih 1,20 kN/m²).
+Konstrukcija se ovom specifikacijom **ne zadaje**. Ponuđač je obavezan da **uz ponudu**
+dostavi tehničko rješenje konstrukcije za prihvat fotonaponskih panela, za obje lokacije,
+sa statičkim proračunom ovjerenim i potpisanim od ovlaštenog inženjera i sa specifikacijom
+materijala (Tačka 5, dokaz 2).
 
-**Podatak lokaliteta** (obavezujuće, iz ovjerene projektne dokumentacije lokacije):
+Dejstva (vjetar, snijeg, led) i sve projektne sile — podizanje, horizontalna sila, moment
+prevrtanja i spreg po temeljnoj traci — usvaja i dokazuje Ponuđač za koncept konstrukcije
+koji nudi. **Projektne vrijednosti se ne zadaju ovom specifikacijom.**
 
-| Parametar | Zahtjev |
-|---|---|
-| Pritisak vjetra | qp ≥ 1,20 kN/m² na obje lokacije |
-| Koeficijent sile | cf ≥ 1,5 pri 45° prema EN 1991-1-4 §7.3, osim ako se proračunom dokaže drugačije |
-| Mjerodavno | podizanje (uplift) i prevrtanje, a NE nosivost tla |
+Statički proračun se dostavlja u sklopu tehničkog rješenja i uslov je za počinjanje radova.
+Prije početka izvođenja radova tehničko rješenje mora biti pregledano i odobreno.
 
-**Projektne sile po nosaču se ne zadaju.** One proizlaze iz koncepta konstrukcije koji
-Ponuđač nudi i iskazuju se i dokazuju u njegovom tehničkom rješenju i statičkom proračunu
-(Tačka 5, dokaz 2). Vrijednosti u tabeli ispod su **orijentacione**, izvedene za referentnu
-geometriju polja iz Tačke 3.1, i služe samo za procjenu reda veličine:
+Proračun se radi prema standardima iz Tačke 2, najmanje:
 
-| Parametar (orijentaciono) | Vrijednost |
-|---|---|
-| Površina izloženosti vjetru | 7,84 m² po nosaču |
-| Sila podizanja po nosaču | 14,1 kN (GSN, γQ = 1,5 / γG,fav = 0,9; vlastita težina konstrukcije se zanemaruje) |
-| Horizontalna sila po nosaču | 10,0 kN (GSN) |
-| Moment prevrtanja po nosaču | 25,7 kNm (GSN) |
-| Spreg po temeljnoj traci | 16,1 kN pri razmaku traka 1600 mm |
+- BAS EN 1990 — osnove proračuna, uključujući dokaz na podizanje i prevrtanje
+- BAS EN 1991-1-4 sa BiH nacionalnim aneksom — vjetar, uključujući faktor orografije
+- BAS EN 1991-1-3 sa BiH nacionalnim aneksom — snijeg; radijalni led prema ovjerenoj
+  projektnoj dokumentaciji lokacije
+- BAS EN 1993-1-1 — dimenzionisanje čelične konstrukcije; izvedba prema BAS EN 1090-2 (EXC2)
+- BAS EN 1992-1-1 i BAS EN 1997-1 — temelji i geotehnički uslovi, uz dubinu smrzavanja
+
+Napomena: za ovakvu konstrukciju mjerodavne su provjere na podizanje (uplift) i
+prevrtanje, a ne nosivost tla.
 
 ### 3.3 Materijal i izrada konstrukcije
 
@@ -147,8 +135,8 @@ geometriju polja iz Tačke 3.1, i služe samo za procjenu reda veličine:
 | Materijal | vruće cinčan ili nehrđajući A4 |
 | Broj | min. 2 ankera po temeljnoj traci, odnosno 4 po nosaču |
 | Nosivost i dubina ugradnje | prema ETA za konkretnu podlogu (beton / stijena) i prema statičkom proračunu iz tehničkog rješenja Ponuđača |
-| **Projektne sile ankerisanja** | proizlaze iz koncepta konstrukcije koji Ponuđač nudi i iskazuju se u tehničkom rješenju; mjerodavno opterećenje sidrenja je **sila po traci od momenta prevrtanja** (Tačka 3.2, orijentaciono) |
-| Dokazivanje | ispitivanje čupanjem (pull-out) na ≥10 % ugrađenih ankera, min. 2 po nosaču, do 1,5 × projektne sile, uz zapisnik ovjeren od nadzornog organa |
+| **Projektne sile ankerisanja** | proizlaze iz koncepta konstrukcije koji Ponuđač nudi i iskazuju se i dokazuju u njegovom tehničkom rješenju i statičkom proračunu (Tačka 3.2) |
+| Dokazivanje | ispitivanje čupanjem (pull-out) na **min. 2 ankera po lokaciji**, do 1,5 × projektne sile iz odobrenog tehničkog rješenja, uz zapisnik ovjeren od nadzornog organa |
 
 ### 3.5 Temelji nosača
 
@@ -164,10 +152,9 @@ geometriju polja iz Tačke 3.1, i služe samo za procjenu reda veličine:
 
 **Traka se betonira punom dubinom rova, jedinstvene širine.** Rov u stijeni siječe se
 jednom širinom po cijeloj dubini — temelj širi u dnu nego u vrhu tražio bi potkopavanje i
-na kršu nije izvodiv. Vlastita težina trake je dio dokaza sigurnosti na podizanje:
-`1,170 m³ × 24 kN/m³ × 0,9 = 25,3 kN` prema sprezi od 16,1 kN po traci. Traka manje
-zapremine tu provjeru ne zatvara vlastitom težinom. Pošto traka ispunjava rov,
-**zatrpavanja nema** i sav iskopani materijal se odvozi.
+na kršu nije izvodiv. Vlastita težina trake je dio dokaza sigurnosti na podizanje, koji
+Ponuđač daje u svom statičkom proračunu. Pošto traka ispunjava rov, **zatrpavanja nema**
+i sav iskopani materijal se odvozi.
 
 ### 3.6 Uzemljenje (LOT 1)
 
@@ -214,10 +201,10 @@ Hamziće.
 | Izvedba | za montažu u prostor (skid, bez vlastitog kućišta) |
 | Dimenzije | 1550 × 620 × 1020 mm (referentno ±5 %) |
 | Masa | 365 kg suho / 372 kg mokro (referentno) |
-| Derating | Sjednica: 1076 m n.v., Hamzići: 493 m n.v., temperatura okoline do +40 °C (ISO 3046-1); Ponuđač dostavlja derating proizvođača za obje lokacije |
-| **Uzbuda (OBAVEZNO)** | nezavisna pobuda — **PMG ili AREP/AUX** namotaj; trajna struja kratkog spoja **≥3 × In (≈78 A)** u trajanju ≥10 s prema ISO 8528-3. Standardna SHUNT pobuda **NIJE prihvatljiva** |
+| Derating | snaga prema ISO 3046-1 za nadmorsku visinu lokacije (Sjednica 1076 m n.v., Hamzići 493 m n.v.) i temperaturu okoline do +40 °C |
+| Uzbuda | nezavisna pobuda — **PMG ili AREP/AUX** namotaj; trajna struja kratkog spoja **≥3 × In (≈78 A)** u trajanju ≥10 s prema ISO 8528-3 |
 | Antivibracioni elementi | gumeno-metalni oslonci, vlastita frekvencija ≤8 Hz, statički progib ≥5 mm, između skida i roštilja iz Tačke 4.2; **svi priključci na motor elastični** — izduv, hladnjak i **oba voda goriva** |
-| Hladni start | predgrijač rashladne tečnosti na DC, napojen iz DC razvoda −48 V (Tačka 4.5); uključuje ga kontroler agregata samo za kratko predgrijavanje prije starta pri niskoj temperaturi; uz to pomoćna sredstva za hladni start prema proizvođaču i zimsko dizel gorivo prema EN 590. Grijač prostora se ne predviđa — agregat je jedini izvor izmjeničnog napona |
+| Hladni start | predgrijač rashladne tečnosti na DC, napojen iz DC razvoda −48 V (Tačka 4.5), koji uključuje kontroler agregata prije starta pri niskoj temperaturi; pomoćna sredstva za hladni start prema proizvođaču; zimsko dizel gorivo prema EN 590 |
 
 ![Slika 1 — FG Wilson P18-6 (Skid), bočni pogled (ilustrativno)](../TD-OUTPUT/grafika/prilog1/agregat-bocni.png){width=60%}
 
@@ -227,16 +214,12 @@ Hamziće.
 
 - metalni, **dvoplašni**, zapremine **500 l**, sa nivo sondom i detekcijom curenja
   goriva u međuplaštu
-- referentne dimenzije 1050 × 600 × 1310 mm, masa cca 170 kg — pun ≈590 kg na
-  0,63 m² = 9,2 kN/m²; unutar projektnih 10,00 kN/m²
+- referentne dimenzije 1050 × 600 × 1310 mm, masa prazan cca 170 kg (pun ≈590 kg)
 - **OBAVEZAN čelični ram/roštilj za raznošenje opterećenja** pod DEA i pod koritom sa
-  spremnikom, sa prenosom na primarne nosače podne konstrukcije. Opterećenja su
-  koncentrisana na mali broj sekundarnih nosača (HOP 100 × 50 × 3 na 0,51 m), dok se
-  10,00 kN/m² odnosi na ravnomjerno raspodijeljeno opterećenje
-- **sekundarnu zaštitu čini međuplašt** dvoplašnog spremnika sa sondom za detekciju
-  curenja, pa tankvana zapremine ≥110 % **NIJE zahtijevana**. Ispod spremnika se
-  izvodi **prihvatno korito (kada) 1150 × 640 mm, visina ruba 200 mm**, za prihvat
-  kapanja i prosipanja, sa vidljivim najnižim mjestom za kontrolu i pražnjenje
+  spremnikom, sa prenosom opterećenja na primarne nosače podne konstrukcije
+- ispod spremnika se izvodi **prihvatno korito (kada) 1150 × 640 mm, visina ruba
+  200 mm**, za prihvat kapanja i prosipanja, sa vidljivim najnižim mjestom za kontrolu
+  i pražnjenje
 - vanjski priključak za tankanje sa zaštitom od statičkog elektriciteta i
   sprječavanjem prelijevanja
 - odušna cijev izvan kontejnera, sa plamenobranom, udaljena ≥3 m od izduva i usisa
@@ -342,12 +325,13 @@ sredstvom zaštite od indirektnog dodira.
 | Element | Zahtjev |
 |---|---|
 | Nazivna struja | **In = 26,0 A** pri 18 kVA / 400 V |
-| Struja kvara (SHUNT) | prva poluperioda ≈333 A (12,8 × In) → prelazna ≈169 A (6,5 × In) → **TRAJNA ≈13 A (0,5 × In)** — ne aktivira zaštitu (**ne zadovoljava**) |
 | **Struja kvara (PMG/AREP)** | **≥78 A (3 × In) trajno ≥10 s — ZAHTIJEVANO** |
 | Sistem zaštite | TN-S, jedinstvena tačka spajanja N i PE u novom GRO |
-| Glavna zaštita | 4p RCD 63 A / 300 mA, S-tip (selektivna) |
+| Zaštita dovoda | 4p (3P+N) kompaktni prekidač 32 A sa podesivim magnetnim okidanjem; jednopolni uređaji na trofaznom dovodu **nisu prihvatljivi** |
+| Glavna zaštita | 4p RCD 50 A / 300 mA, S-tip (selektivna), **najmanje tip A** — tip AC nije prihvatljiv (prekidački ispravljači iza sklopke) |
 | Krajnji strujni krugovi | RCBO 16 A / 30 mA, tip A (utičnice, rasvjeta) |
-| Sklopka izvora | 4p 63 A, položaji 1 – agregat / 0 – isključeno / 2 – rezerva |
+| Dovod ispravljača | 3p C 20 A (projektna struja 14,4 A pri ograničenju 9,5 kW iz Tačke 4.6) |
+| Sklopka izvora | 4p 50 A, položaji 1 – agregat / 0 – isključeno / 2 – rezerva; sklopka 0-1 iza nje je **4p** (prekida i N) |
 | SPD, AC strana | **tip 1 + 2** (Iimp ≥12,5 kA) — objekti imaju vanjski LPS |
 | SPD, DC strana | tip 2 po stringu (Iimp ≥5 kA, Ucpv ≥425 V), na PVDB i na polju |
 | SPD, signalni vodovi | prema EN 61643-21 (obavezno za stubove h = 38 m i h = 32 m) |
@@ -357,7 +341,7 @@ sredstvom zaštite od indirektnog dodira.
 
 | Postojeće stanje i novi GRO | BS Sjednica | BS Hamzići |
 |---|---|---|
-| Postojeći strujni krugovi | snimiti stanje i prevezati postojeće krugove u novi GRO; signalna rasvjeta antenskog stuba (K7) prelazi na DC razvod −48 V | kontejner je **prazan — nema GRO ni krugova**: nova rasvjeta (2 LED svjetiljke IP65 ≥1500 lm; jedna je za 48 V DC na DC razvodu, pa je svjetlo dostupno i kad agregat ne radi), 2 utičnice 230 V/16 A IP44, kablovi u kanalicama; postojeća svjetiljka za obilježavanje stuba prelazi na DC razvod −48 V |
+| Postojeći strujni krugovi | kontejner je **prazan — nema GRO ni krugova**: nova rasvjeta (2 LED svjetiljke IP65 ≥1500 lm; jedna je za 48 V DC na DC razvodu, pa je svjetlo dostupno i kad agregat ne radi), 2 utičnice 230 V/16 A IP44, kablovi u kanalicama; postojeća rasvjeta stuba prelazi na DC razvod −48 V | kontejner je **prazan — nema GRO ni krugova**: nova rasvjeta (2 LED svjetiljke IP65 ≥1500 lm; jedna je za 48 V DC na DC razvodu, pa je svjetlo dostupno i kad agregat ne radi), 2 utičnice 230 V/16 A IP44, kablovi u kanalicama; postojeća rasvjeta stuba prelazi na DC razvod −48 V |
 | Klima-uređaj | — | **bez kruga za klima-uređaj** (demontira se, Tačka 4.8) |
 | Smještaj GRO | SI zid, uz vanjske ormare koje napaja | SZ zid, jugozapadno od ulaznih vrata; **širina ≤0,50 m** (raspoloživi zid 0,595 m); ormari Huawei su vani, na JZ strani (Tačka 4.3.B) |
 | Grafički prilog | E-01 | H-05 |
@@ -370,7 +354,7 @@ izvoda sa vlastitim zaštitnim prekidačem — preko novog **DC razvoda −48 V*
 
 | Potrošač na DC razvodu | Zahtjev |
 |---|---|
-| Svjetiljka za obilježavanje antenskog stuba | LED za 48 V DC, niskog intenziteta, sa foto-senzorom i nadzorom ispada prema SMU, umjesto postojeće svjetiljke; ili postojeća svjetiljka preko DC/AC pretvarača ≤100 W |
+| Rasvjeta stuba | LED za 48 V DC, niskog intenziteta, sa foto-senzorom i nadzorom ispada prema SMU, umjesto postojeće svjetiljke; ili postojeća svjetiljka preko DC/AC pretvarača ≤100 W |
 | Vatrodojavna centrala | preko DC/DC pretvarača na nazivni napon centrale; centrala zadržava vlastite akumulatore prema EN 54-4 |
 | Punjač akumulatora za start agregata | DC/DC 48 V → 12/24 V prema agregatu, sa strujnim ograničenjem i signalizacijom |
 | Ventilator prostora | 48 V DC (EC), Tačka 4.3 |
@@ -382,15 +366,13 @@ izvoda sa vlastitim zaštitnim prekidačem — preko novog **DC razvoda −48 V*
 
 - start agregata prema **stanju napunjenosti baterija (SoC)**, a ne prema ispadu mreže
   — lokacije nemaju priključak EES
-- **ograničenje ulazne snage ispravljačkog sistema na maks. 9,5 kW dok agregat radi.**
-  Derativana prime snaga agregata je 11,6 kW na Sjednici i 12,3 kW na Hamzićima, a
-  neograničen ispravljački sistem vuče ≈12,5 kW. Granica ujedno drži agregat iznad 30 %
-  opterećenja i sprječava mokri rad motora
-- **parametriranje SMU za minimalan rad agregata (OBAVEZNO)** — dokazuje se protokolom
+- **ograničenje ulazne snage ispravljačkog sistema na maks. 9,5 kW dok agregat radi**,
+  uz zadržavanje opterećenja agregata iznad 30 %
+- **parametriranje SMU za minimalan rad agregata** — dokazuje se protokolom
   iz Tačke 5, stavka 12:
   - start agregata pri dubini pražnjenja baterija **DOD 85 %** (SoC 15 %)
   - zaustavljanje agregata pri **SoC 60 %** — ostatak punjenja preuzima fotonaponsko
-    polje; punjenje baterija agregatom do vrha povećava rad agregata za 10–16 %
+    polje
   - struja punjenja baterija podešena tako da ne ograničava agregat ispod 9,5 kW: na
     najveću vrijednost koju dozvoljava BMS baterijskih modula (proračun pretpostavlja
     0,5 C), uz pisanu potvrdu proizvođača
@@ -461,7 +443,7 @@ lokaciju**.
 | 3 | Izjava o svojstvima prema EN 1090-1 i klasa izvedbe EXC2 | 1 | REALIZACIJA |
 | 4 | Atesti materijala (čelik) i potvrda o vrućem cinčanju (debljina sloja) | 1 | REALIZACIJA |
 | 5 | ETA certifikat i proračun za hemijska sidra | 1 | REALIZACIJA |
-| 6 | Zapisnik o ispitivanju ankera na čupanje (min. 10 %), po lokaciji | 1 | REALIZACIJA |
+| 6 | Zapisnik o ispitivanju ankera na čupanje (min. 2 ankera po lokaciji) | 1 | REALIZACIJA |
 | 7 | Tehnički list (TDS) agregata sa dokazom o PMG/AREP nezavisnoj pobudi (3 × In, ≥10 s) | 2 | PONUDA |
 | 8 | Proračun pada pritiska ventilacije i protutlaka izduvnog sistema, po lokaciji | 2 | REALIZACIJA |
 | 9 | Elaborat zaštite od požara za prostor sa rezervoarom 500 l, po lokaciji | 2 | REALIZACIJA |
@@ -470,6 +452,7 @@ lokaciju**.
 | 12 | Protokol o parametriranju i funkcionalnom ispitivanju integracije DEA–PV–baterija, po lokaciji, uključujući postavljeno ograničenje od 9,5 kW, start pri DOD 85 %, stop pri SoC 60 %, struju punjenja uz potvrdu proizvođača baterija i najkraće vrijeme rada | 2 | PRIMOPREDAJA |
 | 13 | Zapisnik o primopredaji demontiranog klima-uređaja Stulz WDE80 u skladištu Alipašino Polje (Hamzići) | 2 | REALIZACIJA |
 | 14 | Otpremnica skladišta Azići (Bojnička bb) i zapisnik o preuzimanju opreme Kupca na lokaciji, po lokaciji (Tačka 4.9) | 2 | REALIZACIJA |
+| 15 | Derating snage agregata prema ISO 3046-1, od proizvođača, za nadmorsku visinu i projektnu temperaturu obje lokacije | 2 | PONUDA |
 
 ## 6. Ispitivanja i puštanje u rad
 
@@ -479,7 +462,7 @@ Ispitivanja se izvode **na svakoj lokaciji**.
 |---|---|
 | Otpor uzemljenja | ≤10 Ω |
 | Kontinuitet zaštitnih vodiča | ≤0,1 Ω po spoju |
-| Ispitivanje čupanja ankera | ≥10 % ankera, do 1,5 × projektne sile |
+| Ispitivanje čupanja ankera | min. 2 ankera po lokaciji, do 1,5 × projektne sile iz odobrenog tehničkog rješenja |
 | Funkcionalno ispitivanje RCD | vrijeme i struja isključenja prema IEC 61008/61009 |
 | Ispitivanje ventilacije | izmjereni pad pritiska ≤125 Pa |
 | Funkcionalno ispitivanje agregata | automatski start/stop, zaštite, alarmi |

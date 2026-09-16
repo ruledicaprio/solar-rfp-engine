@@ -13,7 +13,7 @@ Sheets:
     S-02  Buduće stanje                    1:50
     S-03  Presjek A-A                      1:30
     M-01  Agregat u kontejneru             1:25
-    E-01  Jednopolna shema                 -
+    E-01  Jednopolna šema — novi GRO i DC razvod -48 V   -
 
 Model space is millimetres at 1:1; the sheet frame is scaled by the plot
 denominator, following the site project's convention.
@@ -413,7 +413,8 @@ def check_extents(doc, name, scale):
         raise SystemExit(f"{name}: content outside the A3 sheet — " + "; ".join(bad))
 
 
-SHEET_SCALE = {"S-01": 50, "S-02": 50, "S-03": 30, "M-01": 25, "E-01": 50}
+SHEET_SCALE = {"S-01": 50, "S-02": 50, "S-03": 30, "S-04": 50,
+               "M-01": 25, "E-01": 50}
 
 
 def build(names=None):

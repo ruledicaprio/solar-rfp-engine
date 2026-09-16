@@ -47,6 +47,9 @@ from ezdxf.enums import TextEntityAlignment as TA                  # noqa: E402
 from bht_frame import (A3_H, A3_W, MARGIN, MARGIN_L, TB_H, TB_W,   # noqa: E402
                        draw_frame, new_doc, north_arrow, scale_bar, _txt)
 import build_drawings as B                                          # noqa: E402
+import genset                                                       # noqa: E402
+import single_line                                                  # noqa: E402
+import sw_view                                                      # noqa: E402
 
 rect, solid_rect, hatch_rect = B.rect, B.solid_rect, B.hatch_rect
 dim_h, dim_v, leader = B.dim_h, B.dim_v, B.leader
@@ -414,10 +417,12 @@ def plan_equipment(msp, X0, Y0, L, sc, detail):
     if detail:
         fx, fy, fw, fd = L["frame"]
         rect(msp, X0 + fx, Y0 + fy, fw, fd, "Konstrukcija", color=5, lw=35)
-    rect(msp, X0 + sx, Y0 + sy, sl, sw, "Agregat", color=30, lw=50)
+    # the set itself: same outline and the same dimension chain as M-01 draws
+    # (genset.py), radiator at the JI end so the fan faces the discharge
+    gp = genset.plan(msp, B, X0 + sx, Y0 + sy, sc, D, radiator="S",
+                     labels=detail, dims=detail, detail=2 if detail else 0)
     if detail:
-        # radiator band at the JI end, sheet-metal plenum from it to the wall
-        rect(msp, X0 + sx, Y0 + sy, sl, 180, "Agregat", color=4, lw=35)
+        # sheet-metal plenum from the radiator face to the wall
         rect(msp, X0 + sx, Y0 + t, sl, sy - t, "Ventilacija", color=4, lw=35)
     d0, d1 = L["discharge"]
     solid_rect(msp, X0 + d0, Y0, d1 - d0, t, "Ventilacija", 4)
@@ -434,10 +439,11 @@ def plan_equipment(msp, X0, Y0, L, sc, detail):
     solid_rect(msp, X0 + f0, Y0, f1 - f0, t, "Ventilacija", 4)
 
     kx, ky, kw, kh = L["kada"]
-    rect(msp, X0 + kx, Y0 + ky, kw, kh, "Agregat", color=1 if detail else 30, lw=35)
     if detail:
-        tx, ty, tw, th = L["tank"]
-        rect(msp, X0 + tx, Y0 + ty, tw, th, "Agregat", color=30, lw=35)
+        genset.tank_plan(msp, B, X0 + kx, Y0 + ky, sc, D, long_axis="y",
+                         dims=False)
+    else:
+        rect(msp, X0 + kx, Y0 + ky, kw, kh, "Agregat", color=30, lw=35)
     gx, gy, gw, gd = L["gro"]
     if not detail:
         solid_rect(msp, X0 + gx, Y0 + gy, gw, gd, "Novi1", 30)
@@ -589,13 +595,17 @@ NOTES_X = 28000                  # right-hand note column on the plans
 
 
 def _orientation_note(msp, sc, y):
+    """Six lines of provenance and reasoning reduced to the two that are drawing
+    data.  The source (Google Maps) and the 180° discrepancy against the 2017
+    certified sheet were an argument for the orientation, not a requirement; the
+    Investor took that class of text out of Prilog I on 15.09.2026 and it has no
+    more place on a drawing.  What a reader needs is which way the compound
+    faces and that the Bidder confirms it on site."""
     return note_block(msp, NOTES_X, y, sc, "NAPOMENA — ORIJENTACIJA:", [
-        "Prema Google Maps (Naručilac 11.09.2026) kompleks je zakrenut 45°: vrata",
-        "kontejnera i kapija gledaju na SJEVEROZAPAD (SZ), klima-uređaj Stulz na JI.",
-        "Crtež je pravougaon na kompleks (gore SZ, desno SI, dolje JI, lijevo JZ);",
-        "strelica pokazuje pravi sjever. Ovjereni crtež lokacije iz 2017",
-        "(GP-BS-10472-291, 01_Situacija 1_200) zakrenut je ≈180° u odnosu na teren.",
-        "Orijentaciju potvrđuje Ponuđač obilaskom lokacije.",
+        "Kompleks je zakrenut 45°: vrata kontejnera i kapija gledaju na SJEVEROZAPAD",
+        "(SZ), klima-uređaj Stulz na JI, FN polje na JZ. Crtež je pravougaon na",
+        "kompleks (gore SZ, desno SI, dolje JI, lijevo JZ); strelica pokazuje pravi",
+        "sjever. Orijentaciju potvrđuje Ponuđač obilaskom lokacije.",
     ])
 
 
@@ -669,7 +679,7 @@ def sheet_h01():
         f"4  Stub h = {tw['height'] // 1000} m; platforma P I (+3,0 m) je iznad krova "
         "(+2,63 / +2,89 m).",
         "5  Uzemljivač FeZn 25×4: prsten u temeljima stopa i dva prstena na 0,8 m.",
-        "6  Kapija se otvara prema van; krilo 1,30 m udarilo bi u kontejner.",
+        "6  Kapija se otvara prema van; krilo 1,30 m.",
         f"7  Teren uz ploču je na {minus(TERRAIN)} m; ograda {dec(fe['height'])} m iznad ploče, "
         f"{dec(FENCE_ABOVE_GROUND)} m iznad terena.",
         "8  Mjere uređaja i otvora uzimaju se na obaveznom obilasku lokacije.",
@@ -816,9 +826,9 @@ def sheet_h02():
         f"3  Temeljne trake {strip_w_txt(fnd)} × {sl} mm, d = {fnd['strip_d']} mm, na "
         f"podložnom betonu {fnd['blinding_thk']} mm.",
         "4  Postojeći prsteni uzemljivača (0,8 m) ukrštaju temeljne trake — LOT 1.",
-        "5  Vjetar qp ≥ 1,20 kN/m²; nosač CUSTOM izrade, proračun dostavlja Ponuđač.",
+        "5  Nosač i temelji — tehničko rješenje i statički proračun Ponuđača.",
         "6  Raspored u kontejneru prema H-04.",
-        "7  Ormari ICC360-HA1-C1 i MTS iza FN polja, u sjeni — principijelno.",
+        "7  Ormari ICC360-HA1-C1 i MTS iza FN polja — principijelno.",
     ])
     return doc
 
@@ -1041,7 +1051,7 @@ def sheet_h03():
     lead(msp, (x0 + ux * km + nx * MT, y0 + uy * km + ny * MT),
          f"FN moduli {mod['model'].split(' /')[0]} {mod['L']} × {MW}, položeno, {rows} reda",
          (X(fx0) + 1500, GY + top + 700), SC)
-    lead(msp, (x1, GY + 1400), "nosač — CUSTOM izrada", (x1 - 500, GY + 1900), SC)
+    lead(msp, (x1, GY + 1400), "nosač FN panela", (x1 - 500, GY + 1900), SC)
     lead(msp, (X(sx0 + sl) - 400, GY - 600),
          f"temeljna traka {strip_w_txt(fnd)} × {sl}, "
          f"d = {fd} — C30/37", (X(sx0 + sl) + 650, GY - 1100), SC)
@@ -1058,7 +1068,7 @@ def sheet_h03():
     _txt(msp, "S J E V E R O I S T O K  →", X(fe_e) - 1500, GY - 650, 2.4 * SC,
          layer="Orijentacija", color=1)
 
-    note_block(msp, 700, 1250, SC, "OBJAŠNJENJA:", [
+    note_block(msp, 700, 1250, SC, "NAPOMENE:", [
         f"1  Polje: {rows} reda × {sup['cols']} modul 585 Wp, položeno; nagib {arr['tilt_deg']}°, "
         f"projekcija {proj} mm; {arr['count']} odvojena nosača u nizu (H-02).",
         f"2  Dvije temeljne trake po nosaču {strip_w_txt(fnd)} × {sl} mm, "
@@ -1072,8 +1082,8 @@ def sheet_h03():
         "    premještanje ili premoštavanje prstena (LOT 1).",
         f"5  Trake su {mmc(A['margin'])} mm od granice zakupa (JZ) i od ploče (SI); "
         "položaj presjeka na H-02.",
-        "6  Stub, platforma P I (+3,0 m), kontejner i ormari šematski; ICC360 i MTS stoje iza "
-        "FN polja, u njegovoj sjeni.",
+        "6  Stub, platforma P I (+3,0 m), kontejner i ormari šematski; ICC360 i MTS su iza "
+        "FN polja.",
     ])
     return doc
 
@@ -1174,8 +1184,6 @@ def sheet_h04():
     # labels in the plan
     _txt(msp, "DEA 18 kVA / 14,4 kW", ox + ax - 60, oy + sy0 + sl * 0.55, 1.8 * SC,
          color=7, align=TA.MIDDLE_CENTER, rotation=90)
-    _txt(msp, f"skid {sl} × {sw}", ox + ax + 150, oy + sy0 + sl * 0.55, 1.4 * SC,
-         color=8, align=TA.MIDDLE_CENTER, rotation=90)
     _txt(msp, "HLADNJAK", ox + ax, oy + sy0 + 90, 1.3 * SC, color=8, align=TA.MIDDLE_CENTER)
     _txt(msp, "spremnik 500 l", ox + tx + tw_ / 2 - 40, oy + ty + 120, 1.6 * SC,
          color=7, rotation=90)
@@ -1269,7 +1277,8 @@ def sheet_h04():
     # beyond the cut: the tank in its tray, the DC razvod on the SZ wall, the
     # intake in the SI wall (behind the genset, dashed), the room fan in the JI wall
     rect(msp, S_(ky + kh), syo, kh, kada["rim_mm"], "Agregat", color=1)
-    rect(msp, S_(ty + th), syo + 40, th, tk["H"], "Agregat", color=30)
+    genset.tank_elev(msp, B, S_(ty + th), syo + 40, SC, D, view="long",
+                     dims=False)
     rect(msp, S_(by + bd), syo + DCB_Z, bd, DCB_H, "Novi1", color=30)
     e = rect(msp, S_(i1), syo + iz0, i1 - i0, iz1 - iz0, "Ventilacija", color=4, lw=35)
     ltype(e, "DASHED", SC, 1)
@@ -1278,11 +1287,9 @@ def sheet_h04():
     rect(msp, S_(L["lights"]["DC"][1]) - 200, syo + H_LO - 90, 400, 60, "Sema", color=2)
     # frame, skid (cut along its length), radiator band, plenum to the opening
     rect(msp, S_(fy + fdep), syo, fdep, FRAME_H, "Konstrukcija", color=5, lw=35)
-    rect(msp, S_(sy1), syo + FRAME_H, sl, g["skid_H"], "Agregat", color=30, lw=50)
-    hatch_rect(msp, S_(sy1), syo + FRAME_H, sl, g["skid_H"], "Agregat", "ANSI31",
-               SC * 0.3, 30)
-    rect(msp, S_(sy0 + 180), syo + FRAME_H + 100, 180, g["skid_H"] - 150, "Agregat",
-         color=4, lw=35)
+    # the set in elevation: same outline M-01 carries (genset.py).  This section
+    # looks the other way, so the radiator end lands on the RIGHT - flip=True.
+    genset.elev(msp, B, S_(sy1), syo + FRAME_H, SC, D, flip=True, labels=False)
     msp.add_lwpolyline([(S_(sy0), syo + FRAME_H + 150), (S_(t), syo + dz0),
                         (S_(t), syo + dz1), (S_(sy0), syo + FRAME_H + g["skid_H"] - 50)],
                        close=True, dxfattribs={"layer": "Ventilacija", "color": 4,
@@ -1350,186 +1357,113 @@ def sheet_h04():
 # H-05  Jednopolna šema — novi GRO i DC razvod −48 V                       —
 # --------------------------------------------------------------------------
 def sheet_h05():
-    """Equivalent of Sjednica E-01: the PV DC chain as E-01 draws it, the
-    Huawei ICC360, the new GRO (AC, live only while the DEA runs) and the new
-    DC razvod -48 V for the always-on loads (user decision 11.09.2026)."""
+    """The single-line scheme. Identical to Sjednica E-01 - both sheets are drawn by
+    single_line.draw(); only the per-site wall names and routes differ."""
     SC = 50
     doc, msp = _sheet(SC, "Jednopolna šema — novi GRO i DC razvod −48 V", "H-05", "—")
-    LY = "Sema"
-    arr, ctl = D["array"], D["control"]
-    per_string = arr["modules_total"] // 2
-    wp = int(round(arr["kWp"] * 1000 / arr["modules_total"]))
+    single_line.draw(msp, SC, D, B, {
+        "huawei_title": "Huawei ICC360-HA1-C1 (oprema Kupca)",
+        "huawei_sub": "vani na ploči, JZ strana — principijelno",
+        "gro_title": f"GRO (AC) — NOVO, ≤{GRO_W} × {GRO_D} × {GRO_H} mm",
+        "gro_sub": "SZ zid kontejnera, jugozapadno od vrata",
+        "f1_route": "F1 kroz JZ zid",
+        "dc_wall": "SZ zid, sjeveroistočno od vrata",
+        "dc_feed": "−48 V iz ICC360, kroz JZ zid",
+        "earth_text": "postojeći uzemljivač FeZn 25×4 (2 prstena na 0,8 m + temelji stuba) "
+                      "· R ≤ 10 Ω · nosači FN vezani Cu užetom 50 mm² preko bimetalnih spojeva",
+        "note4_tail": "Klima-uređaj Stulz se demontira — nema izvoda za klimatizaciju.",
+    })
+    return doc
 
-    def box(x, y, w, h, label, sub="", sub2="", color=7, new=False, kupac=False):
-        # single 45° lines = Contractor's supply and installation; cross-hatch =
-        # equipment the BUYER supplies, which the Contractor only installs and
-        # connects (Prilog I 4.9, Prilog II 5.19). ANSI37 is spaced wider because a
-        # cross-hatch at the same scale reads twice as dense and hides the sub-labels.
-        if new:
-            hatch_rect(msp, x, y, w, h, LY, "ANSI31", SC * 4, 8)
-        if kupac:
-            hatch_rect(msp, x, y, w, h, LY, "ANSI37", SC * 8, 8)
-        rect(msp, x, y, w, h, LY, color=color, lw=50)
-        n = 1 + bool(sub) + bool(sub2)
-        yy = y + h / 2 + (n - 1) * 95
-        _txt(msp, label, x + w / 2, yy, 1.9 * SC, color=7, align=TA.MIDDLE_CENTER)
-        for s in (sub, sub2):
-            if s:
-                yy -= 190
-                _txt(msp, s, x + w / 2, yy, 1.5 * SC, color=8, align=TA.MIDDLE_CENTER)
 
-    def wire(*pts, color=7, lw=35):
-        msp.add_lwpolyline(pts, dxfattribs={"layer": LY, "color": color, "lineweight": lw})
 
-    def enclosure(x, y, w, h, color, title, sub=""):
-        e = rect(msp, x, y, w, h, LY, color=color, lw=35)
-        ltype(e, "DASHED", SC, 2)
-        _txt(msp, title, x + 150, y + h - 250, 1.8 * SC, color=7)
-        if sub:
-            _txt(msp, sub, x + 150, y + h - 420, 1.4 * SC, color=8)
+# --------------------------------------------------------------------------
+# H-06  Pogled sa jugozapada                                             1:50
+# --------------------------------------------------------------------------
+def sheet_h06():
+    """Pogled sa jugozapada na cijeli kompleks — parnjak Sjednicinom S-04.
 
-    # ---- PV DC chain (as E-01): 2 strings x 6, DC SPD at the array, PVDB, 2 x iSSU
-    kwp_s = dec(arr["kWp"] * 1000 / 2)
-    box(1300, 12800, 2600, 1000, "STRING 1", f"{per_string} × {wp} Wp = {kwp_s} kWp", color=5,
-        kupac=True)
-    box(1300, 11350, 2600, 1000, "STRING 2", f"{per_string} × {wp} Wp = {kwp_s} kWp", color=5,
-        kupac=True)
-    _txt(msp, "nosači PV-1 + PV-2", 1300, 12600, 1.6 * SC, color=8)
-    _txt(msp, "nosači PV-3 + PV-4", 1300, 11150, 1.6 * SC, color=8)
-    box(4500, 12800, 1900, 1000, "SPD DC tip 2", "na polju · string 1", color=1)
-    box(4500, 11350, 1900, 1000, "SPD DC tip 2", "na polju · string 2", color=1)
-    box(7100, 11900, 2600, 1300, "PVDB 500-15-2B", "IP55 · 2 rute", "DC SPD tip 2", color=5,
-        kupac=True)
-    wire((3900, 13300), (4500, 13300), color=5)
-    wire((3900, 11850), (4500, 11850), color=5)
-    wire((6400, 13300), (6750, 13300), (6750, 12850), (7100, 12850), color=5)
-    wire((6400, 11850), (6750, 11850), (6750, 12250), (7100, 12250), color=5)
-    wire((9700, 12850), (11200, 12850), (11200, 13300), (12000, 13300), color=5)
-    wire((9700, 12250), (11400, 12250), (11400, 11900), (12000, 11900), color=5)
+    Hamzići se crtaju pravougaono na kompleks, a plan-ZAPAD je pravi JUGOZAPAD,
+    pa je ovo elevacija duž plan-ose X.  Vodoravna osa lista je plan-Y, okrenuta:
+    u = 5400 − y, tako da je lijevo SZ a desno JI, isto kao na S-04.  Zbog toga
+    je PV-1, koji na H-02 leži na najmanjem y, ovdje krajnje desno.
 
-    # ---- Huawei ICC360-HA1-C1 (Buyer's equipment)
-    enclosure(11600, 6700, 4800, 7500, 30, "Huawei ICC360-HA1-C1 (oprema Kupca)",
-              "vani na ploči, JZ strana — principijelno")
-    box(12000, 12900, 2000, 800, "iSSU S4875G2", "MPPT · ruta 1", color=30, kupac=True)
-    box(12000, 11500, 2000, 800, "iSSU S4875G2", "MPPT · ruta 2", color=30, kupac=True)
-    box(12000, 9300, 2000, 1100, "ISPRAVLJAČI", "R4875 · AC → −48 V",
-        f"ulaz ≤{dec(ctl['rect_cap_ac_kw'] * 1000, 1)} kW (SMU)", color=30, kupac=True)
-    wire((14700, 7400), (14700, 13400), lw=70)
-    _txt(msp, "−48 V DC", 14780, 13450, 1.6 * SC, color=7)
-    for y in (13300, 11900, 9850):
-        wire((14000, y), (14700, y), color=30)
-    box(15000, 12700, 1250, 900, "BATERIJA", "LFP −48 V", color=5, kupac=True)
-    box(15000, 10900, 1250, 900, "DC TK", "oprema TK", color=7)
-    box(15000, 7700, 1250, 1000, "DC IZLAZ", "rezerva, prekidač", color=7)
-    for y in (13150, 11350, 8200):
-        wire((14700, y), (15000, y))
+    Mjerilo 1:50 i stub prekinut na +9,50 m — v. sw_view i S-04.
+    """
+    SC = 50
+    doc, msp = _sheet(SC, "Pogled sa JUGOZAPADA — kompleks sa FN poljem",
+                      "H-06", "1:50")
 
-    # ---- new GRO (AC) - the DEA is the only AC source
-    box(1300, 9300, 2600, 1300, "DEA 18 kVA", "400/230 V · 14,4 kW", "PMG ili AREP/AUX",
-        color=30, new=True)
-    msp.add_circle((4200, 8900), 60, dxfattribs={"layer": LY, "color": 7})
-    _txt(msp, "poz. 2 — rezerva", 4050, 8860, 1.5 * SC, color=8, align=TA.RIGHT)
-    enclosure(4400, 5000, 6700, 5900, 30, f"GRO (AC) — NOVO, ≤{GRO_W} × {GRO_D} × {GRO_H} mm",
-              "SZ zid kontejnera, jugozapadno od vrata")
-    box(4700, 9300, 2200, 1100, "Q0 SKLOPKA IZVORA", "4p · 1-0-2 · 63 A",
-        "1 DEA · 0 · 2 rezerva", color=30, new=True)
-    wire((3900, 10100), (4700, 10100), color=30)
-    wire((4260, 8900), (4500, 8900), (4500, 9550), (4700, 9550), color=30)
-    _txt(msp, "1", 4580, 10150, 1.4 * SC, color=8)
-    _txt(msp, "2", 4580, 9600, 1.4 * SC, color=8)
-    box(4700, 7500, 2200, 1000, "FI0 · RCD 4p", "63 A / 300 mA · S-tip", color=30, new=True)
-    wire((5800, 9300), (5800, 8500), color=30)
-    wire((5800, 8900), (7500, 8900), color=1)
-    box(7500, 8450, 2300, 900, "SPD AC tip 1+2", "Iimp ≥12,5 kA/pol · Up ≤1,5 kV", color=1, new=True)
-    wire((5800, 7500), (5800, 7000), color=30)
-    wire((4600, 7000), (10900, 7000), color=7, lw=100)
-    _txt(msp, "L1 L2 L3 N · 400/230 V", 9100, 7090, 1.4 * SC, color=8)
-    # GSI with the one N-PE link and the SPD earth
-    for c_, dy in ((2, 0), (3, -60)):
-        wire((4600, 5300 + dy), (10900, 5300 + dy), color=c_, lw=50)
-    _txt(msp, "PE / GSI", 4650, 5380, 1.4 * SC, color=7)
-    wire((4800, 7000), (4800, 5300), color=3, lw=50)
-    rect(msp, 4650, 6000, 300, 300, LY, color=3, lw=35)
-    _txt(msp, "jedini spoj N–PE (TN-S)", 5000, 5600, 1.4 * SC, color=7)
-    wire((8650, 8450), (8650, 5300), color=1)
-    feeders = [(6350, "F2 · RCBO", "16 A / 30 mA, A", "RASVJETA AC", "1 svjetiljka", "NOVO"),
-               (7400, "F3 · RCBO", "16 A / 30 mA, A", "UTIČNICE", "kontejnera", "NOVO"),
-               (8450, "F4", "1p C 16 A", "POMOĆNI", "potrošači DEA", "AC"),
-               (9500, "F5", "1p C 16 A", "REZERVA", "", "")]
-    for x, b1, b2, l1, l2, l3 in feeders:
-        wire((x, 7000), (x, 6600), color=30)
-        box(x - 450, 5700, 900, 900, b1, b2, color=30, new=True)
-        wire((x, 5700), (x, 4700), color=30)
-        box(x - 500, 3300, 1000, 1400, l1, l2, l3, color=7)
-    wire((10550, 7000), (10550, 6600), color=30)
-    box(10100, 5700, 900, 900, "F1", "3p C 32 A", color=30, new=True)
-    wire((11000, 6150), (11350, 6150), (11350, 9850), (12000, 9850), color=30)
-    _txt(msp, "F1 kroz JZ zid", 11300, 6500, 1.3 * SC, color=8, rotation=90)
+    sup, arr = D["support"], D["array"]
+    A = array_layout()
+    fe, c, tw = GEO["fence"], GEO["container"], GEO["tower"]
+    S = GEO["slab"]["size"][1]
+    fw, n = sup["field_w"], arr["count"]
+    CW = c["external"][1]                       # 3005 mm po plan-osi Y
 
-    # ---- new DC razvod -48 V (always-on loads)
-    enclosure(16900, 3300, 3450, 7300, 30, "DC RAZVOD −48 V — NOVO",
-              "trajni potrošači (≤25 W prosječno)")
-    _txt(msp, "SZ zid, sjeveroistočno od vrata", 17050, 9880, 1.3 * SC, color=8)
-    wire((16250, 8200), (16650, 8200), (16650, 9600), (17300, 9600), color=5)
-    _txt(msp, "−48 V iz ICC360, kroz JZ zid", 16600, 7200, 1.3 * SC, color=8,
-         rotation=90)
-    wire((17300, 9600), (17300, 3950), lw=70)
-    rows = [(8750, "D1", "2p 6 A DC", "RASVJETA PREPREKE", "LED 48 V DC, fotoćelija",
-             "nadzor ispada → SMU"),
-            (7700, "D2", "2p 6 A DC", "VATRODOJAVA", "DC/DC → centrala",
-             "baterije EN 54-4"),
-            (6650, "D3", "2p 10 A DC", "PUNJAČ AKU. DEA", "DC/DC, strujni limit",
-             "alarm → SMU"),
-            (5600, "D4", "2p 10 A DC", "VENTILATOR Ø315", "EC 48 V DC, izvlačni",
-             "termostat; stop dok DEA radi"),
-            (4550, "D5", "2p 6 A DC", "RASVJETA DC", "LED 48 V DC",
-             "prekidač uz vrata"),
-            (3500, "D6", "2p 10 A DC", "PREDGRIJAČ DEA", "rashladna tečnost, DC",
-             "uključuje ga KOA prije starta")]
-    for y, b1, b2, l1, l2, l3 in rows:
-        yc = y + 450
-        wire((17300, yc), (17550, yc))
-        box(17550, y, 900, 900, b1, b2, color=30, new=True)
-        wire((18450, yc), (18600, yc))
-        box(18600, y - 50, 1650, 1000, l1, l2, l3, color=7)
-    e = msp.add_lwpolyline([(20300, 8150), (20300, 6050)],
-                           dxfattribs={"layer": LY, "color": 1, "lineweight": 35})
-    ltype(e, "DASHED", SC, 1)
-    _txt(msp, "blokada pri požaru", 20290, 6400, 1.2 * SC, color=1, rotation=90)
+    # u = 5400 − y, pa +U_OFF da niz počne na 1900 kao na S-04
+    U_OFF = 1900 - (S - A["stands"][-1] - fw)
+    def U(y):
+        return S - y + U_OFF
 
-    # ---- earth
-    for c_, dy in ((2, 0), (3, -70)):
-        wire((1300, 3050 + dy), (20350, 3050 + dy), color=c_, lw=70)
-    for x, ytop in ((2600, 9300), (10900, 5300), (13500, 6700), (18600, 3300)):
-        wire((x, 3050), (x, ytop), color=2, lw=50)
-    _txt(msp, "postojeći uzemljivač FeZn 25×4 (2 prstena na 0,8 m + temelji stuba) · R ≤ 10 Ω "
-              "· nosači FN vezani Cu užetom 50 mm² preko bimetalnih spojeva",
-         1300, 2760, 1.6 * SC, color=7)
+    total = A["total"]
+    Z = 3800                                    # gornja ivica ploče
+    TERR = TERRAIN                              # teren je 200 mm ispod ploče
+    stands = [(U(ay + fw), f"PV-{i}") for i, ay in enumerate(A["stands"], 1)]
+    mid = U(S / 2)
+    CUT = 9500
 
-    note_block(msp, 1300, 2450, SC, "NAPOMENE:", h=1.8, lines=[
-        "1  Lokacija NIJE na mreži — DEA je jedini AC izvor; izvodi GRO su pod naponom samo dok "
-        "DEA radi. Trajni potrošači su na DC razvodu −48 V.",
-        "2  TN-S: jedini spoj N–PE je u novom GRO; R ≤ 10 Ω. Odvodnici: AC tip 1+2, DC tip 2 po "
-        "stringu, signalni vodovi EN 61643-21.",
-        "3  DEA sa nezavisnom pobudom PMG ili AREP/AUX (≥3 × In ≈ 78 A, ≥10 s); RCD 63 A / 300 mA "
-        "S-tip je obavezan.",
-        f"4  Ulaz ispravljača ograničen na {dec(ctl['rect_cap_ac_kw'] * 1000, 1)} kW dok radi DEA "
-        "(SMU). Klima-uređaj Stulz se demontira — nema izvoda za klimatizaciju.",
-        f"5  FN: {arr['modules_total']} modula = 2 stringa × {per_string}; PVDB ima 2 rute → "
-        "2 × iSSU S4875G2. Požar: STOP DEA i isključenje ventilatora.",
-        "6  Nazivne struje F4–F5 i D1–D6 su orijentacione; presjeke i selektivnost potvrđuje "
-        "Izvođač. ICC360 — principijelno.",
+    cfg = {
+        "z0": Z, "terrain": TERR,
+        "view": (mid - total / 2 - 600, mid + total / 2 + 600),
+        "slab": (U(S), S, 300),
+        "tower": sw_view.load_profile(HERE), "u_axis": mid, "cut": CUT,
+        "container": (U(c["origin"][1] + CW), CW),
+        "c_lo": c["heights"]["eave_low"], "c_hi": c["heights"]["eave_high"],
+        # ograda je 1,80 m iznad ploče, a stoji na terenu 0,20 m niže
+        "fence": (U(fe["origin"][1] + fe["size"][1]), fe["size"][1],
+                  FENCE_ABOVE_GROUND),
+        "stands": stands, "stand_w": fw,
+        "dim_u": mid + total / 2 + 700,
+        "left": "S Z", "right": "J I",
+    }
+    k = sw_view.draw(msp, B, SC, D, cfg)
+    z_top = Z + CUT
+
+    _txt(msp, "POGLED SA JUGOZAPADA  (pravac gledanja azimut 45°)",
+         mid - total / 2 - 600, z_top + 800, 2.6 * SC, color=7)
+    lead(msp, (mid, Z + c["heights"]["eave_high"]), "postojeći kontejner K2",
+         (mid + 1800, Z + c["heights"]["eave_high"] + 2100), SC)
+    lead(msp, (mid + 800, Z + 7400),
+         f"antenski stub {tw['height'] // 1000} m — silueta iz ovjerenog projekta",
+         (mid + 3200, Z + 8900), SC)
+    lead(msp, (stands[-1][0] + fw / 2, Z + TERR + arr["top_edge"] - 300),
+         f"FN polje {n} × 3 modula 585 Wp, azimut {arr['azimuth_deg']}°, "
+         f"nagib {arr['tilt_deg']}°",
+         (stands[-1][0] + fw / 2 + 900, Z + TERR + arr["top_edge"] + 2600), SC)
+
+    NX = mid + total / 2 + 2600
+    legend(msp, NX, z_top + 300, SC, [
+        (110, "LOT 1 — FN moduli i nosači (ispred ograde, JZ)"),
+        (5,   "postojeći antenski stub — silueta iz ovjerenog projekta"),
+        (6,   "postojeći kontejner K2 na postojećoj ploči"),
+        (8,   f"postojeća ograda {dec(fe['height'])} m iznad ploče"),
+    ], col_w=44.0 * SC)
+    note_block(msp, NX, z_top - 2400, SC, "NAPOMENE:", [
+        "1  Prava ortogonalna elevacija u pravcu azimuta 45°;",
+        "    visine i širine su mjerljive.",
+        "2  Paneli gledaju u posmatrača pod 45°, pa se po visini",
+        f"    vide skraćeno: +{dec(arr['bottom_edge'])} do "
+        f"+{dec(arr['top_edge'])} m od terena.",
+        f"3  Teren uz FN polje je {minus(TERRAIN)} m ispod ploče; ograda",
+        f"    je {dec(FENCE_ABOVE_GROUND)} m iznad terena.",
+        f"4  Stub je prikazan do +{dec(CUT)} m i prekinut; h = "
+        f"{tw['height'] // 1000} m",
+        "    prema ovjerenom projektu (list 462 — 01_Dispozicija S32 m).",
+        "5  Zahtjevi: Prilog I, Tačke 3 i 4.",
     ])
-    hatch_rect(msp, 1300, 700, 700, 300, LY, "ANSI31", SC * 4, 8)
-    rect(msp, 1300, 700, 700, 300, LY, color=8)
-    _txt(msp, "isporuka i montaža Izvođača (DEA, GRO, DC razvod −48 V)", 2150, 790,
-         1.6 * SC, color=7)
-    hatch_rect(msp, 7300, 700, 700, 300, LY, "ANSI37", SC * 8, 8)
-    rect(msp, 7300, 700, 700, 300, LY, color=8)
-    _txt(msp, "oprema Kupca (FN, PVDB, iSSU, baterije, ICC360)", 8150, 790,
-         1.6 * SC, color=7)
     return doc
 
 
 SHEETS = {"H-01": (sheet_h01, 100), "H-02": (sheet_h02, 100), "H-03": (sheet_h03, 30),
-          "H-04": (sheet_h04, 25), "H-05": (sheet_h05, 50)}
+          "H-04": (sheet_h04, 25), "H-05": (sheet_h05, 50), "H-06": (sheet_h06, 50)}

@@ -67,7 +67,11 @@ STYLES = {
     "RomanS":   "arial.ttf",
 }
 
-DIM_SCALES = (20, 30, 50, 100, 200)      # "M 20" ... "M 200"; M 30 is new
+# "M 20" ... "M 200"; M 30 is new, and M 25 closes a defect: M-01 is the only
+# 1:25 sheet here, so its dimensions silently fell back to 'Standard' and every
+# one of them printed 0,1 mm high - the container 3005/2300 included.  Hamzići
+# had already worked around it locally (sheets_hamzici._sheet).
+DIM_SCALES = (20, 25, 30, 50, 100, 150, 200)   # 150: S-04 / H-06, 38 m stuba na A3
 
 
 # --------------------------------------------------------------------------
