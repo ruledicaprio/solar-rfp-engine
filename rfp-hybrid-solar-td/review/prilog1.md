@@ -327,9 +327,11 @@ sredstvom zaštite od indirektnog dodira.
 | Nazivna struja | **In = 26,0 A** pri 18 kVA / 400 V |
 | **Struja kvara (PMG/AREP)** | **≥78 A (3 × In) trajno ≥10 s — ZAHTIJEVANO** |
 | Sistem zaštite | TN-S, jedinstvena tačka spajanja N i PE u novom GRO |
-| Glavna zaštita | 4p RCD 50 A / 300 mA, S-tip (selektivna) |
+| Zaštita dovoda | 4p (3P+N) kompaktni prekidač 32 A sa podesivim magnetnim okidanjem; jednopolni uređaji na trofaznom dovodu **nisu prihvatljivi** |
+| Glavna zaštita | 4p RCD 50 A / 300 mA, S-tip (selektivna), **najmanje tip A** — tip AC nije prihvatljiv (prekidački ispravljači iza sklopke) |
 | Krajnji strujni krugovi | RCBO 16 A / 30 mA, tip A (utičnice, rasvjeta) |
-| Sklopka izvora | 4p 50 A, položaji 1 – agregat / 0 – isključeno / 2 – rezerva |
+| Dovod ispravljača | 3p C 20 A (projektna struja 14,4 A pri ograničenju 9,5 kW iz Tačke 4.6) |
+| Sklopka izvora | 4p 50 A, položaji 1 – agregat / 0 – isključeno / 2 – rezerva; sklopka 0-1 iza nje je **4p** (prekida i N) |
 | SPD, AC strana | **tip 1 + 2** (Iimp ≥12,5 kA) — objekti imaju vanjski LPS |
 | SPD, DC strana | tip 2 po stringu (Iimp ≥5 kA, Ucpv ≥425 V), na PVDB i na polju |
 | SPD, signalni vodovi | prema EN 61643-21 (obavezno za stubove h = 38 m i h = 32 m) |

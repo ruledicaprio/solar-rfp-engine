@@ -271,9 +271,37 @@ BOTH_SITES_EDITS = {
         # ostavlja faktor 1,9 - 63 A je bilo predimenzionirano.  Prekostrujna
         # zaštita se NE mijenja i ostaje C 32 A: agregat daje ≈78 A (3 × In, PMG),
         # što je 2,4 × 32 A ali samo 1,56 × 50 A, pa bi podizanje oslabilo zaštitu.
+        # 16.09.2026, drugi dio: zatvara se RED-09 iz 03-electrical.md. Iz njegove
+        # tabele ispravki su ranije usvojeni RCD 300 mA S-tip i RCBO 30 mA tip A,
+        # a dvije nisu — trofazni dovod je ostao na tri jednopolna prekidača, a
+        # dovod ispravljača na 32 A bez stepenovanja. Uz to sklopka 0-1 nije
+        # prekidala N, što na TN-S ostrvskom sistemu sa jedinom N-PE vezom u ovom
+        # ormaru nije formalnost, i nije bio zadan tip RCD-a iza prekidačkih
+        # ispravljača.
         "5.6": [("za odabir izvora, 1-0-2, 63 A", "za odabir izvora, 1-0-2, 50 A"),
                 ("3p dvopoložajna sklopka 0-1, 63 A", "3p dvopoložajna sklopka 0-1, 50 A"),
-                ("(RCD) 63 A / 300 mA", "(RCD) 50 A / 300 mA")],
+                ("(RCD) 63 A / 300 mA", "(RCD) 50 A / 300 mA"),
+                ("3p dvopoložajna sklopka 0-1, 50 A, sa pomoćnim kontaktom",
+                 "4p dvopoložajna sklopka (QS) 0-1, 50 A, sa prekidanjem neutralnog "
+                 "vodiča i sa pomoćnim kontaktom"),
+                ("3 kom 1p automatski prekidač, C, 32 A, 10 kA, za zaštitu napajanja "
+                 "preko DEA",
+                 "1 kom 4p (3P+N) kompaktni prekidač (Q1) 32 A, sa podesivim magnetnim "
+                 "okidanjem, za zaštitu napajanja preko DEA; tri nezavisna jednopolna "
+                 "uređaja na trofaznom dovodu NISU prihvatljiva — jednopolno okidanje "
+                 "ostavlja agregat u jednofaznom radu sa dvije faze pod naponom i ne "
+                 "prekida neutralni vodič"),
+                ("(RCD) 50 A / 300 mA, S-tip (selektivna), za cjelokupni napojni krug "
+                 "iza sklopke izvora",
+                 "(RCD) 50 A / 300 mA, S-tip (selektivna), najmanje TIP A — tip AC NIJE "
+                 "prihvatljiv jer se iza sklopke napajaju prekidački ispravljači; "
+                 "konačan tip prema dokumentaciji proizvođača ispravljačkog sistema; za "
+                 "cjelokupni napojni krug iza sklopke izvora"),
+                ("1 kom 3p automatski prekidač, C, 32 A, 10 kA, za AC napajanje "
+                 "ispravljačkog sistema",
+                 "1 kom 3p automatski prekidač, C, 20 A, 10 kA, za AC napajanje "
+                 "ispravljačkog sistema (projektna struja 14,4 A pri ograničenju ulazne "
+                 "snage ispravljača na 9,5 kW iz Tačke 3.1)")],
     },
 }
 # ---- LOT 1, items written out in full (15.09.2026) -------------------------
