@@ -98,6 +98,8 @@ REQUIRED = [r for r in bp1.REQUIRED if r not in SUPERSEDED_REQUIRED] \
     # preuzimanje i transport opreme Kupca (Tačka 4.9)
     "Azići, Bojnička bb, Sarajevo", "Preuzimanje i transport", "otpremnica",
     "iPV585-M2A (12 kom po lokaciji)",
+    # oprema Kupca, sažeta Huawei specifikacija isporuke (Tačka 9)
+    "Oprema Kupca — specifikacija isporuke", "ICC360", "R4875",
 ]
 N_MEDIA = len(FIGURES)
 
@@ -121,13 +123,17 @@ def figures():
 def prilog1():
     bp1.build(md=os.path.join(paths.JOINT, "review", "prilog1.md"), out=paths.PRILOG1,
               forbidden=FORBIDDEN, required=REQUIRED, n_media=N_MEDIA)
-    evidence_table_widths(paths.PRILOG1)
+    table_widths(paths.PRILOG1, "Br.", (0.07, 0.63, 0.10, 0.20))
+    table_widths(paths.PRILOG1, "Oprema", (0.64, 0.16, 0.20))
 
 
-def evidence_table_widths(path, shares=(0.07, 0.63, 0.10, 0.20)):
+def table_widths(path, header, shares):
     """The evidence table (Br. | Dokaz | LOT | Oznaka) comes out of widen_tables
-    with four equal columns, so the long 'Dokaz' texts wrap into nine lines. Give
-    that one table its own widths; every other table keeps the shared layout."""
+    with four equal columns, so the long 'Dokaz' texts wrap into nine lines, and
+    the equipment table of Tačka 9 (Oprema | Po lokaciji | Ukupno) with the
+    26/30/44 split meant for parameter tables. Give the one table whose first
+    header cell is `header` its own widths; every other table keeps the shared
+    layout."""
     import re
     import zipfile
 
@@ -144,7 +150,7 @@ def evidence_table_widths(path, shares=(0.07, 0.63, 0.10, 0.20)):
         text = "".join(re.findall(r"<w:t[^>]*>([^<]*)</w:t>", first_cell.group(0))) \
             if first_cell else ""
         cols = re.findall(r'<w:gridCol w:w="(\d+)"\s*/>', tbl)
-        if text.strip() != "Br." or len(cols) != len(shares):
+        if text.strip() != header or len(cols) != len(shares):
             return tbl
         total = sum(int(c) for c in cols)
         new = [int(total * s) for s in shares]
@@ -156,7 +162,7 @@ def evidence_table_widths(path, shares=(0.07, 0.63, 0.10, 0.20)):
 
     xml = re.sub(r"<w:tbl>.*?</w:tbl>", fix, xml, flags=re.S)
     if done != 1:
-        raise SystemExit(f"evidence table: expected 1, adjusted {done}")
+        raise SystemExit(f"table {header!r}: expected 1, adjusted {done}")
     items["word/document.xml"] = xml.encode("utf-8")
     with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as out:
         for name, data in items.items():

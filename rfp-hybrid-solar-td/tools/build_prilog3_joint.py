@@ -7,6 +7,7 @@ Prilog III of the joint tender: one annex, two site blocks.
                       the seven K2 sheets, INFO-02
     B. BS Hamzići   - photos with the block headline, site data, H-01..H-06,
                       sheets of the certified 2017 project (as reference), INFO-02
+    oprema Kupca    - the Huawei delivery, condensed (Prilog I, Tačka 9)
 
 The A4 pages and both INFO-02 pages carry the BH Telecom memorandum as their
 header (Investor, 11.09.2026); the A3 drawings keep their own title block.
@@ -337,6 +338,66 @@ def certified_sheets(doc):
     return tmp
 
 
+def equipment_rows():
+    """The equipment table of Prilog I, Tačka 9, read from review/prilog1.md so
+    the two annexes cannot drift apart: header, [(oprema, po lokaciji, ukupno)]."""
+    md = open(os.path.join(paths.JOINT, "review", "prilog1.md"), encoding="utf-8").read()
+    sec = md.split("## 9. Oprema Kupca", 1)
+    if len(sec) != 2:
+        raise SystemExit("prilog1.md: Tačka 9 (oprema Kupca) not found")
+    rows = [[c.strip() for c in ln.strip().strip("|").split("|")]
+            for ln in sec[1].splitlines() if ln.startswith("|")]
+    if len(rows) < 3 or rows[0][0] != "Oprema" or any(len(r) != 3 for r in rows):
+        raise SystemExit("prilog1.md: Tačka 9 table is not Oprema | Po lokaciji | Ukupno")
+    return rows[0], rows[2:]
+
+
+def equipment_page(doc):
+    """Last page: the Customer's equipment the bidder collects, transports and
+    installs (Prilog I, Tačke 4.9 i 9), so its size is visible next to the
+    drawings."""
+    head, rows = equipment_rows()
+    page = doc.new_page(width=595, height=842)
+    y0 = bp3.memo_header(page)
+    reg, bold = fonts(page)
+    page.insert_textbox(fitz.Rect(50, y0 + 12, 545, y0 + 42),
+                        "OPREMA KUPCA — SPECIFIKACIJA ISPORUKE", fontname=bold, fontsize=14)
+    page.draw_line(fitz.Point(50, y0 + 44), fitz.Point(545, y0 + 44), color=ORANGE, width=1.6)
+    line(page, reg, "Huawei oprema koju Kupac predaje Ponuđaču u skladištu Azići, Bojnička bb, "
+                    "Sarajevo; Ponuđač je preuzima, prevozi i ugrađuje (Prilog I, Tačke 4.9 i "
+                    "9). Sažeto, informativno; tačan spisak Kupac daje uz narudžbu.",
+         y0 + 52, 8.5, GREY, align=0)
+    xs, size, rule = (50, 375, 460, 545), 8.5, (0.75, 0.75, 0.75)
+    scratch = fitz.open()
+    probe = scratch.new_page(width=595, height=842)
+    pfonts = fonts(probe)
+
+    def height_for(cells, font):
+        for h in range(20, 120, 4):
+            if all(probe.insert_textbox(fitz.Rect(xs[i] + 6, 5, xs[i + 1] - 4, h), txt,
+                                        fontname=font, fontsize=size) >= 0
+                   for i, txt in enumerate(cells)):
+                return h
+        raise SystemExit(f"oprema Kupca: red ne stane — {cells[0][:60]!r}")
+
+    y = y0 + 90
+    for n, cells in enumerate([head] + rows):
+        h = height_for(cells, pfonts[n == 0])
+        page.draw_rect(fitz.Rect(xs[0], y, xs[-1], y + h), color=rule, width=0.6,
+                       fill=(0.93, 0.93, 0.93) if n == 0 else None)
+        for i, txt in enumerate(cells):
+            if i:
+                page.draw_line(fitz.Point(xs[i], y), fitz.Point(xs[i], y + h), color=rule,
+                               width=0.6)
+            if page.insert_textbox(fitz.Rect(xs[i] + 6, y + 5, xs[i + 1] - 4, y + h), txt,
+                                   fontname=bold if n == 0 else reg, fontsize=size) < 0:
+                raise SystemExit(f"oprema Kupca: {txt[:50]!r} nije stalo")
+        y += h
+    scratch.close()
+    if y > 842 - 30:
+        raise SystemExit("oprema Kupca: the table runs off the page")
+
+
 def main():
     if not os.path.exists(SJ_ANNEX):
         raise SystemExit(f"Sjednica annex missing: {SJ_ANNEX}")
@@ -366,6 +427,7 @@ def main():
         out.insert_pdf(fitz.open(os.path.join(HZ, "TD-OUTPUT", "grafika", s + ".pdf")))
     tmp = certified_sheets(out)
     info_pv(out, HZ, "45")
+    equipment_page(out)
     out.set_metadata({"title": "Prilog III — Situacije, dispozicija opreme i grafički prilozi",
                       "author": "BH Telecom d.d. Sarajevo",
                       "subject": "BS Sjednica (Bileća) i BS Hamzići (Čitluk) — autonomni "

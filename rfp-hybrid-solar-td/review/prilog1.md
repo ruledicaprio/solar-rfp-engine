@@ -516,3 +516,26 @@ stablom rad agregata raste za 1–10 h godišnje.
 ![Slika 8 — BS Hamzići: mjesečni energetski bilans (prosjek i raspon 2005–2023)](../TD-OUTPUT/grafika/prilog1/energetski-bilans-hamzici.png){width=100%}
 
 ![Slika 9 — BS Hamzići: horizont, putanje Sunca i stablo JJI–JI (procjena)](../TD-OUTPUT/grafika/prilog1/horizont-hamzici.png){width=100%}
+
+---
+
+## 9. Oprema Kupca — specifikacija isporuke (informativno)
+
+Opremu iz tabele Kupac predaje Ponuđaču u skladištu (Tačka 4.9). Spisak je sažet iz
+Huawei specifikacije isporuke za obje lokacije i služi Ponuđaču da procijeni obim
+preuzimanja, prevoza i ugradnje; sitni pribor i kablovi su grupisani. Tačan spisak
+Kupac daje uz narudžbu.
+
+| Oprema | Po lokaciji | Ukupno (2 lokacije) |
+|---|---|---|
+| Vanjski ormar hibridnog sistema napajanja Huawei ICC360 sa kontrolerom i razdjelom 600 A, izmjenjivačem toplote i DC klima-uređajem, 650 × 650 × 2000 mm | 1 kom | 2 kom |
+| Ispravljački moduli R4875, 4000 W, 1U | 3 kom | 6 kom |
+| Solarni moduli S4875G3, 4000 W, sa AFCI | 2 kom | 4 kom |
+| FN moduli iPV585-M2A, 585 W, 2278 × 1134 × 30 mm | 12 kom (7,02 kWp) | 24 kom |
+| FN razdjelna kutija PVDB, 500 V DC, 2 izlaza | 1 kom | 2 kom |
+| AC ulazni modul AIU03 (100 A, 3P+N) i prenaponska zaštita SPM01A | 1 + 1 kom | 2 + 2 kom |
+| Sprega sa agregatom i nadzor: interfejsni modul agregata, bežični senzor nivoa goriva, bežični relej, napojna jedinica AC/DC 13,5 V, omnidirekciona antena, kabl za punjenje startne baterije agregata 10 m | po 1 kom | po 2 kom |
+| Montažni pribor: nosači za montažu na cijev Ø48–114 mm (2 kom), pribor postolja, slijepe maske (5 kom), sabirnica za uzemljenje, pribor ormara i FN priključka, alat za MC4 konektore | 1 komplet | 2 kompleta |
+| Energetski kablovi: H07Z-K 4 mm² (24 m crni i 24 m bijeli), PE 16 mm² (17 m), AC ulazni 4 × 25 mm² (10 m); baterijski 4AWG (2 para) i 6 mm² (2 × 0,5 m) | ≈75 m + 4 kom | ≈150 m + 8 kom |
+| FN produžni kablovi 4 mm²: 3 m (8 kom) i 7 m (2 kom) | 10 kom | 20 kom |
+| Signalni i komunikacioni kablovi: upredene parice 4 × 2 × 26AWG (30 m), 4 × 20AWG (10 m), 2 × 0,75 mm² (10 m); RS485, signalni, alarm vrata i CAN kablovi | ≈50 m + 6 kom | ≈100 m + 12 kom |
