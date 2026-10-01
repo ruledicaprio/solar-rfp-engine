@@ -26,7 +26,6 @@ from pptx.util import Inches, Pt
 HERE = os.path.dirname(os.path.abspath(__file__))
 JOINT = os.path.dirname(HERE)
 ROOT = os.path.dirname(JOINT)
-GRAF = os.path.join(JOINT, "TD-OUTPUT", "grafika", "prilog1")
 P3 = os.path.join(JOINT, "TD-OUTPUT", "3.2 Prilog III TD - Situacije.pdf")
 
 FONT = "Bookman Old Style"
@@ -279,210 +278,129 @@ def _set_lines(sh, lines, sizes=None, bold=None):
 
 
 # --------------------------------------------------------------------------
-def s_opis(prs, L, img):
+def s_investicija(prs, L, img):
     s = new_slide(prs, L)
-    title(s, "Opis investicije")
+    title(s, "Opis investicije i postojeće stanje")
     B = {"bullet": True}
-    box(s, 0.4, 1.05, 5.75, 5.1, [
+    box(s, 0.4, 1.05, 5.4, 3.3, [
         ("BS Sjednica (Bileća) i BS Hamzići (Čitluk) nisu priključene na "
-         "elektroenergetsku mrežu, niti se priključak očekuje u narednom periodu.", B),
-        ("Bez napajanja lokacije se ne mogu pustiti u rad: izostaje pokrivanje "
-         "šireg područja i planirano RR čvorište Sjednica.", B),
-        ("Rješenje je autonomni (off-grid) hibridni sistem na −48 V DC: "
-         "fotonaponsko polje kao primarni izvor, LFP baterije i automatski dizel "
-         "agregat kao rezerva.", B),
-        ("Huawei oprema (FN moduli, ICC360, baterije, MTS) je posebna nabavka. "
-         "Ova nabavka obuhvata infrastrukturu i instalaciju, u dva LOT-a.", B),
-        ("Druga iteracija ovakvog rješenja, nakon pozitivnog iskustva na lokaciji "
-         "MILNIŠTE_MIKRO (Glamoč).", B),
-    ], size=13, space=8)
-    x, y, w, h = picture(s, img["sjednica"], 6.4, 1.05, 3.2, 4.75)
-    box(s, x, y + h + 0.05, w, 0.3, [("BS Sjednica, 1076 m n.v.",
-                                      {"size": 10, "color": GREY, "italic": True})],
-        align=PP_ALIGN.CENTER)
-    notes(s, "Zašto nabavka: lokacije bez EES-a, bez napajanja nema puštanja u rad. "
-             "Huawei dio je već nabavljen kroz projekte RAN-a; ovdje je infrastruktura.")
-
-
-def s_stanje(prs, L, img):
-    s = new_slide(prs, L)
-    title(s, "Postojeće stanje lokacija")
-    cols = [
-        ("BS SJEDNICA — Bileća (RS)", img["sjednica"], [
-            "1076 m n.v. · 42,9448° N, 18,3236° E",
-            "AB ploča 5,40 × 5,40 m, rešetkasti stub h = 38 m",
-            "kontejner K2 3,00 × 2,30 m — prostor za agregat",
-            "vanjski ormar Huawei ICC360 uz kontejner",
-            "ograda 2,10 m; parcela ≈150 m²",
-            "nema priključka na EES",
-        ]),
-        ("BS HAMZIĆI — Čitluk (FBiH)", img["hamzici"], [
-            "493 m n.v. · 43,2880° N, 17,6248° E",
-            "AB ploča 5,40 × 5,40 m, rešetkasti stub h = 32 m",
-            "kontejner K2 prazan, klima Stulz WDE80 se demontira",
-            "ormari ICC360 i MTS na JZ strani, iza FN polja",
-            "makadamski prilaz ≈800 m × 3 m",
-            "priključak projektovan 2017. nije izveden",
-        ]),
-    ]
-    for k, (head, photo, lines) in enumerate(cols):
-        x0 = 0.4 + k * 4.7
-        card(s, x0, 1.05, 4.5, 4.3)
-        box(s, x0 + 0.2, 1.15, 4.1, 0.35, [(head, {"bold": True, "size": 13,
-                                                   "color": ORANGE})])
-        picture(s, photo, x0 + 0.2, 1.6, 1.75, 3.6)
-        box(s, x0 + 2.05, 1.6, 2.35, 3.7,
-            [(t, {"bullet": True, "indent": 0.16}) for t in lines], size=10.5,
-            space=5)
-    box(s, 0.4, 5.45, 9.2, 0.35, [("Oba objekta imaju otežan prilaz, naročito nakon "
-                                   "padavina; obilazak lokacija je dio postupka.",
-                                   {"size": 10.5, "italic": True, "color": GREY})])
-    notes(s, "Oba objekta: otežan prilaz, naročito nakon padavina; obilazak lokacija "
-             "je dio postupka (Tačka 3 TD).")
+         "elektroenergetsku mrežu; bez napajanja se ne mogu pustiti u rad.", B),
+        ("Rješenje je autonomni hibridni sistem na −48 V DC: FN polje, LFP "
+         "baterije i dizel agregat kao rezerva.", B),
+        ("Huawei oprema (FN moduli, ICC360, baterije, MTS) je posebna nabavka; "
+         "ova nabavka obuhvata infrastrukturu i instalaciju.", B),
+        ("Druga iteracija, nakon lokacije MILNIŠTE_MIKRO (Glamoč).", B),
+    ], size=12, space=7)
+    for k, (key, cap) in enumerate((("sjednica", "BS Sjednica"),
+                                    ("hamzici", "BS Hamzići"))):
+        x, y, w, h = picture(s, img[key], 6.0 + k * 1.85, 1.05, 1.75, 2.95)
+        box(s, x, y + h + 0.03, w, 0.28, [(cap, {"size": 9.5, "color": GREY,
+                                               "italic": True})],
+            align=PP_ALIGN.CENTER)
+    rows = [["Lokacija", "Nadm. visina", "Postojeće", "Napomena"],
+            ["BS Sjednica, Bileća (RS)", "1076 m", "ploča 5,40 × 5,40 m, stub 38 m, "
+             "kontejner K2", "ormar ICC360 uz kontejner"],
+            ["BS Hamzići, Čitluk (FBiH)", "493 m", "ploča 5,40 × 5,40 m, stub 32 m, "
+             "kontejner K2", "demontaža klime Stulz; makadam ≈800 m"]]
+    table(s, 0.4, 4.4, 9.2, rows, [2.35, 1.15, 3.05, 2.65], size=10, row_h=0.45,
+          head_h=0.32)
+    notes(s, "Bez napajanja nema puštanja u rad; izostaje pokrivanje i RR čvorište "
+             "Sjednica. Oba objekta imaju otežan prilaz, naročito nakon padavina.")
 
 
 def s_rjesenje(prs, L):
     s = new_slide(prs, L)
-    title(s, "Tehničko rješenje — po lokaciji")
-    # blok šema
-    blocks = [
-        (0.4, 1.15, "FN polje", "12 × iPV585-M2A\n7,02 kWp\n4 nosača × 3 modula"),
-        (2.75, 1.15, "Solarni moduli", "PVDB 500 V DC\n2 × S4875G3\n4 kW, AFCI"),
-        (5.1, 1.15, "Huawei ICC360", "−48 V DC sabirnica\nkontroler SMU\nLFP 48,6 kWh"),
-        (7.45, 1.15, "TK oprema", "≈1,18 kW nazivno\n≈1,33 kW vršno"),
-    ]
-    for x, y, h1, h2 in blocks:
-        card(s, x, y, 2.15, 1.55)
-        box(s, x + 0.1, y + 0.1, 1.95, 1.4,
-            [(h1, {"bold": True, "size": 12, "color": ORANGE}), (h2, {"size": 10.5})],
-            align=PP_ALIGN.CENTER, space=3)
+    title(s, "Tehničko rješenje i predmet nabavke")
+    blocks = [(0.4, "FN polje", "12 × 585 Wp\n7,02 kWp"),
+              (2.75, "Solarni moduli", "PVDB\n2 × S4875G3"),
+              (5.1, "Huawei ICC360", "−48 V DC, SMU\nLFP 48,6 kWh"),
+              (7.45, "TK oprema", "≈1,18 kW\nnazivno")]
+    for x, h1, h2 in blocks:
+        card(s, x, 1.0, 2.15, 1.0)
+        box(s, x + 0.08, 1.05, 1.99, 0.9,
+            [(h1, {"bold": True, "size": 11, "color": ORANGE}), (h2, {"size": 10})],
+            align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, space=1)
     for x in (2.57, 4.92, 7.27):
-        arrow(s, x, 1.77, 0.17, 0.3)
-    # agregat ispod ICC360
-    card(s, 5.1, 3.05, 2.15, 1.2, LIGHT)
-    box(s, 5.2, 3.12, 1.95, 1.1,
-        [("Rezerva: DEA 18 kVA", {"bold": True, "size": 12, "color": ORANGE}),
-         ("u kontejneru → GRO →\n3 × R4875 (AC/DC)", {"size": 10.5})],
-        align=PP_ALIGN.CENTER, space=3)
-    shape(s, MSO_SHAPE.UP_ARROW, 6.03, 2.73, 0.3, 0.3, ORANGE)
-    # ključni parametri
-    B = {"bullet": True, "indent": 0.18}
-    box(s, 0.4, 3.05, 4.5, 3.1, [
-        ("LOT 1 — FN nosači", {"bold": True, "size": 12}),
-        ("4 odvojena nosača × 3 modula, položeno", B),
-        ("nagib 45°, jugozapad (azimut 225°)", B),
-        ("2 temeljne trake po nosaču, C30/37 XC4+XF3", B),
-        ("LOT 2 — agregat i instalacije", {"bold": True, "size": 12}),
-        ("DEA 18 kVA / 14,4 kW, skid u kontejneru", B),
-        ("dvoplašni spremnik 500 l, korito, protupožarna zaštita", B),
-        ("novi GRO, DC razvod −48 V, uzemljenje, SPD", B),
-    ], size=11, space=4)
-    box(s, 5.1, 4.45, 4.5, 1.4, [
-        ("Upravljanje (SMU)", {"bold": True, "size": 12}),
-        ("start agregata po SoC: DOD 85 %, stop SoC 60 %", B),
-        ("ulaz ispravljača ograničen na 9,5 kW", B),
-        ("najkraći rad 1 h; alarmi u NetEco", B),
-    ], size=11, space=4)
-    notes(s, "Huawei oprema (FN moduli, ICC360, ispravljači, solarni moduli, "
-             "baterije) dolazi od Kupca; ponuđač je ugrađuje i povezuje.")
-
-
-def s_bilans(prs, L):
-    s = new_slide(prs, L)
-    title(s, "Očekivani energetski bilans",
-          "satna simulacija 2005–2023, pvlib + PVGIS-SARAH3, polje JZ 45°")
-    stats = [("74,7 %", "77,0 %", "solarni udio u potrošnji"),
-             ("≈300 h", "≈270 h", "rad agregata godišnje"),
-             ("≈990 l", "≈900 l", "gorivo godišnje")]
-    for k, (a, b, lab) in enumerate(stats):
-        x = 0.4 + k * 3.1
-        card(s, x, 1.3, 2.9, 1.25)
-        box(s, x + 0.1, 1.38, 2.7, 0.3, [(lab, {"size": 11, "color": GREY})],
-            align=PP_ALIGN.CENTER)
-        box(s, x + 0.1, 1.62, 1.35, 0.9, [(a, {"bold": True, "size": 22, "color": ORANGE}),
-                                         ("Sjednica", {"size": 10})],
-            align=PP_ALIGN.CENTER, space=0)
-        box(s, x + 1.45, 1.62, 1.35, 0.9, [(b, {"bold": True, "size": 22, "color": ORANGE}),
-                                          ("Hamzići", {"size": 10})],
-            align=PP_ALIGN.CENTER, space=0)
-    picture(s, os.path.join(GRAF, "energetski-bilans-sjednica.png"), 0.4, 2.75, 5.6, 3.05)
-    B = {"bullet": True, "indent": 0.18}
-    box(s, 6.2, 2.85, 3.4, 2.9, [
-        ("FN proizvodnja ≈9 240 / ≈9 580 kWh/god", B),
-        ("u 9 od 10 godina agregat do ≈360 / ≈320 h", B),
-        ("spremnik 500 l dopunjava se 2–3 puta godišnje", B),
-        ("nepokrivena potrošnja: 0", B),
-        ("vrijednosti su informativne (Prilog I, Tačka 8)",
-         {"bullet": True, "indent": 0.18, "italic": True, "color": GREY}),
-    ], size=10.5, space=5)
-    notes(s, "Orijentacija JZ je odluka Naručioca (11.09.2026); prema jugu bi "
-             "agregat radio ≈50 h godišnje manje.")
-
-
-def s_raspored(prs, L, img):
-    s = new_slide(prs, L)
-    title(s, "Raspored opreme — BS Sjednica",
-          "crtež M-01 iz Priloga III; za BS Hamzići crtež H-04")
-    picture(s, img["m01"], 0.6, 1.25, 8.8, 4.6)
-    notes(s, "Agregat u skid izvedbi na roštilju, spremnik 500 l u koritu, "
-             "usis na SI zidu, izlaz toplog zraka kroz SZ zid.")
-
-
-def s_lotovi(prs, L):
-    s = new_slide(prs, L)
-    title(s, "Predmet nabavke — dva LOT-a",
-          "ponuđač može dostaviti ponudu za jedan ili oba LOT-a")
-    lots = [
-        ("LOT 1", "Nosači FN panela", "8 kpl (4 po lokaciji)", [
-            "pripremni i zemljani radovi, iskop u stijeni",
-            "temeljne trake, podložni beton",
-            "isporuka i montaža nosača, hemijski ankeri",
-            "uzemljenje nosača na postojeći prsten",
-            "statički proračun (vjetar, snijeg) — uslov za početak radova",
-        ]),
-        ("LOT 2", "Agregat i hibridni sistem", "2 agregatska postrojenja 18 kVA", [
-            "DEA skid u kontejneru, roštilj, spremnik 500 l",
-            "ventilacija, izduv, protupožarna zaštita",
-            "GRO, DC razvod −48 V, kablovi, SPD, uzemljenje",
-            "preuzimanje opreme Kupca u Azićima, prevoz, montaža FN panela",
-            "uvezivanje u NetEco, puštanje u rad, 72 h probni rad, obuka",
-            "demontaža klime Stulz (Hamzići)",
-        ]),
-    ]
-    for k, (tag, name, qty, items) in enumerate(lots):
+        arrow(s, x, 1.37, 0.17, 0.26)
+    shape(s, MSO_SHAPE.UP_ARROW, 6.05, 2.03, 0.26, 0.24, ORANGE)
+    card(s, 5.1, 2.3, 2.15, 0.62, LIGHT)
+    box(s, 5.15, 2.3, 2.05, 0.62, [("Rezerva: DEA 18 kVA", {"bold": True, "size": 10.5,
+                                                          "color": ORANGE}),
+                                   ("→ GRO → 3 × R4875", {"size": 9.5})],
+        align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, space=0)
+    box(s, 0.4, 2.2, 4.55, 0.75, [
+        [("Očekivano godišnje: ", {"bold": True, "size": 10.5}),
+         ("solarni udio 75–77 %, agregat ≈270–300 h, gorivo ≈900–990 l "
+          "(pvsim, 2005–2023).", {"size": 10.5})]], space=0)
+    lots = [("LOT 1", "Nosači FN panela — 8 kpl (4 po lokaciji)", [
+                "zemljani radovi, temeljne trake C30/37",
+                "4 nosača × 3 modula, 45°, azimut 225°",
+                "hemijski ankeri, uzemljenje nosača",
+                "statički proračun — uslov za početak radova"]),
+            ("LOT 2", "Agregat i hibridni sistem — 2 kpl", [
+                "DEA 18 kVA skid u kontejneru, spremnik 500 l",
+                "ventilacija, izduv, protupožarna zaštita",
+                "GRO, DC razvod −48 V, SPD, uzemljenje",
+                "preuzimanje opreme Kupca (Azići), montaža FN",
+                "NetEco, puštanje u rad, 72 h proba, obuka"])]
+    for k, (tag, name, items) in enumerate(lots):
         x0 = 0.4 + k * 4.7
-        card(s, x0, 1.35, 4.5, 4.3)
-        badge(s, x0 + 0.2, 1.5, 0.75, tag, size=11)
-        box(s, x0 + 1.1, 1.5, 3.3, 0.75, [(name, {"bold": True, "size": 14}),
-                                          (qty, {"size": 11, "color": GREY})],
-            anchor=MSO_ANCHOR.MIDDLE, space=0)
-        box(s, x0 + 0.25, 2.45, 4.05, 3.6,
-            [(t, {"bullet": True, "indent": 0.18}) for t in items], size=12, space=7)
-    notes(s, "Isti opis radova za obje lokacije; Prilog II ima zaseban obrazac "
-             "za svaki LOT, sa listom po lokaciji.")
+        card(s, x0, 3.1, 4.5, 2.35)
+        badge(s, x0 + 0.15, 3.2, 0.62, tag, size=10)
+        box(s, x0 + 0.88, 3.2, 3.5, 0.62, [(name, {"bold": True, "size": 11.5})],
+            anchor=MSO_ANCHOR.MIDDLE)
+        box(s, x0 + 0.2, 3.92, 4.15, 1.85,
+            [(t, {"bullet": True, "indent": 0.16}) for t in items], size=11,
+            space=3)
+    notes(s, "Huawei oprema (ICC360, R4875 ×3, S4875G3 ×2, FN moduli ×12, PVDB, "
+             "kablovi) dolazi od Kupca; spisak u Prilogu I, Tačka 9. Ponuđač može "
+             "ponuditi jedan ili oba LOT-a.")
 
 
-def s_oprema(prs, L):
+def s_postupak(prs, L):
     s = new_slide(prs, L)
-    title(s, "Oprema Kupca — predaje se Ponuđaču",
-          "Huawei specifikacija isporuke; preuzimanje u skladištu Azići, Sarajevo")
-    rows = [["Oprema", "Po lokaciji", "Ukupno"],
-            ["Ormar hibridnog sistema ICC360 (kontroler, razvod 600 A, DC klima)", "1", "2"],
-            ["Ispravljački moduli R4875, 4 kW", "3", "6"],
-            ["Solarni moduli S4875G3, 4 kW, AFCI", "2", "4"],
-            ["FN moduli iPV585-M2A, 585 W", "12", "24"],
-            ["FN razdjelna kutija PVDB, AC ulazni modul AIU03, SPD SPM01A", "1 + 1 + 1", "2 + 2 + 2"],
-            ["DC/DC pretvarač 13,5 V / 26,8 V (start. akumulator, 24 V potrošači)", "1", "2"],
-            ["Senzor nivoa goriva, modul agregata, bežični relej, antena", "komplet", "2 kompleta"],
-            ["Kablovi (energetski, FN, signalni) i montažni pribor", "komplet", "2 kompleta"],
-            ["LFP baterijski moduli (iz druge nabavke Kupca)", "prema projektu", "—"]]
-    table(s, 0.4, 1.3, 9.2, rows, [6.2, 1.4, 1.6], size=10.5, row_h=0.42,
-          align=[PP_ALIGN.LEFT, PP_ALIGN.CENTER, PP_ALIGN.CENTER])
-    box(s, 0.4, 5.65, 9.2, 0.5, [("Ponuđač (LOT 2) preuzima, prevozi, istovara i "
-                                  "ugrađuje; od otpremnice do primopredaje za opremu "
-                                  "odgovara Ponuđač.", {"size": 11, "italic": True,
-                                                         "color": GREY})])
-    notes(s, "Detaljan spisak: Prilog I, Tačka 9 i završna strana Priloga III.")
+    title(s, "Postupak nabavke — od objave do ugovora")
+    rows = [("Postupak", "pregovarački postupak sa objavom obavještenja "
+                         "(čl. 10 i 16 Pravilnika)"),
+            ("Kriterij", "najniža cijena prihvatljive ponude, za svaki LOT"),
+            ("Rokovi", "ponude 20 dana od poziva; realizacija 90 dana od uvođenja "
+                       "u posao, po LOT-u"),
+            ("Plaćanje", "100 %, 30 dana od fakture, po završenom LOT-u i "
+                         "primopredaji"),
+            ("Garancija", "min. 2 godine + postgarancija 5 godina; kazna 0,1 %/dan, "
+                          "max 10 %")]
+    y = 1.0
+    for k, (lab, val) in enumerate(rows):
+        shape(s, MSO_SHAPE.RECTANGLE, 0.4, y, 9.2, 0.4, TINT if k % 2 == 0 else WHITE)
+        box(s, 0.5, y, 1.6, 0.4, [(lab, {"bold": True, "size": 10.5, "color": ORANGE})],
+            anchor=MSO_ANCHOR.MIDDLE)
+        box(s, 2.1, y, 7.4, 0.4, [(val, {"size": 10.5})], anchor=MSO_ANCHOR.MIDDLE,
+            space=0)
+        y += 0.42
+    steps = [("Odluka Uprave", "odobrenje sredstava"),
+             ("Zahtjev za nabavku", "TD, komisija, 9 ponuđača"),
+             ("Objava i poziv", "obavještenje i poziv"),
+             ("Obilazak lokacija", "do 5 dana prije roka"),
+             ("Prijem ponuda", "20 dana; jedan ili oba LOT-a"),
+             ("Ocjena", "reference, kadrovi, autorizacija DEA"),
+             ("Pregovori", "cijena; konačne ponude"),
+             ("Izbor i ugovor", "po LOT-u; uvođenje ≤15 dana")]
+    w, h, gx = 2.1, 1.12, 0.27
+    for k, (head, body) in enumerate(steps):
+        r, c = divmod(k, 4)
+        x, yy = 0.4 + c * (w + gx), 3.25 + r * (h + 0.18)
+        card(s, x, yy, w, h)
+        badge(s, x + 0.1, yy + 0.1, 0.38, str(k + 1), size=11)
+        box(s, x + 0.55, yy + 0.08, w - 0.62, 0.45, [(head, {"bold": True, "size": 10.5})],
+            anchor=MSO_ANCHOR.MIDDLE, space=0)
+        box(s, x + 0.12, yy + 0.56, w - 0.22, h - 0.6, [(body, {"size": 9.5})], space=0)
+        if c < 3:
+            arrow(s, x + w + 0.04, yy + 0.18, 0.19, 0.22)
+    notes(s, "Uslovi: min. 2 slična ugovora u 3 godine (LOT 1 ≥10.000 KM, LOT 2 "
+             "≥20.000 KM), min. 3 radnika + 1 certificiran serviser, autorizacija "
+             "proizvođača DEA, ISO 9001/14001. Primopredaja: Komisija na lokaciji do "
+             "15 dana od zahtjeva. Rizik: referentni P18-6 standardno ima SHUNT "
+             "pobudu; tražiti AREP+ ili EBS.")
 
 
 def s_vrijednost(prs, L):
@@ -529,160 +447,6 @@ def s_vrijednost(prs, L):
              "pobudom prije objave.")
 
 
-def s_elementi(prs, L):
-    s = new_slide(prs, L)
-    title(s, "Ostali elementi nabavnog zahtjeva")
-    rows = [
-        ("Postupak", "pregovarački postupak sa objavom obavještenja "
-                     "(čl. 10 i 16 Pravilnika o nabavkama)"),
-        ("Kriterij", "najniža cijena prihvatljive ponude, za svaki LOT posebno"),
-        ("Rok za ponude", "20 dana od slanja poziva"),
-        ("Rok realizacije", "90 dana od uvođenja u posao, za svaki LOT; "
-                            "uvođenje do 15 dana od potpisa ugovora"),
-        ("Plaćanje", "100 %, odgođeno 30 dana od ispravne fakture; fakturiše se "
-                     "po završenom LOT-u, uz zapisnik o primopredaji"),
-        ("Garancija", "min. 2 godine; postgarantni period min. 5 godina"),
-        ("Ugovorna kazna", "0,1 % po danu kašnjenja, 0,5 % po danu za neotklonjene "
-                           "nedostatke; ukupno najviše 10 %"),
-        ("Primopredaja", "Komisija Kupca na lokaciji, do 15 dana od zahtjeva; "
-                         "nedostaci se otklanjaju u roku do 15 dana"),
-    ]
-    y = 1.05
-    for k, (lab, val) in enumerate(rows):
-        fill = TINT if k % 2 == 0 else WHITE
-        shape(s, MSO_SHAPE.RECTANGLE, 0.4, y, 9.2, 0.56, fill)
-        box(s, 0.55, y, 2.2, 0.56, [(lab, {"bold": True, "size": 11.5, "color": ORANGE})],
-            anchor=MSO_ANCHOR.MIDDLE)
-        box(s, 2.8, y, 6.7, 0.56, [(val, {"size": 11})], anchor=MSO_ANCHOR.MIDDLE,
-            space=0)
-        y += 0.595
-    notes(s, "Kao u predlošku prezentacije planirane nabavke; izvor TD Tačke 3, "
-             "4, 7 i 8 i Zahtjev za nabavku.")
-
-
-def s_tok(prs, L):
-    s = new_slide(prs, L)
-    title(s, "Tok postupka — od objave do ugovora")
-    steps = [
-        ("Odluka Uprave", "odobrenje sredstava 100.000 KM, LOT 1 i 2"),
-        ("Zahtjev za nabavku", "TD sa Prilozima I–III, komisija, lista ponuđača"),
-        ("Objava i poziv", "obavještenje + poziv za 9 potencijalnih ponuđača"),
-        ("Obilazak lokacija", "prijava do 15 dana, obilazak do 5 dana prije roka; "
-                              "Direkcija Mostar"),
-        ("Prijem ponuda", "20 dana od poziva; ponuda za jedan ili oba LOT-a"),
-        ("Ocjena ponuda", "kvalifikacija, tehnička prihvatljivost, cijena po LOT-u"),
-        ("Pregovori", "o cijeni sa prihvatljivim ponuđačima; konačne ponude"),
-        ("Izbor i ugovor", "odluka o izboru po LOT-u, potpis, uvođenje u posao "
-                           "do 15 dana"),
-    ]
-    w, h, gx = 2.1, 2.1, 0.27
-    for k, (head, body) in enumerate(steps):
-        r, c = divmod(k, 4)
-        x = 0.4 + c * (w + gx)
-        y = 1.05 + r * (h + 0.3)
-        card(s, x, y, w, h)
-        badge(s, x + 0.15, y + 0.15, 0.48, str(k + 1), size=14)
-        box(s, x + 0.15, y + 0.72, w - 0.3, 0.55, [(head, {"bold": True, "size": 12})],
-            space=0)
-        box(s, x + 0.15, y + 1.22, w - 0.3, h - 1.3, [(body, {"size": 10})], space=0)
-        if c < 3:
-            arrow(s, x + w + 0.04, y + 0.27, 0.19, 0.24)
-    notes(s, "Rokovi iz Zahtjeva za nabavku (tačka 7) i TD Tačka 3 (obilazak). "
-             "Pregovori se vode samo sa ponuđačima čije su ponude prihvatljive.")
-
-
-def s_uslovi(prs, L):
-    s = new_slide(prs, L)
-    title(s, "Uslovi za ponuđače i dokazi")
-    cells = [
-        ("Reference", ["min. 2 ista ili slična ugovora u zadnje 3 godine",
-                       "LOT 1: zbirno ≥ 10.000 KM — FN nosači",
-                       "LOT 2: zbirno ≥ 20.000 KM — agregatska postrojenja",
-                       "za oba LOT-a dokazuje se svaki posebno"]),
-        ("Kadrovi", ["min. 3 radnika elektro ili mašinske struke",
-                     "min. 1 serviser certificiran od proizvođača nuđenog agregata",
-                     "lista osiguranika i izjava za trajanje ugovora"]),
-        ("Agregat (LOT 2)", ["autorizacija proizvođača ili ovlaštenog distributera "
-                             "za BiH",
-                             "ISO 9001 i ISO 14001 proizvođača",
-                             "elektro sheme DEA, nacrti spremnika i roštilja"]),
-        ("Nosači (LOT 1)", ["statički proračun nosača za odabrane FN panele",
-                            "katalog sa označenim dijelovima i materijalom",
-                            "Obrazac za cijenu (Prilog II) za svaki LOT, sve stavke "
-                            "popunjene"]),
-    ]
-    for k, (head, items) in enumerate(cells):
-        r, c = divmod(k, 2)
-        x, y = 0.4 + c * 4.7, 1.05 + r * 2.4
-        card(s, x, y, 4.5, 2.25)
-        badge(s, x + 0.18, y + 0.18, 0.42, str(k + 1), size=12)
-        box(s, x + 0.75, y + 0.18, 3.6, 0.42, [(head, {"bold": True, "size": 13})],
-            anchor=MSO_ANCHOR.MIDDLE)
-        box(s, x + 0.25, y + 0.72, 4.05, 1.5,
-            [(t, {"bullet": True, "indent": 0.16}) for t in items], size=11,
-            space=4)
-    notes(s, "TD Tačke 5 i 6; ovjerene kopije: sud, upravni organ ili notar.")
-
-
-def s_realizacija(prs, L):
-    s = new_slide(prs, L)
-    title(s, "Nakon ugovora — realizacija i primopredaja")
-    steps = [("Uvođenje u posao", "do 15 dana od potpisa; predaja gradilišta, "
-                                  "građevinski dnevnik"),
-             ("Statički proračun", "ovjeren proračun nosača i poda kontejnera — "
-                                   "uslov za početak radova"),
-             ("Izvođenje", "LOT 1 temelji i nosači; LOT 2 agregat, instalacije, "
-                           "montaža FN panela"),
-             ("Ispitivanja", "nalaz uzemljenja, FAT agregata, 72 h probni rad, "
-                             "obuka osoblja"),
-             ("Primopredaja", "Komisija na lokaciji do 15 dana; izvedbena "
-                              "dokumentacija; faktura po LOT-u")]
-    y0 = 1.35
-    shape(s, MSO_SHAPE.RECTANGLE, 0.75, y0 + 0.31, 8.5, 0.06, ORANGE)
-    for k, (head, body) in enumerate(steps):
-        x = 0.4 + k * 1.86
-        badge(s, x + 0.55, y0, 0.68, str(k + 1), size=16)
-        box(s, x, y0 + 0.85, 1.78, 0.6, [(head, {"bold": True, "size": 12})],
-            align=PP_ALIGN.CENTER, space=0)
-        box(s, x, y0 + 1.45, 1.78, 1.6, [(body, {"size": 10})], align=PP_ALIGN.CENTER,
-            space=0)
-    card(s, 0.4, 4.05, 9.2, 1.35, LIGHT)
-    B = {"bullet": True, "indent": 0.18}
-    box(s, 0.6, 4.18, 8.8, 1.4, [
-        ("Nadzor Kupca: Voditelj projekta i nadzorni organi za građevinsku (LOT 1) "
-         "te mašinsku i elektro fazu (LOT 2).", B),
-        ("Viškovi do 15 % po stavci i 1 % ukupno odobrava nadzor; preko 10 % "
-         "ukupne vrijednosti ide novi postupak.", B),
-        ("Kolaudacija: EE napajanje 006-001; agregati klasa 4034 (8 %), "
-         "ispravljači 3050 (10 %).", B),
-    ], size=11, space=6)
-    notes(s, "TD Tačka 3.3–3.4 (rokovi, nadzor, primopredaja) i Tačka 7.2 "
-             "(viškovi i nepredviđeni radovi).")
-
-
-def s_rizici(prs, L):
-    s = new_slide(prs, L)
-    title(s, "Rizici i mjere")
-    rows = [["Rizik", "Mjera"],
-            ["Pristup lokacijama (1076 m n.v., makadam), zimski uslovi",
-             "obavezan obilazak; terenska vozila; radovi u proljeće/ljeto; uvođenje "
-             "u posao po povoljnim uslovima"],
-            ["Dozvole općine i zakup zemljišta",
-             "klauzula o zamjenskoj lokaciji po jediničnim cijenama ili odustajanje"],
-            ["Ispad agregata na lokaciji bez posade (servis jednom godišnje)",
-             "pobuda AREP+ ili Stamford EBS (≥3 × In, 10 s); daljinski reset i "
-             "start/stop preko NetEco"],
-            ["Procjena LOT 2 u odnosu na tržište",
-             "prije objave upit ovlaštenom distributeru za agregat sa traženom "
-             "pobudom"],
-            ["Usklađenost sa Huawei opremom",
-             "spisak opreme Kupca u TD; zapisnik o preuzimanju sa serijskim "
-             "brojevima"]]
-    table(s, 0.4, 1.1, 9.2, rows, [3.7, 5.5], size=11, row_h=0.78, head_h=0.4)
-    notes(s, "Referentni FG Wilson P18-6 standardno ima SHUNT pobudu; PMG nije "
-             "dostupan u klasi 18–20 kVA (Leroy-Somer TAL 040).")
-
-
 # --------------------------------------------------------------------------
 def images(tmp):
     import pymupdf
@@ -696,8 +460,6 @@ def images(tmp):
     out["hamzici"] = os.path.join(tmp, "hamzici.jpg")
     Image.frombytes("RGB", (pix.width, pix.height), pix.samples).rotate(
         -90, expand=True).save(out["hamzici"], quality=88)
-    out["m01"] = os.path.join(tmp, "m01.png")
-    d[7].get_pixmap(dpi=150).save(out["m01"])
     return out
 
 
@@ -713,19 +475,10 @@ def main():
     img = images(tmp)
     prs, L = prep_template(src)
     edit_title_slide(prs.slides[0])
-    s_opis(prs, L, img)
-    s_stanje(prs, L, img)
+    s_investicija(prs, L, img)
     s_rjesenje(prs, L)
-    s_bilans(prs, L)
-    s_raspored(prs, L, img)
-    s_lotovi(prs, L)
-    s_oprema(prs, L)
     s_vrijednost(prs, L)
-    s_elementi(prs, L)
-    s_tok(prs, L)
-    s_uslovi(prs, L)
-    s_realizacija(prs, L)
-    s_rizici(prs, L)
+    s_postupak(prs, L)
     move_last_to_end(prs)
     renumber(prs)
     prs.core_properties.title = "Autonomni hibridni sistemi napajanja BS Sjednica i BS Hamzići"
