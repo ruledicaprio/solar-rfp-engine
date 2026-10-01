@@ -523,7 +523,7 @@ stablom rad agregata raste za 1–10 h godišnje.
 
 Opremu iz tabele Kupac predaje Ponuđaču u skladištu (Tačka 4.9). Spisak je sažet iz
 Huawei specifikacije isporuke za obje lokacije i služi Ponuđaču da procijeni obim
-preuzimanja, prevoza i ugradnje; sitni pribor i kablovi su grupisani. Tačan spisak
+preuzimanja, prevoza i ugradnje; sitni pribor je grupisan, kablovi su po tipu. Tačan spisak
 Kupac daje uz narudžbu.
 
 | Oprema | Po lokaciji | Ukupno (2 lokacije) |
@@ -534,8 +534,24 @@ Kupac daje uz narudžbu.
 | FN moduli iPV585-M2A, 585 W, 2278 × 1134 × 30 mm | 12 kom (7,02 kWp) | 24 kom |
 | FN razdjelna kutija PVDB, 500 V DC, 2 izlaza | 1 kom | 2 kom |
 | AC ulazni modul AIU03 (100 A, 3P+N) i prenaponska zaštita SPM01A | 1 + 1 kom | 2 + 2 kom |
-| Sprega sa agregatom i nadzor: interfejsni modul agregata, bežični senzor nivoa goriva, bežični relej, napojna jedinica AC/DC 13,5 V, omnidirekciona antena, kabl za punjenje startne baterije agregata 10 m | po 1 kom | po 2 kom |
+| Sprega sa agregatom i nadzor: interfejsni modul agregata, bežični senzor nivoa goriva, bežični relej, napojna jedinica AC/DC 13,5 V, omnidirekciona antena | po 1 kom | po 2 kom |
 | Montažni pribor: nosači za montažu na cijev Ø48–114 mm (2 kom), pribor postolja, slijepe maske (5 kom), sabirnica za uzemljenje, pribor ormara i FN priključka, alat za MC4 konektore | 1 komplet | 2 kompleta |
-| Energetski kablovi: H07Z-K 4 mm² (24 m crni i 24 m bijeli), PE 16 mm² (17 m), AC ulazni 4 × 25 mm² (10 m); baterijski 4AWG (2 para) i 6 mm² (2 × 0,5 m) | ≈75 m + 4 kom | ≈150 m + 8 kom |
-| FN produžni kablovi 4 mm²: 3 m (8 kom) i 7 m (2 kom) | 10 kom | 20 kom |
-| Signalni i komunikacioni kablovi: upredene parice 4 × 2 × 26AWG (30 m), 4 × 20AWG (10 m), 2 × 0,75 mm² (10 m); RS485, signalni, alarm vrata i CAN kablovi | ≈50 m + 6 kom | ≈100 m + 12 kom |
+| **Energetski kablovi** | | |
+| H07Z-K 4 mm², 450/750 V, LSZH, crni | 24 m | 48 m |
+| H07Z-K 4 mm², 450/750 V, LSZH, bijeli | 24 m | 48 m |
+| Zaštitni PE 16 mm², 450/750 V, žuto-zeleni | 17 m | 34 m |
+| AC ulazni ZA-RVV 4 × 25 mm², 0,6/1 kV | 10 m | 20 m |
+| Baterijski kabl 4AWG (124 A), par plavi/crni | 2 kom | 4 kom |
+| Kabl 6 mm², 0,5 m, sa papučicama OT6 | 2 kom | 4 kom |
+| Kabl za punjenje startne baterije agregata 1,5 mm², 10 m | 1 kom | 2 kom |
+| **FN kablovi** | | |
+| FN produžni kabl 4 mm², 3 m | 8 kom | 16 kom |
+| FN produžni kabl 4 mm², 7 m | 2 kom | 4 kom |
+| **Signalni i komunikacioni kablovi** | | |
+| Upredene parice SEYYP 4 × 2 × 26AWG, LSZH | 30 m | 60 m |
+| Vanjski kabl 4 × 20AWG, neoklopljen | 10 m | 20 m |
+| Vanjski pljosnati kabl RVV 2 × 0,75 mm² | 10 m | 20 m |
+| RS485 konverzioni kabl, 4 para | 1 kom | 2 kom |
+| Signalni kablovi 0,6 m (2 kom) i 3,0 m (1 kom) | 3 kom | 6 kom |
+| Kabl alarma vrata, 1,5 m | 1 kom | 2 kom |
+| CAN kabl sa završnim otpornikom (Li baterije) | 1 kom | 2 kom |

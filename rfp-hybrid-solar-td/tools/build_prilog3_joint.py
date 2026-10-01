@@ -382,15 +382,22 @@ def equipment_page(doc):
 
     y = y0 + 90
     for n, cells in enumerate([head] + rows):
-        h = height_for(cells, pfonts[n == 0])
+        # a group row (| **Energetski kablovi** | | |) spans the table in bold
+        group = cells[0].startswith("**") and not any(cells[1:])
+        if group:
+            cells = [cells[0].strip("*")]
+        strong = n == 0 or group
+        h = height_for(cells, pfonts[strong])
         page.draw_rect(fitz.Rect(xs[0], y, xs[-1], y + h), color=rule, width=0.6,
-                       fill=(0.93, 0.93, 0.93) if n == 0 else None)
+                       fill=(0.93, 0.93, 0.93) if n == 0 else (0.97, 0.97, 0.97) if group
+                       else None)
         for i, txt in enumerate(cells):
             if i:
                 page.draw_line(fitz.Point(xs[i], y), fitz.Point(xs[i], y + h), color=rule,
                                width=0.6)
-            if page.insert_textbox(fitz.Rect(xs[i] + 6, y + 5, xs[i + 1] - 4, y + h), txt,
-                                   fontname=bold if n == 0 else reg, fontsize=size) < 0:
+            x1 = xs[-1] if group else xs[i + 1]
+            if page.insert_textbox(fitz.Rect(xs[i] + 6, y + 5, x1 - 4, y + h), txt,
+                                   fontname=bold if strong else reg, fontsize=size) < 0:
                 raise SystemExit(f"oprema Kupca: {txt[:50]!r} nije stalo")
         y += h
     scratch.close()
