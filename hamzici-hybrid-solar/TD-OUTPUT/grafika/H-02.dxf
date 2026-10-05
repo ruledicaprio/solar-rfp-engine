@@ -489,7 +489,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461319.6162962965
+2461319.6292939815
   9
 $TDUCREATE
  40
@@ -497,7 +497,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2461319.6162962965
+2461319.6292939815
   9
 $TDUUPDATE
  40
@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-294
+28D
   9
 $SURFTAB1
  70
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{A6C4A6F4-BB2C-4756-BE9E-6B296C56B1C5}
+{E23FF8F4-16F1-431D-A48F-E5EE5A855689}
   9
 $VERSIONGUID
   2
-{ADA891C6-B231-4F28-BE09-BFBD505B6251}
+{77AEEA20-1155-4A76-B86F-34635D5C3849}
   9
 $EXTNAMES
 290
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -3745,7 +3745,7 @@ ACAD
   0
 APPID
   5
-291
+28A
 330
 3
 100
@@ -3759,7 +3759,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-292
+28B
 330
 3
 100
@@ -25677,7 +25677,7 @@ AcDbText
  40
 170.0
   1
-Kompleks je zakrenut za 45°: vrata kontejnera i kapija orijentisani su prema
+Kompleks je zakrenut za 45°; strelica označava pravi sjever.
   7
 20
  11
@@ -25711,7 +25711,7 @@ AcDbText
  40
 170.0
   1
-sjeverozapadu (SZ), klima-uređaj Stulz prema jugoistoku (JI), a FN polje prema
+Orijentaciju potvrđuje Ponuđač na lokaciji.
   7
 20
  11
@@ -25739,19 +25739,19 @@ AcDbText
  10
 28000.0
  20
-22287.0
+21587.0
  30
 0.0
  40
-170.0
+220.00000000000003
   1
-jugozapadu (JZ). Crtež je orijentisan prema kompleksu (gore SZ, desno SI, dolje
+NAPOMENE:
   7
 20
  11
 28000.0
  21
-22287.0
+21587.0
  31
 0.0
 100
@@ -25773,19 +25773,19 @@ AcDbText
  10
 28000.0
  20
-22040.5
+21367.0
  30
 0.0
  40
 170.0
   1
-JI, lijevo JZ); strelica označava pravi sjever. Orijentaciju potvrđuje Ponuđač
+1  Azimut 225°, nagib 45°; ivice panela +0,50 / +2,93 m od ploče.
   7
 20
  11
 28000.0
  21
-22040.5
+21367.0
  31
 0.0
 100
@@ -25807,19 +25807,19 @@ AcDbText
  10
 28000.0
  20
-21794.0
+21120.5
  30
 0.0
  40
 170.0
   1
-prilikom obilaska lokacije.
+2  Niz od 4 nosača, ukupne dužine 10312 mm.
   7
 20
  11
 28000.0
  21
-21794.0
+21120.5
  31
 0.0
 100
@@ -25841,19 +25841,19 @@ AcDbText
  10
 28000.0
  20
-20847.5
+20874.0
  30
 0.0
  40
-220.00000000000003
+170.0
   1
-NAPOMENE:
+3  Temeljne trake 500 × 2600 × 900 mm; vrh u nivou ploče.
   7
 20
  11
 28000.0
  21
-20847.5
+20874.0
  31
 0.0
 100
@@ -25881,7 +25881,7 @@ AcDbText
  40
 170.0
   1
-1  Nosači su orijentisani prema jugozapadu (azimut 225°), nagib 45°;
+4  Postojeći prsteni uzemljivača se lociraju i štite (LOT 1).
   7
 20
  11
@@ -25915,7 +25915,7 @@ AcDbText
  40
 170.0
   1
-    kote ivica panela su +0,50 / +2,93 m od gornje ivice ploče.
+5  Nosači i temelji prema tehničkom rješenju Ponuđača.
   7
 20
  11
@@ -25949,251 +25949,13 @@ AcDbText
  40
 170.0
   1
-2  Niz čine 4 odvojena nosača: 4 × 2278 + 3 × 400 = 10312 mm, u JZ pojasu.
+6  Raspored u kontejneru: H-04. Ormari ICC360 i MTS prikazani su principijelno.
   7
 20
  11
 28000.0
  21
 20134.5
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-28A
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-19888.0
- 30
-0.0
- 40
-170.0
-  1
-3  Temeljne trake 500 × 2600 mm, dubine 900 mm, na podložnom betonu d = 50 mm;
-  7
-20
- 11
-28000.0
- 21
-19888.0
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-28B
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-19641.5
- 30
-0.0
- 40
-170.0
-  1
-    vrh trake je u nivou ploče, 0,20 m iznad terena.
-  7
-20
- 11
-28000.0
- 21
-19641.5
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-28C
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-19395.0
- 30
-0.0
- 40
-170.0
-  1
-4  Postojeći prsteni uzemljivača (0,8 m ispod terena) prolaze ispod temeljnih traka;
-  7
-20
- 11
-28000.0
- 21
-19395.0
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-28D
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-19148.5
- 30
-0.0
- 40
-170.0
-  1
-    lociraju se i štite u okviru LOT 1.
-  7
-20
- 11
-28000.0
- 21
-19148.5
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-28E
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-18902.0
- 30
-0.0
- 40
-170.0
-  1
-5  Nosači i temelji izvode se prema tehničkom rješenju i statičkom proračunu Ponuđača.
-  7
-20
- 11
-28000.0
- 21
-18902.0
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-28F
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-18655.5
- 30
-0.0
- 40
-170.0
-  1
-6  Raspored opreme u kontejneru prikazan je na crtežu H-04.
-  7
-20
- 11
-28000.0
- 21
-18655.5
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-290
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-18409.0
- 30
-0.0
- 40
-170.0
-  1
-7  Ormari ICC360-HA1-C1 i MTS prikazani su iza FN polja principijelno.
-  7
-20
- 11
-28000.0
- 21
-18409.0
  31
 0.0
 100
@@ -27289,7 +27051,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-293
+28C
   0
 DICTIONARYVAR
   5
@@ -27301,7 +27063,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-10-05T12:47:28.444081+00:00
+1.4.4 @ 2026-10-05T13:06:11.758572+00:00
   0
 VISUALSTYLE
   5
@@ -28005,7 +27767,7 @@ X-Ray
   0
 DICTIONARYVAR
   5
-293
+28C
 330
 2D
 100
@@ -28013,7 +27775,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-10-05T12:47:28.489211+00:00
+1.4.4 @ 2026-10-05T13:06:11.815703+00:00
   0
 ENDSEC
   0

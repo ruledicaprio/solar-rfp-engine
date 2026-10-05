@@ -254,22 +254,8 @@ HAMZICI_LOT1_EDITS = {
          "1076 m n.v.",
          "Klasa XF3: ista specifikacija kao na lokaciji Sjednica, radi jednog opisa za obje "
          "lokacije."),
-        ("PUNE dubine 900 mm = 1,170 m³ po traci.",
-         "PUNE dubine 900 mm = 1,170 m³ po traci; vrh trake je u nivou gornje ivice ploče, "
-         "0,20 m iznad vanjskog terena, pa se gornjih 200 mm betonira u oplati."),
     ],
-    # Strip tops at the slab level, 0,20 m above the terrain (Investor, 05.10.2026): the
-    # same 900 mm strip sits 200 mm higher, so the trench is 750 mm deep and the strip
-    # sides show above the ground - design.json foundation._top_level.
-    "2.1": [("Rov širine 500 mm, dubine 950 mm, dužine 2600 mm. 4 nosača × 2 trake × 1,235 m3.",
-             "Rov širine 500 mm, dubine 750 mm od vanjskog terena, dužine 2600 mm (vrh trake je "
-             "0,20 m iznad terena, u nivou ploče). 4 nosača × 2 trake × 0,975 m3.")],
-    "2.2": [("4 nosača × 2 trake × 1,235 m3", "4 nosača × 2 trake × 0,975 m3")],
-    "2.5": [("0,50 × 2,60 × 8 traka = 10,4 m².",
-             "Gornja površina 0,50 × 2,60 × 8 traka = 10,4 m² i bočne strane iznad terena "
-             "2 × (2,60 + 0,50) × 0,20 × 8 traka = 9,9 m², ukupno 20,3 m².")],
 }
-HAMZICI_LOT1_QTY = {"2.1": ("m3", 7.8), "2.2": ("m3", 7.8), "2.5": ("m2", 20.3)}
 
 # Source typos fixed on BOTH site sheets of a LOT, before the Hamzići edits. The Sjednica
 # source gets the same fixes from bht-sjednica-final-review/tools/fix_boq_dc_aux.py, so
@@ -324,7 +310,7 @@ BOTH_SITES_EDITS = {
 # the bidder's own tehničko rješenje, so the predmjer states scope, not a design. The
 # source item 1.1 ran to ~4 000 characters of justification; patching it sentence by
 # sentence no longer worked, so 1.1-1.3 are replaced whole.
-def _lot1_11(smjestaj, crtez, kote="od nivoa terena"):
+def _lot1_11(smjestaj, crtez):
     return (
         "Isporuka i montaža nosive metalne konstrukcije (ground mount support) za prihvat "
         "fotonaponskih panela:\n"
@@ -334,7 +320,7 @@ def _lot1_11(smjestaj, crtez, kote="od nivoa terena"):
         "jugozapadnom ogradom\n"
         " - gabariti po nosaču: širina polja 2278 mm (poprečna greda 2891 mm, bočni prepust "
         "306,5 mm), dužina polja po nagibu 3442 mm, horizontalna projekcija 2434 mm pri nagibu "
-        f"45°; donja ivica panela na +0,50 m, gornja ivica na +2,93 m {kote}\n"
+        "45°; donja ivica panela na +0,50 m, gornja ivica na +2,93 m od nivoa terena\n"
         f" - {smjestaj}\n"
         " - materijal, antikorozivna zaštita, zavarivanje i spojni pribor prema Prilogu I, "
         "Tačka 3.3\n"
@@ -364,11 +350,10 @@ SITE_REPLACE = {
             "smještaj (43,288012° N, 17,624794° E, 493 m n.v.): nosači se temelje IZVAN "
             "ograđenog platoa, jugozapadno od ploče i ograde, u pojasu dubine 3300 mm i dužine "
             "12,50 m (JZ strana), unutar zakupa k.č. 109/1 K.O. Hamzići (12,00 × 12,50 m); trake "
-            "350 mm od granice zakupa i od ploče; vrh temeljnih traka je u nivou gornje ivice "
-            "ploče, 0,20 m iznad vanjskog terena (teren uz ploču je na −0,20 m, ovjereni "
-            "04_Ograda); gornja (sjeveroistočna) ivica panela je 1,13 m iznad vrha ograde "
-            "h=1,80 m od ploče",
-            "H-05", "od gornje ivice ploče, u čijem je nivou vrh temeljnih traka"))},
+            "350 mm od granice zakupa i od ploče; gornja (sjeveroistočna) ivica panela je 0,93 m "
+            "iznad vrha ograde — ograda je h=1,80 m iznad ploče, odnosno 2,00 m iznad vanjskog "
+            "terena, koji je uz ploču na −0,20 m (ovjereni 04_Ograda)",
+            "H-05"))},
     },
 }
 
@@ -509,7 +494,7 @@ def _site_replaced(lot):
 
 
 EXPECTED_CHANGES = {
-    "LOT 1": sorted(set(HAMZICI_LOT1_EDITS) | set(HAMZICI_LOT1_QTY) | _site_replaced("LOT 1")
+    "LOT 1": sorted(set(HAMZICI_LOT1_EDITS) | _site_replaced("LOT 1")
                     | {n for n, *_ in NEW_ITEMS["LOT 1"]}),
     "LOT 2": sorted(set(HAMZICI_EDITS) | set(HAMZICI_QTY) | set(HAMZICI_REPLACE)
                     | _site_replaced("LOT 2") | {n for n, *_ in NEW_ITEMS["LOT 2"]}),
@@ -860,19 +845,8 @@ def apply_replacements(ws, mapping, log):
         log.append(f"{ws.title}: {n} replaced ({unit} x {qty}, {len(text)} chars)")
 
 
-def apply_qty(ws, mapping, log):
-    items = structure(ws)["items"]
-    for n, (unit, qty) in mapping.items():
-        r = items[n]
-        if ws.cell(r, 3).value != unit:
-            raise ValueError(f"{ws.title} {n}: unit {ws.cell(r, 3).value!r} != {unit!r}")
-        log.append(f"{n}: qty {ws.cell(r, 4).value} -> {qty} {unit}")
-        ws.cell(r, 4).value = qty
-
-
 def apply_hamzici_lot1(ws, log):
     apply_text_edits(ws, HAMZICI_LOT1_EDITS, log)
-    apply_qty(ws, HAMZICI_LOT1_QTY, log)
     insert_new_items(ws, NEW_ITEMS["LOT 1"], log)
 
 
@@ -880,7 +854,13 @@ def apply_hamzici_lot2(ws, log):
     apply_text_edits(ws, HAMZICI_EDITS, log)
     apply_note_edits(ws, HAMZICI_NOTE_EDITS["LOT 2"], log)
     apply_replacements(ws, HAMZICI_REPLACE, log)
-    apply_qty(ws, HAMZICI_QTY, log)
+    items = structure(ws)["items"]
+    for n, (unit, qty) in HAMZICI_QTY.items():
+        r = items[n]
+        if ws.cell(r, 3).value != unit:
+            raise ValueError(f"{ws.title} {n}: unit {ws.cell(r, 3).value!r} != {unit!r}")
+        log.append(f"{n}: qty {ws.cell(r, 4).value} -> {qty} {unit}")
+        ws.cell(r, 4).value = qty
     insert_new_items(ws, NEW_ITEMS["LOT 2"], log)
 
 

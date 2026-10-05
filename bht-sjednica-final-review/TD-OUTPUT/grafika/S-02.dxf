@@ -489,7 +489,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461319.616064815
+2461319.629050926
   9
 $TDUCREATE
  40
@@ -497,7 +497,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2461319.616064815
+2461319.629050926
   9
 $TDUUPDATE
  40
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{E629E4C1-45ED-49EB-B851-83945B03E0D9}
+{D2A42700-3619-4261-A4A5-D8AAB6D638E0}
   9
 $VERSIONGUID
   2
-{E316B6DD-83E9-49A4-B00C-26F7AF8026C6}
+{069BB955-1466-4A02-B21A-9B241B8077B5}
   9
 $EXTNAMES
 290
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -19827,7 +19827,7 @@ AcDbText
  40
 85.0
   1
-1  Nosači i temelji izvode se prema tehničkom rješenju i statičkom proračunu Ponuđača.
+1  Nosači i temelji prema tehničkom rješenju Ponuđača.
   7
 20
  11
@@ -19861,7 +19861,7 @@ AcDbText
  40
 85.0
   1
-2  Temelji se izvode izvan ograde; kote ivica panela su +0,50 / +2,93 m.
+2  Temelji izvan ograde; ivice panela +0,50 / +2,93 m.
   7
 20
  11
@@ -21009,7 +21009,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-10-05T12:47:08.805145+00:00
+1.4.4 @ 2026-10-05T13:05:50.784031+00:00
   0
 VISUALSTYLE
   5
@@ -21721,7 +21721,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-10-05T12:47:08.835812+00:00
+1.4.4 @ 2026-10-05T13:05:50.810672+00:00
   0
 ENDSEC
   0

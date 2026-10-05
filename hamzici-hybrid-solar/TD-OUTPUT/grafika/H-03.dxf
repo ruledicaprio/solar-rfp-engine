@@ -489,7 +489,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461319.6162962965
+2461319.6292939815
   9
 $TDUCREATE
  40
@@ -497,7 +497,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2461319.6162962965
+2461319.6292939815
   9
 $TDUUPDATE
  40
@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-1B1
+1AE
   9
 $SURFTAB1
  70
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{944A2E45-8D66-42E1-8364-82ABA2FD660C}
+{1E817112-BAD2-49CD-B83F-FC22CB21049A}
   9
 $VERSIONGUID
   2
-{61A145F1-9BFD-425A-BD7B-5B4773508596}
+{15AACDE5-0184-494D-8F6C-59FB4298B8AB}
   9
 $EXTNAMES
 290
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -3745,7 +3745,7 @@ ACAD
   0
 APPID
   5
-1AE
+1AB
 330
 3
 100
@@ -3759,7 +3759,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-1AF
+1AC
 330
 3
 100
@@ -19565,7 +19565,7 @@ AcDbText
  40
 51.0
   1
-1  FN polje: 3 reda × 1 modul 585 Wp, položeno; nagib 45°, horizontalna projekcija 2434 mm;
+1  FN polje: 3 × 1 modul 585 Wp, nagib 45°; 4 nosača u nizu (H-02).
   7
 20
  11
@@ -19599,7 +19599,7 @@ AcDbText
  40
 51.0
   1
-    4 odvojena nosača u nizu (H-02).
+2  Dvije trake po nosaču 500 × 2600 × 900 mm, razmak 1600 mm; C30/37, B500B.
   7
 20
  11
@@ -19633,7 +19633,7 @@ AcDbText
  40
 51.0
   1
-2  Po nosaču dvije temeljne trake 500 × 2600 mm, dubine 900 mm, na razmaku 1600 mm (druga traka je iza ravni presjeka);
+3  Kote od ploče (±0,00); vrh traka je u nivou ploče, teren na −0,20 m.
   7
 20
  11
@@ -19667,7 +19667,7 @@ AcDbText
  40
 51.0
   1
-    beton C30/37 (XC4+XF3), armatura B500B, podložni beton C12/15 d = 50 mm.
+4  Gornja ivica panela je 1,13 m iznad ograde.
   7
 20
  11
@@ -19701,7 +19701,7 @@ AcDbText
  40
 51.0
   1
-3  Kote su date od gornje ivice ploče (±0,00), u čijem je nivou i vrh temeljnih traka; teren je na −0,20 m (04_Ograda).
+5  Postojeći prsteni uzemljivača se lociraju i štite (LOT 1).
   7
 20
  11
@@ -19735,115 +19735,13 @@ AcDbText
  40
 51.0
   1
-    Donja ivica panela je na +0,50, gornja na +2,93; vrh ograde je na +1,80, pa je gornja ivica panela 1,13 m iznad ograde.
+6  Stub, kontejner i ormari prikazani su šematski.
   7
 20
  11
 700.0
  21
 814.2499999999998
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1AB
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-700.0
- 20
-740.2999999999997
- 30
-0.0
- 40
-51.0
-  1
-4  Postojeći prsteni uzemljivača (0,80 m ispod terena) prolaze ispod dna rova; lociraju se, otkopavaju i štite (LOT 1).
-  7
-20
- 11
-700.0
- 21
-740.2999999999997
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1AC
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-700.0
- 20
-666.3499999999997
- 30
-0.0
- 40
-51.0
-  1
-5  Trake su udaljene 350 mm od granice zakupa (JZ) i od ploče (SI); položaj presjeka prikazan je na H-02.
-  7
-20
- 11
-700.0
- 21
-666.3499999999997
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1AD
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-700.0
- 20
-592.3999999999996
- 30
-0.0
- 40
-51.0
-  1
-6  Stub, platforma P I (+3,0 m), kontejner i ormari prikazani su šematski; ICC360 i MTS nalaze se iza FN polja.
-  7
-20
- 11
-700.0
- 21
-592.3999999999996
  31
 0.0
 100
@@ -20939,7 +20837,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-1B0
+1AD
   0
 DICTIONARYVAR
   5
@@ -20951,7 +20849,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-10-05T12:47:28.519055+00:00
+1.4.4 @ 2026-10-05T13:06:11.851025+00:00
   0
 VISUALSTYLE
   5
@@ -21655,7 +21553,7 @@ X-Ray
   0
 DICTIONARYVAR
   5
-1B0
+1AD
 330
 2D
 100
@@ -21663,7 +21561,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-10-05T12:47:28.548514+00:00
+1.4.4 @ 2026-10-05T13:06:11.882663+00:00
   0
 ENDSEC
   0

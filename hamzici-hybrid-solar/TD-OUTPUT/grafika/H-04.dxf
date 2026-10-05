@@ -489,7 +489,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461319.6162962965
+2461319.6292939815
   9
 $TDUCREATE
  40
@@ -497,7 +497,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2461319.6162962965
+2461319.6292939815
   9
 $TDUUPDATE
  40
@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-24C
+249
   9
 $SURFTAB1
  70
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{8A71DCF9-68A1-41BC-BF74-A25CB516D186}
+{229E01E2-D88A-46DC-A418-F46B6560AA88}
   9
 $VERSIONGUID
   2
-{0B154214-E189-45BD-8E45-0C865345D975}
+{AA5D283A-5969-4A4D-888D-0585C894B6F4}
   9
 $EXTNAMES
 290
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -3745,7 +3745,7 @@ ACAD
   0
 APPID
   5
-249
+246
 330
 3
 100
@@ -3759,7 +3759,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-24A
+247
 330
 3
 100
@@ -23713,7 +23713,7 @@ AcDbText
  40
 42.5
   1
-1  Dizel-električni agregat FG Wilson P18-6 (skid) ili ekvivalent, 18 kVA / 14,4 kW; osa SZ–JI, hladnjak prema JI.
+1  DEA FG Wilson P18-6 ili ekvivalent, 18 kVA / 14,4 kW.
   7
 20
  11
@@ -23747,7 +23747,7 @@ AcDbText
  40
 42.5
   1
-2  Izlaz zraka kroz postojeće otvore klima-uređaja Stulz (sredina JI zida), najmanje 0,36 m² bruto;
+2  Izlaz zraka kroz otvore Stulz (JI), najmanje 0,36 m²; hauba usmjerava zrak naviše.
   7
 20
  11
@@ -23781,7 +23781,7 @@ AcDbText
  40
 42.5
   1
-    limeni plenum i hauba 700 × 600 mm usmjeravaju topli zrak naviše.
+3  Usis 500 × 700 mm (SI, +0,30 m); izduv NO 50 kroz JI zid na ≈+2,30 m.
   7
 20
  11
@@ -23815,7 +23815,7 @@ AcDbText
  40
 42.5
   1
-3  Usis zraka 500 × 700 mm na SI zidu (+0,30 m). Izduv NO 50 kroz JI zid na ≈+2,30 m, ispod platforme stuba.
+4  Spremnik 500 l je dvoplašni, u koritu; roštilj ispod skida i korita je obavezan.
   7
 20
  11
@@ -23849,7 +23849,7 @@ AcDbText
  40
 42.5
   1
-4  GRO dimenzija do 500 × 250 × 800 mm na SZ zidu; dvoplašni spremnik 500 l u koritu 1150 × 640 mm;
+5  Servisni prolazi se ne zauzimaju.
   7
 20
  11
@@ -23883,115 +23883,13 @@ AcDbText
  40
 42.5
   1
-    roštilj ispod skida i korita je obavezan.
+6  Raspored je principijelan. Zahtjevi: Prilog I, Tačka 4.
   7
 20
  11
 600.0
  21
 1086.875
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-246
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-600.0
- 20
-1025.25
- 30
-0.0
- 40
-42.5
-  1
-5  Servisni prolazi iznose 780 / 780 mm i 965 mm do GRO; skid širine 620 mm unosi se kroz vrata širine 990 mm.
-  7
-20
- 11
-600.0
- 21
-1025.25
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-247
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-600.0
- 20
-963.625
- 30
-0.0
- 40
-42.5
-  1
-6  Ventilator Ø315 (JI zid, izvlačni, D4) i DC razvod −48 V istočno od vrata prikazani su na H-05.
-  7
-20
- 11
-600.0
- 21
-963.625
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-248
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-600.0
- 20
-902.0
- 30
-0.0
- 40
-42.5
-  1
-7  Raspored je principijelan; mjere otvora i servisne tačke potvrđuje Ponuđač na licu mjesta. Zahtjevi: Prilog I, Tačka 4.
-  7
-20
- 11
-600.0
- 21
-902.0
  31
 0.0
 100
@@ -25087,7 +24985,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-24B
+248
   0
 DICTIONARYVAR
   5
@@ -25099,7 +24997,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-10-05T12:47:28.569516+00:00
+1.4.4 @ 2026-10-05T13:06:11.907865+00:00
   0
 VISUALSTYLE
   5
@@ -25803,7 +25701,7 @@ X-Ray
   0
 DICTIONARYVAR
   5
-24B
+248
 330
 2D
 100
@@ -25811,7 +25709,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-10-05T12:47:28.610694+00:00
+1.4.4 @ 2026-10-05T13:06:11.957595+00:00
   0
 ENDSEC
   0

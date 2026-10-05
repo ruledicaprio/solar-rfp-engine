@@ -489,7 +489,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461319.616064815
+2461319.629050926
   9
 $TDUCREATE
  40
@@ -497,7 +497,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2461319.616064815
+2461319.629050926
   9
 $TDUUPDATE
  40
@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-1D6
+1D3
   9
 $SURFTAB1
  70
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{7650D521-E49E-4A5B-B450-EE1477C7E540}
+{501B39DC-A054-4FEC-87A3-72A098598B73}
   9
 $VERSIONGUID
   2
-{3680AF85-A396-4C45-B8F3-B4B3C877AADC}
+{78FD8D1A-3BD5-46FB-B461-83D9E7D02F82}
   9
 $EXTNAMES
 290
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -3745,7 +3745,7 @@ ACAD
   0
 APPID
   5
-1D3
+1D0
 330
 3
 100
@@ -3759,7 +3759,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-1D4
+1D1
 330
 3
 100
@@ -20531,7 +20531,7 @@ AcDbText
  40
 42.5
   1
-1  Dizel-električni agregat FG Wilson P18-6 (skid) ili ekvivalent, 18 kVA / 14,4 kW.
+1  DEA FG Wilson P18-6 ili ekvivalent, 18 kVA / 14,4 kW.
   7
 20
  11
@@ -20565,7 +20565,7 @@ AcDbText
  40
 42.5
   1
-2  Usis zraka 500 × 700 mm na SI zidu (+0,30 m); kanal i žaluzina 600 × 600 mm i izduv DN 50 na SZ zidu;
+2  Usis 500 × 700 mm (SI); izlaz 600 × 600 mm i izduv DN 50 (SZ); ventilator Ø315 (JI).
   7
 20
  11
@@ -20599,7 +20599,7 @@ AcDbText
  40
 42.5
   1
-    oduška na JZ zidu; ventilator Ø315 na JI zidu.
+3  Spremnik 500 l je dvoplašni, u koritu; roštilj ispod skida i korita je obavezan.
   7
 20
  11
@@ -20633,7 +20633,7 @@ AcDbText
  40
 42.5
   1
-3  Roštilj ispod skida i ispod korita je obavezan.
+4  Servisni prolazi 720 / 720 / 1155 mm se ne zauzimaju.
   7
 20
  11
@@ -20667,7 +20667,7 @@ AcDbText
  40
 42.5
   1
-4  Spremnik je dvoplašni; ispod njega je korito 1150 × 640 mm, visine ruba 200 mm.
+5  DC razvod −48 V je na SI zidu; potrošači D1–D6 prikazani su na E-01.
   7
 20
  11
@@ -20701,115 +20701,13 @@ AcDbText
  40
 42.5
   1
-5  Servisni prolazi 720 mm (JZ), 720 mm (SI) i 1155 mm (JI) moraju ostati slobodni.
+6  Raspored je principijelan. Zahtjevi: Prilog I, Tačka 4.
   7
 20
  11
 700.0
  21
 2036.875
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1D0
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-700.0
- 20
-1975.25
- 30
-0.0
- 40
-42.5
-  1
-6  Skid širine 620 mm unosi se kroz vrata širine 900 mm. Kontejner je prazan.
-  7
-20
- 11
-700.0
- 21
-1975.25
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1D1
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-700.0
- 20
-1913.625
- 30
-0.0
- 40
-42.5
-  1
-7  DC razvod −48 V nalazi se na SI zidu uz GRO; trajni potrošači D1–D6 prikazani su na E-01.
-  7
-20
- 11
-700.0
- 21
-1913.625
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1D2
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-700.0
- 20
-1852.0
- 30
-0.0
- 40
-42.5
-  1
-8  Raspored je principijelan i potvrđuje se na licu mjesta. Zahtjevi: Prilog I, Tačka 4.
-  7
-20
- 11
-700.0
- 21
-1852.0
  31
 0.0
 100
@@ -21905,7 +21803,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-1D5
+1D2
   0
 DICTIONARYVAR
   5
@@ -21917,7 +21815,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-10-05T12:47:08.957034+00:00
+1.4.4 @ 2026-10-05T13:05:50.918136+00:00
   0
 VISUALSTYLE
   5
@@ -22621,7 +22519,7 @@ X-Ray
   0
 DICTIONARYVAR
   5
-1D5
+1D2
 330
 2D
 100
@@ -22629,7 +22527,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-10-05T12:47:08.989041+00:00
+1.4.4 @ 2026-10-05T13:05:50.951610+00:00
   0
 ENDSEC
   0

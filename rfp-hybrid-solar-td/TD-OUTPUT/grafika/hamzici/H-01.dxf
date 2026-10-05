@@ -489,7 +489,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461319.6162962965
+2461319.6292939815
   9
 $TDUCREATE
  40
@@ -497,7 +497,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2461319.6162962965
+2461319.6292939815
   9
 $TDUUPDATE
  40
@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-1DF
+1D8
   9
 $SURFTAB1
  70
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{323C6EA5-6442-4141-A364-26D09341B7E8}
+{3ADD0B37-C954-4771-82A7-EB4489100337}
   9
 $VERSIONGUID
   2
-{9B30745D-7E14-4FE2-8E64-425F628043FF}
+{3C1832EB-69AA-426B-8AB2-2EF94F74B963}
   9
 $EXTNAMES
 290
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -3745,7 +3745,7 @@ ACAD
   0
 APPID
   5
-1DC
+1D5
 330
 3
 100
@@ -3759,7 +3759,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-1DD
+1D6
 330
 3
 100
@@ -20589,7 +20589,7 @@ AcDbText
  40
 170.0
   1
-Kompleks je zakrenut za 45°: vrata kontejnera i kapija orijentisani su prema
+Kompleks je zakrenut za 45°; strelica označava pravi sjever.
   7
 20
  11
@@ -20623,7 +20623,7 @@ AcDbText
  40
 170.0
   1
-sjeverozapadu (SZ), klima-uređaj Stulz prema jugoistoku (JI), a FN polje prema
+Orijentaciju potvrđuje Ponuđač na lokaciji.
   7
 20
  11
@@ -20651,19 +20651,19 @@ AcDbText
  10
 28000.0
  20
-22287.0
+21587.0
  30
 0.0
  40
-170.0
+220.00000000000003
   1
-jugozapadu (JZ). Crtež je orijentisan prema kompleksu (gore SZ, desno SI, dolje
+NAPOMENE:
   7
 20
  11
 28000.0
  21
-22287.0
+21587.0
  31
 0.0
 100
@@ -20685,19 +20685,19 @@ AcDbText
  10
 28000.0
  20
-22040.5
+21367.0
  30
 0.0
  40
 170.0
   1
-JI, lijevo JZ); strelica označava pravi sjever. Orijentaciju potvrđuje Ponuđač
+1  Podloga: ovjereni projekat lokacije GP-BS-10472-291 (2017).
   7
 20
  11
 28000.0
  21
-22040.5
+21367.0
  31
 0.0
 100
@@ -20719,19 +20719,19 @@ AcDbText
  10
 28000.0
  20
-21794.0
+21120.5
  30
 0.0
  40
 170.0
   1
-prilikom obilaska lokacije.
+2  Zakup 12,00 × 12,50 m (150 m²), k.č. 109/1, općina Čitluk.
   7
 20
  11
 28000.0
  21
-21794.0
+21120.5
  31
 0.0
 100
@@ -20753,19 +20753,19 @@ AcDbText
  10
 28000.0
  20
-20847.5
+20874.0
  30
 0.0
  40
-220.00000000000003
+170.0
   1
-NAPOMENE:
+3  Kontejner je prazan; klima-uređaj Stulz WDE80 je na JI zidu.
   7
 20
  11
 28000.0
  21
-20847.5
+20874.0
  31
 0.0
 100
@@ -20793,7 +20793,7 @@ AcDbText
  40
 170.0
   1
-1  Geometrija je preuzeta iz ovjerenog projekta lokacije GP-BS-10472-291 (2017).
+4  Stub h = 32 m; platforma P I je na +3,0 m.
   7
 20
  11
@@ -20827,7 +20827,7 @@ AcDbText
  40
 170.0
   1
-2  Površina zakupa iznosi 12,00 × 12,50 m = 150 m², k.č. br. 109/1, općina Čitluk.
+5  Uzemljivač FeZn 25×4 mm: prsten u temeljima stuba i dva prstena na 0,8 m.
   7
 20
  11
@@ -20861,7 +20861,7 @@ AcDbText
  40
 170.0
   1
-3  Kontejner je prazan; na sredini JI zida ugrađen je klima-uređaj Stulz WDE80
+6  Teren uz ploču je na −0,20 m; ograda je 1,80 m iznad ploče.
   7
 20
  11
@@ -20895,251 +20895,13 @@ AcDbText
  40
 170.0
   1
-    (≈700 × 500 × 2200 mm).
+7  Mjere se potvrđuju obilaskom lokacije.
   7
 20
  11
 28000.0
  21
 19888.0
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1D5
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-19641.5
- 30
-0.0
- 40
-170.0
-  1
-4  Visina stuba iznosi 32 m; platforma P I (+3,0 m) nalazi se iznad krova kontejnera
-  7
-20
- 11
-28000.0
- 21
-19641.5
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1D6
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-19395.0
- 30
-0.0
- 40
-170.0
-  1
-    (+2,63 / +2,89 m).
-  7
-20
- 11
-28000.0
- 21
-19395.0
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1D7
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-19148.5
- 30
-0.0
- 40
-170.0
-  1
-5  Uzemljivač FeZn 25×4 mm izveden je kao prsten u temeljima stopa stuba i dva
-  7
-20
- 11
-28000.0
- 21
-19148.5
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1D8
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-18902.0
- 30
-0.0
- 40
-170.0
-  1
-    prstena na dubini 0,8 m.
-  7
-20
- 11
-28000.0
- 21
-18902.0
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1D9
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-18655.5
- 30
-0.0
- 40
-170.0
-  1
-6  Kapija se otvara prema van; širina krila iznosi 1,30 m.
-  7
-20
- 11
-28000.0
- 21
-18655.5
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1DA
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-18409.0
- 30
-0.0
- 40
-170.0
-  1
-7  Teren uz ploču je na −0,20 m; ograda je visine 1,80 m iznad ploče, odnosno 2,00 m iznad terena.
-  7
-20
- 11
-28000.0
- 21
-18409.0
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-1DB
-330
-17
-100
-AcDbEntity
-  8
-Tekst
- 62
-7
-100
-AcDbText
- 10
-28000.0
- 20
-18162.5
- 30
-0.0
- 40
-170.0
-  1
-8  Mjere uređaja i otvora utvrđuju se prilikom obaveznog obilaska lokacije.
-  7
-20
- 11
-28000.0
- 21
-18162.5
  31
 0.0
 100
@@ -22235,7 +21997,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-1DE
+1D7
   0
 DICTIONARYVAR
   5
@@ -22247,7 +22009,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-10-05T12:47:28.341334+00:00
+1.4.4 @ 2026-10-05T13:06:11.642199+00:00
   0
 VISUALSTYLE
   5
@@ -22951,7 +22713,7 @@ X-Ray
   0
 DICTIONARYVAR
   5
-1DE
+1D7
 330
 2D
 100
@@ -22959,7 +22721,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-10-05T12:47:28.421598+00:00
+1.4.4 @ 2026-10-05T13:06:11.735824+00:00
   0
 ENDSEC
   0

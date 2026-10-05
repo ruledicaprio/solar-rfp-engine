@@ -605,11 +605,8 @@ def _orientation_note(msp, sc, y):
     more place on a drawing.  What a reader needs is which way the compound
     faces and that the Bidder confirms it on site."""
     return note_block(msp, NOTES_X, y, sc, "NAPOMENA — ORIJENTACIJA:", [
-        "Kompleks je zakrenut za 45°: vrata kontejnera i kapija orijentisani su prema",
-        "sjeverozapadu (SZ), klima-uređaj Stulz prema jugoistoku (JI), a FN polje prema",
-        "jugozapadu (JZ). Crtež je orijentisan prema kompleksu (gore SZ, desno SI, dolje",
-        "JI, lijevo JZ); strelica označava pravi sjever. Orijentaciju potvrđuje Ponuđač",
-        "prilikom obilaska lokacije.",
+        "Kompleks je zakrenut za 45°; strelica označava pravi sjever.",
+        "Orijentaciju potvrđuje Ponuđač na lokaciji.",
     ])
 
 
@@ -677,20 +674,13 @@ def sheet_h01():
 
     y = _orientation_note(msp, SC, 23000)
     note_block(msp, NOTES_X, y - 700, SC, "NAPOMENE:", [
-        "1  Geometrija je preuzeta iz ovjerenog projekta lokacije GP-BS-10472-291 (2017).",
-        f"2  Površina zakupa iznosi {dec(12000)} × {dec(12500)} m = 150 m², k.č. br. 109/1, "
-        "općina Čitluk.",
-        "3  Kontejner je prazan; na sredini JI zida ugrađen je klima-uređaj Stulz WDE80",
-        "    (≈700 × 500 × 2200 mm).",
-        f"4  Visina stuba iznosi {tw['height'] // 1000} m; platforma P I (+3,0 m) nalazi se "
-        "iznad krova kontejnera",
-        "    (+2,63 / +2,89 m).",
-        "5  Uzemljivač FeZn 25×4 mm izveden je kao prsten u temeljima stopa stuba i dva",
-        "    prstena na dubini 0,8 m.",
-        "6  Kapija se otvara prema van; širina krila iznosi 1,30 m.",
-        f"7  Teren uz ploču je na {minus(TERRAIN)} m; ograda je visine {dec(fe['height'])} m "
-        f"iznad ploče, odnosno {dec(FENCE_ABOVE_GROUND)} m iznad terena.",
-        "8  Mjere uređaja i otvora utvrđuju se prilikom obaveznog obilaska lokacije.",
+        "1  Podloga: ovjereni projekat lokacije GP-BS-10472-291 (2017).",
+        "2  Zakup 12,00 × 12,50 m (150 m²), k.č. 109/1, općina Čitluk.",
+        "3  Kontejner je prazan; klima-uređaj Stulz WDE80 je na JI zidu.",
+        f"4  Stub h = {tw['height'] // 1000} m; platforma P I je na +3,0 m.",
+        "5  Uzemljivač FeZn 25×4 mm: prsten u temeljima stuba i dva prstena na 0,8 m.",
+        f"6  Teren uz ploču je na {minus(TERRAIN)} m; ograda je {dec(fe['height'])} m iznad ploče.",
+        "7  Mjere se potvrđuju obilaskom lokacije.",
     ])
     return doc
 
@@ -827,19 +817,12 @@ def sheet_h02():
     y = _orientation_note(msp, SC, 23000)
     b_, top_ = arr["bottom_edge"], arr["top_edge"]
     note_block(msp, NOTES_X, y - 700, SC, "NAPOMENE:", [
-        f"1  Nosači su orijentisani prema jugozapadu (azimut {arr['azimuth_deg']}°), nagib "
-        f"{arr['tilt_deg']}°;",
-        f"    kote ivica panela su +{dec(b_)} / +{dec(top_)} m od gornje ivice ploče.",
-        f"2  Niz čine {n} odvojena nosača: {n} × {mmc(fw)} + {n - 1} × {ARRAY_GAP} = "
-        f"{mmc(A['total'])} mm, u JZ pojasu.",
-        f"3  Temeljne trake {strip_w_txt(fnd)} × {sl} mm, dubine {fnd['strip_d']} mm, na "
-        f"podložnom betonu d = {fnd['blinding_thk']} mm;",
-        f"    vrh trake je u nivou ploče, {dec(-TERRAIN)} m iznad terena.",
-        "4  Postojeći prsteni uzemljivača (0,8 m ispod terena) prolaze ispod temeljnih traka;",
-        "    lociraju se i štite u okviru LOT 1.",
-        "5  Nosači i temelji izvode se prema tehničkom rješenju i statičkom proračunu Ponuđača.",
-        "6  Raspored opreme u kontejneru prikazan je na crtežu H-04.",
-        "7  Ormari ICC360-HA1-C1 i MTS prikazani su iza FN polja principijelno.",
+        f"1  Azimut {arr['azimuth_deg']}°, nagib {arr['tilt_deg']}°; ivice panela +{dec(b_)} / +{dec(top_)} m od ploče.",
+        f"2  Niz od {n} nosača, ukupne dužine {mmc(A['total'])} mm.",
+        f"3  Temeljne trake {strip_w_txt(fnd)} × {sl} × {fnd['strip_d']} mm; vrh u nivou ploče.",
+        "4  Postojeći prsteni uzemljivača se lociraju i štite (LOT 1).",
+        "5  Nosači i temelji prema tehničkom rješenju Ponuđača.",
+        "6  Raspored u kontejneru: H-04. Ormari ICC360 i MTS prikazani su principijelno.",
     ])
     return doc
 
@@ -1087,22 +1070,12 @@ def sheet_h03():
          layer="Orijentacija", color=1)
 
     note_block(msp, 700, 1250, SC, "NAPOMENE:", [
-        f"1  FN polje: {rows} reda × {sup['cols']} modul 585 Wp, položeno; nagib "
-        f"{arr['tilt_deg']}°, horizontalna projekcija {proj} mm;",
-        f"    {arr['count']} odvojena nosača u nizu (H-02).",
-        f"2  Po nosaču dvije temeljne trake {strip_w_txt(fnd)} × {sl} mm, dubine {fd} mm, "
-        f"na razmaku {A['sp']} mm (druga traka je iza ravni presjeka);",
-        f"    beton C30/37 (XC4+XF3), armatura B500B, podložni beton C12/15 d = {bl} mm.",
-        "3  Kote su date od gornje ivice ploče (±0,00), u čijem je nivou i vrh temeljnih traka; "
-        f"teren je na {minus(TERRAIN)} m (04_Ograda).",
-        f"    Donja ivica panela je na +{dec(b)}, gornja na +{dec(top)}; vrh ograde je na "
-        f"+{dec(FH)}, pa je gornja ivica panela {dec(PV_OVER_FENCE)} m iznad ograde.",
-        "4  Postojeći prsteni uzemljivača (0,80 m ispod terena) prolaze ispod dna rova; "
-        "lociraju se, otkopavaju i štite (LOT 1).",
-        f"5  Trake su udaljene {mmc(A['margin'])} mm od granice zakupa (JZ) i od ploče (SI); "
-        "položaj presjeka prikazan je na H-02.",
-        "6  Stub, platforma P I (+3,0 m), kontejner i ormari prikazani su šematski; ICC360 i MTS "
-        "nalaze se iza FN polja.",
+        f"1  FN polje: {rows} × {sup['cols']} modul 585 Wp, nagib {arr['tilt_deg']}°; {arr['count']} nosača u nizu (H-02).",
+        f"2  Dvije trake po nosaču {strip_w_txt(fnd)} × {sl} × {fd} mm, razmak {A['sp']} mm; C30/37, B500B.",
+        f"3  Kote od ploče (±0,00); vrh traka je u nivou ploče, teren na {minus(TERRAIN)} m.",
+        f"4  Gornja ivica panela je {dec(PV_OVER_FENCE)} m iznad ograde.",
+        "5  Postojeći prsteni uzemljivača se lociraju i štite (LOT 1).",
+        "6  Stub, kontejner i ormari prikazani su šematski.",
     ])
     return doc
 
@@ -1356,23 +1329,12 @@ def sheet_h04():
     # The normative wording lives in Prilog I, Tačka 4; the sheet carries only what a
     # reader needs at the drawing - dimensions, positions and the one-line rule.
     note_block(msp, 600, 1450, SC, "NAPOMENE:", [
-        "1  Dizel-električni agregat FG Wilson P18-6 (skid) ili ekvivalent, 18 kVA / 14,4 kW; "
-        "osa SZ–JI, hladnjak prema JI.",
-        "2  Izlaz zraka kroz postojeće otvore klima-uređaja Stulz (sredina JI zida), najmanje "
-        "0,36 m² bruto;",
-        f"    limeni plenum i hauba {HOOD_W} × {HOOD_D} mm usmjeravaju topli zrak naviše.",
-        "3  Usis zraka 500 × 700 mm na SI zidu (+0,30 m). Izduv NO 50 kroz JI zid na "
-        f"≈+{dec(EXH_Z)} m, ispod platforme stuba.",
-        f"4  GRO dimenzija do {GRO_W} × {GRO_D} × {GRO_H} mm na SZ zidu; dvoplašni spremnik "
-        f"500 l u koritu {kada['L']} × {kada['W']} mm;",
-        "    roštilj ispod skida i korita je obavezan.",
-        f"5  Servisni prolazi iznose {L['clr']['west']:.0f} / {L['clr']['east']:.0f} mm i "
-        f"{L['clr']['north_gro']:.0f} mm do GRO; skid širine 620 mm unosi se kroz vrata "
-        "širine 990 mm.",
-        "6  Ventilator Ø315 (JI zid, izvlačni, D4) i DC razvod −48 V istočno od vrata prikazani "
-        "su na H-05.",
-        "7  Raspored je principijelan; mjere otvora i servisne tačke potvrđuje Ponuđač na "
-        "licu mjesta. Zahtjevi: Prilog I, Tačka 4.",
+        "1  DEA FG Wilson P18-6 ili ekvivalent, 18 kVA / 14,4 kW.",
+        "2  Izlaz zraka kroz otvore Stulz (JI), najmanje 0,36 m²; hauba usmjerava zrak naviše.",
+        f"3  Usis 500 × 700 mm (SI, +0,30 m); izduv NO 50 kroz JI zid na ≈+{dec(EXH_Z)} m.",
+        "4  Spremnik 500 l je dvoplašni, u koritu; roštilj ispod skida i korita je obavezan.",
+        "5  Servisni prolazi se ne zauzimaju.",
+        "6  Raspored je principijelan. Zahtjevi: Prilog I, Tačka 4.",
     ])
     return doc
 
@@ -1395,7 +1357,7 @@ def sheet_h05():
         "dc_feed": "−48 V iz ICC360, kroz JZ zid",
         "earth_text": "postojeći uzemljivač FeZn 25×4 (2 prstena na 0,8 m + temelji stuba) "
                       "· R ≤ 10 Ω · nosači FN vezani Cu užetom 50 mm² preko bimetalnih spojeva",
-        "note4_tail": "Klima-uređaj Stulz se demontira; izvod za klimatizaciju nije predviđen.",
+        "note4_tail": "Klima-uređaj Stulz se demontira.",
     })
     return doc
 
@@ -1474,16 +1436,10 @@ def sheet_h06():
         (8,   f"postojeća ograda {dec(fe['height'])} m iznad ploče"),
     ], col_w=44.0 * SC)
     note_block(msp, NX, z_top - 2400, SC, "NAPOMENE:", [
-        "1  Prikaz je ortogonalna elevacija u pravcu azimuta 45°;",
-        "    visine i širine su mjerljive.",
-        "2  Paneli su okrenuti prema posmatraču pod nagibom 45°, pa su",
-        f"    po visini prikazani skraćeno: +{dec(arr['bottom_edge'])} do "
-        f"+{dec(arr['top_edge'])} m od ploče.",
-        f"3  Vrh temeljnih traka je u nivou ploče; teren uz FN polje je na {minus(TERRAIN)} m,",
-        f"    a ograda je {dec(FENCE_ABOVE_GROUND)} m iznad terena.",
-        f"4  Stub je prikazan do +{dec(CUT)} m i prekinut; visina stuba iznosi "
-        f"{tw['height'] // 1000} m",
-        "    prema ovjerenom projektu (list 462 — 01_Dispozicija S32 m).",
+        "1  Ortogonalni pogled u pravcu azimuta 45°.",
+        f"2  Paneli su prikazani skraćeno: +{dec(arr['bottom_edge'])} do +{dec(arr['top_edge'])} m od ploče.",
+        f"3  Teren uz FN polje je na {minus(TERRAIN)} m.",
+        f"4  Stub je prekinut na +{dec(CUT)} m; h = {tw['height'] // 1000} m.",
         "5  Zahtjevi: Prilog I, Tačke 3 i 4.",
     ])
     return doc

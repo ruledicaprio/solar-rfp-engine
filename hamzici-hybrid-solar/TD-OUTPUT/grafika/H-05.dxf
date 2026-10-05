@@ -489,7 +489,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461319.6162962965
+2461319.6292939815
   9
 $TDUCREATE
  40
@@ -497,7 +497,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2461319.6162962965
+2461319.6293055555
   9
 $TDUUPDATE
  40
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{19C18E6F-A989-415F-8202-4F8ABC7A2DA5}
+{DB43906E-C7AE-4ED7-BD20-74D20F5348AE}
   9
 $VERSIONGUID
   2
-{85E53846-BACD-4277-8574-1996D425DE80}
+{17765118-C5CD-4C34-8D21-4EA7939EFC87}
   9
 $EXTNAMES
 290
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -25087,7 +25087,7 @@ AcDbText
  40
 75.0
   1
-1  DEA je jedini izvor izmjeničnog napona; izvodi GRO su pod naponom samo za vrijeme rada DEA. Trajni potrošači priključeni su na DC razvod −48 V.
+1  DEA je jedini izvor izmjeničnog napona; trajni potrošači su na DC razvodu −48 V.
   7
 20
  11
@@ -25121,7 +25121,7 @@ AcDbText
  40
 75.0
   1
-2  Sistem TN-S: jedini spoj N–PE izveden je u novom GRO; R ≤ 10 Ω. Odvodnici prenapona: AC tip 1+2, DC tip 2 po stringu, signalni vodovi prema EN 61643-21.
+2  Sistem TN-S, spoj N–PE samo u novom GRO; R ≤ 10 Ω. Odvodnici: AC tip 1+2, DC tip 2.
   7
 20
  11
@@ -25155,7 +25155,7 @@ AcDbText
  40
 75.0
   1
-3  DEA mora imati nezavisnu pobudu PMG ili AREP/AUX (≥3 × In ≈ 78 A, ≥10 s); zaštitni uređaj diferencijalne struje 50 A / 300 mA, najmanje tip A, S-tip, je obavezan.
+3  DEA sa pobudom PMG ili AREP/AUX; RCD 50 A / 300 mA, najmanje tip A, S-tip.
   7
 20
  11
@@ -25189,7 +25189,7 @@ AcDbText
  40
 75.0
   1
-4  Ulazna snaga ispravljača ograničena je na 9,5 kW za vrijeme rada DEA (SMU). Klima-uređaj Stulz se demontira; izvod za klimatizaciju nije predviđen.
+4  Ulaz ispravljača ograničen je na 9,5 kW tokom rada DEA. Klima-uređaj Stulz se demontira.
   7
 20
  11
@@ -25223,7 +25223,7 @@ AcDbText
  40
 75.0
   1
-5  FN: 12 modula = 2 stringa × 6; PVDB ima 2 rute → 2 × iSSU S4875G2. U slučaju požara DEA se zaustavlja, a ventilator isključuje.
+5  FN: 12 modula = 2 stringa × 6; pri požaru DEA se zaustavlja.
   7
 20
  11
@@ -25257,7 +25257,7 @@ AcDbText
  40
 75.0
   1
-6  Nazivne struje F4–F5 i D1–D6 su orijentacione; presjeke i selektivnost potvrđuje Izvođač. ICC360 je prikazan principijelno.
+6  Nazivne struje su orijentacione; potvrđuje ih Izvođač.
   7
 20
  11
@@ -26743,7 +26743,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-10-05T12:47:28.635687+00:00
+1.4.4 @ 2026-10-05T13:06:11.990536+00:00
   0
 VISUALSTYLE
   5
@@ -27455,7 +27455,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-10-05T12:47:28.671638+00:00
+1.4.4 @ 2026-10-05T13:06:12.032034+00:00
   0
 ENDSEC
   0

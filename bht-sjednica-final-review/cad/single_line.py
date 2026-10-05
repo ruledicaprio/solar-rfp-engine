@@ -227,18 +227,12 @@ def draw(msp, SC, D, B, cfg):
     _txt(msp, cfg["earth_text"], 1300, 2760, 1.6 * SC, color=7)
 
     note_block(msp, 1300, 2450, SC, "NAPOMENE:", h=1.5, lines=[
-        "1  DEA je jedini izvor izmjeničnog napona; izvodi GRO su pod naponom samo za vrijeme "
-        "rada DEA. Trajni potrošači priključeni su na DC razvod −48 V.",
-        "2  Sistem TN-S: jedini spoj N–PE izveden je u novom GRO; R ≤ 10 Ω. Odvodnici "
-        "prenapona: AC tip 1+2, DC tip 2 po stringu, signalni vodovi prema EN 61643-21.",
-        "3  DEA mora imati nezavisnu pobudu PMG ili AREP/AUX (≥3 × In ≈ 78 A, ≥10 s); "
-        "zaštitni uređaj diferencijalne struje 50 A / 300 mA, najmanje tip A, S-tip, je obavezan.",
-        f"4  Ulazna snaga ispravljača ograničena je na {cap_w} kW za vrijeme rada DEA (SMU). "
-        f"{cfg['note4_tail']}",
-        f"5  FN: {arr['modules_total']} modula = 2 stringa × {per_string}; PVDB ima 2 rute → "
-        "2 × iSSU S4875G2. U slučaju požara DEA se zaustavlja, a ventilator isključuje.",
-        "6  Nazivne struje F4–F5 i D1–D6 su orijentacione; presjeke i selektivnost potvrđuje "
-        "Izvođač. ICC360 je prikazan principijelno.",
+        "1  DEA je jedini izvor izmjeničnog napona; trajni potrošači su na DC razvodu −48 V.",
+        "2  Sistem TN-S, spoj N–PE samo u novom GRO; R ≤ 10 Ω. Odvodnici: AC tip 1+2, DC tip 2.",
+        "3  DEA sa pobudom PMG ili AREP/AUX; RCD 50 A / 300 mA, najmanje tip A, S-tip.",
+        f"4  Ulaz ispravljača ograničen je na {cap_w} kW tokom rada DEA. {cfg['note4_tail']}",
+        f"5  FN: {arr['modules_total']} modula = 2 stringa × {per_string}; pri požaru DEA se zaustavlja.",
+        "6  Nazivne struje su orijentacione; potvrđuje ih Izvođač.",
     ])
     # uzorci u legendi su umanjene kutije, sa istom trakom uz donju ivicu
     for lx, pat, sc_, txt in (
