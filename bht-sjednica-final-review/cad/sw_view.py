@@ -158,17 +158,25 @@ def draw(msp, B, sc, D, cfg):
     _container(msp, B, cu0, cw, Z, cfg["c_lo"], cfg["c_hi"], sc)
 
     # 3) ograda, pa FN polje ispred nje
+    # Temeljne trake su u nivou ploče na obje lokacije, pa nosači stoje na Z, a ne
+    # na terenu; gdje je teren niži (Hamzići, −0,20) traka viri iznad njega.
     fu0, fw_, fh = cfg["fence"]
     _fence(msp, B, fu0, fw_, Z + terr, fh, sc)
+    sw_, sp = D["foundation"]["strip_w_top"], D["support"]["strip_spacing"]
     for u0, tag in cfg["stands"]:
-        _stand(msp, B, u0, cfg["stand_w"], Z + terr, b, top, sc, tag=tag)
+        if terr < 0:                                # dvije trake po nosaču, poprečno
+            uc = u0 + cfg["stand_w"] / 2
+            for du in (-sp / 2, sp / 2):
+                B.rect(msp, uc + du - sw_ / 2, Z + terr, sw_, -terr, "Temelj",
+                       color=32, lw=35)
+        _stand(msp, B, u0, cfg["stand_w"], Z, b, top, sc, tag=tag)
 
-    # 4) kote: samo ono što ova TD propisuje
+    # 4) kote: samo ono što ova TD propisuje, od gornje ivice ploče
     us = [u for u, _ in cfg["stands"]]
     B.dim_h(msp, min(us), max(us) + cfg["stand_w"], Z + terr, sc, off=-7.0 * sc)
-    B.dim_v(msp, Z + terr, Z + terr + b, cfg["dim_u"], sc, off=0)
-    B.dim_v(msp, Z + terr, Z + terr + top, cfg["dim_u"] + 4.0 * sc, sc, off=0)
-    B.dim_v(msp, Z + terr, Z + terr + fh, cfg["dim_u"] + 8.0 * sc, sc, off=0)
+    B.dim_v(msp, Z, Z + b, cfg["dim_u"], sc, off=0)
+    B.dim_v(msp, Z, Z + top, cfg["dim_u"] + 4.0 * sc, sc, off=0)
+    B.dim_v(msp, Z, Z + fh + terr, cfg["dim_u"] + 8.0 * sc, sc, off=0)
 
     # strane svijeta na krajevima pogleda, kao na ostalim listovima
     _txt(msp, cfg["left"], cfg["view"][0] + 200, Z + terr - 9.0 * sc, 2.2 * sc,

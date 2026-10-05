@@ -54,7 +54,9 @@ FORBIDDEN = [r for r in bp1.FORBIDDEN if r[0] != "Tačku 4.8"] + [
     ("Čapljin", "Hamzići su u općini Čitluk"),
     ("AS 36 m", "stub na Hamzićima je 32 m"),
     ("Hamzići?", "zaostali upitnik iz nacrta"),
-    ("1,94 m", "nadvišenje ograde na Hamzićima je 0,93 m: teren je 0,20 m ispod ploče"),
+    ("1,94 m", "nadvišenje ograde na Hamzićima je 1,13 m, mjereno od ploče"),
+    ("0,93 m", "Hamzići: vrh temeljnih traka je u nivou ploče, pa je nadvišenje ograde "
+               "1,13 m (Naručilac 05.10.2026)"),
     ("ISTOČNI zid, južni kraj", "Stulz je u sredini JI zida (Naručilac 11.09.2026)"),
     ("duža osa istok–zapad", "agregat na Hamzićima stoji po osi SZ–JI"),
     # 11.09.2026: true orientation, SW fields, 4x3L stand at both sites
@@ -62,7 +64,7 @@ FORBIDDEN = [r for r in bp1.FORBIDDEN if r[0] != "Tačku 4.8"] + [
     ("2 reda × 2", "nosač je 1 × 3 modula, položeno (4x3L)"),
     ("≈230 h/god", "Hamzići: ≈270 h/god sa poljem prema JZ"),
     ("≈750 l/god", "Hamzići: ≈900 l/god sa poljem prema JZ"),
-    ("1,74 m", "nadvišenje ograde na Hamzićima je 0,93 m (4x3L)"),
+    ("1,74 m", "nadvišenje ograde na Hamzićima je 1,13 m (4x3L)"),
     # recenzija A. Čolpa, 27.08.2026
     ("400 mm (gore)", "traka je jedinstvene širine 500 mm — recenzent 27.08.2026"),
     ("(dolje) × 2600", "traka je jedinstvene širine 500 mm — recenzent 27.08.2026"),
@@ -89,7 +91,7 @@ SUPERSEDED_REQUIRED = {
 }
 REQUIRED = [r for r in bp1.REQUIRED if r not in SUPERSEDED_REQUIRED] \
     + [v for v in SUPERSEDED_REQUIRED.values() if v] + [
-    "493 m", "0,93 m", "h = 1,80 m", "3300 mm", "k.č. 109/1", "Stulz WDE80",
+    "493 m", "1,13 m", "h = 1,80 m", "3300 mm", "k.č. 109/1", "Stulz WDE80",
     "Alipašino Polje", "0,36 m²", "≈270 h/god", "≈900 l/god", "H-04",
     "izvlačni", "≤0,50 m", "3.6.9 Plan uzemljivača", "225°",
     # recenzija A. Čolpa, 27.08.2026

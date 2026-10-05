@@ -109,9 +109,10 @@ def build(site, cfg, dxf):
     ys = [p[1] for s in pl for p in s]
     x_base, x_top = max(xs), min(xs)
 
-    # osa stuba: sredina siluete na samoj bazi, gdje je najšira
-    base = [p for s in pl for p in s if p[0] > x_base - 50]
-    y_axis = (min(p[1] for p in base) + max(p[1] for p in base)) / 2
+    # osa stuba: sredina cijele siluete, koja je simetrična.  Ne sredina tačaka
+    # na samoj bazi: kod Hamzića u pojasu od 50 mm na dnu ima tačaka samo jedna
+    # noga, pa je stub ispadao pomaknut za pola baze udesno.
+    y_axis = (min(ys) + max(ys)) / 2
 
     conv = [[[round(p[1] - y_axis, 1), round(x_base - p[0], 1)] for p in s]
             for s in pl]
@@ -141,8 +142,10 @@ def build(site, cfg, dxf):
 
 
 def main():
-    names = to_dxf([c["dwg"] for c in SITES.values()])
-    for site, cfg in SITES.items():
+    """Bez argumenata obje lokacije; inače samo navedene (npr. `hamzici`)."""
+    sites = {k: SITES[k] for k in (sys.argv[1:] or SITES)}
+    names = to_dxf([c["dwg"] for c in sites.values()])
+    for site, cfg in sites.items():
         build(site, cfg, names[cfg["dwg"]])
     return 0
 

@@ -257,9 +257,10 @@ nosaču, horizontalna projekcija pri 45° **2434 mm**, ukupno 12 modula = 7,02 k
 
 | | |
 |---|---|
-| Donja / gornja ivica | **+0,50 m / +2,93 m** od terena |
+| Kota temeljnih traka | vrh trake u nivou gornje ivice ploče (±0,00), **0,20 m iznad terena** — nosači i kontejner stoje na istom nivou (Naručilac 05.10.2026.) |
+| Donja / gornja ivica | **+0,50 m / +2,93 m** od ploče, odnosno +0,70 / +3,13 m od terena |
 | Kota ograde | **+1,80 m** od ploče (ovjereni `04_Ograda.dwg`); teren oko ploče je na **−0,20 m**, pa je ograda 2,00 m iznad terena |
-| **Nadvišenje ograde** | **0,93 m** (2,93 − 2,00) |
+| **Nadvišenje ograde** | **1,13 m** (2,93 − 1,80) |
 | Raspoloživi pojas JZ od ploče | **3300 mm** × 12 500 mm (zakup 12,00 × 12,50 m, ploča 5,40 m u sredini) |
 | Dubina polja / dužina trake | 2434 / 2600 mm → trake **350 mm** od granice zakupa i od ploče |
 | Dužina niza (4 nosača, razmak 0,40 m) | 4 × 2278 + 3 × 400 = **10 312 mm** od raspoloživih 12,50 m, centrirano na ploču |
@@ -294,10 +295,12 @@ Kao Sjednica: **8 traka** (2 po nosaču) **500 × 2600 mm, jedinstvene širine p
 dubini** (bez proširenja u dnu — rov u stijeni se siječe jednom širinom), **puna dubina
 900 mm**, **1,170 m³ po traci → 9,36 m³** C30/37. Potrebno je 0,74 m³ po traci: vlastita
 težina trake 28,1 kN > potrebnih 17,9 kN (spreg 16,1 kN / 0,9), odnosno
-0,9 × 28,1 = 25,3 kN > 16,1 kN. Količine: podložni beton 0,52 m³, iskop 9,88 m³,
-**zatrpavanja nema** (beton i podložni beton ispunjavaju rov u cijelosti), odvoz
-9,88 m³, obrada gornjih površina 10,4 m² (LOT 1, sekcija 2). Oba postojeća prstena
-uzemljivača presijecaju svih 8 traka (D.6).
+0,9 × 28,1 = 25,3 kN > 16,1 kN. Vrh trake je u nivou ploče, 0,20 m iznad terena, pa se
+gornjih 200 mm betonira u oplati, a rov je dubok 900 + 50 − 200 = **750 mm** od terena
+(0,975 m³ po traci). Količine: podložni beton 0,52 m³, iskop **7,80 m³**, **zatrpavanja
+nema** (beton i podložni beton ispunjavaju rov u cijelosti), odvoz **7,80 m³**, obrada
+gornjih površina i bočnih strana iznad terena 10,4 + 9,9 = **20,3 m²** (LOT 1, sekcija 2).
+Oba postojeća prstena uzemljivača prolaze 50 mm ispod dna rova svih 8 traka (D.6).
 
 ### B.7 Pod kontejnera i unos opreme
 
@@ -465,7 +468,7 @@ Derativana prime snaga je 12,3 kW, neograničeni ispravljački sistem vuče ≈1
 | Postojeći uzemljivač | Fe/Zn 25 × 4 mm: prsten u temeljima stopa stuba i prsten na dubini 0,8 m (ovjereni `3.6.9 Plan uzemljivača`) |
 | Vodič do nosača | Cu 50 mm², bimetalni spojevi Cu/Fe-Zn |
 | Ciljani otpor | ≤10 Ω |
-| Ukrštanja sa temeljnim trakama | oba postojeća prstena (kvadrati 7,50 m i 10,00 m oko ploče, 1,05 m i 2,30 m od ivice ploče, dubina 0,8 m) presijecaju svih 8 temeljnih traka u JZ pojasu (dubina 0,9 m): lociranje, otkopavanje i premještanje ispod ili oko trake ili premoštavanje, bez trajnog prekida prstena; otpor se mjeri prije i poslije radova — posebna stavka LOT 1 |
+| Ukrštanja sa temeljnim trakama | oba postojeća prstena (kvadrati 7,50 m i 10,00 m oko ploče, 1,05 m i 2,30 m od ivice ploče, dubina 0,8 m ispod terena) prolaze 50 mm ispod dna rova svih 8 temeljnih traka u JZ pojasu (rov 0,75 m): lociranje, otkopavanje, zaštita i po potrebi premještanje ispod ili oko trake ili premoštavanje, bez trajnog prekida prstena; otpor se mjeri prije i poslije radova — posebna stavka LOT 1 |
 | FN polje i stub | rešetkasti stub h = 32 m; metoda kotrljajuće sfere, LPL I (r = 20 m): na visini gornje ivice (2,93 m) zaštićeni radijus je ≈9,6 m, a polje je ≈1–5 m od najbliže noge stuba → **unutar zone zaštite, dodatne hvataljke nisu potrebne** |
 
 ### D.7 Prenaponska zaštita

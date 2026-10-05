@@ -489,7 +489,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461300.4149074075
+2461319.616064815
   9
 $TDUCREATE
  40
@@ -497,7 +497,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2461300.4149074075
+2461319.616064815
   9
 $TDUUPDATE
  40
@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-1D5
+1D6
   9
 $SURFTAB1
  70
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{47AA0B04-E85E-4BAA-9CC2-F33957FF3ECF}
+{7650D521-E49E-4A5B-B450-EE1477C7E540}
   9
 $VERSIONGUID
   2
-{9A02F73A-D7D4-4811-8817-C556AC36CC83}
+{3680AF85-A396-4C45-B8F3-B4B3C877AADC}
   9
 $EXTNAMES
 290
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -3745,7 +3745,7 @@ ACAD
   0
 APPID
   5
-1D2
+1D3
 330
 3
 100
@@ -3759,7 +3759,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-1D3
+1D4
 330
 3
 100
@@ -20495,7 +20495,7 @@ AcDbText
  30
 0.0
  40
-65.0
+55.00000000000001
   1
 NAPOMENE:
   7
@@ -20525,19 +20525,19 @@ AcDbText
  10
 700.0
  20
-2340.0
+2345.0
  30
 0.0
  40
-52.5
+42.5
   1
-1  DEA FG Wilson P18-6 (skid) ili ekv., 18 kVA / 14,4 kW.
+1  Dizel-električni agregat FG Wilson P18-6 (skid) ili ekvivalent, 18 kVA / 14,4 kW.
   7
 20
  11
 700.0
  21
-2340.0
+2345.0
  31
 0.0
 100
@@ -20559,19 +20559,19 @@ AcDbText
  10
 700.0
  20
-2263.875
+2283.375
  30
 0.0
  40
-52.5
+42.5
   1
-2  Usis 500 × 700 SI (+0,30); kanal i žaluzina 600 × 600 te izduv DN 50 SZ; oduška JZ; ventilator Ø315 JI.
+2  Usis zraka 500 × 700 mm na SI zidu (+0,30 m); kanal i žaluzina 600 × 600 mm i izduv DN 50 na SZ zidu;
   7
 20
  11
 700.0
  21
-2263.875
+2283.375
  31
 0.0
 100
@@ -20593,19 +20593,19 @@ AcDbText
  10
 700.0
  20
-2187.75
+2221.75
  30
 0.0
  40
-52.5
+42.5
   1
-3  Roštilj OBAVEZAN ispod skida i ispod korita.
+    oduška na JZ zidu; ventilator Ø315 na JI zidu.
   7
 20
  11
 700.0
  21
-2187.75
+2221.75
  31
 0.0
 100
@@ -20627,19 +20627,19 @@ AcDbText
  10
 700.0
  20
-2111.625
+2160.125
  30
 0.0
  40
-52.5
+42.5
   1
-4  Spremnik DVOPLAŠNI; ispod njega korito 1150 × 640, rub 200 mm.
+3  Roštilj ispod skida i ispod korita je obavezan.
   7
 20
  11
 700.0
  21
-2111.625
+2160.125
  31
 0.0
 100
@@ -20661,19 +20661,19 @@ AcDbText
  10
 700.0
  20
-2035.5
+2098.5
  30
 0.0
  40
-52.5
+42.5
   1
-5  Servisni prolazi 720 mm JZ / 720 mm SI / 1155 mm JI — ne zauzimati.
+4  Spremnik je dvoplašni; ispod njega je korito 1150 × 640 mm, visine ruba 200 mm.
   7
 20
  11
 700.0
  21
-2035.5
+2098.5
  31
 0.0
 100
@@ -20695,19 +20695,19 @@ AcDbText
  10
 700.0
  20
-1959.375
+2036.875
  30
 0.0
  40
-52.5
+42.5
   1
-6  Unos skida 620 mm kroz vrata 900 mm. Kontejner je PRAZAN.
+5  Servisni prolazi 720 mm (JZ), 720 mm (SI) i 1155 mm (JI) moraju ostati slobodni.
   7
 20
  11
 700.0
  21
-1959.375
+2036.875
  31
 0.0
 100
@@ -20729,19 +20729,19 @@ AcDbText
  10
 700.0
  20
-1883.25
+1975.25
  30
 0.0
  40
-52.5
+42.5
   1
-7  DC razvod −48 V na SI zidu uz GRO; trajni potrošači D1–D6 — E-01.
+6  Skid širine 620 mm unosi se kroz vrata širine 900 mm. Kontejner je prazan.
   7
 20
  11
 700.0
  21
-1883.25
+1975.25
  31
 0.0
 100
@@ -20763,19 +20763,53 @@ AcDbText
  10
 700.0
  20
-1807.125
+1913.625
  30
 0.0
  40
-52.5
+42.5
   1
-8  Raspored je principijelan; potvrđuje se na licu mjesta. Zahtjevi: Prilog I, Tačka 4.
+7  DC razvod −48 V nalazi se na SI zidu uz GRO; trajni potrošači D1–D6 prikazani su na E-01.
   7
 20
  11
 700.0
  21
-1807.125
+1913.625
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+1D2
+330
+17
+100
+AcDbEntity
+  8
+Tekst
+ 62
+7
+100
+AcDbText
+ 10
+700.0
+ 20
+1852.0
+ 30
+0.0
+ 40
+42.5
+  1
+8  Raspored je principijelan i potvrđuje se na licu mjesta. Zahtjevi: Prilog I, Tačka 4.
+  7
+20
+ 11
+700.0
+ 21
+1852.0
  31
 0.0
 100
@@ -21871,7 +21905,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-1D4
+1D5
   0
 DICTIONARYVAR
   5
@@ -21883,7 +21917,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-09-16T07:57:28.559581+00:00
+1.4.4 @ 2026-10-05T12:47:08.957034+00:00
   0
 VISUALSTYLE
   5
@@ -22587,7 +22621,7 @@ X-Ray
   0
 DICTIONARYVAR
   5
-1D4
+1D5
 330
 2D
 100
@@ -22595,7 +22629,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-09-16T07:57:28.632966+00:00
+1.4.4 @ 2026-10-05T12:47:08.989041+00:00
   0
 ENDSEC
   0

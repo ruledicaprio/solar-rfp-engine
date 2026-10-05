@@ -489,7 +489,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461300.415150463
+2461319.6162962965
   9
 $TDUCREATE
  40
@@ -497,7 +497,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2461300.415150463
+2461319.6162962965
   9
 $TDUUPDATE
  40
@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-24A
+24C
   9
 $SURFTAB1
  70
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{9D904F9F-8EBE-4D60-993B-5B3663129FE6}
+{8A71DCF9-68A1-41BC-BF74-A25CB516D186}
   9
 $VERSIONGUID
   2
-{2211E5BD-1F0F-4BFB-8840-7098954AB038}
+{0B154214-E189-45BD-8E45-0C865345D975}
   9
 $EXTNAMES
 290
@@ -3745,7 +3745,7 @@ ACAD
   0
 APPID
   5
-247
+249
 330
 3
 100
@@ -3759,7 +3759,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-248
+24A
 330
 3
 100
@@ -23677,7 +23677,7 @@ AcDbText
  30
 0.0
  40
-65.0
+55.00000000000001
   1
 NAPOMENE:
   7
@@ -23707,19 +23707,19 @@ AcDbText
  10
 600.0
  20
-1390.0
+1395.0
  30
 0.0
  40
-52.5
+42.5
   1
-1  DEA FG Wilson P18-6 (skid) ili ekv., 18 kVA / 14,4 kW; os SZ–JI, hladnjak JI.
+1  Dizel-električni agregat FG Wilson P18-6 (skid) ili ekvivalent, 18 kVA / 14,4 kW; osa SZ–JI, hladnjak prema JI.
   7
 20
  11
 600.0
  21
-1390.0
+1395.0
  31
 0.0
 100
@@ -23741,19 +23741,19 @@ AcDbText
  10
 600.0
  20
-1313.875
+1333.375
  30
 0.0
  40
-52.5
+42.5
   1
-2  Izlaz zraka kroz postojeće otvore Stulz (sredina JI zida), ≥0,36 m² bruto, limeni plenum i hauba 700 × 600 — topli zrak NAVIŠE.
+2  Izlaz zraka kroz postojeće otvore klima-uređaja Stulz (sredina JI zida), najmanje 0,36 m² bruto;
   7
 20
  11
 600.0
  21
-1313.875
+1333.375
  31
 0.0
 100
@@ -23775,19 +23775,19 @@ AcDbText
  10
 600.0
  20
-1237.75
+1271.75
  30
 0.0
  40
-52.5
+42.5
   1
-3  Usis 500 × 700 na SI zidu (+0,30). Izduv NO 50 kroz JI zid na ≈+2,30 m, ispod platforme stuba.
+    limeni plenum i hauba 700 × 600 mm usmjeravaju topli zrak naviše.
   7
 20
  11
 600.0
  21
-1237.75
+1271.75
  31
 0.0
 100
@@ -23809,19 +23809,19 @@ AcDbText
  10
 600.0
  20
-1161.625
+1210.125
  30
 0.0
  40
-52.5
+42.5
   1
-4  GRO ≤500 × 250 × 800 na SZ zidu; spremnik 500 l dvoplašni u koritu 1150 × 640; roštilj OBAVEZAN pod skidom i koritom.
+3  Usis zraka 500 × 700 mm na SI zidu (+0,30 m). Izduv NO 50 kroz JI zid na ≈+2,30 m, ispod platforme stuba.
   7
 20
  11
 600.0
  21
-1161.625
+1210.125
  31
 0.0
 100
@@ -23843,19 +23843,19 @@ AcDbText
  10
 600.0
  20
-1085.5
+1148.5
  30
 0.0
  40
-52.5
+42.5
   1
-5  Servisni prolazi 780 / 780 mm i 965 mm do GRO; unos skida 620 mm kroz vrata 990 mm.
+4  GRO dimenzija do 500 × 250 × 800 mm na SZ zidu; dvoplašni spremnik 500 l u koritu 1150 × 640 mm;
   7
 20
  11
 600.0
  21
-1085.5
+1148.5
  31
 0.0
 100
@@ -23877,19 +23877,19 @@ AcDbText
  10
 600.0
  20
-1009.375
+1086.875
  30
 0.0
  40
-52.5
+42.5
   1
-6  Ventilator Ø315 (JI, izvlačni, D4) i DC razvod −48 V istočno od vrata — H-05.
+    roštilj ispod skida i korita je obavezan.
   7
 20
  11
 600.0
  21
-1009.375
+1086.875
  31
 0.0
 100
@@ -23911,11 +23911,79 @@ AcDbText
  10
 600.0
  20
-933.25
+1025.25
  30
 0.0
  40
-52.5
+42.5
+  1
+5  Servisni prolazi iznose 780 / 780 mm i 965 mm do GRO; skid širine 620 mm unosi se kroz vrata širine 990 mm.
+  7
+20
+ 11
+600.0
+ 21
+1025.25
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+247
+330
+17
+100
+AcDbEntity
+  8
+Tekst
+ 62
+7
+100
+AcDbText
+ 10
+600.0
+ 20
+963.625
+ 30
+0.0
+ 40
+42.5
+  1
+6  Ventilator Ø315 (JI zid, izvlačni, D4) i DC razvod −48 V istočno od vrata prikazani su na H-05.
+  7
+20
+ 11
+600.0
+ 21
+963.625
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+248
+330
+17
+100
+AcDbEntity
+  8
+Tekst
+ 62
+7
+100
+AcDbText
+ 10
+600.0
+ 20
+902.0
+ 30
+0.0
+ 40
+42.5
   1
 7  Raspored je principijelan; mjere otvora i servisne tačke potvrđuje Ponuđač na licu mjesta. Zahtjevi: Prilog I, Tačka 4.
   7
@@ -23923,7 +23991,7 @@ AcDbText
  11
 600.0
  21
-933.25
+902.0
  31
 0.0
 100
@@ -25019,7 +25087,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-249
+24B
   0
 DICTIONARYVAR
   5
@@ -25031,7 +25099,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-09-16T07:57:49.559119+00:00
+1.4.4 @ 2026-10-05T12:47:28.569516+00:00
   0
 VISUALSTYLE
   5
@@ -25735,7 +25803,7 @@ X-Ray
   0
 DICTIONARYVAR
   5
-249
+24B
 330
 2D
 100
@@ -25743,7 +25811,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-09-16T07:57:49.623496+00:00
+1.4.4 @ 2026-10-05T12:47:28.610694+00:00
   0
 ENDSEC
   0

@@ -300,7 +300,9 @@ SJEDNICA_FACTS = re.compile(r"1076|42,94|16,00 × 9,40|h=2,10|h=38|planinsk|11,6
                             # superseded Hamzići layout of the plan-frame round (before the
                             # 45° orientation, 11.09.2026): walls named as if door = north
                             r"sredini JUŽNOG zida|u ZAPADNI zid|JUGOZAPADNOM uglu|kroz ISTOČNI "
-                            r"zid|sjevernom pojasu|na JUŽNOM zidu|pojasu južno od ploče|1,74 m")
+                            r"zid|sjevernom pojasu|na JUŽNOM zidu|pojasu južno od ploče|1,74 m|"
+                            # strips at the terrain, before 05.10.2026
+                            r"0,93 m|dubine 950 mm|1,235 m3")
 
 
 def check_sjednica(wbs):

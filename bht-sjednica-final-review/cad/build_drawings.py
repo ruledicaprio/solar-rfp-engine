@@ -126,11 +126,12 @@ def legend(msp, x, y, scale, rows, title="LEGENDA", cols=1, col_w=None):
     return top - per * step
 
 
-def note_block(msp, x, y, scale, title, lines, h=2.1):
+def note_block(msp, x, y, scale, title, lines, h=1.7):
     # colour 7, not the grey 8 it used to be: at note size the grey printed too
-    # faint to read on a plotted A3 sheet
-    _txt(msp, title, x, y, 2.6 * scale, layer="Tekst", color=7)
-    yy = y - 2.4 * scale
+    # faint to read on a plotted A3 sheet.  1,7 mm text under a 2,2 mm title
+    # (05.10.2026): the notes are secondary to the drawing and were too large.
+    _txt(msp, title, x, y, 2.2 * scale, layer="Tekst", color=7)
+    yy = y - 2.2 * scale
     for ln in lines:
         _txt(msp, ln, x, yy, h * scale, layer="Tekst", color=7)
         yy -= h * 1.45 * scale
@@ -305,7 +306,7 @@ def sheet_s01():
     ])
 
     note_block(msp, 6400, 3400, SC, "NAPOMENA:", [
-        "Geometrija iz ovjerenog projekta lokacije (01 Situacija 1_200).",
+        "Geometrija je preuzeta iz ovjerenog projekta lokacije (01 Situacija 1:200).",
     ])
     return doc
 

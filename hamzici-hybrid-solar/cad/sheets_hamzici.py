@@ -94,8 +94,11 @@ SLAB_T = 300             # slab thickness drawn in section A-A (not in the input
 EARTH_RINGS = tuple(GEO["earth_rings"]["offset_from_slab_mm"])    # 3.6.9, at 0,8 m
 TERRAIN = GEO["terrain"]["level_mm"]                               # -200 vs slab top
 FENCE_ABOVE_GROUND = GEO["fence"]["height"] - TERRAIN              # 1800 + 200
-# from the terrain; design.json array.above_fence carries the same figure
-PV_OVER_FENCE = D["array"]["top_edge"] - FENCE_ABOVE_GROUND        # 934
+# The strip tops are at the slab level (Investor, 05.10.2026), so the panel edges and
+# the fence top are all read from the slab; design.json array.above_fence matches.
+PV_OVER_FENCE = D["array"]["top_edge"] - GEO["fence"]["height"]    # 1134
+if PV_OVER_FENCE != D["array"]["above_fence"]:
+    raise SystemExit("design.json array.above_fence disagrees with top_edge - fence")
 PLAN_NORTH = GEO["orientation"]["plan_north_bearing_deg"]          # 315: plan up = true NW
 SIDE = {"N": "SZ", "E": "SI", "S": "JI", "W": "JZ"}                # plan side -> true side
 CAB_FRONT_CLEAR = 600    # free space in front of an outdoor cabinet (door side)
@@ -602,10 +605,11 @@ def _orientation_note(msp, sc, y):
     more place on a drawing.  What a reader needs is which way the compound
     faces and that the Bidder confirms it on site."""
     return note_block(msp, NOTES_X, y, sc, "NAPOMENA — ORIJENTACIJA:", [
-        "Kompleks je zakrenut 45°: vrata kontejnera i kapija gledaju na SJEVEROZAPAD",
-        "(SZ), klima-uređaj Stulz na JI, FN polje na JZ. Crtež je pravougaon na",
-        "kompleks (gore SZ, desno SI, dolje JI, lijevo JZ); strelica pokazuje pravi",
-        "sjever. Orijentaciju potvrđuje Ponuđač obilaskom lokacije.",
+        "Kompleks je zakrenut za 45°: vrata kontejnera i kapija orijentisani su prema",
+        "sjeverozapadu (SZ), klima-uređaj Stulz prema jugoistoku (JI), a FN polje prema",
+        "jugozapadu (JZ). Crtež je orijentisan prema kompleksu (gore SZ, desno SI, dolje",
+        "JI, lijevo JZ); strelica označava pravi sjever. Orijentaciju potvrđuje Ponuđač",
+        "prilikom obilaska lokacije.",
     ])
 
 
@@ -673,16 +677,20 @@ def sheet_h01():
 
     y = _orientation_note(msp, SC, 23000)
     note_block(msp, NOTES_X, y - 700, SC, "NAPOMENE:", [
-        "1  Geometrija iz ovjerenog projekta lokacije GP-BS-10472-291 (2017).",
-        f"2  Zakup {dec(12000)} × {dec(12500)} m = 150 m², k.č. br. 109/1, općina Čitluk.",
-        "3  Kontejner je PRAZAN; u sredini JI zida je Stulz WDE80 (≈700 × 500 × 2200).",
-        f"4  Stub h = {tw['height'] // 1000} m; platforma P I (+3,0 m) je iznad krova "
-        "(+2,63 / +2,89 m).",
-        "5  Uzemljivač FeZn 25×4: prsten u temeljima stopa i dva prstena na 0,8 m.",
-        "6  Kapija se otvara prema van; krilo 1,30 m.",
-        f"7  Teren uz ploču je na {minus(TERRAIN)} m; ograda {dec(fe['height'])} m iznad ploče, "
-        f"{dec(FENCE_ABOVE_GROUND)} m iznad terena.",
-        "8  Mjere uređaja i otvora uzimaju se na obaveznom obilasku lokacije.",
+        "1  Geometrija je preuzeta iz ovjerenog projekta lokacije GP-BS-10472-291 (2017).",
+        f"2  Površina zakupa iznosi {dec(12000)} × {dec(12500)} m = 150 m², k.č. br. 109/1, "
+        "općina Čitluk.",
+        "3  Kontejner je prazan; na sredini JI zida ugrađen je klima-uređaj Stulz WDE80",
+        "    (≈700 × 500 × 2200 mm).",
+        f"4  Visina stuba iznosi {tw['height'] // 1000} m; platforma P I (+3,0 m) nalazi se "
+        "iznad krova kontejnera",
+        "    (+2,63 / +2,89 m).",
+        "5  Uzemljivač FeZn 25×4 mm izveden je kao prsten u temeljima stopa stuba i dva",
+        "    prstena na dubini 0,8 m.",
+        "6  Kapija se otvara prema van; širina krila iznosi 1,30 m.",
+        f"7  Teren uz ploču je na {minus(TERRAIN)} m; ograda je visine {dec(fe['height'])} m "
+        f"iznad ploče, odnosno {dec(FENCE_ABOVE_GROUND)} m iznad terena.",
+        "8  Mjere uređaja i otvora utvrđuju se prilikom obaveznog obilaska lokacije.",
     ])
     return doc
 
@@ -819,16 +827,19 @@ def sheet_h02():
     y = _orientation_note(msp, SC, 23000)
     b_, top_ = arr["bottom_edge"], arr["top_edge"]
     note_block(msp, NOTES_X, y - 700, SC, "NAPOMENE:", [
-        f"1  Nosači na JUGOZAPAD (azimut {arr['azimuth_deg']}°), nagib {arr['tilt_deg']}°; "
-        f"ivica panela +{dec(b_)} / +{dec(top_)} m.",
-        f"2  {n} odvojena nosača u nizu: {n} × {mmc(fw)} + {n - 1} × {ARRAY_GAP} = "
-        f"{mmc(A['total'])} mm, u pojasu JZ.",
-        f"3  Temeljne trake {strip_w_txt(fnd)} × {sl} mm, d = {fnd['strip_d']} mm, na "
-        f"podložnom betonu {fnd['blinding_thk']} mm.",
-        "4  Postojeći prsteni uzemljivača (0,8 m) ukrštaju temeljne trake — LOT 1.",
-        "5  Nosač i temelji — tehničko rješenje i statički proračun Ponuđača.",
-        "6  Raspored u kontejneru prema H-04.",
-        "7  Ormari ICC360-HA1-C1 i MTS iza FN polja — principijelno.",
+        f"1  Nosači su orijentisani prema jugozapadu (azimut {arr['azimuth_deg']}°), nagib "
+        f"{arr['tilt_deg']}°;",
+        f"    kote ivica panela su +{dec(b_)} / +{dec(top_)} m od gornje ivice ploče.",
+        f"2  Niz čine {n} odvojena nosača: {n} × {mmc(fw)} + {n - 1} × {ARRAY_GAP} = "
+        f"{mmc(A['total'])} mm, u JZ pojasu.",
+        f"3  Temeljne trake {strip_w_txt(fnd)} × {sl} mm, dubine {fnd['strip_d']} mm, na "
+        f"podložnom betonu d = {fnd['blinding_thk']} mm;",
+        f"    vrh trake je u nivou ploče, {dec(-TERRAIN)} m iznad terena.",
+        "4  Postojeći prsteni uzemljivača (0,8 m ispod terena) prolaze ispod temeljnih traka;",
+        "    lociraju se i štite u okviru LOT 1.",
+        "5  Nosači i temelji izvode se prema tehničkom rješenju i statičkom proračunu Ponuđača.",
+        "6  Raspored opreme u kontejneru prikazan je na crtežu H-04.",
+        "7  Ormari ICC360-HA1-C1 i MTS prikazani su iza FN polja principijelno.",
     ])
     return doc
 
@@ -840,8 +851,10 @@ def sheet_h03():
     """Equivalent of Sjednica S-03.  Section along PV-2's plan-north strip
     (plane y = A['section_y']): the JZ band, the fence, the ICC360 behind the
     stands and the container cut across its width, looking true SZ (plan
-    north): JZ on the left, SI on the right.  Levels are from the terrain beside
-    the array; the slab top is +0,20 (terrain -0,20 against the slab, 04_Ograda)."""
+    north): JZ on the left, SI on the right.  Levels are from the slab top, ±0,00;
+    the terrain beside it is -0,20 (04_Ograda).  The strip tops are at the slab
+    level, so the stands and the container stand on one level (Investor,
+    05.10.2026) and the strips show 0,20 m above the terrain."""
     SC = 30
     doc, msp = _sheet(SC, "Presjek A–A kroz FN polje", "H-03", "1:30")
     A = array_layout()
@@ -850,7 +863,6 @@ def sheet_h03():
     FH = GEO["fence"]["height"]                     # above the slab
     if FH != arr["fence_height"]:
         raise SystemExit("fence height: design.json and site_geometry.json disagree")
-    ZS = -TERRAIN                                   # slab top above the terrain
     lx = GEO["parcel"]["lease"]["origin"][0]
     S = GEO["slab"]["size"][0]
     fe_w = GEO["fence"]["origin"][0]
@@ -866,20 +878,21 @@ def sheet_h03():
     fd, bl = fnd["strip_d"], fnd["blinding_thk"]
 
     # A3 window at 1:30 is 600..12300 x 300..8610; title block x > 6900 below 1740
-    GX, GY = 5775, 3300                             # GY = terrain beside the array
+    GX, GY = 5775, 3300                             # GY = slab top = strip tops, ±0,00
+    GT = GY + TERRAIN                               # terrain beside the slab, -0,20
 
     def X(s):                                       # s = slab-local X, SI to the right
         return GX + s
 
     # terrain at -0,20 against the slab, both sides; hatch ticks clear of strip/slab
     x_l, x_r = X(lx) - 1500, X(fe_e) + 700
-    for xa_, xb_ in ((x_l, X(0)), (X(S), x_r)):
-        msp.add_line((xa_, GY), (xb_, GY),
+    for xa_, xb_ in ((x_l, X(sx0)), (X(sx0 + sl), X(0)), (X(S), x_r)):
+        msp.add_line((xa_, GT), (xb_, GT),
                      dxfattribs={"layer": "Objekat", "color": 8, "lineweight": 50})
     x = x_l + 150
     while x < x_r - 100:
         if not (X(sx0) - 100 <= x <= X(sx0 + sl) + 250 or X(0) - 100 <= x <= X(S) + 250):
-            msp.add_line((x, GY), (x - 150, GY - 150),
+            msp.add_line((x, GT), (x - 150, GT - 150),
                          dxfattribs={"layer": "Objekat", "color": 8})
         x += 450
     e = msp.add_line((X(lx), GY - 1300), (X(lx), GY + 4300),
@@ -887,16 +900,18 @@ def sheet_h03():
     ltype(e, "PHANTOM", SC, 1.5)
     _txt(msp, "granica zakupa", X(lx) - 80, GY + 4150, 1.7 * SC, color=8, align=TA.RIGHT)
 
-    # foundation strip, full depth, on blinding (seen along its length)
+    # foundation strip, full depth, on blinding (seen along its length); its top is at
+    # the slab level, 0,20 m above the terrain
     rect(msp, X(sx0), GY - fd, sl, fd, "Temelj", color=32, lw=50)
     hatch_rect(msp, X(sx0), GY - fd, sl, fd, "Temelj", "ANSI31", SC * 0.35, 32)
     solid_rect(msp, X(sx0) - 50, GY - fd - bl, sl + 100, bl, "Temelj", 254)
     rect(msp, X(sx0) - 50, GY - fd - bl, sl + 100, bl, "Temelj", color=8, lw=35)
 
-    # the two existing earth rings (tapes along the band) cross the strip at 0,8 m
+    # the two existing earth rings (tapes along the band), 0,8 m under the terrain,
+    # pass just below the strip
     dr = GEO["earth_rings"]["depth_mm"]
     for off in EARTH_RINGS:
-        solid_rect(msp, X(-off) - 40, GY - dr - 40, 80, 80, "Uzemljenje", 2)
+        solid_rect(msp, X(-off) - 40, GT - dr - 40, 80, 80, "Uzemljenje", 2)
 
     # stand: three modules in landscape along the 45 deg slope, rail, posts, brace
     x0, y0 = X(fx0), GY + b
@@ -927,27 +942,26 @@ def sheet_h03():
 
     # fences, cut by the plane: posts 50 outside the slab, on the terrain,
     # 1,80 m above the slab = 2,00 m above the ground
-    FT = ZS + FH                                    # fence top above the terrain
     for s in (fe_w, fe_e):
         fx = X(s)
-        solid_rect(msp, fx - 25, GY, 50, FT, "Ograda", 8)
-        rect(msp, fx - 25, GY, 50, FT, "Ograda", color=8, lw=70)
-        for ry in (GY + ZS + 100, GY + FT - 30):
+        solid_rect(msp, fx - 25, GT, 50, FENCE_ABOVE_GROUND, "Ograda", 8)
+        rect(msp, fx - 25, GT, 50, FENCE_ABOVE_GROUND, "Ograda", color=8, lw=70)
+        for ry in (GY + 100, GY + FH - 30):
             rect(msp, fx - 15, ry, 30, 30, "Ograda", color=8, lw=50)
     _txt(msp, f"ograda {dec(FH)} m od ploče", X(fe_w) - 90, GY + 150, 1.6 * SC,
          color=7, rotation=90)
 
-    # slab, top at +0,20
-    rect(msp, X(0), GY + ZS - SLAB_T, S, SLAB_T, "Objekat", color=254, lw=35)
-    hatch_rect(msp, X(0), GY + ZS - SLAB_T, S, SLAB_T, "Objekat", "ANSI31", SC * 0.5, 8)
-    _txt(msp, f"postojeća AB ploča {dec(S)} × {dec(S)} m, gornja površina +{dec(ZS)}",
-         X(S / 2), GY + ZS - SLAB_T - 300, 1.7 * SC, color=8, align=TA.CENTER)
+    # slab, top at ±0,00
+    rect(msp, X(0), GY - SLAB_T, S, SLAB_T, "Objekat", color=254, lw=35)
+    hatch_rect(msp, X(0), GY - SLAB_T, S, SLAB_T, "Objekat", "ANSI31", SC * 0.5, 8)
+    _txt(msp, f"postojeća AB ploča {dec(S)} × {dec(S)} m, gornja površina ±0,00",
+         X(S / 2), GY - SLAB_T - 300, 1.7 * SC, color=8, align=TA.CENTER)
 
     # tower in the background (the plan-north legs), schematic; platform P I over the roof
     lf = tw["leg_footprint"][0]
     TOP = 4400
     zp = tw["platforms_m"][0] * 1000
-    G0 = GY + ZS                                    # slab top
+    G0 = GY                                         # slab top
     legs_x = sorted({p[0] for p in tw["legs_centres"]})
     for s in legs_x:
         rect(msp, X(s) - lf / 2, G0, lf, TOP, "Konstrukcija", color=5, lw=35)
@@ -1023,20 +1037,23 @@ def sheet_h03():
     msp.add_circle((xc0 + EXH_X, G0 + EXH_Z), 70,
                    dxfattribs={"layer": "Ventilacija", "color": 1})
     _txt(msp, f"postojeći kontejner K2 — presjek po širini {cw} mm", (xc0 + xc1) / 2,
-         GY + ZS - SLAB_T - 560, 1.6 * SC, color=8, align=TA.CENTER)
+         GY - SLAB_T - 560, 1.6 * SC, color=8, align=TA.CENTER)
 
-    # levels from the terrain, labelled at the left end
+    # levels from the slab top, labelled at the left end
     for lvl, lab in ((b, f"donja ivica panela  +{dec(b)}"),
-                     (FT, f"vrh ograde  +{dec(FT)}  ({dec(FH)} iznad ploče)"),
+                     (FH, f"vrh ograde  +{dec(FH)}  ({dec(FENCE_ABOVE_GROUND)} iznad terena)"),
                      (top, f"gornja ivica panela  +{dec(top)}")):
         msp.add_line((650, GY + lvl), (X(fe_w) + 150, GY + lvl),
                      dxfattribs={"layer": "Sakriveno", "color": 8})
         _txt(msp, lab, 700, GY + lvl + 40, 1.9 * SC, layer="Kota_tekst", color=7)
-    _txt(msp, "teren  ±0,00", 700, GY + 40, 1.9 * SC, layer="Kota_tekst", color=7)
+    _txt(msp, "ploča i temeljne trake  ±0,00", 700, GY + 40, 1.9 * SC,
+         layer="Kota_tekst", color=7)
+    _txt(msp, f"teren  {minus(TERRAIN)}", 700, GT - 260, 1.9 * SC, layer="Kota_tekst",
+         color=7)
 
     # dimensions
     dim_free(msp, (1750, GY), (1750, GY + top), (1750, 0), SC, angle=90)
-    dim_free(msp, (X(fe_w), GY + FT), (x1, GY + top), (X(fe_w) + 350, 0), SC, angle=90)
+    dim_free(msp, (X(fe_w), GY + FH), (x1, GY + top), (X(fe_w) + 350, 0), SC, angle=90)
     yb = GY - fd - bl
     dim_free(msp, (x0, yb), (x1, yb), (0, yb - 450), SC)
     yc = yb - 900
@@ -1055,7 +1072,8 @@ def sheet_h03():
     lead(msp, (X(sx0 + sl) - 400, GY - 600),
          f"temeljna traka {strip_w_txt(fnd)} × {sl}, "
          f"d = {fd} — C30/37", (X(sx0 + sl) + 650, GY - 1100), SC)
-    lead(msp, (X(-EARTH_RINGS[0]), GY - dr), "2 postojeća prstena FeZn 25×4 na −0,80 — ukrštanje",
+    lead(msp, (X(-EARTH_RINGS[0]), GT - dr),
+         "2 postojeća prstena FeZn 25×4, 0,80 m ispod terena",
          (X(sx0 + sl) + 650, GY - 1450), SC)
     lead(msp, (X(sx0) + 300, GY - fd - bl / 2), f"podložni beton C12/15, d = {bl}",
          (X(sx0) - 350, GY - 1250), SC)
@@ -1069,21 +1087,22 @@ def sheet_h03():
          layer="Orijentacija", color=1)
 
     note_block(msp, 700, 1250, SC, "NAPOMENE:", [
-        f"1  Polje: {rows} reda × {sup['cols']} modul 585 Wp, položeno; nagib {arr['tilt_deg']}°, "
-        f"projekcija {proj} mm; {arr['count']} odvojena nosača u nizu (H-02).",
-        f"2  Dvije temeljne trake po nosaču {strip_w_txt(fnd)} × {sl} mm, "
-        f"dubina {fd} mm, razmak {A['sp']} mm (druga iza ravni presjeka);",
-        f"    beton C30/37 (XC4+XF3), armatura B500B, na podložnom betonu C12/15 d = {bl} mm.",
-        f"3  Kote od terena uz FN polje; teren je {minus(TERRAIN)} m ispod ploče (04_Ograda). "
-        f"Donja ivica panela +{dec(b)}, gornja +{dec(top)};",
-        f"    vrh ograde +{dec(FT)} ({dec(FH)} m iznad ploče) — gornja ivica je "
-        f"{dec(PV_OVER_FENCE)} m iznad ograde.",
-        "4  Postojeći prsteni uzemljivača na 0,8 m presijecaju traku: lociranje, otkopavanje i",
-        "    premještanje ili premoštavanje prstena (LOT 1).",
-        f"5  Trake su {mmc(A['margin'])} mm od granice zakupa (JZ) i od ploče (SI); "
-        "položaj presjeka na H-02.",
-        "6  Stub, platforma P I (+3,0 m), kontejner i ormari šematski; ICC360 i MTS su iza "
-        "FN polja.",
+        f"1  FN polje: {rows} reda × {sup['cols']} modul 585 Wp, položeno; nagib "
+        f"{arr['tilt_deg']}°, horizontalna projekcija {proj} mm;",
+        f"    {arr['count']} odvojena nosača u nizu (H-02).",
+        f"2  Po nosaču dvije temeljne trake {strip_w_txt(fnd)} × {sl} mm, dubine {fd} mm, "
+        f"na razmaku {A['sp']} mm (druga traka je iza ravni presjeka);",
+        f"    beton C30/37 (XC4+XF3), armatura B500B, podložni beton C12/15 d = {bl} mm.",
+        "3  Kote su date od gornje ivice ploče (±0,00), u čijem je nivou i vrh temeljnih traka; "
+        f"teren je na {minus(TERRAIN)} m (04_Ograda).",
+        f"    Donja ivica panela je na +{dec(b)}, gornja na +{dec(top)}; vrh ograde je na "
+        f"+{dec(FH)}, pa je gornja ivica panela {dec(PV_OVER_FENCE)} m iznad ograde.",
+        "4  Postojeći prsteni uzemljivača (0,80 m ispod terena) prolaze ispod dna rova; "
+        "lociraju se, otkopavaju i štite (LOT 1).",
+        f"5  Trake su udaljene {mmc(A['margin'])} mm od granice zakupa (JZ) i od ploče (SI); "
+        "položaj presjeka prikazan je na H-02.",
+        "6  Stub, platforma P I (+3,0 m), kontejner i ormari prikazani su šematski; ICC360 i MTS "
+        "nalaze se iza FN polja.",
     ])
     return doc
 
@@ -1337,16 +1356,21 @@ def sheet_h04():
     # The normative wording lives in Prilog I, Tačka 4; the sheet carries only what a
     # reader needs at the drawing - dimensions, positions and the one-line rule.
     note_block(msp, 600, 1450, SC, "NAPOMENE:", [
-        "1  DEA FG Wilson P18-6 (skid) ili ekv., 18 kVA / 14,4 kW; os SZ–JI, hladnjak JI.",
-        f"2  Izlaz zraka kroz postojeće otvore Stulz (sredina JI zida), ≥0,36 m² bruto, "
-        f"limeni plenum i hauba {HOOD_W} × {HOOD_D} — topli zrak NAVIŠE.",
-        f"3  Usis 500 × 700 na SI zidu (+0,30). Izduv NO 50 kroz JI zid na ≈+{dec(EXH_Z)} m, "
-        "ispod platforme stuba.",
-        f"4  GRO ≤{GRO_W} × {GRO_D} × {GRO_H} na SZ zidu; spremnik 500 l dvoplašni u koritu "
-        f"{kada['L']} × {kada['W']}; roštilj OBAVEZAN pod skidom i koritom.",
-        f"5  Servisni prolazi {L['clr']['west']:.0f} / {L['clr']['east']:.0f} mm i "
-        f"{L['clr']['north_gro']:.0f} mm do GRO; unos skida 620 mm kroz vrata 990 mm.",
-        "6  Ventilator Ø315 (JI, izvlačni, D4) i DC razvod −48 V istočno od vrata — H-05.",
+        "1  Dizel-električni agregat FG Wilson P18-6 (skid) ili ekvivalent, 18 kVA / 14,4 kW; "
+        "osa SZ–JI, hladnjak prema JI.",
+        "2  Izlaz zraka kroz postojeće otvore klima-uređaja Stulz (sredina JI zida), najmanje "
+        "0,36 m² bruto;",
+        f"    limeni plenum i hauba {HOOD_W} × {HOOD_D} mm usmjeravaju topli zrak naviše.",
+        "3  Usis zraka 500 × 700 mm na SI zidu (+0,30 m). Izduv NO 50 kroz JI zid na "
+        f"≈+{dec(EXH_Z)} m, ispod platforme stuba.",
+        f"4  GRO dimenzija do {GRO_W} × {GRO_D} × {GRO_H} mm na SZ zidu; dvoplašni spremnik "
+        f"500 l u koritu {kada['L']} × {kada['W']} mm;",
+        "    roštilj ispod skida i korita je obavezan.",
+        f"5  Servisni prolazi iznose {L['clr']['west']:.0f} / {L['clr']['east']:.0f} mm i "
+        f"{L['clr']['north_gro']:.0f} mm do GRO; skid širine 620 mm unosi se kroz vrata "
+        "širine 990 mm.",
+        "6  Ventilator Ø315 (JI zid, izvlačni, D4) i DC razvod −48 V istočno od vrata prikazani "
+        "su na H-05.",
         "7  Raspored je principijelan; mjere otvora i servisne tačke potvrđuje Ponuđač na "
         "licu mjesta. Zahtjevi: Prilog I, Tačka 4.",
     ])
@@ -1371,7 +1395,7 @@ def sheet_h05():
         "dc_feed": "−48 V iz ICC360, kroz JZ zid",
         "earth_text": "postojeći uzemljivač FeZn 25×4 (2 prstena na 0,8 m + temelji stuba) "
                       "· R ≤ 10 Ω · nosači FN vezani Cu užetom 50 mm² preko bimetalnih spojeva",
-        "note4_tail": "Klima-uređaj Stulz se demontira — nema izvoda za klimatizaciju.",
+        "note4_tail": "Klima-uređaj Stulz se demontira; izvod za klimatizaciju nije predviđen.",
     })
     return doc
 
@@ -1437,10 +1461,10 @@ def sheet_h06():
     lead(msp, (mid + 800, Z + 7400),
          f"antenski stub {tw['height'] // 1000} m — silueta iz ovjerenog projekta",
          (mid + 3200, Z + 8900), SC)
-    lead(msp, (stands[-1][0] + fw / 2, Z + TERR + arr["top_edge"] - 300),
+    lead(msp, (stands[-1][0] + fw / 2, Z + arr["top_edge"] - 300),
          f"FN polje {n} × 3 modula 585 Wp, azimut {arr['azimuth_deg']}°, "
          f"nagib {arr['tilt_deg']}°",
-         (stands[-1][0] + fw / 2 + 900, Z + TERR + arr["top_edge"] + 2600), SC)
+         (stands[-1][0] + fw / 2 + 900, Z + arr["top_edge"] + 2600), SC)
 
     NX = mid + total / 2 + 2600
     legend(msp, NX, z_top + 300, SC, [
@@ -1450,14 +1474,14 @@ def sheet_h06():
         (8,   f"postojeća ograda {dec(fe['height'])} m iznad ploče"),
     ], col_w=44.0 * SC)
     note_block(msp, NX, z_top - 2400, SC, "NAPOMENE:", [
-        "1  Prava ortogonalna elevacija u pravcu azimuta 45°;",
+        "1  Prikaz je ortogonalna elevacija u pravcu azimuta 45°;",
         "    visine i širine su mjerljive.",
-        "2  Paneli gledaju u posmatrača pod 45°, pa se po visini",
-        f"    vide skraćeno: +{dec(arr['bottom_edge'])} do "
-        f"+{dec(arr['top_edge'])} m od terena.",
-        f"3  Teren uz FN polje je {minus(TERRAIN)} m ispod ploče; ograda",
-        f"    je {dec(FENCE_ABOVE_GROUND)} m iznad terena.",
-        f"4  Stub je prikazan do +{dec(CUT)} m i prekinut; h = "
+        "2  Paneli su okrenuti prema posmatraču pod nagibom 45°, pa su",
+        f"    po visini prikazani skraćeno: +{dec(arr['bottom_edge'])} do "
+        f"+{dec(arr['top_edge'])} m od ploče.",
+        f"3  Vrh temeljnih traka je u nivou ploče; teren uz FN polje je na {minus(TERRAIN)} m,",
+        f"    a ograda je {dec(FENCE_ABOVE_GROUND)} m iznad terena.",
+        f"4  Stub je prikazan do +{dec(CUT)} m i prekinut; visina stuba iznosi "
         f"{tw['height'] // 1000} m",
         "    prema ovjerenom projektu (list 462 — 01_Dispozicija S32 m).",
         "5  Zahtjevi: Prilog I, Tačke 3 i 4.",
