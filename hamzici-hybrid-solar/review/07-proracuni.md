@@ -257,7 +257,7 @@ nosaču, horizontalna projekcija pri 45° **2434 mm**, ukupno 12 modula = 7,02 k
 
 | | |
 |---|---|
-| Kota temeljnih traka | vrh trake u nivou gornje ivice ploče (±0,00), **0,20 m iznad terena** — nosači i kontejner stoje na istom nivou (Naručilac 05.10.2026.) |
+| Kota temeljnih traka | vrh trake u nivou gornje ivice ploče (±0,00), **0,20 m iznad terena** — nosači i kontejner stoje na istom nivou |
 | Donja / gornja ivica | **+0,50 m / +2,93 m** od ploče, odnosno +0,70 / +3,13 m od terena |
 | Kota ograde | **+1,80 m** od ploče (ovjereni `04_Ograda.dwg`); teren oko ploče je na **−0,20 m**, pa je ograda 2,00 m iznad terena |
 | **Nadvišenje ograde** | **1,13 m** (2,93 − 1,80) |

@@ -81,8 +81,8 @@ CONFLICTS.update({
         "1,64 m / 1636 mm (superseded - 3x4)": r"1[,.]64\s*m|1636\s*mm",
     },
     "fence overhang (Hamzići)": {
-        "1,13 m (correct - strips at the slab level, 05.10.2026)": r"1[,.]13\s*m",
-        # 0,93 m stays in item 1.1 of the issued Prilog II, which is not reissued (05.10.2026)
+        "1,13 m (correct - strips at the slab level)": r"1[,.]13\s*m",
+        # 0,93 m stays in item 1.1 of the issued Prilog II, which is not reissued
         "1,74 m (superseded - 3x4)": r"1[,.]74\s*m",
     },
     "overturning moment per support": {

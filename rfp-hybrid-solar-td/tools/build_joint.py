@@ -56,7 +56,7 @@ FORBIDDEN = [r for r in bp1.FORBIDDEN if r[0] != "Tačku 4.8"] + [
     ("Hamzići?", "zaostali upitnik iz nacrta"),
     ("1,94 m", "nadvišenje ograde na Hamzićima je 1,13 m, mjereno od ploče"),
     ("0,93 m", "Hamzići: vrh temeljnih traka je u nivou ploče, pa je nadvišenje ograde "
-               "1,13 m (Naručilac 05.10.2026)"),
+               "1,13 m"),
     ("ISTOČNI zid, južni kraj", "Stulz je u sredini JI zida (Naručilac 11.09.2026)"),
     ("duža osa istok–zapad", "agregat na Hamzićima stoji po osi SZ–JI"),
     # 11.09.2026: true orientation, SW fields, 4x3L stand at both sites

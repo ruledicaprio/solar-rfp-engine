@@ -129,7 +129,7 @@ def legend(msp, x, y, scale, rows, title="LEGENDA", cols=1, col_w=None):
 def note_block(msp, x, y, scale, title, lines, h=1.7):
     # colour 7, not the grey 8 it used to be: at note size the grey printed too
     # faint to read on a plotted A3 sheet.  1,7 mm text under a 2,2 mm title
-    # (05.10.2026): the notes are secondary to the drawing and were too large.
+    # the notes are secondary to the drawing.
     _txt(msp, title, x, y, 2.2 * scale, layer="Tekst", color=7)
     yy = y - 2.2 * scale
     for ln in lines:

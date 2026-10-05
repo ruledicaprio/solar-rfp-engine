@@ -94,7 +94,7 @@ SLAB_T = 300             # slab thickness drawn in section A-A (not in the input
 EARTH_RINGS = tuple(GEO["earth_rings"]["offset_from_slab_mm"])    # 3.6.9, at 0,8 m
 TERRAIN = GEO["terrain"]["level_mm"]                               # -200 vs slab top
 FENCE_ABOVE_GROUND = GEO["fence"]["height"] - TERRAIN              # 1800 + 200
-# The strip tops are at the slab level (Investor, 05.10.2026), so the panel edges and
+# The strip tops are at the slab level, so the panel edges and
 # the fence top are all read from the slab; design.json array.above_fence matches.
 PV_OVER_FENCE = D["array"]["top_edge"] - GEO["fence"]["height"]    # 1134
 if PV_OVER_FENCE != D["array"]["above_fence"]:
@@ -836,8 +836,7 @@ def sheet_h03():
     stands and the container cut across its width, looking true SZ (plan
     north): JZ on the left, SI on the right.  Levels are from the slab top, ±0,00;
     the terrain beside it is -0,20 (04_Ograda).  The strip tops are at the slab
-    level, so the stands and the container stand on one level (Investor,
-    05.10.2026) and the strips show 0,20 m above the terrain."""
+    level, so the stands and the container stand on one level and the strips show 0,20 m above the terrain."""
     SC = 30
     doc, msp = _sheet(SC, "Presjek A–A kroz FN polje", "H-03", "1:30")
     A = array_layout()
