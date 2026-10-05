@@ -257,9 +257,10 @@ nosaču, horizontalna projekcija pri 45° **2434 mm**, ukupno 12 modula = 7,02 k
 
 | | |
 |---|---|
-| Donja / gornja ivica | **+0,50 m / +2,93 m** od terena |
+| Kota temeljnih traka | vrh trake u nivou gornje ivice ploče (±0,00), **0,20 m iznad terena** — nosači i kontejner stoje na istom nivou (Naručilac 05.10.2026.) |
+| Donja / gornja ivica | **+0,50 m / +2,93 m** od ploče, odnosno +0,70 / +3,13 m od terena |
 | Kota ograde | **+1,80 m** od ploče (ovjereni `04_Ograda.dwg`); teren oko ploče je na **−0,20 m**, pa je ograda 2,00 m iznad terena |
-| **Nadvišenje ograde** | **0,93 m** (2,93 − 2,00) |
+| **Nadvišenje ograde** | **1,13 m** (2,93 − 1,80) |
 | Raspoloživi pojas JZ od ploče | **3300 mm** × 12 500 mm (zakup 12,00 × 12,50 m, ploča 5,40 m u sredini) |
 | Dubina polja / dužina trake | 2434 / 2600 mm → trake **350 mm** od granice zakupa i od ploče |
 | Dužina niza (4 nosača, razmak 0,40 m) | 4 × 2278 + 3 × 400 = **10 312 mm** od raspoloživih 12,50 m, centrirano na ploču |
@@ -294,7 +295,7 @@ Kao Sjednica: **8 traka** (2 po nosaču) **500 × 2600 mm, jedinstvene širine p
 dubini** (bez proširenja u dnu — rov u stijeni se siječe jednom širinom), **puna dubina
 900 mm**, **1,170 m³ po traci → 9,36 m³** C30/37. Potrebno je 0,74 m³ po traci: vlastita
 težina trake 28,1 kN > potrebnih 17,9 kN (spreg 16,1 kN / 0,9), odnosno
-0,9 × 28,1 = 25,3 kN > 16,1 kN. Količine: podložni beton 0,52 m³, iskop 9,88 m³,
+0,9 × 28,1 = 25,3 kN > 16,1 kN. Vrh trake je u nivou ploče, 0,20 m iznad terena (B.4). Količine: podložni beton 0,52 m³, iskop 9,88 m³,
 **zatrpavanja nema** (beton i podložni beton ispunjavaju rov u cijelosti), odvoz
 9,88 m³, obrada gornjih površina 10,4 m² (LOT 1, sekcija 2). Oba postojeća prstena
 uzemljivača presijecaju svih 8 traka (D.6).

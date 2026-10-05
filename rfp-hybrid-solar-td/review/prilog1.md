@@ -176,7 +176,8 @@ i sav iskopani materijal se odvozi.
 | Parametar | BS Sjednica | BS Hamzići |
 |---|---|---|
 | Kota ograde | h = 2,10 m (ovjereni `04 Ograda`) | h = 1,80 m od ploče (ovjereni `04_Ograda`); teren oko ploče je na −0,20 m, pa je ograda 2,00 m iznad terena |
-| Nadvišenje ograde | 0,83 m | 0,93 m |
+| Kota temeljnih traka | vrh trake u nivou terena | vrh trake u nivou gornje ivice ploče, 0,20 m iznad terena. Kote panela +0,50 / +2,93 m mjere se od ploče |
+| Nadvišenje ograde | 0,83 m | 1,13 m |
 | Raspoloživi prostor | na JZ strani ograde, unutar zakupljene parcele 16,00 × 9,40 m; niz 10 312 mm | pojas na JZ strani ploče dubine 3300 mm i dužine 12,50 m, unutar zakupa 12,00 × 12,50 m — projekcija polja 2434 mm i trake 2600 mm staju sa po 350 mm od granice zakupa i od ploče; niz 10 312 mm centriran na ploču |
 | Položaj nosača | niz paralelan sa JZ ogradom; Ponuđač utvrđuje odmak od ograde tako da ravan panela nigdje ne dodiruje ogradu, a konstrukcija ostane unutar parcele | nosači okrenuti na JZ (azimut 225°), niz paralelan sa granicom zakupa; iza niza, na ploči sa JZ strane, stoje vanjski ormari ICC360-HA1-C1 i MTS (0,85 m slobodno ispred njih); položaj potvrđuje Ponuđač geodetskim snimanjem |
 | Prepreke | nema | listopadno stablo JJI–JI od stuba (≈7–9 m, 15–20 m, izvan zakupa) zasjenjuje polje samo u zimskim jutrima (do ≈2 % decembarske proizvodnje; polje okrenuto na JZ ga uglavnom izbjegava); stablo se ne uklanja |

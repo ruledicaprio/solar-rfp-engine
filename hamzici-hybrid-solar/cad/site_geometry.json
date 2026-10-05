@@ -105,7 +105,7 @@
   "terrain": {
     "level_mm": -200,
     "reference": "top of the slab = ±0,00",
-    "source": "04_Ograda.dwg, POGLED - OGRADA BAZNE STANICE: '- 0.20' at the ground line beside the slab; the fence '+ 1.80' is read from the slab. Adopted by the coordinator 11.09.2026: the fence is 1,80 m above the slab = 2,00 m above the outside ground, so the PV top edge (+2,934 above its own ground, 4x3L) clears the fence top by 0,934 m."
+    "source": "04_Ograda.dwg, POGLED - OGRADA BAZNE STANICE: '- 0.20' at the ground line beside the slab; the fence '+ 1.80' is read from the slab. Adopted by the coordinator 11.09.2026: the fence is 1,80 m above the slab = 2,00 m above the outside ground, so the PV top edge (+2,934 above its own ground, 4x3L) clears the fence top by 0,934 m. Superseded 05.10.2026 (Investor): the PV strip tops are at the slab level, so the array levels are read from the slab and the clearance is 2,934 - 1,800 = 1,134 m (design.json foundation._top_level)."
   },
 
   "earth_rings": {

@@ -180,8 +180,8 @@ def register(B):
         # Investor's 15.09.2026 decision took both out of Prilog I and the BOQ:
         # actions are the Bidder's to adopt, and the stand is not named a type.
         note_block(msp, 1200, bot - 180, SC, "NAPOMENE:", [
-            "1  Nosač i temelji — tehničko rješenje i statički proračun Ponuđača.",
-            f"2  Temelji IZVAN ograde; ivica panela +{arr['bottom_edge'] / 1000:.2f} / "
+            "1  Nosači i temelji prema tehničkom rješenju Ponuđača.",
+            f"2  Temelji izvan ograde; ivice panela +{arr['bottom_edge'] / 1000:.2f} / "
             f"+{arr['top_edge'] / 1000:.2f} m.".replace(".", ",", 2),
             "3  Zahtjevi: Prilog I, Tačke 3 i 4.",
         ])
@@ -339,13 +339,11 @@ def register(B):
         # "NAPOMENE", as every other sheet: the block carries drawing data, and
         # the TD no longer explains itself on the sheets (Naručilac 15.09.2026)
         note_block(msp, 700, 1500, SC, "NAPOMENE:", [
-            f"1  Polje: {sup['rows']} reda × {sup['cols']} modul 585 Wp, položeno; projekcija "
-            f"{proj} mm pri 45°; {arr['count']} odvojena nosača u nizu.",
-            f"2  Dvije trake po nosaču {strip_w_txt(fnd)} × {fnd['strip_l']} mm, d = "
-            f"{fnd['strip_d']} mm, razmak {sup['strip_spacing']} mm; C30/37, armatura B500B.",
-            f"3  Donja ivica panela +{b / 1000:.2f} m, gornja +{top / 1000:.2f} m."
-            .replace(".", ",", 2),
-            "4  Postojeća ograda h = 2,10 m (projekat lokacije, 04 Ograda).",
+            f"1  FN polje: {sup['rows']} × {sup['cols']} modul 585 Wp, nagib 45°; {arr['count']} nosača u nizu.",
+            f"2  Dvije trake po nosaču {strip_w_txt(fnd)} × {fnd['strip_l']} × {fnd['strip_d']} mm, "
+            f"razmak {sup['strip_spacing']} mm; C30/37, B500B.",
+            f"3  Ivice panela +{b / 1000:.2f} / +{top / 1000:.2f} m.".replace(".", ",", 2),
+            "4  Postojeća ograda h = 2,10 m.",
         ])
         return doc
 
@@ -580,16 +578,12 @@ def register(B):
         # The normative wording lives in Prilog I, Tačka 4; the sheet carries only the
         # dimensions, the positions and the one-line rule (as H-04).
         note_block(msp, 700, 2400, SC, "NAPOMENE:", [
-            "1  DEA FG Wilson P18-6 (skid) ili ekv., 18 kVA / 14,4 kW.",
-            "2  Usis 500 × 700 SI (+0,30); kanal i žaluzina 600 × 600 te izduv DN 50 SZ; "
-            "oduška JZ; ventilator Ø315 JI.",
-            "3  Roštilj OBAVEZAN ispod skida i ispod korita.",
-            "4  Spremnik DVOPLAŠNI; ispod njega korito 1150 × 640, rub 200 mm.",
-            "5  Servisni prolazi 720 mm JZ / 720 mm SI / 1155 mm JI — ne zauzimati.",
-            "6  Unos skida 620 mm kroz vrata 900 mm. Kontejner je PRAZAN.",
-            "7  DC razvod −48 V na SI zidu uz GRO; trajni potrošači D1–D6 — E-01.",
-            "8  Raspored je principijelan; potvrđuje se na licu mjesta. "
-            "Zahtjevi: Prilog I, Tačka 4.",
+            "1  DEA FG Wilson P18-6 ili ekvivalent, 18 kVA / 14,4 kW.",
+            "2  Usis 500 × 700 mm (SI); izlaz 600 × 600 mm i izduv DN 50 (SZ); ventilator Ø315 (JI).",
+            "3  Spremnik 500 l je dvoplašni, u koritu; roštilj ispod skida i korita je obavezan.",
+            "4  Servisni prolazi 720 / 720 / 1155 mm se ne zauzimaju.",
+            "5  DC razvod −48 V je na SI zidu; potrošači D1–D6 prikazani su na E-01.",
+            "6  Raspored je principijelan. Zahtjevi: Prilog I, Tačka 4.",
         ])
         return doc
 
@@ -614,7 +608,7 @@ def register(B):
             "dc_feed": "−48 V iz ICC360, kroz SI zid",
             "earth_text": "postojeći prstenasti uzemljivač Fe/Zn 25×4 · R ≤ 10 Ω "
                           "· nosači FN vezani Cu užetom 50 mm² preko bimetalnih spojeva",
-            "note4_tail": "Kontejner je prazan — nema zatečenih izvoda.",
+            "note4_tail": "Kontejner je prazan.",
         })
         return doc
 
@@ -700,13 +694,10 @@ def register(B):
             (8,   "postojeća ograda h = 2,10 m"),
         ], col_w=44.0 * SC)
         note_block(msp, NX, z_top - 2400, SC, "NAPOMENE:", [
-            "1  Prava ortogonalna elevacija u pravcu azimuta 45°;",
-            "    visine i širine su mjerljive.",
-            "2  Paneli gledaju u posmatrača pod 45°, pa se po visini",
-            f"    vide skraćeno: +{arr['bottom_edge'] / 1000:.2f} do "
+            "1  Ortogonalni pogled u pravcu azimuta 45°.",
+            f"2  Paneli su prikazani skraćeno: +{arr['bottom_edge'] / 1000:.2f} do "
             f"+{arr['top_edge'] / 1000:.2f} m.".replace(".", ",", 2),
-            "3  Stub je prikazan do +9,50 m i prekinut; h = 38 m prema",
-            "    ovjerenom projektu (list 462 — 01_ANTENSKI STUB 38 m).",
+            "3  Stub je prekinut na +9,50 m; h = 38 m.",
             "4  Zahtjevi: Prilog I, Tačke 3 i 4.",
         ])
         return doc
